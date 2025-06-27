@@ -6,18 +6,18 @@ import warnings
 import numpy as np
 import ot
 import torch
-from fugw.solvers.utils import (
-    batch_elementwise_prod_and_sum,
-    crow_indices_to_row_indices,
-    solver_sinkhorn_sparse,
-)
-from fugw.utils import _low_rank_squared_l2, _make_csr_matrix
+import jax
+from ott.geometry import pointcloud
+from ott.tools import sinkhorn_divergence
+from ott.solvers import linear
+from fugw.solvers.utils import solver_sinkhorn_log_sparse
 from joblib import Parallel, delayed
 from scipy import linalg
 from scipy.sparse import diags
 from scipy.spatial.distance import cdist
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.linear_model import RidgeCV
+from functools import partial
 
 # Fast implementation for parallelized computing
 from fmralign.hyperalignment.linalg import safe_svd, svd_pca
@@ -389,14 +389,11 @@ class OptimalTransportAlignment(Alignment):
         Mixing matrix containing the optimal permutation
     """
 
-    def __init__(
-        self, metric="euclidean", reg=1, tau=1.0, max_iter=1000, tol=1e-3
-    ):
-        self.metric = metric
+    def __init__(self, reg=1, tol=1e-3, batch_size=None, solver="sinkhorn"):
         self.reg = reg
-        self.tau = tau
         self.tol = tol
-        self.max_iter = max_iter
+        self.batch_size = batch_size
+        self.solver = solver
 
     def fit(self, X, Y):
         """
@@ -408,31 +405,42 @@ class OptimalTransportAlignment(Alignment):
         Y: (n_samples, n_features) nd array
             target data
         """
-        import jax
-        from ott.geometry import costs, geometry
-        from ott.problems.linear import linear_problem
-        from ott.solvers.linear import sinkhorn
 
-        if self.metric == "euclidean":
-            cost_matrix = costs.Euclidean().all_pairs(x=X.T, y=Y.T)
-        else:
-            cost_matrix = cdist(X.T, Y.T, metric=self.metric)
+        self.geom = pointcloud.PointCloud(
+            X.T,
+            Y.T,
+            epsilon=self.reg,
+            batch_size=self.batch_size,
+            scale_cost="max_cost",
+        )
+        if self.solver == "sinkhorn":
+            solver = jax.jit(linear.solve)
+            out = solver(self.geom)
+        elif self.solver == "sinkdiv":
+            solver = jax.jit(
+                partial(
+                    sinkhorn_divergence.sinkdiv,
+                    batch_size=self.batch_size,
+                    scale_cost="max_cost",
+                )
+            )
+            _, out = solver(X.T, Y.T)
 
-        geom = geometry.Geometry(cost_matrix=cost_matrix, epsilon=self.reg)
-        problem = linear_problem.LinearProblem(
-            geom, tau_a=self.tau, tau_b=self.tau
-        )
-        solver = sinkhorn.Sinkhorn(
-            geom, max_iterations=self.max_iter, threshold=self.tol
-        )
-        P = jax.jit(solver)(problem)
-        self.R = np.asarray(P.matrix) * len(X.T)
+        self.dual_potentials = out.to_dual_potentials()
 
         return self
 
     def transform(self, X):
         """Transform X using optimal coupling computed during fit."""
-        return X @ self.R
+        self.n_voxels = X.shape[1]
+
+        # @jax.jit
+        # def apply_potentials(x):
+        #     return self.dual_potentials._grad_f(x.T).T
+        def apply_potentials(x):
+            return self.dual_potentials.transport(x.T).T
+
+        return apply_potentials(X)
 
 
 class IndividualizedNeuralTuning(Alignment):
@@ -735,10 +743,11 @@ class SparseUOT(Alignment):
     def __init__(
         self,
         sparsity_mask,
-        rho=float("inf"),
+        method="sinkhorn",
+        rho=torch.Tensor([float("inf")]),
         reg=1,
         max_iter=1000,
-        tol=1e-3,
+        tol=1e-7,
         eval_freq=10,
         device="cpu",
         verbose=False,
@@ -746,58 +755,72 @@ class SparseUOT(Alignment):
         self.rho = rho
         self.reg = reg
         self.sparsity_mask = sparsity_mask
+        self.method = method
         self.max_iter = max_iter
         self.tol = tol
         self.eval_freq = eval_freq
         self.device = device
         self.verbose = verbose
 
-    def _initialize_weights(self, n, cost):
-        crow_indices, col_indices = cost.crow_indices(), cost.col_indices()
-        row_indices = crow_indices_to_row_indices(crow_indices)
-        weights = torch.ones(n, device=self.device) / n
-        ws_dot_wt_values = weights[row_indices] * weights[col_indices]
-        ws_dot_wt = _make_csr_matrix(
-            crow_indices,
-            col_indices,
-            ws_dot_wt_values,
-            cost.size(),
-            self.device,
-        )
-        return weights, ws_dot_wt
-
-    def _initialize_plan(self, n):
-        return (
-            torch.sparse_coo_tensor(
-                self.sparsity_mask.indices(),
-                torch.ones_like(self.sparsity_mask.values())
-                / self.sparsity_mask.values().shape[0],
-                (n, n),
-            )
-            .coalesce()
-            .to_sparse_csr()
-            .to(self.device)
+    def _compute_cost_from_mask(
+        self, source_features, target_features, sparsity_mask
+    ):
+        indices = sparsity_mask.indices()
+        size = sparsity_mask.size()
+        row_indices, col_indices = indices[0], indices[1]
+        batch_size = int(1e4)
+        values = torch.cat(
+            [
+                0.5
+                * (
+                    source_features[row_indices[i : i + batch_size], :]
+                    - target_features[col_indices[i : i + batch_size],]
+                ).sum(1)
+                for i in range(0, len(row_indices), batch_size)
+            ]
         )
 
-    def _uot_cost(self, init_plan, F, n):
-        crow_indices, col_indices = (
-            init_plan.crow_indices(),
-            init_plan.col_indices(),
+        return torch.sparse_coo_tensor(indices, values, size=size).coalesce()
+
+    def _half_sinkhorn_div(
+        self,
+        source_features,
+        target_features,
+        sparsity_mask,
+        ws,
+        wt,
+        eps,
+        solver,
+    ):
+        """Compute the Sinkhorn divergence between two sets of features."""
+        cost_xy = self._compute_cost_from_mask(
+            source_features, target_features, sparsity_mask
         )
-        row_indices = crow_indices_to_row_indices(crow_indices)
-        cost_values = batch_elementwise_prod_and_sum(
-            F[0], F[1], row_indices, col_indices, 1
+        cost_xx = self._compute_cost_from_mask(
+            source_features, source_features, sparsity_mask
         )
-        # Clamp negative values to avoid numerical errors
-        cost_values = torch.clamp(cost_values, min=0.0)
-        cost_values = torch.sqrt(cost_values)
-        return _make_csr_matrix(
-            crow_indices,
-            col_indices,
-            cost_values,
-            (n, n),
-            self.device,
+        (alpha, beta), _ = solver(cost_xy, ws, wt, eps)
+        (alpha_x, beta_x), _ = solver(cost_xx, ws, ws, eps)
+        half_loss = (alpha.dot(ws) + beta.dot(wt)) - (alpha_x + beta_x).dot(
+            ws
+        ) / 2
+        return half_loss
+
+    def _sinkhorn_plan(
+        self,
+        source_features,
+        target_features,
+        sparsity_mask,
+        ws,
+        wt,
+        eps,
+        solver,
+    ):
+        cost_xy = self._compute_cost_from_mask(
+            source_features, target_features, sparsity_mask
         )
+        _, pi = solver(cost_xy, ws, wt, eps)
+        return pi
 
     def fit(self, X, Y):
         """
@@ -809,43 +832,58 @@ class SparseUOT(Alignment):
         Y: (n_samples, n_features) torch.Tensor
             target data
         """
-        n_features = X.shape[1]
-        F = _low_rank_squared_l2(X.T, Y.T)
 
-        init_plan = self._initialize_plan(n_features)
-        cost = self._uot_cost(init_plan, F, n_features)
+        sparsity_mask = self.sparsity_mask.to(self.device)
+        self.weights = 1 / sparsity_mask.sum(dim=0).to_dense()
+        ws = self.weights
+        wt = ws
 
-        weights, ws_dot_wt = self._initialize_weights(n_features, cost)
+        source_features = torch.Tensor(X.T).to(self.device)
+        source_features.requires_grad_(True)
+        target_features = torch.Tensor(Y.T).to(self.device)
 
-        uot_params = (
-            torch.tensor([self.rho], device=self.device),
-            torch.tensor([self.rho], device=self.device),
-            torch.tensor([self.reg], device=self.device),
-        )
-        init_duals = (
-            torch.zeros(n_features, device=self.device),
-            torch.zeros(n_features, device=self.device),
-        )
-        tuple_weights = (weights, weights, ws_dot_wt)
-        train_params = (self.max_iter, self.tol, self.eval_freq)
-
-        _, pi = solver_sinkhorn_sparse(
-            cost=cost,
-            init_duals=init_duals,
-            uot_params=uot_params,
-            tuple_weights=tuple_weights,
-            train_params=train_params,
+        solver = partial(
+            solver_sinkhorn_log_sparse,
+            rho_s=self.rho,
+            rho_t=self.rho,
+            numItermax=self.max_iter,
+            tol=self.tol,
+            eval_freq=self.eval_freq,
             verbose=self.verbose,
         )
 
-        # Convert pi to coo format
-        self.R = pi.to_sparse_coo().detach() * n_features
-
-        if self.R.values().isnan().any():
-            raise ValueError(
-                "Coupling matrix contains NaN values,"
-                "try increasing the regularization parameter."
+        if self.method == "sinkhorn_divergence":
+            loss = self._half_sinkhorn_div(
+                source_features,
+                target_features,
+                sparsity_mask,
+                ws,
+                wt,
+                self.reg,
+                solver=solver,
             )
+
+            g = torch.autograd.grad(loss, [source_features])[0]
+            self.BrenierMap = (-g / ws.view(-1, 1)).detach().cpu().numpy()
+
+            if np.isnan(self.BrenierMap).any():
+                raise ValueError(
+                    "Gradient of the first potential contains NaN values,"
+                    "try increasing the regularization parameter."
+                )
+
+        elif self.method == "sinkhorn":
+            pi = self._sinkhorn_plan(
+                source_features,
+                target_features,
+                sparsity_mask,
+                ws,
+                wt,
+                self.reg,
+                solver=solver,
+            )
+
+            self.pi = pi.detach().cpu()
 
         return self
 
@@ -862,4 +900,11 @@ class SparseUOT(Alignment):
         torch.Tensor of shape (n_samples, n_features)
             Transformed data
         """
-        return (X @ self.R).to_dense()
+        if self.method == "sinkhorn_divergence":
+            X_transformed = (X.T + self.BrenierMap).T
+        elif self.method == "sinkhorn":
+            X_torch = torch.Tensor(X)
+            X_transformed = (
+                X_torch @ self.pi / self.weights.to("cpu")
+            ).numpy()
+        return X_transformed

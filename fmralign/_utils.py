@@ -6,14 +6,16 @@ import nibabel as nib
 import numpy as np
 import torch
 from nilearn._utils.niimg_conversions import check_same_fov
-from nilearn.image import new_img_like, smooth_img
-from nilearn.masking import apply_mask_fmri, intersect_masks
+from nilearn.image import concat_imgs, new_img_like, smooth_img, resampling
+from nilearn.maskers._utils import concatenate_surface_images
+from nilearn.masking import apply_mask_fmri, intersect_masks, load_mask_img
 from nilearn.regions.parcellations import Parcellations
 from nilearn.surface import SurfaceImage
 from pathlib import Path
 import joblib
 import datetime
 from sklearn.exceptions import NotFittedError
+from sklearn import neighbors
 
 
 class ParceledData:
@@ -230,7 +232,16 @@ def _make_parcellation(
         labels = apply_mask_fmri(clustering, masker.mask_img_).astype(int)
 
     elif isinstance(clustering, SurfaceImage):
-        labels = masker.transform(clustering)[0].astype(int)
+        labels = (
+            np.vstack(
+                [
+                    clustering.data.parts["left"],
+                    clustering.data.parts["right"],
+                ]
+            )
+            .astype(int)
+            .ravel()
+        )
 
     # otherwise check it's needed, if not return 1 everywhere
     elif n_pieces == 1:
@@ -275,7 +286,7 @@ def _make_parcellation(
     return labels
 
 
-def _sparse_cluster_matrix(arr):
+def _sparse_clusters_parcellation(arr):
     """
     Creates a sparse matrix where element (i,j) is 1 if arr[i] == arr[j], 0 otherwise.
 
@@ -307,8 +318,8 @@ def _sparse_cluster_matrix(arr):
             cols += indices
 
     # Convert to tensors
-    rows = torch.tensor(rows)
-    cols = torch.tensor(cols)
+    rows = torch.tensor(np.array(rows))
+    cols = torch.tensor(np.array(cols))
     values = torch.ones(len(rows), dtype=torch.bool)
 
     # Create sparse tensor
@@ -316,6 +327,49 @@ def _sparse_cluster_matrix(arr):
         indices=torch.stack([rows, cols]),
         values=values,
         size=(n, n),
+    ).coalesce()
+
+    return sparse_matrix
+
+
+def _sparse_clusters_radius(mask_img, radius):
+    """
+    Creates a sparse adjacency matrix from a mask image where each voxel
+    is connected to its neighbors within a specified radius.
+
+    Parameters
+    ----------
+    mask_img: 3D Nifti1Image
+        Mask image to define the voxels.
+    radius: float
+        Radius in mm to define the neighborhood for each voxel.
+
+
+    Returns
+    -------
+    sparse_matrix: sparse torch.Tensor of shape (n_voxels, n_voxels)
+    """
+    mask_data, mask_affine = load_mask_img(mask_img)
+    mask_coords = np.where(mask_data != 0)
+    mask_coords = resampling.coord_transform(
+        mask_coords[0],
+        mask_coords[1],
+        mask_coords[2],
+        mask_affine,
+    )
+    mask_coords = np.asarray(mask_coords).T
+    clf = neighbors.NearestNeighbors(radius=radius)
+    A = clf.fit(mask_coords).radius_neighbors_graph(mask_coords)
+
+    # Convert CSR to COO
+    coo = A.tocoo()
+
+    # Create torch sparse COO tensor
+    indices = torch.tensor(np.array([coo.row, coo.col]), dtype=torch.int64)
+    values = torch.tensor(coo.data, dtype=torch.bool)
+    size = coo.shape
+    sparse_matrix = torch.sparse_coo_tensor(
+        indices=indices, values=values, size=size
     ).coalesce()
 
     return sparse_matrix
@@ -396,3 +450,105 @@ def load_alignment(input_path):
         input_path = max(pkl_files, key=lambda x: x.stat().st_mtime)
 
     return joblib.load(input_path)
+
+
+def get_connectivity_features(imgs, parcelation_img, masker):
+    """Compute connectivity features for a single subject.
+
+    Parameters
+    ----------
+    imgs : Iterable[Nifti1Image | SurfaceImage]
+        Input subject images.
+    parcelation_img : Nifti1Image | SurfaceImage
+        Labels image for connectivity seeds.
+    masker : NiftiMasker | SurfaceMasker
+        Masker used to transform the data.
+
+    Returns
+    -------
+    Nifti1Image | SurfaceImage
+        Connectivity features image.
+    """
+    if masker.standardize is False:
+        raise ValueError(
+            "Standardization is required for connectivity features."
+        )
+
+    correlation_features_list = []
+    runs_data = masker.transform(imgs)
+    for data in runs_data:
+        labels = apply_mask_fmri(parcelation_img, masker.mask_img_).flatten()
+        averaged_signals = np.stack(
+            [data[:, labels == lbl].mean(axis=1) for lbl in np.unique(labels)],
+            axis=1,
+        )
+
+        # Compute the correlation features (n_targets x n_voxels)
+        correlation_features = (
+            averaged_signals.T @ data / averaged_signals.shape[0]
+        )
+        correlation_features = np.nan_to_num(correlation_features)
+        correlation_features_list.append(correlation_features)
+    return masker.inverse_transform(np.vstack(correlation_features_list))
+
+
+def get_modality_features(imgs, parcellation_img, masker, modality="response"):
+    """Compute alignment features for the given modality.
+
+    Parameters
+    ----------
+    imgs : Iterable[Nifti1Image  |  SurfaceImage]
+        Iterable of images to be aligned.
+    parcelation_img : Nifti1Image | SurfaceImage
+        Labels image for connectivity seeds.
+    masker : NiftiMasker | SurfaceMasker
+        Masker used to transform the data.
+    modality : str, optional
+        modality : str, optional (default='response')
+        Specifies the alignment modality to be used:
+        * 'response': Aligns by directly comparing corresponding similar
+        time points in the source and target images.
+        * 'connectivity': Aligns based on voxel-wise connectivity features
+        within each parcel, comparing how each voxel relates to others in
+        the same region.
+        * 'hybrid': Combines both time series and connectivity information
+        to perform the alignment.
+
+    Returns
+    -------
+    Iterable[Nifti1Image]
+        List of images with additional features for alignment based on the
+        specified modality.
+        If modality is 'response', the original images are returned.
+        If modality is 'connectivity', the connectivity features are returned.
+        If modality is 'hybrid', the original images and connectivity features
+        are concatenated and returned.
+
+    Raises
+    ------
+    ValueError
+        If the modality is not one of 'response', 'connectivity', or 'hybrid'.
+    """
+    if modality == "response":
+        return concat_imgs(imgs)
+
+    elif modality == "connectivity":
+        return get_connectivity_features(imgs, parcellation_img, masker)
+
+    elif modality == "hybrid":
+        hybrid_imgs = []
+        connectivity_imgs = get_connectivity_features(
+            imgs, parcellation_img, masker
+        )
+        if isinstance(imgs[0], SurfaceImage):
+            hybrid_imgs = concatenate_surface_images(
+                [*imgs, connectivity_imgs]
+            )
+        else:
+            hybrid_imgs = concat_imgs([*imgs, connectivity_imgs])
+        return hybrid_imgs
+
+    else:
+        raise ValueError(
+            "mode must be 'response', 'connectivity', or 'hybrid'."
+        )

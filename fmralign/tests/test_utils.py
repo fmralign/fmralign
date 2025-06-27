@@ -9,7 +9,8 @@ from numpy.testing import assert_array_almost_equal, assert_array_equal
 from fmralign._utils import (
     ParceledData,
     _make_parcellation,
-    _sparse_cluster_matrix,
+    _sparse_clusters_parcellation,
+    _sparse_clusters_radius,
     load_alignment,
     save_alignment,
 )
@@ -200,10 +201,10 @@ def test_non_contiguous_labels():
     assert_array_equal(same_parcel, expected)
 
 
-def test_sparse_cluster_matrix():
-    """Test _sparse_cluster_matrix on 2 clusters."""
+def test_sparse_clusters_parcellation():
+    """Test _sparse_clusters_parcellation on 2 clusters."""
     labels = torch.tensor([1, 1, 2, 2, 2])
-    sparse_matrix = _sparse_cluster_matrix(labels)
+    sparse_matrix = _sparse_clusters_parcellation(labels)
 
     expected = torch.tensor(
         [
@@ -219,6 +220,16 @@ def test_sparse_cluster_matrix():
     assert sparse_matrix.shape == (5, 5)
     assert sparse_matrix.dtype == torch.bool
     assert torch.allclose(sparse_matrix.to_dense(), expected)
+
+
+def test_sparse_clusters_radius():
+    _, mask_img = random_niimg((2, 2, 1))
+    out = _sparse_clusters_radius(mask_img, radius=1)
+
+    assert out.shape == (4, 4)
+    assert out.dtype == torch.bool
+    assert torch.allclose(out.to_dense().sum(0), torch.tensor([3, 3, 3, 3]))
+    assert torch.allclose(out.to_dense().sum(1), torch.tensor([3, 3, 3, 3]))
 
 
 def test_saving_and_loading(tmp_path):
