@@ -97,10 +97,10 @@ class SparsePairwiseAlignment(BaseEstimator, TransformerMixin):
 
         X = torch.tensor(
             self.masker.transform(X), device=self.device, dtype=torch.float32
-        )
+        )[None, :]
         Y = torch.tensor(
             self.masker.transform(Y), device=self.device, dtype=torch.float32
-        )
+        )[None, :]
 
         sparsity_mask = _sparse_cluster_matrix(self.labels_)
         if self.alignment_method == "sparse_uot":
