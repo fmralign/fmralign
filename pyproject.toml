@@ -32,7 +32,7 @@ requires-python = ">=3.9"
 
 [project.optional-dependencies]
 # Useful for development
-dev = ["fmralign[jax,doc,test]", "ruff"]
+dev = ["fmralign[doc,test]", "ruff"]
 # For building the documentation
 doc = [
     "coverage",
@@ -47,8 +47,6 @@ doc = [
     "sphinxext-opengraph",
     "furo"
 ]
-# To use JAX-accelerated Optimal Transport
-jax = ["jax", "ott-jax > 0.3.0"]
 # For running unit and docstring tests
 test = ["coverage", "pytest>=6.0.0", "pytest-cov"]
 
