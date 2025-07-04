@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Alignment methods benchmark (pairwise ROI case).
-================================================
+Alignment methods benchmark (template-based ROI case)
+=====================================================
 
 In this tutorial, we compare various methods of alignment on a pairwise alignment
 problem for Individual Brain Charting subjects. For each subject, we have a lot
@@ -53,7 +53,7 @@ plotting.plot_roi(
     resampled_mask_visual,
     title="Visual regions mask extracted from atlas",
     cut_coords=(8, -80, 9),
-    colorbar=True,
+    colorbar=False,
     cmap="Paired",
 )
 
@@ -125,25 +125,22 @@ print(f"We will cluster them in {n_pieces} regions")
 # ---------------------------------------------------
 # On each region, we search for a transformation R that is either :
 #   *  orthogonal, i.e. R orthogonal, scaling sc s.t. ||sc RX - Y ||^2 is minimized
-#   *  a ridge regression : ||XR - Y||^2 + alpha *||R||^2 with a L2 penalization
-#      on the norm of R.
 #   *  the optimal transport plan, which yields the minimal transport cost
 #       while respecting the mass conservation constraints. Calculated with
 #       entropic regularization.
-#   *  we also include identity (no alignment) as a baseline.
-# Then for each method we define the estimator fit it, predict the new image and plot
+# Then for each method we define the estimator, fit it, predict the new image and plot
 # its correlation with the real signal.
 
 from fmralign.metrics import score_voxelwise
-from fmralign.pairwise_alignment import PairwiseAlignment
+from fmralign.template_alignment import TemplateAlignment
 
-methods = ["identity", "scaled_orthogonal", "ridge_cv", "optimal_transport"]
+methods = ["scaled_orthogonal", "optimal_transport"]
 
 for method in methods:
-    alignment_estimator = PairwiseAlignment(
+    alignment_estimator = TemplateAlignment(
         alignment_method=method, n_pieces=n_pieces, masker=roi_masker
     )
-    alignment_estimator.fit(source_train, target_train)
+    alignment_estimator.fit(source_train)
     target_pred = alignment_estimator.transform(source_test)
 
     # derive correlation between prediction, test
@@ -163,8 +160,6 @@ for method in methods:
     )
 
 ###############################################################################
-# We can observe that all alignment methods perform better than identity
-# (no alignment). Ridge is the best performing method, followed by Optimal
-# Transport. If you use Ridge though, be careful about the smooth predictions
-# it yields.
+# We can observe that among the two methods, the optimal transport method
+# yields a better correlation with the target test data.
 #
