@@ -33,8 +33,7 @@ jobs:
       # Step 4: Build Sphinx documentation
       - name: Build Sphinx documentation
         working-directory: doc
-        run: |
-          python -m sphinx -b html . _build/html
+        run: uv run python -m sphinx -b html . _build/html
 
       # Step 5: Upload Sphinx docs as an artifact
       - name: Upload Sphinx docs artifact
