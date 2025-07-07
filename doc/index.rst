@@ -142,7 +142,7 @@ Featured examples
 
    authors.rst
    whats_new.rst
-   GitHub Repository <https://github.com/parietal-INRIA/fmralign>
+   GitHub Repository <https://github.com/fmralign/fmralign>
 
 
 Nilearn is part of the :nipy:`NiPy ecosystem <>`.

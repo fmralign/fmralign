@@ -53,7 +53,7 @@ htmlhelp:
 	      ".hhp project file in $(BUILDDIR)/htmlhelp."
 
 install:
-	git clone --no-checkout --depth 1 https://github.com/Parietal-INRIA/fmralign.github.io.git build/fmralign.github.io
+	git clone --no-checkout --depth 1 https://github.com/fmralign/fmralign.github.io.git build/fmralign.github.io
 	touch build/fmralign.github.io/.nojekyll
 	make html
 	cd build/ && \
