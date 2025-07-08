@@ -7,7 +7,6 @@ from joblib import Memory, Parallel, delayed
 from nibabel.nifti1 import Nifti1Image
 from nilearn._utils.masker_validation import check_embedded_masker
 from nilearn.image import concat_imgs
-from nilearn.maskers._utils import concatenate_surface_images
 from nilearn.surface import SurfaceImage
 from sklearn.base import BaseEstimator, TransformerMixin
 
@@ -61,19 +60,12 @@ class ParcellationMasker(BaseEstimator, TransformerMixin):
         nilearn.regions.parcellations
         If 3D Niimg, image used as predefined clustering,
         n_pieces is then ignored.
-    masker : None or :class:`~nilearn.surface.SurfaceImage`,\
-           or :class:`nilearn.maskers.NiftiMasker`,\
-           :class:`nilearn.maskers.MultiNiftiMasker` or \
-           :class:`nilearn.maskers.SurfaceMasker`, optional
-        Mask/Masker used for masking the data.
-        If mask image if provided, it will be used in the MultiNiftiMasker or
-        SurfaceMasker (depending on the type of mask image).
-        If an instance of either maskers is provided, then this instance
-        parameters will be used in masking the data by overriding the default
-        masker parameters.
-        If None, mask will be automatically computed by a MultiNiftiMasker
-        with default parameters for Nifti images and no mask will be used for
-        SurfaceImage.
+    masker : None or :class:`~nilearn.maskers.NiftiMasker` or \
+            :class:`~nilearn.maskers.MultiNiftiMasker`, or \
+            :class:`~nilearn.maskers.SurfaceMasker` , optional
+        A mask to be used on the data. If provided, the mask
+        will be used to extract the data. If None, a mask will
+        be computed automatically with default parameters.
     mask: Niimg-like object, optional (default = None)
         Mask to be used on data.
     smoothing_fwhm: float, optional (default = None)
@@ -187,10 +179,7 @@ class ParcellationMasker(BaseEstimator, TransformerMixin):
     def _one_parcellation(self, imgs):
         """Compute one parcellation for all images."""
         if isinstance(imgs, list):
-            if isinstance(imgs[0], (Nifti1Image)):
-                imgs = concat_imgs(imgs)
-            else:
-                imgs = concatenate_surface_images(imgs)
+            imgs = concat_imgs(imgs)
         self.labels = _make_parcellation(
             imgs,
             self.clustering,

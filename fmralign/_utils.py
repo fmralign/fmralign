@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+import datetime
 import warnings
 from collections import defaultdict
+from pathlib import Path
 
+import joblib
 import nibabel as nib
 import numpy as np
 import torch
@@ -10,9 +13,6 @@ from nilearn.image import new_img_like, smooth_img
 from nilearn.masking import apply_mask_fmri, intersect_masks
 from nilearn.regions.parcellations import Parcellations
 from nilearn.surface import SurfaceImage
-from pathlib import Path
-import joblib
-import datetime
 from sklearn.exceptions import NotFittedError
 
 
@@ -230,7 +230,7 @@ def _make_parcellation(
         labels = apply_mask_fmri(clustering, masker.mask_img_).astype(int)
 
     elif isinstance(clustering, SurfaceImage):
-        labels = masker.transform(clustering)[0].astype(int)
+        labels = masker.transform(clustering).astype(int)
 
     # otherwise check it's needed, if not return 1 everywhere
     elif n_pieces == 1:
@@ -263,7 +263,7 @@ def _make_parcellation(
             )
             err.args += (errmsg,)
             raise err
-        labels = masker.transform(parcellation.labels_img_)[0].astype(int)
+        labels = masker.transform(parcellation.labels_img_).astype(int)
 
     if verbose > 0:
         unique_labels, counts = np.unique(labels, return_counts=True)

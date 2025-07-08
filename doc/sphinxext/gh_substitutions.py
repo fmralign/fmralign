@@ -30,7 +30,7 @@ def _gh_role(
     else:
         slug = f"issues/{text}"
     text = f"#{text}"
-    ref = f"https://github.com/parietal-INRIA/fmralign/{slug}"
+    ref = f"https://github.com/fmralign/fmralign/{slug}"
     set_classes(options)
     node = reference(rawtext, text, refuri=ref, **options)
     return [node], []

@@ -6,7 +6,7 @@ import torch
 from nibabel.nifti1 import Nifti1Image
 from nilearn.maskers import NiftiMasker
 
-from fmralign.alignment_methods import POTAlignment, SparseUOT
+from fmralign.alignment_methods import SparseUOT
 from fmralign.sparse_template_alignment import (
     SparseTemplateAlignment,
     _align_images_to_template,
@@ -137,7 +137,7 @@ def test_consistency_with_dense_templates():
     dense_algo = TemplateAlignment(
         n_pieces=3,
         masker=masker,
-        alignment_method=POTAlignment(),
+        alignment_method="optimal_transport",
     )
     dense_algo.fit([img1, img2, img3])
 

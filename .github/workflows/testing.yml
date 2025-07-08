@@ -1,4 +1,4 @@
-name: pytest-flake8
+name: Test
 
 on:
     push:
@@ -14,20 +14,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: Install uv and set the python version
+        uses: astral-sh/setup-uv@v6
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -e .[dev]
-      - name: Run Ruff
-        run: ruff check --output-format=github .
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+      - name: Install Venv
+        run: uv venv
+      - name: Install Dependencies
+        run: uv pip install -e ".[dev]"
+      - name: Run Ruff check
+        run: uv run ruff check --output-format=github
       - name: Test with pytest
-        run: |
-          pytest
+        run: uv run pytest

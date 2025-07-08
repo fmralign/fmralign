@@ -95,12 +95,28 @@ class SparsePairwiseAlignment(BaseEstimator, TransformerMixin):
         self.labels_ = self.parcel_masker.labels
         self.n_pieces = self.parcel_masker.n_pieces
 
-        X = torch.tensor(
-            self.masker.transform(X), device=self.device, dtype=torch.float32
-        )
-        Y = torch.tensor(
-            self.masker.transform(Y), device=self.device, dtype=torch.float32
-        )
+        if len(X.shape) == 3:  # handle 3D as a unique case
+            X = torch.tensor(
+                self.masker.transform(X),
+                device=self.device,
+                dtype=torch.float32,
+            )[None, :]
+            Y = torch.tensor(
+                self.masker.transform(Y),
+                device=self.device,
+                dtype=torch.float32,
+            )[None, :]
+        else:
+            X = torch.tensor(
+                self.masker.transform(X),
+                device=self.device,
+                dtype=torch.float32,
+            )
+            Y = torch.tensor(
+                self.masker.transform(Y),
+                device=self.device,
+                dtype=torch.float32,
+            )
 
         sparsity_mask = _sparse_cluster_matrix(self.labels_)
         if self.alignment_method == "sparse_uot":
