@@ -111,14 +111,16 @@ First, we fetch and plot the complete atlas
 
  .. code-block:: none
 
-    [get_dataset_dir] Dataset found in /home/runner/nilearn_data/yeo_2011
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:41: DeprecationWarning: From release >=0.13.0, instead of returning several atlas image accessible via different keys, this fetcher will return the atlas as a dictionary with a single atlas image, accessible through a 'maps' key. To suppress this warning, Please use the parameters 'n_networks' and 'thickness' to specify the exact atlas image you want.
+      atlas_yeo_2011 = datasets.fetch_atlas_yeo_2011()
+    [fetch_atlas_yeo_2011] Dataset found in /home/runner/nilearn_data/yeo_2011
     /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:47: FutureWarning: 'force_resample' will be set to 'True' by default in Nilearn 0.13.0.
     Use 'force_resample=True' to suppress this warning.
       resampled_mask_visual = resample_to_img(
-    /opt/hostedtoolcache/Python/3.11.12/x64/lib/python3.11/site-packages/nilearn/image/resampling.py:805: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
-      return resample_img(
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:47: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
+      resampled_mask_visual = resample_to_img(
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f1782e8f910>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f5cf21897f0>
 
 
 
@@ -214,7 +216,7 @@ but acquired independently.
 Choose the number of regions for local alignment
 ------------------------------------------------
 First, as we will proceed to local alignment we choose a suitable number of
-regions so that each of them is approximately 200 voxels wide. Then our
+regions so that each of them is approximately 100 voxels wide. Then our
 estimator will first make a functional clustering of voxels based on train
 data to divide them into meaningful regions.
 
@@ -227,7 +229,7 @@ data to divide them into meaningful regions.
 
     n_voxels = roi_masker.mask_img_.get_fdata().sum()
     print(f"The chosen region of interest contains {n_voxels} voxels")
-    n_pieces = int(np.round(n_voxels / 200))
+    n_pieces = int(np.round(n_voxels / 100))
     print(f"We will cluster them in {n_pieces} regions")
 
 
@@ -239,7 +241,7 @@ data to divide them into meaningful regions.
  .. code-block:: none
 
     The chosen region of interest contains 6631.0 voxels
-    We will cluster them in 33 regions
+    We will cluster them in 66 regions
 
 
 
@@ -259,7 +261,7 @@ On each region, we search for a transformation R that is either :
 Then for each method we define the estimator fit it, predict the new image and plot
 its correlation with the real signal.
 
-.. GENERATED FROM PYTHON SOURCE LINES 136-165
+.. GENERATED FROM PYTHON SOURCE LINES 136-168
 
 .. code-block:: Python
 
@@ -271,7 +273,10 @@ its correlation with the real signal.
 
     for method in methods:
         alignment_estimator = PairwiseAlignment(
-            alignment_method=method, n_pieces=n_pieces, masker=roi_masker
+            alignment_method=method,
+            clustering="ward",
+            n_pieces=n_pieces,
+            masker=roi_masker,
         )
         alignment_estimator.fit(source_train, target_train)
         target_pred = alignment_estimator.transform(source_test)
@@ -338,19 +343,13 @@ its correlation with the real signal.
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: FutureWarning: The nifti_maps_masker_ attribute is deprecated andwill be removed in Nilearn 0.11.3. Please use maps_masker_ instead.
-      parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:189: UserWarning: 
-     Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
-     parcel 1 : 1725 voxels
-     parcel 15 : 1484 voxels
-     parcel 16 : 1190 voxels
-     parcel 23 : 1048 voxels
-      warnings.warn(warning)
+    [PairwiseAlignment.fit] Resampling mask
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
+      connectivity, n_connected_components = _fix_connectivity(
     /home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
       pearsonr(X_gt[:, vox], X_pred[:, vox])[
-    /opt/hostedtoolcache/Python/3.11.12/x64/lib/python3.11/site-packages/nilearn/plotting/img_plotting.py:1416: UserWarning: Non-finite values detected. These values will be replaced with zeros.
-      safe_get_data(stat_map_img, ensure_finite=True),
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:160: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+      display = plotting.plot_stat_map(
     /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
     Parameter mask_strategy :
         Masker parameter background - overriding estimator parameter epi
@@ -358,19 +357,13 @@ its correlation with the real signal.
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: FutureWarning: The nifti_maps_masker_ attribute is deprecated andwill be removed in Nilearn 0.11.3. Please use maps_masker_ instead.
-      parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:189: UserWarning: 
-     Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
-     parcel 1 : 1725 voxels
-     parcel 15 : 1484 voxels
-     parcel 16 : 1190 voxels
-     parcel 23 : 1048 voxels
-      warnings.warn(warning)
+    [PairwiseAlignment.fit] Resampling mask
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
+      connectivity, n_connected_components = _fix_connectivity(
     /home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
       pearsonr(X_gt[:, vox], X_pred[:, vox])[
-    /opt/hostedtoolcache/Python/3.11.12/x64/lib/python3.11/site-packages/nilearn/plotting/img_plotting.py:1416: UserWarning: Non-finite values detected. These values will be replaced with zeros.
-      safe_get_data(stat_map_img, ensure_finite=True),
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:160: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+      display = plotting.plot_stat_map(
     /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
     Parameter mask_strategy :
         Masker parameter background - overriding estimator parameter epi
@@ -378,19 +371,13 @@ its correlation with the real signal.
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: FutureWarning: The nifti_maps_masker_ attribute is deprecated andwill be removed in Nilearn 0.11.3. Please use maps_masker_ instead.
-      parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:189: UserWarning: 
-     Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
-     parcel 1 : 1725 voxels
-     parcel 15 : 1484 voxels
-     parcel 16 : 1190 voxels
-     parcel 23 : 1048 voxels
-      warnings.warn(warning)
+    [PairwiseAlignment.fit] Resampling mask
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
+      connectivity, n_connected_components = _fix_connectivity(
     /home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
       pearsonr(X_gt[:, vox], X_pred[:, vox])[
-    /opt/hostedtoolcache/Python/3.11.12/x64/lib/python3.11/site-packages/nilearn/plotting/img_plotting.py:1416: UserWarning: Non-finite values detected. These values will be replaced with zeros.
-      safe_get_data(stat_map_img, ensure_finite=True),
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:160: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+      display = plotting.plot_stat_map(
     /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
     Parameter mask_strategy :
         Masker parameter background - overriding estimator parameter epi
@@ -398,24 +385,18 @@ its correlation with the real signal.
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: FutureWarning: The nifti_maps_masker_ attribute is deprecated andwill be removed in Nilearn 0.11.3. Please use maps_masker_ instead.
-      parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:189: UserWarning: 
-     Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
-     parcel 1 : 1725 voxels
-     parcel 15 : 1484 voxels
-     parcel 16 : 1190 voxels
-     parcel 23 : 1048 voxels
-      warnings.warn(warning)
+    [PairwiseAlignment.fit] Resampling mask
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
+      connectivity, n_connected_components = _fix_connectivity(
     /home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
       pearsonr(X_gt[:, vox], X_pred[:, vox])[
-    /opt/hostedtoolcache/Python/3.11.12/x64/lib/python3.11/site-packages/nilearn/plotting/img_plotting.py:1416: UserWarning: Non-finite values detected. These values will be replaced with zeros.
-      safe_get_data(stat_map_img, ensure_finite=True),
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:160: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+      display = plotting.plot_stat_map(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 166-171
+.. GENERATED FROM PYTHON SOURCE LINES 169-174
 
 We can observe that all alignment methods perform better than identity
 (no alignment). Ridge is the best performing method, followed by Optimal
@@ -426,7 +407,7 @@ it yields.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 48.277 seconds)
+   **Total running time of the script:** (0 minutes 49.961 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_methods_benchmark.py:

@@ -231,14 +231,13 @@ idea of alignment is to find a transform, let's call it `R`, between the
 source `X` and the target `Y` that will handle that. Now we will showcase
 on our simple 2D example different kind of transformation we can look for.
 
-.. GENERATED FROM PYTHON SOURCE LINES 174-181
+.. GENERATED FROM PYTHON SOURCE LINES 174-180
 
 .. code-block:: Python
 
 
     from fmralign.alignment_methods import (
         OptimalTransportAlignment,
-        RidgeAlignment,
         ScaledOrthogonalAlignment,
     )
 
@@ -249,7 +248,7 @@ on our simple 2D example different kind of transformation we can look for.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 182-187
+.. GENERATED FROM PYTHON SOURCE LINES 181-186
 
 Orthogonal alignment
 --------------------
@@ -257,7 +256,7 @@ The first idea proposed in Haxby, 2011 was to compute an orthogonal mixing
 matrix `R` and a scaling `sc` such that Frobenius norm: math:
 ` | |sc RX - Y | | ^ 2` is minimized.
 
-.. GENERATED FROM PYTHON SOURCE LINES 187-201
+.. GENERATED FROM PYTHON SOURCE LINES 186-200
 
 .. code-block:: Python
 
@@ -299,56 +298,7 @@ matrix `R` and a scaling `sc` such that Frobenius norm: math:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 202-208
-
-Ridge alignment
----------------
-Another simple idea to regularize the transform `R` searched for is to
-penalize its L2 norm. This is a ridge regression, which means we search `R`
-such that Frobenius  norm :math:`|| XR - Y ||^2 + alpha * ||R||^2`
-is minimized with cross-validation.
-
-.. GENERATED FROM PYTHON SOURCE LINES 208-220
-
-.. code-block:: Python
-
-
-    ridge_alignment = RidgeAlignment(alphas=[0.01, 0.1], cv=2).fit(X.T, Y.T)
-
-    _plot_distributions_and_alignment(
-        X,
-        Y,
-        R=ridge_alignment.R.coef_,
-        title="Ridge between distributions",
-        thr=0.1,
-    )
-    _plot_mixing_matrix(R=ridge_alignment.R.coef_, title="Ridge coefficients")
-
-
-
-
-.. rst-class:: sphx-glr-horizontal
-
-
-    *
-
-      .. image-sg:: /auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_005.png
-         :alt: Ridge between distributions
-         :srcset: /auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_005.png
-         :class: sphx-glr-multi-img
-
-    *
-
-      .. image-sg:: /auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_006.png
-         :alt: Ridge coefficients
-         :srcset: /auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_006.png
-         :class: sphx-glr-multi-img
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 221-230
+.. GENERATED FROM PYTHON SOURCE LINES 201-210
 
 Optimal Transport alignment
 ---------------------------
@@ -360,7 +310,7 @@ optimal coupling between `X` and `Y` with entropic regularization.
 This way of finding a transform uses more geometrical information from the
 distributions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 230-237
+.. GENERATED FROM PYTHON SOURCE LINES 210-217
 
 .. code-block:: Python
 
@@ -379,16 +329,16 @@ distributions.
 
     *
 
-      .. image-sg:: /auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_007.png
+      .. image-sg:: /auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_005.png
          :alt: Optimal Transport
-         :srcset: /auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_007.png
+         :srcset: /auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_005.png
          :class: sphx-glr-multi-img
 
     *
 
-      .. image-sg:: /auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_008.png
+      .. image-sg:: /auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_006.png
          :alt: Optimal Transport coupling
-         :srcset: /auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_008.png
+         :srcset: /auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_006.png
          :class: sphx-glr-multi-img
 
 
@@ -398,7 +348,7 @@ distributions.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.719 seconds)
+   **Total running time of the script:** (0 minutes 0.543 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_simulated_2D_data.py:

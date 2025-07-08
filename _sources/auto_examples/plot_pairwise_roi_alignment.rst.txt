@@ -117,23 +117,25 @@ First, we fetch and plot the complete atlas
 
  .. code-block:: none
 
-    [get_dataset_dir] Dataset created in /home/runner/nilearn_data/yeo_2011
-    [fetch_single_file] Downloading data from 
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:45: DeprecationWarning: From release >=0.13.0, instead of returning several atlas image accessible via different keys, this fetcher will return the atlas as a dictionary with a single atlas image, accessible through a 'maps' key. To suppress this warning, Please use the parameters 'n_networks' and 'thickness' to specify the exact atlas image you want.
+      atlas_yeo_2011 = datasets.fetch_atlas_yeo_2011()
+    [fetch_atlas_yeo_2011] Dataset created in /home/runner/nilearn_data/yeo_2011
+    [fetch_atlas_yeo_2011] Downloading data from 
     ftp://surfer.nmr.mgh.harvard.edu/pub/data/Yeo_JNeurophysiol11_MNI152.zip ...
-    [fetch_single_file]  ...done. (0 seconds, 0 min)
+    [fetch_atlas_yeo_2011]  ...done. (2 seconds, 0 min)
 
-    [uncompress_file] Extracting data from 
+    [fetch_atlas_yeo_2011] Extracting data from 
     /home/runner/nilearn_data/yeo_2011/622858b56913b19ae0865d9fa8ad47cc/Yeo_JNeuroph
     ysiol11_MNI152.zip...
-    [uncompress_file] .. done.
+    [fetch_atlas_yeo_2011] .. done.
 
     /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:52: FutureWarning: 'force_resample' will be set to 'True' by default in Nilearn 0.13.0.
     Use 'force_resample=True' to suppress this warning.
       resampled_mask_visual = resample_to_img(
-    /opt/hostedtoolcache/Python/3.11.12/x64/lib/python3.11/site-packages/nilearn/image/resampling.py:805: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
-      return resample_img(
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:52: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
+      resampled_mask_visual = resample_to_img(
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f17a4764bd0>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f5ccfacf170>
 
 
 
@@ -353,8 +355,10 @@ Finally we plot both scores.
 
  .. code-block:: none
 
-    /opt/hostedtoolcache/Python/3.11.12/x64/lib/python3.11/site-packages/nilearn/plotting/img_plotting.py:1416: UserWarning: Non-finite values detected. These values will be replaced with zeros.
-      safe_get_data(stat_map_img, ensure_finite=True),
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:160: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+      baseline_display = plotting.plot_stat_map(
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:164: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+      display = plotting.plot_stat_map(
 
 
 
@@ -367,7 +371,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 12.590 seconds)
+   **Total running time of the script:** (0 minutes 16.171 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_roi_alignment.py:

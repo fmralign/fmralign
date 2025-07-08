@@ -225,8 +225,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_alignment_methods_benchmark.html">Alignment methods benchmark (pairwise ROI case).</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_int_alignment.html">Co-smoothing prediction using the Individual Neural Tuning Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_toy_int_experiment.html">Individual Neural Tuning Model on simulated data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_surf_alignment.html">Pairwise surface alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_alignment_simulated_2D_data.html">Alignment on simulated 2D data.</a></li>
 </ul>
 </li>
@@ -255,7 +254,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../authors.html">People</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../authors.html#citing-nilearn-and-scikit-learn">Citing Nilearn and scikit-learn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../whats_new.html">What’s new</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/parietal-INRIA/fmralign">GitHub Repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/fmralign/fmralign">GitHub Repository</a></li>
 </ul>
 
 </div>
@@ -313,10 +312,6 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">cdist</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">RidgeCV</span>
-
-<span class="c1"># Fast implementation for parallelized computing</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.hyperalignment.linalg</span><span class="w"> </span><span class="kn">import</span> <span class="n">safe_svd</span><span class="p">,</span> <span class="n">svd_pca</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.hyperalignment.piecewise_alignment</span><span class="w"> </span><span class="kn">import</span> <span class="n">PiecewiseAlignment</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">scaled_procrustes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">primal</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -597,7 +592,9 @@
 
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">POTAlignment</span><span class="p">(</span><span class="n">Alignment</span><span class="p">):</span>
+<div class="viewcode-block" id="OptimalTransportAlignment">
+<a class="viewcode-back" href="../../modules/generated/fmralign.alignment_methods.OptimalTransportAlignment.html#fmralign.alignment_methods.OptimalTransportAlignment">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">OptimalTransportAlignment</span><span class="p">(</span><span class="n">Alignment</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute the optimal coupling between X and Y with entropic regularization,</span>
 <span class="sd">    using the pure Python POT (https://pythonot.github.io/) package.</span>
@@ -620,6 +617,8 @@
 <span class="sd">        Mixing matrix containing the optimal permutation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+<div class="viewcode-block" id="OptimalTransportAlignment.__init__">
+<a class="viewcode-back" href="../../modules/generated/fmralign.alignment_methods.OptimalTransportAlignment.html#fmralign.alignment_methods.OptimalTransportAlignment.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">solver</span><span class="o">=</span><span class="s2">&quot;sinkhorn_epsilon_scaling&quot;</span><span class="p">,</span>
@@ -632,7 +631,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span></div>
+
 
     <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -679,346 +679,8 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform X using optimal coupling computed during fit.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">)</span></div>
 
-
-<div class="viewcode-block" id="OptimalTransportAlignment">
-<a class="viewcode-back" href="../../modules/generated/fmralign.alignment_methods.OptimalTransportAlignment.html#fmralign.alignment_methods.OptimalTransportAlignment">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">OptimalTransportAlignment</span><span class="p">(</span><span class="n">Alignment</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Compute the (unbalanced) optimal coupling between X and Y</span>
-<span class="sd">    with entropic regularization using</span>
-<span class="sd">    OTT-JAX as a backend for acceleration.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    metric : str(optional)</span>
-<span class="sd">        metric used to create transport cost matrix,</span>
-<span class="sd">        see full list in scipy.spatial.distance.cdist doc</span>
-<span class="sd">    reg : int (optional)</span>
-<span class="sd">        level of entropic regularization</span>
-<span class="sd">    tau : float (optional)</span>
-<span class="sd">        level of unbalancing, 1.0 corresponds to balanced transport,</span>
-<span class="sd">        lower values will favor lower mass transport</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    R : jaxlib.xla_extension.Array</span>
-<span class="sd">        Mixing matrix containing the optimal permutation</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="OptimalTransportAlignment.__init__">
-<a class="viewcode-back" href="../../modules/generated/fmralign.alignment_methods.OptimalTransportAlignment.html#fmralign.alignment_methods.OptimalTransportAlignment.__init__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">,</span> <span class="n">reg</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span>
-    <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tau</span> <span class="o">=</span> <span class="n">tau</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span></div>
-
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        X: (n_samples, n_features) nd array</span>
-<span class="sd">            source data</span>
-<span class="sd">        Y: (n_samples, n_features) nd array</span>
-<span class="sd">            target data</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">ott.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">costs</span><span class="p">,</span> <span class="n">geometry</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">ott.problems.linear</span><span class="w"> </span><span class="kn">import</span> <span class="n">linear_problem</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">ott.solvers.linear</span><span class="w"> </span><span class="kn">import</span> <span class="n">sinkhorn</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">:</span>
-            <span class="n">cost_matrix</span> <span class="o">=</span> <span class="n">costs</span><span class="o">.</span><span class="n">Euclidean</span><span class="p">()</span><span class="o">.</span><span class="n">all_pairs</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">Y</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">cost_matrix</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">)</span>
-
-        <span class="n">geom</span> <span class="o">=</span> <span class="n">geometry</span><span class="o">.</span><span class="n">Geometry</span><span class="p">(</span><span class="n">cost_matrix</span><span class="o">=</span><span class="n">cost_matrix</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reg</span><span class="p">)</span>
-        <span class="n">problem</span> <span class="o">=</span> <span class="n">linear_problem</span><span class="o">.</span><span class="n">LinearProblem</span><span class="p">(</span>
-            <span class="n">geom</span><span class="p">,</span> <span class="n">tau_a</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">,</span> <span class="n">tau_b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span>
-        <span class="p">)</span>
-        <span class="n">solver</span> <span class="o">=</span> <span class="n">sinkhorn</span><span class="o">.</span><span class="n">Sinkhorn</span><span class="p">(</span>
-            <span class="n">geom</span><span class="p">,</span> <span class="n">max_iterations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span>
-        <span class="p">)</span>
-        <span class="n">P</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">solver</span><span class="p">)(</span><span class="n">problem</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform X using optimal coupling computed during fit.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">X</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span></div>
-
-
-
-<span class="k">class</span><span class="w"> </span><span class="nc">IndividualizedNeuralTuning</span><span class="p">(</span><span class="n">Alignment</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method of alignment based on the Individualized Neural Tuning model.</span>
-<span class="sd">    It works on 4D fMRI data, and is based on the assumption that the neural</span>
-<span class="sd">    response to a stimulus is shared across subjects. It uses searchlight/</span>
-<span class="sd">    parcelation alignment to denoise the data, and then computes the stimulus</span>
-<span class="sd">    response matrix.</span>
-<span class="sd">    See article : https://doi.org/10.1162/imag_a_00032</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">decomp_method</span><span class="o">=</span><span class="s2">&quot;pca&quot;</span><span class="p">,</span>
-        <span class="n">n_components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">searchlights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">parcels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">dists</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">radius</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-        <span class="n">tuning</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize the IndividualizedNeuralTuning object.</span>
-
-<span class="sd">        Parameters:</span>
-<span class="sd">        ----------</span>
-<span class="sd">        decomp_method : str</span>
-<span class="sd">             The decomposition method to use.</span>
-<span class="sd">             Can be [&quot;pca&quot;, &quot;pcav1&quot;, &quot;procrustes&quot;]</span>
-<span class="sd">             Default is &quot;pca&quot;.</span>
-<span class="sd">        searchlights : array-like</span>
-<span class="sd">            The searchlight indices for each subject,</span>
-<span class="sd">            of shape (n_s, n_searchlights).</span>
-<span class="sd">        parcels : array-like</span>
-<span class="sd">            The parcel indices for each subject,</span>
-<span class="sd">            of shape (n_s, n_parcels) (if not using searchlights)</span>
-<span class="sd">        dists : array-like</span>
-<span class="sd">            The distances of vertices to the center of their searchlight,</span>
-<span class="sd">            of shape (n_searchlights, n_vertices_sl)</span>
-<span class="sd">        radius : int(optional)</span>
-<span class="sd">            The radius of the searchlight sphere, in milimeters.</span>
-<span class="sd">            Defaults to 20.</span>
-<span class="sd">        tuning : bool(optional)</span>
-<span class="sd">            Whether to compute the tuning weights. Defaults to True.</span>
-<span class="sd">        n_components : int</span>
-<span class="sd">             The number of latent dimensions to use in the shared stimulus</span>
-<span class="sd">             information</span>
-<span class="sd">             matrix. Default is None.</span>
-<span class="sd">        n_jobs : int</span>
-<span class="sd">             The number of parallel jobs to run. Default is -1.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">        --------</span>
-<span class="sd">        None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_subjects</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_time_points</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="k">if</span> <span class="n">searchlights</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">parcels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;searchlights or parcels must be provided&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">searchlights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">parcels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;searchlights and parcels cannot be provided at the same time&quot;</span>
-            <span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">searchlights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">regions</span> <span class="o">=</span> <span class="n">searchlights</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">regions</span> <span class="o">=</span> <span class="n">parcels</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">dists</span> <span class="o">=</span> <span class="n">dists</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tuning</span> <span class="o">=</span> <span class="n">tuning</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">tuning_data</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">denoised_signal</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">decomp_method</span> <span class="o">=</span> <span class="n">decomp_method</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
-
-    <span class="c1">################################################################</span>
-    <span class="c1"># Computing decomposition</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_tuning_estimator</span><span class="p">(</span><span class="n">shared_response</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Estimate the tuning matrix for individualized neural tuning.</span>
-
-<span class="sd">        Parameters:</span>
-<span class="sd">        ----------</span>
-<span class="sd">        shared_response : array-like</span>
-<span class="sd">             The shared response matrix of shape (n_timepoints, k)</span>
-<span class="sd">             where k is the dimension of the sources latent space.</span>
-<span class="sd">        target : array-like</span>
-<span class="sd">             The target matrix.</span>
-<span class="sd">        latent_dim : int, optional</span>
-<span class="sd">             The number of latent dimensions (if PCA is used). Defaults to None.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">        --------</span>
-<span class="sd">        array-like: The estimated tuning matrix for the given target.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">shared_response</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">shared_response</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">shared_response</span><span class="p">))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">shared_response</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_stimulus_estimator</span><span class="p">(</span>
-        <span class="n">full_signal</span><span class="p">,</span> <span class="n">n_subjects</span><span class="p">,</span> <span class="n">latent_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Estimates the stimulus matrix for the Individualized Neural Tuning model.</span>
-
-<span class="sd">        Parameters:</span>
-<span class="sd">        -----------</span>
-<span class="sd">        full_signal : ndarray</span>
-<span class="sd">             Concatenated signal for all subjects,</span>
-<span class="sd">             of shape (n_timepoints, n_subjects * n_voxels).</span>
-<span class="sd">        n_subjects : int</span>
-<span class="sd">             The number of subjects.</span>
-<span class="sd">        latent_dim : int, optional</span>
-<span class="sd">             The number of latent dimensions to use. Defaults to None.</span>
-<span class="sd">        scaling : bool, optional</span>
-<span class="sd">             Whether to scale the stimulus matrix sources. Defaults to True.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">        --------</span>
-<span class="sd">        stimulus : ndarray</span>
-<span class="sd">            The stimulus matrix of shape (n_timepoints, n_subjects * n_voxels)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">n_timepoints</span> <span class="o">=</span> <span class="n">full_signal</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">scaling</span><span class="p">:</span>
-            <span class="n">U</span> <span class="o">=</span> <span class="n">svd_pca</span><span class="p">(</span><span class="n">full_signal</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">U</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">safe_svd</span><span class="p">(</span><span class="n">full_signal</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">latent_dim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">latent_dim</span> <span class="o">&lt;</span> <span class="n">n_timepoints</span><span class="p">:</span>
-            <span class="n">U</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="p">:</span><span class="n">latent_dim</span><span class="p">]</span>
-
-        <span class="n">stimulus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n_subjects</span><span class="p">)</span> <span class="o">*</span> <span class="n">U</span>
-        <span class="n">stimulus</span> <span class="o">=</span> <span class="n">stimulus</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">stimulus</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_reconstruct_signal</span><span class="p">(</span><span class="n">shared_response</span><span class="p">,</span> <span class="n">individual_tuning</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Reconstructs the signal using the stimulus as shared</span>
-<span class="sd">        response and individual tuning.</span>
-
-<span class="sd">        Parameters:</span>
-<span class="sd">        --------</span>
-<span class="sd">        shared_response : ndarray</span>
-<span class="sd">             The shared response of shape (n_timeframes, n_timeframes) or</span>
-<span class="sd">             (n_timeframes, latent_dim).</span>
-<span class="sd">        individual_tuning : ndarray</span>
-<span class="sd">             The individual tuning of shape (latent_dim, n_voxels) or</span>
-<span class="sd">             (n_timeframes, n_voxels).</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">        --------</span>
-<span class="sd">        ndarray:</span>
-<span class="sd">            The reconstructed signal of shape (n_timeframes, n_voxels).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">shared_response</span> <span class="o">@</span> <span class="n">individual_tuning</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">X</span><span class="p">,</span>
-        <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Fits the IndividualizedNeuralTuning model to the training data.</span>
-
-<span class="sd">        Parameters:</span>
-<span class="sd">        -----------</span>
-<span class="sd">        X : array-like</span>
-<span class="sd">            The training data of shape (n_subjects, n_samples, n_voxels).</span>
-<span class="sd">        verbose : bool(optional)</span>
-<span class="sd">            Whether to print progress information. Defaults to True.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">        --------</span>
-
-<span class="sd">        self : Instance of IndividualizedNeuralTuning)</span>
-<span class="sd">            The fitted model.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">X_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_subjects</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_time_points</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_voxels</span> <span class="o">=</span> <span class="n">X_</span><span class="o">.</span><span class="n">shape</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">tuning_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_subjects</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">denoised_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_subjects</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-
-        <span class="n">denoiser</span> <span class="o">=</span> <span class="n">PiecewiseAlignment</span><span class="p">(</span>
-            <span class="n">template_kind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">decomp_method</span><span class="p">,</span>
-            <span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
-            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">denoised_signal</span> <span class="o">=</span> <span class="n">denoiser</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
-            <span class="n">X_</span><span class="p">,</span>
-            <span class="n">regions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">regions</span><span class="p">,</span>
-            <span class="n">dists</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dists</span><span class="p">,</span>
-            <span class="n">radius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="c1"># Stimulus matrix computation</span>
-        <span class="n">full_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denoised_signal</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">shared_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stimulus_estimator</span><span class="p">(</span>
-            <span class="n">full_signal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_subjects</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tuning</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tuning_data</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)(</span>
-                <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tuning_estimator</span><span class="p">)(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">shared_response</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">denoised_signal</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
-                <span class="p">)</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_subjects</span><span class="p">)</span>
-            <span class="p">)</span>
-
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Transforms the input test data using the hyperalignment model.</span>
-
-<span class="sd">        Parameters:</span>
-<span class="sd">        ----------</span>
-<span class="sd">        X : array-like</span>
-<span class="sd">            The test data of shape (n_subjects, n_timepoints, n_voxels).</span>
-<span class="sd">        verbose : bool(optional)</span>
-<span class="sd">            Whether to print progress information. Defaults to False.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">        --------</span>
-<span class="sd">        ndarray :</span>
-<span class="sd">            The transformed data of shape (n_subjects, n_timepoints, n_voxels).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">full_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Predict : Computing stimulus matrix...&quot;</span><span class="p">)</span>
-
-        <span class="n">stimulus_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stimulus_estimator</span><span class="p">(</span>
-            <span class="n">full_signal</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_subjects</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span>
-        <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Predict : stimulus matrix shape: &quot;</span><span class="p">,</span> <span class="n">stimulus_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Predict : stimulus matrix shape: &quot;</span><span class="p">,</span> <span class="n">stimulus_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-        <span class="n">reconstructed_signal</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">)(</span>
-            <span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_reconstruct_signal</span><span class="p">)(</span><span class="n">stimulus_</span><span class="p">,</span> <span class="n">T_est</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">T_est</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tuning_data</span>
-        <span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">reconstructed_signal</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">SparseUOT</span><span class="p">(</span><span class="n">Alignment</span><span class="p">):</span>

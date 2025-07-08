@@ -232,8 +232,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_alignment_methods_benchmark.html">Alignment methods benchmark (pairwise ROI case).</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_int_alignment.html">Co-smoothing prediction using the Individual Neural Tuning Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_toy_int_experiment.html">Individual Neural Tuning Model on simulated data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_surf_alignment.html">Pairwise surface alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_alignment_simulated_2D_data.html">Alignment on simulated 2D data.</a></li>
 </ul>
 </li>
@@ -262,7 +261,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../authors.html">People</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../authors.html#citing-nilearn-and-scikit-learn">Citing Nilearn and scikit-learn</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../whats_new.html">What’s new</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/parietal-INRIA/fmralign">GitHub Repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/fmralign/fmralign">GitHub Repository</a></li>
 </ul>
 
 </div>
@@ -327,33 +326,33 @@ signature, and not how to use it. Please refer to the
 <h1><span class="section-number">3.3.5. </span>fmralign.alignment_methods.OptimalTransportAlignment<a class="headerlink" href="#fmralign-alignment-methods-optimaltransportalignment" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="fmralign.alignment_methods.OptimalTransportAlignment">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fmralign.alignment_methods.</span></span><span class="sig-name descname"><span class="pre">OptimalTransportAlignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/nilearn/nilearn/blob/e85d6c3/nilearn/../../../../../../../../../home/runner/work/fmralign/fmralign/fmralign/alignment_methods.py#L369"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../../_modules/fmralign/alignment_methods.html#OptimalTransportAlignment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.alignment_methods.OptimalTransportAlignment" title="Link to this definition">¶</a></dt>
-<dd><p>Compute the (unbalanced) optimal coupling between X and Y
-with entropic regularization using
-OTT-JAX as a backend for acceleration.</p>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fmralign.alignment_methods.</span></span><span class="sig-name descname"><span class="pre">OptimalTransportAlignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sinkhorn_epsilon_scaling'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/nilearn/nilearn/blob/0675e68/nilearn/../../../../../fmralign/alignment_methods.py#L280"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../../_modules/fmralign/alignment_methods.html#OptimalTransportAlignment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.alignment_methods.OptimalTransportAlignment" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the optimal coupling between X and Y with entropic regularization,
+using the pure Python POT (<a class="reference external" href="https://pythonot.github.io/">https://pythonot.github.io/</a>) package.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>metric</strong><span class="classifier">str(optional)</span></dt><dd><p>metric used to create transport cost matrix,
+<dt><strong>solver</strong><span class="classifier">str (optional)</span></dt><dd><p>solver from POT called to find optimal coupling ‘sinkhorn’,
+‘greenkhorn’, ‘sinkhorn_stabilized’,’sinkhorn_epsilon_scaling’, ‘exact’
+see POT/ot/bregman on Github for source code of solvers</p>
+</dd>
+<dt><strong>metric</strong><span class="classifier">str (optional)</span></dt><dd><p>metric used to create transport cost matrix,
 see full list in scipy.spatial.distance.cdist doc</p>
 </dd>
 <dt><strong>reg</strong><span class="classifier">int (optional)</span></dt><dd><p>level of entropic regularization</p>
-</dd>
-<dt><strong>tau</strong><span class="classifier">float (optional)</span></dt><dd><p>level of unbalancing, 1.0 corresponds to balanced transport,
-lower values will favor lower mass transport</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>R</strong><span class="classifier">jaxlib.xla_extension.Array</span></dt><dd><p>Mixing matrix containing the optimal permutation</p>
+<dt><strong>R</strong><span class="classifier">scipy.sparse.csr_matrix</span></dt><dd><p>Mixing matrix containing the optimal permutation</p>
 </dd>
 </dl>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="fmralign.alignment_methods.OptimalTransportAlignment.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/nilearn/nilearn/blob/e85d6c3/nilearn/../../../../../../../../../home/runner/work/fmralign/fmralign/fmralign/alignment_methods.py#L392"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../../_modules/fmralign/alignment_methods.html#OptimalTransportAlignment.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.alignment_methods.OptimalTransportAlignment.__init__" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sinkhorn_epsilon_scaling'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/nilearn/nilearn/blob/0675e68/nilearn/../../../../../fmralign/alignment_methods.py#L303"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../../_modules/fmralign/alignment_methods.html#OptimalTransportAlignment.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.alignment_methods.OptimalTransportAlignment.__init__" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

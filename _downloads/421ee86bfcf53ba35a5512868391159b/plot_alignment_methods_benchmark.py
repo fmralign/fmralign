@@ -109,7 +109,7 @@ target_test = concat_imgs(
 # Choose the number of regions for local alignment
 # ------------------------------------------------
 # First, as we will proceed to local alignment we choose a suitable number of
-# regions so that each of them is approximately 200 voxels wide. Then our
+# regions so that each of them is approximately 100 voxels wide. Then our
 # estimator will first make a functional clustering of voxels based on train
 # data to divide them into meaningful regions.
 
@@ -117,7 +117,7 @@ import numpy as np
 
 n_voxels = roi_masker.mask_img_.get_fdata().sum()
 print(f"The chosen region of interest contains {n_voxels} voxels")
-n_pieces = int(np.round(n_voxels / 200))
+n_pieces = int(np.round(n_voxels / 100))
 print(f"We will cluster them in {n_pieces} regions")
 
 ###############################################################################
@@ -141,7 +141,10 @@ methods = ["identity", "scaled_orthogonal", "ridge_cv", "optimal_transport"]
 
 for method in methods:
     alignment_estimator = PairwiseAlignment(
-        alignment_method=method, n_pieces=n_pieces, masker=roi_masker
+        alignment_method=method,
+        clustering="ward",
+        n_pieces=n_pieces,
+        masker=roi_masker,
     )
     alignment_estimator.fit(source_train, target_train)
     target_pred = alignment_estimator.transform(source_test)

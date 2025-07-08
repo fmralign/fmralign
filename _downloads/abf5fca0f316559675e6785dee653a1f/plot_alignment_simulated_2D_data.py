@@ -174,7 +174,6 @@ _plot_distributions_and_alignment(
 
 from fmralign.alignment_methods import (
     OptimalTransportAlignment,
-    RidgeAlignment,
     ScaledOrthogonalAlignment,
 )
 
@@ -197,25 +196,6 @@ _plot_distributions_and_alignment(
 _plot_mixing_matrix(
     R=scaled_orthogonal_alignment.R.T, title="Orthogonal mixing matrix"
 )
-
-###############################################################################
-# Ridge alignment
-# ---------------
-# Another simple idea to regularize the transform `R` searched for is to
-# penalize its L2 norm. This is a ridge regression, which means we search `R`
-# such that Frobenius  norm :math:`|| XR - Y ||^2 + alpha * ||R||^2`
-# is minimized with cross-validation.
-
-ridge_alignment = RidgeAlignment(alphas=[0.01, 0.1], cv=2).fit(X.T, Y.T)
-
-_plot_distributions_and_alignment(
-    X,
-    Y,
-    R=ridge_alignment.R.coef_,
-    title="Ridge between distributions",
-    thr=0.1,
-)
-_plot_mixing_matrix(R=ridge_alignment.R.coef_, title="Ridge coefficients")
 
 ###############################################################################
 # Optimal Transport alignment
