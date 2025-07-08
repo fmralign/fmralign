@@ -1,9 +1,44 @@
 from sklearn.utils.validation import check_is_fitted
 from sklearn.base import BaseEstimator, TransformerMixin
 
-from fmralign.pairwise import fit_pairwise
-from fmralign.template import fit_template
 from fmralign._utils import _check_labels
+import numpy as np
+from fmralign.template.utils import _rescaled_euclidean_mean
+
+
+def fit_to_target(X, target_data, method, labels, n_jobs, verbose):
+    n_labels = len(np.unique(labels))
+    if n_labels == 1:
+        # If only one label, use the whole brain method
+        fitted_estimators = ...
+    else:
+        fitted_estimators = ...
+    return fitted_estimators
+
+
+def fit_template(
+    X, method, labels, n_jobs, verbose, n_iter=2, scale_template=False
+):
+    # Template is initialized as the mean of all subjects
+    aligned_data = X
+    # Fit template alignment
+    for _ in range(n_iter):
+        template = _rescaled_euclidean_mean(aligned_data, scale_template)
+        fit_ = fit_to_target(
+            X,
+            template,
+            method,
+            labels,
+            n_jobs,
+            verbose,
+        )
+        aligned_data = [fit_[i].transform(X[i]) for i in range(len(X))]
+    return fit_, template
+
+
+def fit_pairwise(X, target, method, labels, n_jobs, verbose):
+    target_data = X[target]
+    return fit_to_target(X, target_data, method, labels, n_jobs, verbose)
 
 
 class Alignment(BaseEstimator, TransformerMixin):
@@ -14,34 +49,42 @@ class Alignment(BaseEstimator, TransformerMixin):
         labels=None,
         n_jobs=1,
         verbose=0,
+        n_iter=2,
+        scale_template=False,
     ):
         self.method = method
         self.target = target
         self.labels = labels
         self.n_jobs = n_jobs
         self.verbose = verbose
+        self.n_iter = n_iter
+        self.template = None
 
     def fit(self, X, y=None) -> None:
         self.labels_ = _check_labels(X[0], self.labels, verbose=self.verbose)
 
-        if self.target is None:
-            # Do template alignment
+        if self.target is None:  # Template alignment
             self.fit_, self.template = fit_template(
                 X,
                 self.method,
                 self.labels_,
+                self.n_iter,
                 self.n_jobs,
-                max(self.verbose - 1, 0),
+                self.verbose,
             )
-        elif isinstance(self.target, int):
-            # Do pairwise alignment with a specific subject
+        elif isinstance(self.target, int):  # Pairwise alignment
             self.fit_ = fit_pairwise(
                 X,
                 self.target,
                 self.method,
                 self.labels_,
                 self.n_jobs,
-                max(self.verbose - 1, 0),
+                self.verbose,
+            )
+        else:
+            raise ValueError(
+                "Target must be an integer index of the subject "
+                "or None for template alignment."
             )
 
     def _transform_one_array(self, X, method):
