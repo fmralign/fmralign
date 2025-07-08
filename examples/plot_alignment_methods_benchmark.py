@@ -163,3 +163,111 @@ for method in methods:
 # We can observe that among the two methods, the optimal transport method
 # yields a better correlation with the target test data.
 #
+# Compare to SRM method
+# ------------------------
+# We now compare the results of the template-based alignment methods to the
+# Shared Response Model (SRM) method.
+
+# **Note:** SRM needs multiple source subjects to better estimate the shared
+# response.
+
+sub_ids = ["sub-01", "sub-02", "sub-04", "sub-05"]
+files, df, mask = fetch_ibc_subjects_contrasts(sub_ids)
+
+# We will use subject 04 as the target subject, and the rest of the subjects as
+# source subjects. We will use the *AP* acquisition for training and the *PA*
+# acquisition for testing.
+
+source_train = []
+for sub in sub_ids:
+    if sub not in ["sub-04"]:
+        source_train.append(
+            concat_imgs(
+                df[df.subject == sub][df.acquisition == "ap"].path.values
+            )
+        )
+target_train = concat_imgs(
+    df[df.subject == "sub-04"][df.acquisition == "ap"].path.values
+)
+
+source_test = []
+for sub in sub_ids:
+    if sub not in ["sub-04"]:
+        source_test.append(
+            concat_imgs(
+                df[df.subject == sub][df.acquisition == "pa"].path.values
+            )
+        )
+target_test = concat_imgs(
+    df[df.subject == "sub-04"][df.acquisition == "pa"].path.values
+)
+
+###############################################################################
+# Choose the number of regions for local alignment
+# ------------------------------------------------
+# We'll again divide the ROI into parcels of ~200 voxels each. Then our
+# estimator will first make a functional clustering of voxels based on train
+# data to divide them into meaningful regions.
+
+n_voxels = roi_masker.mask_img_.get_fdata().sum()
+print(f"The chosen region of interest contains {n_voxels} voxels")
+n_pieces = int(np.round(n_voxels / 200))
+print(f"We will cluster them in {n_pieces} regions")
+
+###############################################################################
+# Initialize the IdentifiableFastSRM model, This version of SRM ensures that
+# the solution is unique.
+
+import numpy as np
+from fastsrm.identifiable_srm import IdentifiableFastSRM
+
+from fmralign.srm import PiecewiseModel
+
+srm = IdentifiableFastSRM(
+    n_components=30,
+    n_iter=10,
+)
+piecewise_srm = PiecewiseModel(
+    srm=srm,
+    n_pieces=n_pieces,
+    clustering="ward",
+    masker=roi_masker,
+)
+
+# Step 1: Fit SRM on training data from source subjects
+shared_response = srm.fit_transform(
+    [roi_masker.transform(s).T for s in source_train]
+)
+
+# Step 2: Freeze the SRM model and add target subject data. This projects the
+# target subject data into the shared response space.
+srm.aggregate = None
+srm.add_subjects([roi_masker.transform(target_train).T], shared_response)
+
+# Step 3: Use SRM to transform new test data from the target subject
+aligned_test = srm.transform([roi_masker.transform(target_test).T])
+aligned_pred = roi_masker.inverse_transform(
+    srm.inverse_transform(aligned_test[0])[0].T
+)
+
+# Step 4: Evaluate voxelwise correlation between predicted and true test
+# signals.
+srm_error = score_voxelwise(
+    target_test, aligned_pred, masker=roi_masker, loss="corr"
+)
+srm_score = roi_masker.inverse_transform(srm_error)
+title = "Correlation of prediction after SRM alignment"
+display = plotting.plot_stat_map(
+    srm_score,
+    display_mode="z",
+    cut_coords=[-15, -5],
+    vmax=1,
+    title=title,
+)
+###############################################################################
+# Summary:
+# --------
+# We compared TemplateAlignment methods (scaled orthogonal, optimal transport)
+# with SRM-based alignment on visual cortex activity. While TemplateAlignment
+# operates pairwise, SRM uses group information to find a shared representational
+# space. SRM may generalize better when multiple subjects are available.
