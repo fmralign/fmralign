@@ -8,7 +8,7 @@ from nilearn.image import new_img_like
 from nilearn.maskers import NiftiMasker
 from nilearn.surface import SurfaceImage
 
-from fmralign.pairwise_alignment import PairwiseAlignment
+from fmralign.pairwise.pairwise_alignment import PairwiseAlignment
 from fmralign.tests.utils import (
     assert_algo_transform_almost_exactly,
     random_niimg,

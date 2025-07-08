@@ -5,7 +5,7 @@ from nibabel.nifti1 import Nifti1Image
 from nilearn.maskers import NiftiMasker
 
 from fmralign._utils import ParceledData
-from fmralign.preprocessing import ParcellationMasker
+from fmralign.embeddings.preprocessing import ParcellationMasker
 from fmralign.tests.utils import random_niimg, surf_img
 
 

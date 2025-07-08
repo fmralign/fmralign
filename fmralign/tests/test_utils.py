@@ -14,7 +14,7 @@ from fmralign._utils import (
     save_alignment,
 )
 from fmralign.tests.utils import random_niimg, sample_parceled_data
-from fmralign.pairwise_alignment import PairwiseAlignment
+from fmralign.pairwise.pairwise_alignment import PairwiseAlignment
 from sklearn.exceptions import NotFittedError
 
 

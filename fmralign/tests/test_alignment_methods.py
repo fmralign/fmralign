@@ -6,7 +6,7 @@ from numpy.testing import assert_array_almost_equal
 from scipy.linalg import orthogonal_procrustes
 from scipy.sparse import csc_matrix
 
-from fmralign.alignment_methods import (
+from fmralign.methods.alignment_methods import (
     DiagonalAlignment,
     Identity,
     OptimalTransportAlignment,

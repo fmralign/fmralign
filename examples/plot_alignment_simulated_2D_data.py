@@ -172,7 +172,7 @@ _plot_distributions_and_alignment(
 # source `X` and the target `Y` that will handle that. Now we will showcase
 # on our simple 2D example different kind of transformation we can look for.
 
-from fmralign.alignment_methods import (
+from fmralign.methods.alignment_methods import (
     OptimalTransportAlignment,
     ScaledOrthogonalAlignment,
 )

@@ -4,7 +4,7 @@ from fastsrm.identifiable_srm import IdentifiableFastSRM
 from nilearn.maskers import NiftiMasker
 from sklearn.base import clone
 
-from fmralign.srm import Identity, PiecewiseModel
+from fmralign.methods.srm import Identity, PiecewiseModel
 
 
 def to_niimgs(X, dim):

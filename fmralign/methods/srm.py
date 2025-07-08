@@ -9,7 +9,7 @@ import numpy as np
 from joblib import Parallel, delayed
 from sklearn.base import BaseEstimator, TransformerMixin, clone
 
-from fmralign.preprocessing import ParcellationMasker
+from fmralign.embeddings.preprocessing import ParcellationMasker
 
 
 class Identity(BaseEstimator, TransformerMixin):

@@ -166,17 +166,21 @@ def piecewise_transform(parceled_data, estimators):
     return parceled_data
 
 
-def _remove_empty_labels(labels):
-    """Remove empty values label values from labels list."""
-    vals = np.unique(labels)
-    inverse_vals = -np.ones(labels.max() + 1).astype(int)
-    inverse_vals[vals] = np.arange(len(vals))
-    return inverse_vals[labels]
-
-
-def _check_labels(labels, threshold=1000):
+def _check_labels(X, labels, threshold=1000, verbose=0):
     """Check if any parcels are bigger than set threshold."""
+    if isinstance(labels, np.ndarray):
+        # If labels are provided as a numpy array, check their validity
+        if len(labels) != X.shape[1]:
+            raise ValueError(
+                "The length of labels must match the number of features in the data."
+            )
+        if labels.ndim != 1:
+            raise ValueError("Labels must be a 1D array.")
+
     unique_labels, counts = np.unique(labels, return_counts=True)
+
+    if verbose > 0:
+        print(f"The alignment will be applied on parcels of sizes {counts}")
 
     if not all(count < threshold for count in counts):
         warning = (
@@ -187,7 +191,13 @@ def _check_labels(labels, threshold=1000):
             if counts[i] > threshold:
                 warning += f"\n parcel {unique_labels[i]} : {counts[i]} voxels"
         warnings.warn(warning)
-    pass
+
+    # If labels are not integer type, convert them to int
+    if not np.issubdtype(labels.dtype, np.integer):
+        labels = labels.astype(int)
+        warnings.warn("Labels were not integer type, converted to int.")
+
+    return labels
 
 
 def _make_parcellation(

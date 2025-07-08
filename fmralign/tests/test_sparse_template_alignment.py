@@ -6,14 +6,14 @@ import torch
 from nibabel.nifti1 import Nifti1Image
 from nilearn.maskers import NiftiMasker
 
-from fmralign.alignment_methods import SparseUOT
-from fmralign.sparse_template_alignment import (
+from fmralign.methods.alignment_methods import SparseUOT
+from fmralign.template.sparse_template_alignment import (
     SparseTemplateAlignment,
     _align_images_to_template,
     _fit_sparse_template,
     _rescaled_euclidean_mean_torch,
 )
-from fmralign.template_alignment import TemplateAlignment
+from fmralign.template.template_alignment import TemplateAlignment
 from fmralign.tests.utils import random_niimg, sample_subjects_data
 
 devices = [torch.device("cpu")]

@@ -7,8 +7,8 @@ from nilearn.surface import SurfaceImage
 from numpy.testing import assert_array_almost_equal
 
 from fmralign._utils import ParceledData
-from fmralign.preprocessing import ParcellationMasker
-from fmralign.template_alignment import (
+from fmralign.embeddings.preprocessing import ParcellationMasker
+from fmralign.template.template_alignment import (
     TemplateAlignment,
     _align_images_to_template,
     _fit_local_template,

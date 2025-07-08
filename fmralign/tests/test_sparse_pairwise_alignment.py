@@ -4,7 +4,7 @@ import torch
 from nibabel.nifti1 import Nifti1Image
 from nilearn.surface import SurfaceImage
 
-from fmralign.sparse_pairwise_alignment import SparsePairwiseAlignment
+from fmralign.pairwise.sparse_pairwise_alignment import SparsePairwiseAlignment
 from fmralign.tests.utils import (
     random_niimg,
     surf_img,
