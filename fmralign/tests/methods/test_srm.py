@@ -1,31 +1,9 @@
 import numpy as np
 import pytest
 from fastsrm.identifiable_srm import IdentifiableFastSRM
-from nilearn.maskers import NiftiMasker
 from sklearn.base import clone
 
 from fmralign.methods.srm import Identity, PiecewiseModel
-
-
-def to_niimgs(X, dim):
-    import nibabel
-    from nilearn.masking import unmask_from_to_3d_array
-
-    p = np.prod(dim)
-    assert len(dim) == 3
-    assert X.shape[-1] <= p
-    mask = np.zeros(p).astype(bool)
-    mask[: X.shape[-1]] = 1
-    assert mask.sum() == X.shape[1]
-    mask = mask.reshape(dim)
-    X = np.rollaxis(
-        np.array([unmask_from_to_3d_array(x, mask) for x in X]), 0, start=4
-    )
-    affine = np.eye(4)
-    return (
-        nibabel.Nifti1Image(X, affine),
-        nibabel.Nifti1Image(mask.astype(float), affine),
-    )
 
 
 n_pieces = 1
@@ -37,20 +15,12 @@ n_voxels = 8
 
 grid_l = int(pow(n_voxels, 1.0 / 3.0))
 
-_, mask = to_niimgs(
-    np.random.rand(n_timeframes_align, n_voxels), (grid_l, grid_l, grid_l)
-)
-masker = NiftiMasker(mask_img=mask).fit()
 
 train_data, test_data = {}, {}
 for i in range(n_subjects):
-    train_data[i] = masker.inverse_transform(
-        np.random.rand(n_timeframes_align, 8)
-    )
-    test_data[i] = masker.inverse_transform(
-        np.random.rand(n_timeframes_test, 8)
-    )
-masker = NiftiMasker(mask_img=mask).fit()
+    train_data[i] = np.random.rand(n_timeframes_align, 8)
+
+    test_data[i] = np.random.rand(n_timeframes_test, 8)
 
 n_components = 3
 
@@ -85,9 +55,7 @@ def test_output_no_clustering(algo):
         )
     psrm.fit(list(train_data.values())[:-1])
 
-    srm_SR = algo.fit_transform(
-        [masker.transform(x).T for x in list(train_data.values())[:-1]]
-    )
+    srm_SR = algo.fit_transform([x.T for x in list(train_data.values())[:-1]])
     if len(srm_SR) == (n_subjects - 1):
         srm_SR = np.mean(srm_SR, axis=0)
 
@@ -97,9 +65,7 @@ def test_output_no_clustering(algo):
     assert len(psrm.fit_) == n_pieces
     np.testing.assert_almost_equal(psrm.reduced_sr[0], srm_SR)
 
-    algo.add_subjects(
-        [masker.transform(list(train_data.values())[-1]).T], srm_SR
-    )
+    algo.add_subjects([list(train_data.values())[-1].T], srm_SR)
     psrm.add_subjects([list(train_data.values())[-1]])
 
     np.testing.assert_almost_equal(psrm.reduced_sr[0], srm_SR)
@@ -108,26 +74,20 @@ def test_output_no_clustering(algo):
     aligned_test = psrm.transform(test_data.values())
     if hasattr(algo, "aggregate"):
         algo.aggregate = None
-    srm_aligned_test = algo.transform(
-        [masker.transform(y).T for y in list(test_data.values())]
-    )
+    srm_aligned_test = algo.transform([y.T for y in list(test_data.values())])
     assert np.shape(aligned_test) == (n_subjects, n_comp, n_timeframes_test)
     np.testing.assert_almost_equal(aligned_test, srm_aligned_test)
 
 
 def test_identity():
     id = Identity()
-    id_SR = id.fit_transform(
-        [masker.transform(x).T for x in list(train_data.values())[:-1]]
-    )
-    id.add_subjects([masker.transform(list(train_data.values())[-1]).T], id_SR)
-    _ = id.transform([masker.transform(y).T for y in list(test_data.values())])
+    id_SR = id.fit_transform([x.T for x in list(train_data.values())[:-1]])
+    id.add_subjects([list(train_data.values())[-1].T], id_SR)
+    _ = id.transform([y.T for y in list(test_data.values())])
     # Check identity SRM just returns the data
     np.testing.assert_almost_equal(
         id_SR.shape,
-        np.asarray(
-            [masker.transform(x).T for x in list(train_data.values())[:-1]]
-        ).shape,
+        np.asarray([x.T for x in list(train_data.values())[:-1]]).shape,
     )
 
 
@@ -154,7 +114,7 @@ def test_algo_each_piece(algo):
     S1 = np.array(
         [
             clone(algo).fit_transform(
-                [masker.transform(x).T[cluster == i] for x in [X1, X2, X3, X4]]
+                [x.T[cluster == i] for x in [X1, X2, X3, X4]]
             )
             for i in [1, 2]
         ]
@@ -173,12 +133,10 @@ n_components = 4
 def test_wrongshape(algo):
     # Test that doing stuff piecewise give the same
     # result as doing it separately
-    X = np.random.rand(10, 64)
-    X1, mask = to_niimgs(X, (4, 4, 4))
-    masker = NiftiMasker(mask_img=mask).fit()
-    X2 = masker.inverse_transform(np.random.rand(10, 64))
-    X3 = masker.inverse_transform(np.random.rand(10, 64))
-    X4 = masker.inverse_transform(np.random.rand(10, 64))
+    X1 = np.random.rand(10, 64)
+    X2 = np.random.rand(10, 64)
+    X3 = np.random.rand(10, 64)
+    X4 = np.random.rand(10, 64)
 
     cluster = np.array([1] * 8 + [2] * 56)
     niimg_cluster = masker.inverse_transform(cluster)
@@ -192,10 +150,7 @@ def test_wrongshape(algo):
         S1 = np.array(
             [
                 clone(algo).fit_transform(
-                    [
-                        masker.transform(x).T[cluster == i]
-                        for x in [X1, X2, X3, X4]
-                    ]
+                    [x.T[cluster == i] for x in [X1, X2, X3, X4]]
                 )
                 for i in [1, 2]
             ]

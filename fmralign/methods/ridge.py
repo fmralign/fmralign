@@ -1,8 +1,8 @@
 from sklearn.linear_model import RidgeCV
-from fmralign.methods.utils import BaseMethod
+from fmralign.methods.base import BaseAlignment
 
 
-class RidgeAlignment(BaseMethod):
+class RidgeAlignment(BaseAlignment):
     """
     Compute a scikit-estimator R using a mixing matrix M s.t Frobenius
     norm || XM - Y ||^2 + alpha * ||M||^2 is minimized with cross-validation

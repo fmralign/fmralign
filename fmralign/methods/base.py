@@ -1,7 +1,7 @@
 from sklearn.base import BaseEstimator, TransformerMixin
 
 
-class BaseMethod(BaseEstimator, TransformerMixin):
+class BaseAlignment(BaseEstimator, TransformerMixin):
     def __init__(self):
         pass
 

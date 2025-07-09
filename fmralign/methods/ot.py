@@ -10,10 +10,10 @@ from fugw.solvers.utils import (
 )
 from fugw.utils import _low_rank_squared_l2, _make_csr_matrix
 from scipy.spatial.distance import cdist
-from fmralign.methods.utils import BaseMethod
+from fmralign.methods.base import BaseAlignment
 
 
-class OptimalTransportAlignment(BaseMethod):
+class OptimalTransportAlignment(BaseAlignment):
     """
     Compute the optimal coupling between X and Y with entropic regularization,
     using the pure Python POT (https://pythonot.github.io/) package.
@@ -98,7 +98,7 @@ class OptimalTransportAlignment(BaseMethod):
         return X.dot(self.R)
 
 
-class SparseUOT(BaseMethod):
+class SparseUOT(BaseAlignment):
     """
     Compute the unbalanced regularized optimal coupling between X and Y,
     with sparsity constraints inspired by the FUGW package sparse

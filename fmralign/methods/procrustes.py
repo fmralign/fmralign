@@ -1,6 +1,6 @@
 import numpy as np
 from scipy import linalg
-from fmralign.methods.utils import BaseMethod
+from fmralign.methods.base import BaseAlignment
 
 
 def scaled_procrustes(X, Y, scaling=False, primal=None):
@@ -57,7 +57,7 @@ def scaled_procrustes(X, Y, scaling=False, primal=None):
     return R.T, sc
 
 
-class ScaledOrthogonalAlignment(BaseMethod):
+class ScaledOrthogonalAlignment(BaseAlignment):
     """
     Compute a orthogonal mixing matrix R and a scaling sc.
     These are calculated such that Frobenius norm ||sc RX - Y||^2 is minimized.

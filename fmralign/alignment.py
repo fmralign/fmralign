@@ -8,11 +8,16 @@ from fmralign.template.utils import _rescaled_euclidean_mean
 
 def fit_to_target(X, target_data, method, labels, n_jobs, verbose):
     n_labels = len(np.unique(labels))
-    if n_labels == 1:
-        # If only one label, use the whole brain method
-        fitted_estimators = ...
-    else:
-        fitted_estimators = ...
+    fitted_estimators = []
+    for sub in X:
+        if n_labels == 1:
+            # If only one label, use the whole brain method
+            fitted_estimator = ...
+            fitted_estimators.append(fitted_estimator)
+        else:
+            # Patch the parcels estimators in a big whole brain estimator
+            fitted_estimator = ...
+            fitted_estimators.append(fitted_estimator)
     return fitted_estimators
 
 
@@ -37,8 +42,7 @@ def fit_template(
 
 
 def fit_pairwise(X, target, method, labels, n_jobs, verbose):
-    target_data = X[target]
-    return fit_to_target(X, target_data, method, labels, n_jobs, verbose)
+    return fit_to_target(X, target, method, labels, n_jobs, verbose)
 
 
 class Alignment(BaseEstimator, TransformerMixin):
@@ -72,7 +76,7 @@ class Alignment(BaseEstimator, TransformerMixin):
                 self.n_jobs,
                 self.verbose,
             )
-        elif isinstance(self.target, int):  # Pairwise alignment
+        elif isinstance(self.target, np.ndarray):  # Pairwise alignment
             self.fit_ = fit_pairwise(
                 X,
                 self.target,
