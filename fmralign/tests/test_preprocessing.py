@@ -13,7 +13,7 @@ def test_init_default_params():
     """Test that ParcellationMasker initializes with default parameters"""
     parcel_masker = ParcellationMasker()
     assert parcel_masker.n_pieces == 1
-    assert parcel_masker.clustering == "kmeans"
+    assert parcel_masker.clustering == "ward"
     assert parcel_masker.mask is None
     assert parcel_masker.smoothing_fwhm is None
     assert parcel_masker.standardize is False
@@ -24,10 +24,14 @@ def test_init_default_params():
 def test_init_custom_params():
     """Test that ParcellationMasker initializes with custom parameters"""
     parcel_masker = ParcellationMasker(
-        n_pieces=2, clustering="ward", standardize=True, detrend=True, n_jobs=2
+        n_pieces=2,
+        clustering="kmeans",
+        standardize=True,
+        detrend=True,
+        n_jobs=2,
     )
     assert parcel_masker.n_pieces == 2
-    assert parcel_masker.clustering == "ward"
+    assert parcel_masker.clustering == "kmeans"
     assert parcel_masker.standardize is True
     assert parcel_masker.detrend is True
     assert parcel_masker.n_jobs == 2

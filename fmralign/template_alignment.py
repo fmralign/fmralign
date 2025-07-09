@@ -211,7 +211,7 @@ class TemplateAlignment(BaseEstimator, TransformerMixin):
         self,
         alignment_method="identity",
         n_pieces=1,
-        clustering="kmeans",
+        clustering="ward",
         scale_template=False,
         n_iter=2,
         save_template=None,

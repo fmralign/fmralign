@@ -111,7 +111,7 @@ class ParcellationMasker(BaseEstimator, TransformerMixin):
     def __init__(
         self,
         n_pieces=1,
-        clustering="kmeans",
+        clustering="ward",
         masker=None,
         mask=None,
         smoothing_fwhm=None,

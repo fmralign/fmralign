@@ -98,7 +98,7 @@ class PiecewiseModel(BaseEstimator, TransformerMixin):
         self,
         srm,
         n_pieces=1,
-        clustering="kmeans",
+        clustering="ward",
         masker=None,
         n_jobs=1,
         verbose=0,

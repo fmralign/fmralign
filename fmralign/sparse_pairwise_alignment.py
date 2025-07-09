@@ -17,7 +17,7 @@ class SparsePairwiseAlignment(BaseEstimator, TransformerMixin):
         self,
         alignment_method="sparse_uot",
         n_pieces=1,
-        clustering="kmeans",
+        clustering="ward",
         masker=None,
         device="cpu",
         n_jobs=1,

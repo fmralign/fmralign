@@ -140,7 +140,7 @@ class SparseTemplateAlignment(BaseEstimator, TransformerMixin):
         self,
         alignment_method="sparse_uot",
         n_pieces=1,
-        clustering="kmeans",
+        clustering="ward",
         scale_template=False,
         n_iter=2,
         save_template=None,

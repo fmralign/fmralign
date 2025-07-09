@@ -85,7 +85,7 @@ class PairwiseAlignment(BaseEstimator, TransformerMixin):
         self,
         alignment_method="identity",
         n_pieces=1,
-        clustering="kmeans",
+        clustering="ward",
         masker=None,
         n_jobs=1,
         verbose=0,
