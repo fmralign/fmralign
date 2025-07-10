@@ -7,6 +7,31 @@ from fmralign.template.utils import _rescaled_euclidean_mean
 
 
 def fit_to_target(X, target_data, method, labels, n_jobs, verbose):
+    """Fit each subject's data to a target using the specified method.
+
+    Parameters
+    ----------
+    X : list of ndarray
+        List of subject data arrays, where each array is of shape (n_samples, n_features).
+    target_data : ndarray
+        The target data array to which each subject's data will be fitted.
+    method : str or an instance of any class derived from `BaseAlignment`
+        Algorithm used to perform alignment between sources and target.
+    labels : np.ndarray or list of int
+        Labels for the parcellation of the data. If only one label is present,
+        the whole brain method is used.
+        If multiple labels are present, the method will patch the parcels estimators
+        in a big whole brain estimator.
+    n_jobs : int
+        Number of jobs to run in parallel. If -1, all CPUs are used.
+        If 1, no parallel computing code is used at all.
+    verbose : int
+        Verbosity level.
+
+    Returns
+    -------
+    list of fitted estimators
+    """
     n_labels = len(np.unique(labels))
     fitted_estimators = []
     for sub in X:
@@ -113,7 +138,7 @@ class Alignment(BaseEstimator, TransformerMixin):
         Will raise AttributeError if called.
         """
         raise AttributeError(
-            "type object 'PairwiseAlignment' has no attribute 'fit_transform'"
+            "type object 'PairwiseAlignment' has no 'fit_transform' method"
         )
 
     def get_parcellation(self):
