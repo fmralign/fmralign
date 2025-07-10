@@ -27,8 +27,8 @@ a terminal, or use ``jupyter-notebook``.
 
 from fmralign.fetch_example_data import fetch_ibc_subjects_contrasts
 
-files, df, mask = fetch_ibc_subjects_contrasts(["sub-01", "sub-02"])
-
+sub_ids = ["sub-01", "sub-02", "sub-04"]
+files, df, mask = fetch_ibc_subjects_contrasts(sub_ids)
 
 ###############################################################################
 # Extract a mask for the visual cortex from Yeo Atlas
@@ -75,41 +75,25 @@ roi_masker = NiftiMasker(mask_img=resampled_mask_visual).fit()
 # independent acquisitions, similar except for one acquisition parameter, the
 # encoding phase used that was either Antero-Posterior (AP) or
 # Postero-Anterior (PA). Although this induces small differences
-# in the final data, we will take  advantage of these pseudo-duplicates to
-# create a training and a testing set that contains roughly the same signals
-# but acquired independently.
+# in the final data, we will take  advantage of these pseudo-duplicates later.
 
-# The training set, used to learn alignment from source subject toward target:
-# * source train: AP contrasts for subject sub-01
-# * target train: AP contrasts for subject sub-02
-#
+# Let's organize our data into training and testing sets:
+# * Training set: Files from the first two subjects (sub-01, sub-02) with both
+#   AP and PA acquisitions. These will serve as our source subjects for
+#   alignment.
+# * Testing set: Files from the third subject (sub-04) with both AP and PA
+#   acquisitions, which will be our target subject for evaluating alignment
+#   quality.
 
-source_train = concat_imgs(
-    df[df.subject == "sub-01"][df.acquisition == "ap"].path.values
-)
-target_train = concat_imgs(
-    df[df.subject == "sub-02"][df.acquisition == "ap"].path.values
-)
-
-# The testing set:
-# * source test: PA contrasts for subject one, used to predict
-#   the corresponding contrasts of subject sub-01
-# * target test: PA contrasts for subject sub-02, used as a ground truth
-#   to score our predictions
-#
-
-source_test = concat_imgs(
-    df[df.subject == "sub-01"][df.acquisition == "pa"].path.values
-)
-target_test = concat_imgs(
-    df[df.subject == "sub-02"][df.acquisition == "pa"].path.values
-)
+# Split data into source and target subjects
+source_train = [concat_imgs(files[i]) for i in range(2)]  # sub-01 and sub-02
+target = concat_imgs(files[2])  # sub-04
 
 ###############################################################################
 # Choose the number of regions for local alignment
 # ------------------------------------------------
 # First, as we will proceed to local alignment we choose a suitable number of
-# regions so that each of them is approximately 200 voxels wide. Then our
+# regions so that each of them is approximately 100 voxels wide. Then our
 # estimator will first make a functional clustering of voxels based on train
 # data to divide them into meaningful regions.
 
@@ -117,7 +101,7 @@ import numpy as np
 
 n_voxels = roi_masker.mask_img_.get_fdata().sum()
 print(f"The chosen region of interest contains {n_voxels} voxels")
-n_pieces = int(np.round(n_voxels / 200))
+n_pieces = int(np.round(n_voxels / 100))
 print(f"We will cluster them in {n_pieces} regions")
 
 ###############################################################################
@@ -131,21 +115,25 @@ print(f"We will cluster them in {n_pieces} regions")
 # Then for each method we define the estimator, fit it, predict the new image and plot
 # its correlation with the real signal.
 
+import matplotlib.pyplot as plt
+
 from fmralign.metrics import score_voxelwise
 from fmralign.template_alignment import TemplateAlignment
 
+fig, axes = plt.subplots(3, 1, figsize=(8, 10))
+
 methods = ["scaled_orthogonal", "optimal_transport"]
 
-for method in methods:
+for i, method in enumerate(methods):
     alignment_estimator = TemplateAlignment(
         alignment_method=method, n_pieces=n_pieces, masker=roi_masker
     )
     alignment_estimator.fit(source_train)
-    target_pred = alignment_estimator.transform(source_test)
+    target_pred = alignment_estimator.transform(target)
 
     # derive correlation between prediction, test
     method_error = score_voxelwise(
-        target_test, target_pred, masker=roi_masker, loss="corr"
+        target, target_pred, masker=roi_masker, loss="corr"
     )
 
     # plot correlation for each method
@@ -157,82 +145,69 @@ for method in methods:
         cut_coords=[-15, -5],
         vmax=1,
         title=title,
+        axes=axes[i],
+        colorbar=False,
     )
 
 ###############################################################################
-# We can observe that among the two methods, the optimal transport method
-# yields a better correlation with the target test data.
-#
-# Compare to SRM method
-# ------------------------
-# We now compare the results of the template-based alignment methods to the
-# Shared Response Model (SRM) method.
-
-# **Note:** SRM needs multiple source subjects to better estimate the shared
-# response.
-
-sub_ids = ["sub-01", "sub-02", "sub-04", "sub-05"]
-files, df, mask = fetch_ibc_subjects_contrasts(sub_ids)
-
-# We will use subject 04 as the target subject, and the rest of the subjects as
-# source subjects. We will use the *AP* acquisition for training and the *PA*
-# acquisition for testing.
-
-source_train = []
-for sub in sub_ids:
-    if sub not in ["sub-04"]:
-        source_train.append(
-            concat_imgs(
-                df[df.subject == sub][df.acquisition == "ap"].path.values
-            )
-        )
-target_train = concat_imgs(
-    df[df.subject == "sub-04"][df.acquisition == "ap"].path.values
-)
-
-source_test = []
-for sub in sub_ids:
-    if sub not in ["sub-04"]:
-        source_test.append(
-            concat_imgs(
-                df[df.subject == sub][df.acquisition == "pa"].path.values
-            )
-        )
-target_test = concat_imgs(
-    df[df.subject == "sub-04"][df.acquisition == "pa"].path.values
-)
+# Next, let's compare the template-based alignment methods to the Shared
+# Response Model (SRM) method. SRM computes a shared response space from
+# different subjects to a particular task, and then projects individual subject
+# data into this shared space.
 
 ###############################################################################
-# Choose the number of regions for local alignment
-# ------------------------------------------------
-# We'll again divide the ROI into parcels of ~200 voxels each. Then our
-# estimator will first make a functional clustering of voxels based on train
-# data to divide them into meaningful regions.
-
-n_voxels = roi_masker.mask_img_.get_fdata().sum()
-print(f"The chosen region of interest contains {n_voxels} voxels")
-n_pieces = int(np.round(n_voxels / 200))
-print(f"We will cluster them in {n_pieces} regions")
-
-###############################################################################
-# Initialize the IdentifiableFastSRM model, This version of SRM ensures that
+# Initialize the IdentifiableFastSRM model. This version of SRM ensures that
 # the solution is unique.
+#
 
-import numpy as np
 from fastsrm.identifiable_srm import IdentifiableFastSRM
-
-from fmralign.srm import PiecewiseModel
 
 srm = IdentifiableFastSRM(
     n_components=30,
     n_iter=10,
 )
-piecewise_srm = PiecewiseModel(
-    srm=srm,
-    n_pieces=n_pieces,
-    clustering="ward",
-    masker=roi_masker,
+
+# #############################################################################
+# For the SRM method, we will use the same training data as before
+# (source subjects: sub-01 and sub-02) and the target subject (sub-04), and we
+# will divide our source and target subjects into training and testing sets,
+# leveraging the AP and PA acquisitions.
+
+# The training set:
+# * source train: AP acquisitions from source subjects (sub-01, sub-02).
+#   These will be projected into a shared response space.
+# * target train: AP acquisitions from the target subject (sub-04).
+#   These define the target shared space.
+#
+
+source_subjects = [sub for sub in sub_ids if sub != "sub-04"]
+source_train = [
+    concat_imgs(df[(df.subject == sub) & (df.acquisition == "ap")].path.values)
+    for sub in source_subjects
+]
+target_train = concat_imgs(
+    df[(df.subject == "sub-04") & (df.acquisition == "ap")].path.values
 )
+
+# The testing set:
+# * source test: acquisitions from source subjects (sub-01, sub-02).
+#   These will be projected into the shared space and transformed to predict
+#   the target.
+# * target test: PA acquisitions from the target subject (sub-04).
+#   These serve as ground truth to evaluate prediction accuracy.
+#
+
+source_test = [
+    concat_imgs(df[(df.subject == sub) & (df.acquisition == "pa")].path.values)
+    for sub in source_subjects
+]
+target_test = concat_imgs(
+    df[(df.subject == "sub-04") & (df.acquisition == "pa")].path.values
+)
+
+################################################################################
+# Fit the SRM model
+# -----------------
 
 # Step 1: Fit SRM on training data from source subjects
 shared_response = srm.fit_transform(
@@ -256,6 +231,7 @@ srm_error = score_voxelwise(
     target_test, aligned_pred, masker=roi_masker, loss="corr"
 )
 srm_score = roi_masker.inverse_transform(srm_error)
+
 title = "Correlation of prediction after SRM alignment"
 display = plotting.plot_stat_map(
     srm_score,
@@ -263,11 +239,15 @@ display = plotting.plot_stat_map(
     cut_coords=[-15, -5],
     vmax=1,
     title=title,
+    axes=axes[len(methods)],
+    colorbar=True,
 )
+
+plt.tight_layout()
+plt.show()
+
 ###############################################################################
 # Summary:
 # --------
 # We compared TemplateAlignment methods (scaled orthogonal, optimal transport)
-# with SRM-based alignment on visual cortex activity. While TemplateAlignment
-# operates pairwise, SRM uses group information to find a shared representational
-# space. SRM may generalize better when multiple subjects are available.
+# with SRM-based alignment on visual cortex activity.
