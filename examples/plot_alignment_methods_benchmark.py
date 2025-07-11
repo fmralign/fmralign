@@ -77,17 +77,32 @@ roi_masker = NiftiMasker(mask_img=resampled_mask_visual).fit()
 # Postero-Anterior (PA). Although this induces small differences
 # in the final data, we will take  advantage of these pseudo-duplicates later.
 
-# Let's organize our data into training and testing sets:
-# * Training set: Files from the first two subjects (sub-01, sub-02) with both
-#   AP and PA acquisitions. These will serve as our source subjects for
-#   alignment.
-# * Testing set: Files from the third subject (sub-04) with both AP and PA
-#   acquisitions, which will be our target subject for evaluating alignment
-#   quality.
+# The training set:
+# * source_train: AP acquisitions from source subjects (sub-01, sub-02).
+# * target_train: AP acquisitions from the target subject (sub-04).
+#
 
-# Split data into source and target subjects
-source_train = [concat_imgs(files[i]) for i in range(2)]  # sub-01 and sub-02
-target = concat_imgs(files[2])  # sub-04
+source_subjects = [sub for sub in sub_ids if sub != "sub-04"]
+source_train = [
+    concat_imgs(df[(df.subject == sub) & (df.acquisition == "ap")].path.values)
+    for sub in source_subjects
+]
+target_train = concat_imgs(
+    df[(df.subject == "sub-04") & (df.acquisition == "ap")].path.values
+)
+
+# The testing set:
+# * source_test: PA acquisitions from source subjects (sub-01, sub-02).
+# * target test: PA acquisitions from the target subject (sub-04).
+#
+
+source_test = [
+    concat_imgs(df[(df.subject == sub) & (df.acquisition == "pa")].path.values)
+    for sub in source_subjects
+]
+target_test = concat_imgs(
+    df[(df.subject == "sub-04") & (df.acquisition == "pa")].path.values
+)
 
 ###############################################################################
 # Choose the number of regions for local alignment
@@ -112,6 +127,8 @@ print(f"We will cluster them in {n_pieces} regions")
 #   *  the optimal transport plan, which yields the minimal transport cost
 #       while respecting the mass conservation constraints. Calculated with
 #       entropic regularization.
+#   *  the shared response model (SRM), which computes a shared response space
+#      from different subjects, and then projects individual subject data into it.
 # Then for each method we define the estimator, fit it, predict the new image and plot
 # its correlation with the real signal.
 
@@ -120,20 +137,30 @@ import matplotlib.pyplot as plt
 from fmralign.metrics import score_voxelwise
 from fmralign.template_alignment import TemplateAlignment
 
-fig, axes = plt.subplots(3, 1, figsize=(8, 10))
-
 methods = ["scaled_orthogonal", "optimal_transport"]
+
+# The IdentifiableFastSRM version of SRM ensures that the solution is unique.
+#
+
+from fastsrm.identifiable_srm import IdentifiableFastSRM
+
+srm = IdentifiableFastSRM(
+    n_components=30,
+    n_iter=10,
+)
+
+fig, axes = plt.subplots(3, 1, figsize=(8, 10))
 
 for i, method in enumerate(methods):
     alignment_estimator = TemplateAlignment(
         alignment_method=method, n_pieces=n_pieces, masker=roi_masker
     )
     alignment_estimator.fit(source_train)
-    target_pred = alignment_estimator.transform(target)
+    target_pred = alignment_estimator.transform(target_train)
 
     # derive correlation between prediction, test
     method_error = score_voxelwise(
-        target, target_pred, masker=roi_masker, loss="corr"
+        target_test, target_pred, masker=roi_masker, loss="corr"
     )
 
     # plot correlation for each method
@@ -149,61 +176,6 @@ for i, method in enumerate(methods):
         colorbar=False,
     )
 
-###############################################################################
-# Next, let's compare the template-based alignment methods to the Shared
-# Response Model (SRM) method. SRM computes a shared response space from
-# different subjects to a particular task, and then projects individual subject
-# data into this shared space.
-
-###############################################################################
-# Initialize the IdentifiableFastSRM model. This version of SRM ensures that
-# the solution is unique.
-#
-
-from fastsrm.identifiable_srm import IdentifiableFastSRM
-
-srm = IdentifiableFastSRM(
-    n_components=30,
-    n_iter=10,
-)
-
-# #############################################################################
-# For the SRM method, we will use the same training data as before
-# (source subjects: sub-01 and sub-02) and the target subject (sub-04), and we
-# will divide our source and target subjects into training and testing sets,
-# leveraging the AP and PA acquisitions.
-
-# The training set:
-# * source train: AP acquisitions from source subjects (sub-01, sub-02).
-#   These will be projected into a shared response space.
-# * target train: AP acquisitions from the target subject (sub-04).
-#   These define the target shared space.
-#
-
-source_subjects = [sub for sub in sub_ids if sub != "sub-04"]
-source_train = [
-    concat_imgs(df[(df.subject == sub) & (df.acquisition == "ap")].path.values)
-    for sub in source_subjects
-]
-target_train = concat_imgs(
-    df[(df.subject == "sub-04") & (df.acquisition == "ap")].path.values
-)
-
-# The testing set:
-# * source test: acquisitions from source subjects (sub-01, sub-02).
-#   These will be projected into the shared space and transformed to predict
-#   the target.
-# * target test: PA acquisitions from the target subject (sub-04).
-#   These serve as ground truth to evaluate prediction accuracy.
-#
-
-source_test = [
-    concat_imgs(df[(df.subject == sub) & (df.acquisition == "pa")].path.values)
-    for sub in source_subjects
-]
-target_test = concat_imgs(
-    df[(df.subject == "sub-04") & (df.acquisition == "pa")].path.values
-)
 
 ################################################################################
 # Fit the SRM model
@@ -239,11 +211,9 @@ display = plotting.plot_stat_map(
     cut_coords=[-15, -5],
     vmax=1,
     title=title,
-    axes=axes[len(methods)],
+    axes=axes[-1],
     colorbar=True,
 )
-
-plt.tight_layout()
 plt.show()
 
 ###############################################################################
