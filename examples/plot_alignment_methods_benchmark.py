@@ -132,7 +132,6 @@ print(f"We will cluster them in {n_pieces} regions")
 # Then for each method we define the estimator, fit it, predict the new image and plot
 # its correlation with the real signal.
 
-import matplotlib.pyplot as plt
 
 from fmralign.metrics import score_voxelwise
 from fmralign.template_alignment import TemplateAlignment
@@ -149,7 +148,8 @@ srm = IdentifiableFastSRM(
     n_iter=10,
 )
 
-fig, axes = plt.subplots(3, 1, figsize=(8, 10))
+# Prepare to store the results
+titles, aligned_scores = [], []
 
 for i, method in enumerate(methods):
     alignment_estimator = TemplateAlignment(
@@ -165,16 +165,10 @@ for i, method in enumerate(methods):
 
     # plot correlation for each method
     aligned_score = roi_masker.inverse_transform(method_error)
-    title = f"Correlation of prediction after {method} alignment"
-    display = plotting.plot_stat_map(
-        aligned_score,
-        display_mode="z",
-        cut_coords=[-15, -5],
-        vmax=1,
-        title=title,
-        axes=axes[i],
-        colorbar=False,
-    )
+
+    # store the results for plotting later
+    titles.append(f"Correlation of prediction after {method} alignment")
+    aligned_scores.append(aligned_score)
 
 
 ################################################################################
@@ -198,22 +192,30 @@ aligned_pred = roi_masker.inverse_transform(
 )
 
 # Step 4: Evaluate voxelwise correlation between predicted and true test
-# signals.
+# signals. Store the results for plotting later.
 srm_error = score_voxelwise(
     target_test, aligned_pred, masker=roi_masker, loss="corr"
 )
 srm_score = roi_masker.inverse_transform(srm_error)
+titles.append("Correlation of prediction after SRM alignment")
+aligned_scores.append(srm_score)
 
-title = "Correlation of prediction after SRM alignment"
-display = plotting.plot_stat_map(
-    srm_score,
-    display_mode="z",
-    cut_coords=[-15, -5],
-    vmax=1,
-    title=title,
-    axes=axes[-1],
-    colorbar=True,
-)
+# Plot the results
+import matplotlib.pyplot as plt
+
+fig, axes = plt.subplots(3, 1, figsize=(8, 12))
+
+for i, (score, title) in enumerate(zip(aligned_scores, titles)):
+    plotting.plot_stat_map(
+        score,
+        display_mode="z",
+        cut_coords=[-15, -5],
+        vmax=1,
+        title=title,
+        axes=axes[i],
+        colorbar=True,
+    )
+
 plt.show()
 
 ###############################################################################
