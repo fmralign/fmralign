@@ -130,7 +130,7 @@ def _map_to_target(
     n_labels = len(np.unique(labels))
     fitted_estimators = []
     for subject_data in X:
-        if n_labels is not None and n_labels > 1:
+        if n_labels > 1:
             estimator = PiecewiseAlignment(
                 method=method,
                 labels=labels,
