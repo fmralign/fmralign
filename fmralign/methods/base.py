@@ -6,7 +6,7 @@ class BaseAlignment(BaseEstimator, TransformerMixin):
         pass
 
     def fit(self, X, Y):
-        pass
+        return self
 
     def transform(self, X):
         pass
