@@ -26,8 +26,8 @@ class RidgeAlignment(BaseAlignment):
         - An iterable yielding train/test splits.
     """
 
-    def __init__(self, alphas=[0.1, 1.0, 10.0, 100, 1000], cv=4):
-        self.alphas = [alpha for alpha in alphas]
+    def __init__(self, alphas=None, cv=4):
+        self.alphas = alphas
         self.cv = cv
 
     def fit(self, X, Y):
@@ -42,7 +42,9 @@ class RidgeAlignment(BaseAlignment):
             target data
         """
         self.R = RidgeCV(
-            alphas=self.alphas,
+            alphas=self.alphas
+            if self.alphas is not None
+            else [0.1, 1.0, 10.0, 100, 1000],
             fit_intercept=True,
             scoring="r2",
             cv=self.cv,
