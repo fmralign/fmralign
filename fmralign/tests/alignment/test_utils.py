@@ -69,7 +69,7 @@ def test_fit_template():
     estimators, template = _fit_template(subjects_data, Identity(), labels)
     assert len(estimators) == len(subjects_data)
     euclidean_mean = _rescaled_euclidean_mean(subjects_data)
-    # Check that the template is the Euclidean mean
+    # Check that the template is the Euclidean mean for identity method
     assert_array_equal(template, euclidean_mean)
 
 
