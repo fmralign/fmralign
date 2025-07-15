@@ -1,12 +1,12 @@
 from .identity import Identity
-from .ot import OptimalTransportAlignment, SparseUOT
-from .procrustes import ScaledOrthogonalAlignment
+from .ot import OptimalTransport, SparseUOT
+from .procrustes import ScaledOrthogonal
 from .ridge import RidgeAlignment
 
 __all__ = [
     "Identity",
-    "OptimalTransportAlignment",
+    "OptimalTransport",
     "SparseUOT",
-    "ScaledOrthogonalAlignment",
+    "ScaledOrthogonal",
     "RidgeAlignment",
 ]

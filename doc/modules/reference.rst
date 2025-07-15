@@ -67,6 +67,6 @@ uses.
 
   Identity
   DiagonalAlignment
-  ScaledOrthogonalAlignment
+  ScaledOrthogonal
   RidgeAlignment
-  OptimalTransportAlignment
+  OptimalTransport

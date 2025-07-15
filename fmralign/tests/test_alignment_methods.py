@@ -8,9 +8,9 @@ from scipy.sparse import csc_matrix
 from fmralign.methods.alignment_methods import (
     DiagonalAlignment,
     Identity,
-    OptimalTransportAlignment,
+    OptimalTransport,
     RidgeAlignment,
-    ScaledOrthogonalAlignment,
+    ScaledOrthogonal,
 )
 from fmralign.tests.utils import zero_mean_coefficient_determination
 
@@ -22,8 +22,8 @@ def test_all_classes_R_and_pred_shape_and_better_than_identity():
     for algo in [
         Identity(),
         RidgeAlignment(),
-        ScaledOrthogonalAlignment(),
-        OptimalTransportAlignment(),
+        ScaledOrthogonal(),
+        OptimalTransport(),
         DiagonalAlignment(),
     ]:
         algo.fit(X, X)
@@ -39,9 +39,9 @@ def test_all_classes_R_and_pred_shape_and_better_than_identity():
         assert_array_almost_equal(X, id.transform(X))
         for algo in [
             RidgeAlignment(),
-            ScaledOrthogonalAlignment(),
-            ScaledOrthogonalAlignment(scaling=False),
-            OptimalTransportAlignment(),
+            ScaledOrthogonal(),
+            ScaledOrthogonal(scaling=False),
+            OptimalTransport(),
             DiagonalAlignment(),
         ]:
             algo.fit(X, Y)

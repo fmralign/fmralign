@@ -13,7 +13,7 @@ from scipy.spatial.distance import cdist
 from fmralign.methods.base import BaseAlignment
 
 
-class OptimalTransportAlignment(BaseAlignment):
+class OptimalTransport(BaseAlignment):
     """
     Compute the optimal coupling between X and Y with entropic regularization,
     using the pure Python POT (https://pythonot.github.io/) package.

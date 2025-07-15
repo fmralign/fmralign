@@ -9,20 +9,20 @@ from fmralign.methods.piecewise import (
 )
 from fmralign.methods import (
     Identity,
-    ScaledOrthogonalAlignment,
+    ScaledOrthogonal,
     SparseUOT,
     RidgeAlignment,
-    OptimalTransportAlignment,
+    OptimalTransport,
 )
 from numpy.testing import assert_array_almost_equal
 from fmralign.tests.utils import sample_one_subject, sample_labels
 
 methods = [
     Identity(),
-    ScaledOrthogonalAlignment(),
+    ScaledOrthogonal(),
     SparseUOT(),
     RidgeAlignment(),
-    OptimalTransportAlignment(),
+    OptimalTransport(),
 ]
 
 

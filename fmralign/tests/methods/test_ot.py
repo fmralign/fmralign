@@ -2,7 +2,7 @@ import numpy as np
 import torch
 from numpy.testing import assert_array_almost_equal
 from fmralign.methods.ot import (
-    OptimalTransportAlignment,
+    OptimalTransport,
     SparseUOT,
 )
 
@@ -14,7 +14,7 @@ def test_ot_backend():
     Y = np.random.randn(n_samples, n_features)
     X /= np.linalg.norm(X)
     Y /= np.linalg.norm(Y)
-    pot_algo = OptimalTransportAlignment(reg=epsilon)
+    pot_algo = OptimalTransport(reg=epsilon)
     sparsity_mask = torch.ones(n_features, n_features).to_sparse_coo()
     torch_algo = SparseUOT(sparsity_mask=sparsity_mask, reg=epsilon)
     pot_algo.fit(X, Y)
@@ -32,7 +32,7 @@ def test_identity_wasserstein():
     identity matrix when using the identity alignment."""
     n_samples, n_features = 10, 5
     X = np.random.randn(n_samples, n_features)
-    algo = OptimalTransportAlignment(reg=1e-12)
+    algo = OptimalTransport(reg=1e-12)
     algo.fit(X, X)
     # Check if transport matrix P is uniform diagonal
     assert_array_almost_equal(algo.R, np.eye(n_features))
@@ -47,8 +47,8 @@ def test_regularization_effect():
     Y = np.random.randn(n_samples, n_features)
 
     # Compare results with different regularization values
-    algo1 = OptimalTransportAlignment(reg=1e-1)
-    algo2 = OptimalTransportAlignment(reg=1e-3)
+    algo1 = OptimalTransport(reg=1e-1)
+    algo2 = OptimalTransport(reg=1e-3)
 
     algo1.fit(X, Y)
     algo2.fit(X, Y)
