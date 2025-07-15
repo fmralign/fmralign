@@ -30,12 +30,12 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
 
     def fit(self, X, y=None) -> None:
         self.labels_ = _check_labels(X[0], self.labels, verbose=self.verbose)
-        self.method_ = _check_method(self.method, self.labels_)
+        self.method_ = _check_method(self.method)
 
         if self.target is None:  # Template alignment
             self.fit_, self.template = _fit_template(
                 X,
-                self.method,
+                self.method_,
                 self.labels_,
                 self.n_jobs,
                 max(self.verbose - 1, 0),
@@ -46,7 +46,7 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
             self.fit_ = _map_to_target(
                 X,
                 self.target,
-                self.method,
+                self.method_,
                 self.labels_,
                 self.n_jobs,
                 max(self.verbose - 1, 0),
