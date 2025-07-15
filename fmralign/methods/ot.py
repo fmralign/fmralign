@@ -133,7 +133,7 @@ class SparseUOT(BaseAlignment):
 
     def __init__(
         self,
-        sparsity_mask,
+        sparsity_mask=None,
         rho=float("inf"),
         reg=1,
         max_iter=1000,
@@ -209,6 +209,11 @@ class SparseUOT(BaseAlignment):
             target data
         """
         n_features = X.shape[1]
+        if self.sparsity_mask is None:
+            # If no sparsity mask is provided, use a dense mask
+            self.sparsity_mask = torch.ones(
+                (n_features, n_features), device=self.device
+            ).to_sparse_coo()
         F = _low_rank_squared_l2(X.T, Y.T)
 
         init_plan = self._initialize_plan(n_features)
@@ -261,4 +266,5 @@ class SparseUOT(BaseAlignment):
         torch.Tensor of shape (n_samples, n_features)
             Transformed data
         """
-        return (X @ self.R).to_dense()
+        X_ = torch.tensor(X, dtype=torch.float32).to(self.device)
+        return (X_ @ self.R).to_dense().detach().cpu().numpy()

@@ -64,31 +64,30 @@ def test_sparseuot():
     Y = torch.randn(n_samples, n_features)
     X /= torch.norm(X)
     Y /= torch.norm(Y)
-    sparsity_mask = torch.ones(n_features, n_features).to_sparse_coo()
-    algo = SparseUOT(sparsity_mask=sparsity_mask)
+    algo = SparseUOT()
     algo.fit(X, Y)
     X_transformed = algo.transform(X)
 
     assert algo.R.shape == (n_features, n_features)
     assert algo.R.dtype == torch.float32
-    assert isinstance(X_transformed, torch.Tensor)
+    assert isinstance(X_transformed, np.ndarray)
     assert X_transformed.shape == X.shape
 
     # Test identity transformation
     algo.R = (torch.eye(n_features)).to_sparse_coo()
     X_transformed = algo.transform(X)
-    assert torch.allclose(X_transformed, X)
+    assert_array_almost_equal(X_transformed, X)
 
     # Check the unbalanced case
-    algo = SparseUOT(sparsity_mask=sparsity_mask)
+    algo = SparseUOT()
     algo.fit(X, Y)
     mass1 = algo.R.sum() / n_features
 
-    algo = SparseUOT(sparsity_mask=sparsity_mask, rho=0.1)
+    algo = SparseUOT(rho=0.1)
     algo.fit(X, Y)
     mass2 = algo.R.sum() / n_features
 
-    algo = SparseUOT(sparsity_mask=sparsity_mask, rho=0.0)
+    algo = SparseUOT(rho=0.0)
     algo.fit(X, Y)
     mass3 = algo.R.sum() / n_features
 
