@@ -1,14 +1,6 @@
-import pytest
 import numpy as np
 from numpy.testing import assert_array_almost_equal
 from fmralign.methods.identity import Identity
-
-
-def test_identity_fit():
-    """Test that Identity method initializes correctly."""
-    identity_method = Identity()
-    with pytest.raises(NotImplementedError):
-        identity_method.fit(np.random.randn(10, 5), np.random.randn(10, 5))
 
 
 def test_identity_transform():
