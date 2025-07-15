@@ -1,0 +1,86 @@
+import pytest
+import numpy as np
+from fmralign.alignment.utils import (
+    _check_method,
+    _check_labels,
+    _fit_template,
+    _map_to_target,
+    _rescaled_euclidean_mean,
+)
+from fmralign.methods import Identity
+from fmralign.tests.utils import sample_subjects
+from numpy.testing import assert_array_equal
+
+
+@pytest.mark.parametrize("scale_average", [True, False])
+def test_rescaled_euclidean_mean(scale_average):
+    """Test the rescaled Euclidean mean function."""
+    subjects_data, _ = sample_subjects()
+    average_data = _rescaled_euclidean_mean(subjects_data)
+    assert average_data.shape == subjects_data[0].shape
+    assert average_data.dtype == subjects_data[0].dtype
+
+    if scale_average is False:
+        assert_array_equal(average_data, np.mean(subjects_data, axis=0))
+
+
+def test_check_labels():
+    """Test the label checking function."""
+    subjects_data, labels = sample_subjects()
+    # Check valid labels
+    _check_labels(subjects_data[0], labels)
+
+    # Check invalid labels (length mismatch)
+    with pytest.raises(ValueError):
+        _check_labels(subjects_data[0], np.array([1, 2]))
+
+    # Check invalid labels (not 1D)
+    with pytest.raises(ValueError):
+        _check_labels(subjects_data[0], np.array([[1, 2], [3, 4]]))
+
+    # Check parcel size warning
+    with pytest.warns(UserWarning):
+        _check_labels(subjects_data[0], labels, threshold=2)
+
+    # Check integer conversion warning
+    with pytest.warns(UserWarning):
+        _check_labels(subjects_data[0], labels.astype(float))
+
+
+def test_check_method():
+    """Test the method checking function."""
+    # Check valid method
+    method = _check_method("identity")
+    assert isinstance(method, Identity)
+
+    # Check invalid method
+    with pytest.raises(ValueError):
+        _check_method("invalid_method")
+
+    # Check valid method instance
+    method_instance = Identity()
+    checked_method = _check_method(method_instance)
+    assert checked_method is method_instance
+
+
+def test_fit_template():
+    """Test fitting a template to a set of subjects."""
+    subjects_data, labels = sample_subjects()
+    estimators, template = _fit_template(subjects_data, Identity(), labels)
+    assert len(estimators) == len(subjects_data)
+    euclidean_mean = _rescaled_euclidean_mean(subjects_data)
+    # Check that the template is the Euclidean mean
+    assert_array_equal(template, euclidean_mean)
+
+
+def test_map_to_target():
+    """Test identity of multiple subjects to target."""
+    X, labels = sample_subjects()
+    target_data = X[0]
+    estimators = _map_to_target(X, target_data, Identity(), labels)
+    assert len(estimators) == len(X)
+    for estimator in estimators:
+        assert isinstance(estimator, Identity)
+        transformed_data = estimator.transform(X[0])
+        assert transformed_data.shape == target_data.shape
+        assert transformed_data.dtype == target_data.dtype
