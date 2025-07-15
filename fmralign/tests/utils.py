@@ -162,7 +162,20 @@ def surf_img(n_samples=1):
     return SurfaceImage(mesh, data)
 
 
-def sample_subjects_data(n_subjects=3):
-    """Sample data in one parcel for n_subjects"""
-    subjects_data = [np.random.rand(10, 20) for _ in range(n_subjects)]
-    return subjects_data
+def sample_one_subject(n_features=10, n_voxels=30):
+    """Generate random data for a single subject."""
+    return np.random.rand(n_features, n_voxels)
+
+
+def sample_labels(n_voxels=30, n_labels=1):
+    """Generate random labels for testing."""
+    return np.random.randint(0, n_labels, n_voxels)
+
+
+def sample_subjects(n_subjects=3, n_features=10, n_voxels=30, n_labels=1):
+    """Generate random data for multiple subjects."""
+    subjects_data = [
+        sample_one_subject(n_features, n_voxels) for _ in range(n_subjects)
+    ]
+    labels = sample_labels(n_voxels, n_labels)
+    return subjects_data, labels
