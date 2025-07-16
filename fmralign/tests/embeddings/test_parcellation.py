@@ -3,7 +3,7 @@ import numpy as np
 import nibabel as nib
 from fmralign.embeddings.parcellation import (
     get_labels,
-    sparse_clusters_parcellation,
+    get_adjacency_from_labels,
 )
 from fmralign.tests.utils import random_niimg, surf_img
 from nilearn.maskers import NiftiMasker, SurfaceMasker
@@ -49,10 +49,10 @@ def test_get_labels():
     assert len(np.unique(labels)) == 2
 
 
-def test_sparse_clusters_parcellation():
+def test_get_adjacency_from_labels():
     """Test _sparse_cluster_matrix on 2 clusters."""
     labels = np.array([1, 1, 2, 2, 2])
-    sparse_matrix = sparse_clusters_parcellation(labels)
+    sparse_matrix = get_adjacency_from_labels(labels)
 
     expected = np.array(
         [
