@@ -1,0 +1,163 @@
+from sklearn.base import BaseEstimator, TransformerMixin
+from fmralign.alignment.utils import (
+    _check_labels,
+    _check_method,
+    _fit_template,
+    _map_to_target,
+)
+import numpy as np
+
+
+class GroupAlignment(BaseEstimator, TransformerMixin):
+    """Performs group-level alignment of various subject data.
+
+    This class aligns multiple subjects' data either to a computed template
+    or to a specific target subject's data. It supports various alignment
+    methods and can process data in parallel.
+
+    Parameters
+    ----------
+    method : str or a `BaseAlignment` instance, default="identity"
+        The alignment method to use. Supported methods depend on the
+        underlying alignment implementation.
+    target : array-like or None, default=None
+        Target for alignment. If None, performs template alignment where
+        a template is computed from all subjects. If array-like, performs
+        pairwise alignment to the specified target data.
+    labels : array-like or None, default=None
+        Labels for the data features. If provided, local alignments
+        can be performed in parallel. If None, global alignment
+        is performed across all features.
+    n_jobs : int, default=1
+        Number of parallel jobs to run. -1 means using all processors.
+    verbose : int, default=0
+        Verbosity level. Higher values provide more detailed output.
+    n_iter : int, default=2
+        Number of iterations for the alignment algorithm.
+    scale_template : bool, default=False
+        Whether to scale the template during template alignment.
+
+    Attributes
+    ----------
+    labels_ : array-like
+        Validated labels used during fitting.
+    method_ : str
+        Validated alignment method used during fitting.
+    fit_ : list
+        List of fitted alignment estimators, one per subject.
+    template : array-like or None
+        Computed template for template alignment. None for pairwise alignment.
+
+    Examples
+    --------
+    >>> # Template alignment
+    >>> aligner = GroupAlignment(method="procrustes", n_iter=3)
+    >>> aligner.fit(subject_data_list)
+    >>> aligned_data = aligner.transform(subject_data_list, [0, 1, 2])
+
+    >>> # Pairwise alignment to target
+    >>> target_data = np.array([[1, 2], [3, 4]])
+    >>> aligner = GroupAlignment(method="procrustes", target=target_data)
+    >>> aligner.fit(subject_data_list)
+    >>> aligned_data = aligner.transform(subject_data_list, [0, 1])
+    """
+
+    def __init__(
+        self,
+        method="identity",
+        target=None,
+        labels=None,
+        n_jobs=1,
+        verbose=0,
+        n_iter=2,
+        scale_template=False,
+    ):
+        self.method = method
+        self.target = target
+        self.labels = labels
+        self.n_jobs = n_jobs
+        self.verbose = verbose
+        self.n_iter = n_iter
+        self.scale_template = scale_template
+        self.template = None
+
+    def fit(self, X, y=None) -> None:
+        """Fit the group alignment model to the data.
+
+        Parameters
+        ----------
+        X : list of array-like
+            List of subject data arrays to align. Each array should have the
+            same number of features.
+        %(y_dummy)s
+        """
+        if self.target is None:  # Template alignment
+            self.fit_, self.template = _fit_template(
+                X,
+                self.method_,
+                self.labels_,
+                self.n_jobs,
+                max(self.verbose - 1, 0),
+                self.n_iter,
+                self.scale_template,
+            )
+        elif isinstance(self.target, np.ndarray):  # Pairwise alignment
+            self.fit_ = _map_to_target(
+                X,
+                self.target,
+                self.method_,
+                self.labels_,
+                self.n_jobs,
+                max(self.verbose - 1, 0),
+            )
+        else:
+            raise ValueError(
+                "Target must be an integer index of the subject "
+                "or None for template alignment."
+            )
+        return self
+
+    def _transform_one_array(self, X, estimator):
+        """Transform a single subject's data using a fitted estimator.
+
+        Parameters
+        ----------
+        X : array-like
+            Subject data to transform. Should have the same number of
+            voxels/columns as the data used during fitting.
+        estimator : A fitted alignment estimator
+            The fitted alignment estimator to use for transformation.
+
+        Returns
+        -------
+        array-like
+            Aligned subject data.
+
+        Raises
+        ------
+        ValueError
+            If the estimator has not been fitted yet.
+        """
+        # Check if estimator is fitted
+        if not hasattr(estimator, "fit"):
+            raise ValueError(
+                "This instance has not been fitted yet. "
+                "Please call 'fit' before 'transform'."
+            )
+        return estimator.transform(X)
+
+    def transform(self, X, subject_indices):
+        return [
+            self._transform_one_array(X[i], self.fit_[i])
+            for i in subject_indices
+        ]
+
+    # Make inherited function harmless
+    def fit_transform(self):
+        """Parent method not applicable here.
+
+        Will raise AttributeError if called.
+        """
+        raise AttributeError(
+            "type object 'PairwiseAlignment' has no 'fit_transform' attribute"
+        )
