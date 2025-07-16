@@ -2,7 +2,6 @@
 import nibabel as nib
 import numpy as np
 import pytest
-import torch
 from nilearn.maskers import NiftiMasker
 from numpy.testing import assert_array_equal
 from sklearn.exceptions import NotFittedError
@@ -10,7 +9,6 @@ from sklearn.exceptions import NotFittedError
 from fmralign import GroupAlignment
 from fmralign._utils import (
     _make_parcellation,
-    _sparse_cluster_matrix,
     load_alignment,
     save_alignment,
 )
@@ -56,27 +54,6 @@ def test_make_parcellation():
             np.hstack([np.ones(2000), 4 * np.ones(800)]), np.eye(4)
         )
         _make_parcellation(img, clustering_method, n_pieces, masker)
-
-
-def test_sparse_cluster_matrix():
-    """Test _sparse_cluster_matrix on 2 clusters."""
-    labels = torch.tensor([1, 1, 2, 2, 2])
-    sparse_matrix = _sparse_cluster_matrix(labels)
-
-    expected = torch.tensor(
-        [
-            [1, 1, 0, 0, 0],
-            [1, 1, 0, 0, 0],
-            [0, 0, 1, 1, 1],
-            [0, 0, 1, 1, 1],
-            [0, 0, 1, 1, 1],
-        ],
-        dtype=torch.bool,
-    )
-
-    assert sparse_matrix.shape == (5, 5)
-    assert sparse_matrix.dtype == torch.bool
-    assert torch.allclose(sparse_matrix.to_dense(), expected)
 
 
 def test_saving_and_loading(tmp_path):
