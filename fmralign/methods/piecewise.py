@@ -90,7 +90,27 @@ def _list_to_array(lst, labels):
 
 
 class PiecewiseAlignment(BaseAlignment):
-    def __init__(self, method, labels=None, n_jobs=1, verbose=0):
+    """Class for piecewise alignment.
+
+    This class allows for fitting an alignment method in a piecewise manner,
+    where each piece corresponds to a unique label in the provided labels array.
+
+    It uses parallel processing to fit the alignment method to each piece of data
+    and agregates the results in a estimator at the whole-brain level.
+
+    Parameters
+    ----------
+    method : `BaseAlignment`
+        Alignment method to be used for each piece.
+    labels : 1D np.ndarray
+        Labels used to determine how to split the data between parcels.
+    n_jobs : int, optional
+        Number of jobs to run in parallel. Default is 1.
+    verbose : int, optional
+        Verbosity level. Default is 0.
+    """
+
+    def __init__(self, method, labels, n_jobs=1, verbose=0):
         super().__init__()
         self.n_jobs = n_jobs
         self.method = method
@@ -98,6 +118,15 @@ class PiecewiseAlignment(BaseAlignment):
         self.verbose = verbose
 
     def fit(self, X, Y):
+        """Fit the alignment method to the source and target data.
+
+        Parameters
+        ----------
+        X : np.ndarray
+            Source data of shape (n_samples, n_features).
+        Y : np.ndarray
+            Target data of shape (n_samples, n_features).
+        """
         X_ = _array_to_list(X, self.labels)
         Y_ = _array_to_list(Y, self.labels)
         self.fit_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose)(
@@ -108,7 +137,7 @@ class PiecewiseAlignment(BaseAlignment):
 
     def transform(self, X):
         """
-        Transform X using the fitted method.
+        Transform X using the fitted estimator.
 
         Parameters
         ----------
@@ -117,8 +146,8 @@ class PiecewiseAlignment(BaseAlignment):
 
         Returns
         -------
-        list of ndarray
-            List of transformed arrays corresponding to each label.
+        np.ndarray
+            Transformed data of shape (n_samples, n_features).
         """
         X_ = _array_to_list(X, self.labels)
         piecewise_transforms = Parallel(
