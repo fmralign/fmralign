@@ -91,7 +91,7 @@ def get_labels(
     return labels
 
 
-def sparse_clusters_parcellation(labels):
+def get_adjacency_from_labels(labels):
     """
     Creates a sparse matrix where element (i,j) is 1
     if labels[i] == labels[j], 0 otherwise.
