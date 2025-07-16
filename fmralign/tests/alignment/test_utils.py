@@ -1,6 +1,7 @@
 import pytest
 import numpy as np
 from fmralign.alignment.utils import (
+    _check_input_arrays,
     _check_method,
     _check_labels,
     _fit_template,
@@ -22,6 +23,39 @@ def test_rescaled_euclidean_mean(scale_average):
 
     if scale_average is False:
         assert_array_equal(average_data, np.mean(subjects_data, axis=0))
+
+
+def test_check_input_arrays():
+    """Test the input array checking function."""
+    # Valid input
+    subjects_data = [np.random.rand(10, 5) for _ in range(3)]
+    checked_data = _check_input_arrays(subjects_data)
+    assert isinstance(checked_data, list)
+    assert all(isinstance(x, np.ndarray) for x in checked_data)
+
+    # Invalid input (not a list)
+    with pytest.raises(ValueError):
+        _check_input_arrays(np.random.rand(10, 5))
+
+    # Invalid input (empty list)
+    with pytest.raises(ValueError):
+        _check_input_arrays([])
+
+    # Invalid input (non-array elements)
+    with pytest.raises(ValueError):
+        _check_input_arrays([np.random.rand(10, 5), "not an array"])
+
+    # Invalid input (non-2D arrays)
+    with pytest.raises(ValueError):
+        _check_input_arrays([np.random.rand(10), np.random.rand(5, 1)])
+
+    # Invalid input (arrays with different number of features)
+    with pytest.raises(ValueError):
+        _check_input_arrays([np.random.rand(10, 5), np.random.rand(10, 6)])
+
+    # Invalid input (arrays with different number of samples)
+    with pytest.raises(ValueError):
+        _check_input_arrays([np.random.rand(10, 5), np.random.rand(12, 5)])
 
 
 def test_check_labels():

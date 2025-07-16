@@ -1,5 +1,6 @@
 from sklearn.base import BaseEstimator, TransformerMixin
 from fmralign.alignment.utils import (
+    _check_input_arrays,
     _check_labels,
     _check_method,
     _fit_template,
@@ -91,9 +92,14 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
             same number of features.
         %(y_dummy)s
         """
+        # Validate input data
+        X_ = _check_input_arrays(X)
+        self.labels_ = _check_labels(X_[0], self.labels)
+        self.method_ = _check_method(self.method)
+
         if self.target is None:  # Template alignment
             self.fit_, self.template = _fit_template(
-                X,
+                X_,
                 self.method_,
                 self.labels_,
                 self.n_jobs,
@@ -103,7 +109,7 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
             )
         elif isinstance(self.target, np.ndarray):  # Pairwise alignment
             self.fit_ = _map_to_target(
-                X,
+                X_,
                 self.target,
                 self.method_,
                 self.labels_,
