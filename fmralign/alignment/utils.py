@@ -137,6 +137,9 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
     if labels is None:
         # If no labels are provided, create a single label for the whole brain
         labels = np.ones(X.shape[1], dtype=int)
+        warnings.warn(
+            "No labels provided, using a single label for all features."
+        )
     else:
         if len(labels) != X.shape[1]:
             raise ValueError(

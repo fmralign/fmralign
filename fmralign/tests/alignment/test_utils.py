@@ -80,6 +80,10 @@ def test_check_labels():
     with pytest.warns(UserWarning):
         _check_labels(subjects_data[0], labels.astype(float))
 
+    # Check no labels warning
+    with pytest.warns(UserWarning):
+        _check_labels(subjects_data[0], None)
+
 
 def test_check_method():
     """Test the method checking function."""
