@@ -5,6 +5,8 @@ from nilearn.surface import SurfaceImage
 from nilearn.regions import Parcellations
 from nilearn._utils.niimg_conversions import check_same_fov
 from nilearn.masking import apply_mask_fmri
+from collections import defaultdict
+from scipy.sparse import coo_matrix
 
 
 def get_labels(
@@ -87,3 +89,47 @@ def get_labels(
         print(f"The alignment will be applied on parcels of sizes {counts}")
 
     return labels
+
+
+def sparse_clusters_parcellation(labels):
+    """
+    Creates a sparse matrix where element (i,j) is 1
+    if labels[i] == labels[j], 0 otherwise.
+
+    Parameters
+    ----------
+    labels: ndarray of shape (n,)
+        1D array of integers
+
+    Returns
+    -------
+    sparse_matrix: sparse scipy.sparse.coo_matrix
+        of shape (len(labels), len(labels))
+    """
+
+    n = len(labels)
+
+    # Create a dictionary mapping each value to its indices
+    value_to_indices = defaultdict(list)
+    for i, val in enumerate(labels.tolist()):
+        value_to_indices[val].append(i)
+
+    # Create lists to store indices and values for the sparse matrix
+    rows = []
+    cols = []
+
+    # For each value, add all pairs of indices where that value appears
+    for indices in value_to_indices.values():
+        for i in indices:
+            rows += [i] * len(indices)
+            cols += indices
+
+    # Convert to numpy arrays
+    rows = np.array(rows)
+    cols = np.array(cols)
+    values = np.ones(len(rows), dtype=bool)
+
+    # Create sparse COO matrix
+    sparse_matrix = coo_matrix((values, (rows, cols)), shape=(n, n))
+
+    return sparse_matrix
