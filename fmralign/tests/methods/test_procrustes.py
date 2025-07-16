@@ -1,10 +1,11 @@
 import numpy as np
 from numpy.testing import assert_array_almost_equal
-from fmralign.methods.procrustes import (
-    scaled_procrustes,
-    ScaledOrthogonal,
-)
 from scipy.linalg import orthogonal_procrustes
+
+from fmralign.methods.procrustes import (
+    ScaledOrthogonal,
+    scaled_procrustes,
+)
 
 
 def test_scaled_procrustes_algorithmic():

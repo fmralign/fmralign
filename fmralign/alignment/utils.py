@@ -1,14 +1,16 @@
+import warnings
+
 import numpy as np
 from sklearn.base import clone
-from fmralign.methods.piecewise import PiecewiseAlignment
-import warnings
+
 from fmralign.methods import (
     Identity,
     OptimalTransport,
-    SparseUOT,
-    ScaledOrthogonal,
     RidgeAlignment,
+    ScaledOrthogonal,
+    SparseUOT,
 )
+from fmralign.methods.piecewise import PiecewiseAlignment
 
 
 def _rescaled_euclidean_mean(subjects_data, scale_average=False):

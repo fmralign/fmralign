@@ -10,6 +10,7 @@ from fugw.solvers.utils import (
 )
 from fugw.utils import _low_rank_squared_l2, _make_csr_matrix
 from scipy.spatial.distance import cdist
+
 from fmralign.methods.base import BaseAlignment
 
 

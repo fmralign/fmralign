@@ -5,7 +5,9 @@ import pytest
 import torch
 from nilearn.maskers import NiftiMasker
 from numpy.testing import assert_array_almost_equal
+from sklearn.exceptions import NotFittedError
 
+from fmralign import GroupAlignment
 from fmralign._utils import (
     _make_parcellation,
     _sparse_cluster_matrix,
@@ -13,8 +15,6 @@ from fmralign._utils import (
     save_alignment,
 )
 from fmralign.tests.utils import random_niimg, sample_subjects
-from sklearn.exceptions import NotFittedError
-from fmralign import GroupAlignment
 
 
 def test_make_parcellation():

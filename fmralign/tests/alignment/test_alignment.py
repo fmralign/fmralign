@@ -1,6 +1,7 @@
+from numpy.testing import assert_array_almost_equal
+
 from fmralign import GroupAlignment
 from fmralign.tests.utils import sample_subjects
-from numpy.testing import assert_array_almost_equal
 
 
 def test_alignment_template():

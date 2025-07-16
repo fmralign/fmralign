@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import datetime
-import warnings
 from collections import defaultdict
 from pathlib import Path
 

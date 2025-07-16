@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import linalg
+
 from fmralign.methods.base import BaseAlignment
 
 

@@ -1,3 +1,2 @@
 from ._version import __version__  # noqa: F401
-
-from .alignment.group_alignment import GroupAlignment
+from .alignment.group_alignment import GroupAlignment  # noqa: F401

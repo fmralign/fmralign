@@ -1,16 +1,17 @@
-import pytest
 import numpy as np
+import pytest
+from numpy.testing import assert_array_equal
+
 from fmralign.alignment.utils import (
     _check_input_arrays,
-    _check_method,
     _check_labels,
+    _check_method,
     _fit_template,
     _map_to_target,
     _rescaled_euclidean_mean,
 )
 from fmralign.methods import Identity
 from fmralign.tests.utils import sample_subjects
-from numpy.testing import assert_array_equal
 
 
 @pytest.mark.parametrize("scale_average", [True, False])

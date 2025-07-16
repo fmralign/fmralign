@@ -1,4 +1,5 @@
 from sklearn.linear_model import RidgeCV
+
 from fmralign.methods.base import BaseAlignment
 
 

@@ -1,5 +1,14 @@
-import pytest
 import numpy as np
+import pytest
+from numpy.testing import assert_array_almost_equal
+
+from fmralign.methods import (
+    Identity,
+    OptimalTransport,
+    RidgeAlignment,
+    ScaledOrthogonal,
+    SparseUOT,
+)
 from fmralign.methods.piecewise import (
     PiecewiseAlignment,
     _array_to_list,
@@ -7,15 +16,7 @@ from fmralign.methods.piecewise import (
     _list_to_array,
     _transform_one_piece,
 )
-from fmralign.methods import (
-    Identity,
-    ScaledOrthogonal,
-    SparseUOT,
-    RidgeAlignment,
-    OptimalTransport,
-)
-from numpy.testing import assert_array_almost_equal
-from fmralign.tests.utils import sample_one_subject, sample_labels
+from fmralign.tests.utils import sample_labels, sample_one_subject
 
 methods = [
     Identity(),

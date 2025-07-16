@@ -1,6 +1,7 @@
 import numpy as np
 import torch
 from numpy.testing import assert_array_almost_equal
+
 from fmralign.methods.ot import (
     OptimalTransport,
     SparseUOT,

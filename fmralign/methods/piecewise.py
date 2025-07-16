@@ -1,7 +1,8 @@
-from fmralign.methods.base import BaseAlignment
-from sklearn.base import clone
-from joblib import Parallel, delayed
 import numpy as np
+from joblib import Parallel, delayed
+from sklearn.base import clone
+
+from fmralign.methods.base import BaseAlignment
 
 
 def _fit_one_piece(X, Y, method):

@@ -1,6 +1,7 @@
-from fmralign.methods.ridge import RidgeAlignment
 from numpy.testing import assert_array_almost_equal
 from sklearn.datasets import make_regression
+
+from fmralign.methods.ridge import RidgeAlignment
 
 
 def test_ridge_alignment():

@@ -1,4 +1,6 @@
+import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
+
 from fmralign.alignment.utils import (
     _check_input_arrays,
     _check_labels,
@@ -6,7 +8,6 @@ from fmralign.alignment.utils import (
     _fit_template,
     _map_to_target,
 )
-import numpy as np
 
 
 class GroupAlignment(BaseEstimator, TransformerMixin):
