@@ -5,8 +5,6 @@ from nilearn.surface import InMemoryMesh, PolyMesh, SurfaceImage
 from numpy.random import default_rng
 from numpy.testing import assert_array_almost_equal
 
-from fmralign._utils import _make_parcellation
-
 
 def zero_mean_coefficient_determination(
     y_true, y_pred, sample_weight=None, multioutput="uniform_average"
