@@ -88,18 +88,21 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
 
         Parameters
         ----------
-        X : list of array-like
-            List of subject data arrays to align. Each array should have the
-            same number of features.
-        %(y_dummy)s
+        X : dict of array-like
+            Dictionary where keys are subject identifiers and values are
+            arrays of subject data. Each array should have the same number of
+            samples and features.
+        y : None, optional
+            Ignored. This parameter exists for compatibility with
+            scikit-learn's API.
         """
         # Validate input data
-        X_ = _check_input_arrays(X)
+        self.subject_keys_, X_ = _check_input_arrays(X)
         self.labels_ = _check_labels(X_[0], self.labels)
         self.method_ = _check_method(self.method)
 
         if self.target is None:  # Template alignment
-            self.fit_, self.template = _fit_template(
+            fit_, self.template = _fit_template(
                 X_,
                 self.method_,
                 self.labels_,
@@ -109,7 +112,7 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
                 self.scale_template,
             )
         elif isinstance(self.target, np.ndarray):  # Pairwise alignment
-            self.fit_ = _map_to_target(
+            fit_ = _map_to_target(
                 X_,
                 self.target,
                 self.method_,
@@ -122,6 +125,8 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
                 "Target must be an integer index of the subject "
                 "or None for template alignment."
             )
+
+        self.fitted_estimators = dict(zip(self.subject_keys_, fit_))
         return self
 
     def _transform_one_array(self, X, estimator):
@@ -153,11 +158,39 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
             )
         return estimator.transform(X)
 
-    def transform(self, X, subject_indices):
-        return [
-            self._transform_one_array(X[i], self.fit_[i])
-            for i in subject_indices
-        ]
+    def transform(self, X):
+        """Transform the input arrays using the fitted model.
+
+        Parameters
+        ----------
+        X : dict of array-like
+            Dictionary where keys are subject identifiers and values are
+            array of subject data. Each array should have the same number of
+            samples and features.
+
+        Returns
+        -------
+        dict of array-like
+            Dictionary with transformed subject data.
+        """
+        if not hasattr(self, "fitted_estimators"):
+            raise ValueError(
+                "This instance has not been fitted yet. "
+                "Please call 'fit' before 'transform'."
+            )
+
+        # Check if the keys are valid
+        keys = list(X.keys())
+        if not all(key in self.subject_keys_ for key in keys):
+            raise ValueError(
+                "Some subjects identifier are not present in the fitted model. "
+                "Please check the input keys."
+            )
+
+        return {
+            key: self._transform_one_array(X[key], self.fitted_estimators[key])
+            for key in keys
+        }
 
     # Make inherited function harmless
     def fit_transform(self):
