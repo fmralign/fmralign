@@ -177,7 +177,7 @@ def save_alignment(alignment_estimator, output_path):
     ValueError
         If the output path is not a valid file or directory.
     """
-    if not hasattr(alignment_estimator, "fit_"):
+    if not hasattr(alignment_estimator, "fitted_estimators"):
         raise NotFittedError(
             "This instance has not been fitted yet. "
             "Please call 'fit' before 'save'."

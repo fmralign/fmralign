@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 import torch
 from nilearn.maskers import NiftiMasker
-from numpy.testing import assert_array_almost_equal
+from numpy.testing import assert_array_equal
 from sklearn.exceptions import NotFittedError
 
 from fmralign import GroupAlignment
@@ -81,7 +81,8 @@ def test_sparse_cluster_matrix():
 
 def test_saving_and_loading(tmp_path):
     """Test saving and loading utilities."""
-    X, labels = sample_subjects()
+    subjects_data, labels = sample_subjects()
+    X = dict(enumerate(subjects_data))
 
     algo = GroupAlignment(labels=labels)
 
@@ -97,5 +98,5 @@ def test_saving_and_loading(tmp_path):
     loaded_model = load_alignment(tmp_path)
 
     # Check that the transformed arrays are the same
-    [transformed] = loaded_model.transform(X, [0])
-    assert_array_almost_equal(transformed, X[0])
+    transformed = loaded_model.transform(X)
+    assert_array_equal(transformed[0], subjects_data[0])
