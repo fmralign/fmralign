@@ -29,34 +29,60 @@ def test_rescaled_euclidean_mean(scale_average):
 def test_check_input_arrays():
     """Test the input array checking function."""
     # Valid input
-    subjects_data = [np.random.rand(10, 5) for _ in range(3)]
-    checked_data = _check_input_arrays(subjects_data)
-    assert isinstance(checked_data, list)
-    assert all(isinstance(x, np.ndarray) for x in checked_data)
+    subjects_keys = ["sub-01", "sub-02", "sub-03"]
+    subjects_values = [np.random.rand(10, 5) for _ in range(3)]
+    subjects_dict = dict(zip(subjects_keys, subjects_values))
+    checked_keys, checked_values = _check_input_arrays(subjects_dict)
+    assert isinstance(checked_values, list)
+    assert all(isinstance(x, np.ndarray) for x in checked_values)
+    assert checked_keys == subjects_keys
 
-    # Invalid input (not a list)
-    with pytest.raises(ValueError):
+    # Invalid input (not a dict)
+    with pytest.raises(AttributeError):
         _check_input_arrays(np.random.rand(10, 5))
 
-    # Invalid input (empty list)
-    with pytest.raises(ValueError):
-        _check_input_arrays([])
+    # Invalid input (empty dict)
+    with pytest.raises(ValueError, match="Input data cannot be empty"):
+        _check_input_arrays({})
 
     # Invalid input (non-array elements)
-    with pytest.raises(ValueError):
-        _check_input_arrays([np.random.rand(10, 5), "not an array"])
+    invalid_dict = {"sub-01": np.random.rand(10, 5), "sub-02": "not an array"}
+    with pytest.raises(
+        ValueError, match="All elements in the input dict must be numpy arrays"
+    ):
+        _check_input_arrays(invalid_dict)
 
     # Invalid input (non-2D arrays)
-    with pytest.raises(ValueError):
-        _check_input_arrays([np.random.rand(10), np.random.rand(5, 1)])
+    invalid_dict = {
+        "sub-01": np.random.rand(10),
+        "sub-02": np.random.rand(5, 1),
+    }
+    with pytest.raises(
+        ValueError, match="All arrays in the input dict must be 2D arrays"
+    ):
+        _check_input_arrays(invalid_dict)
 
     # Invalid input (arrays with different number of features)
-    with pytest.raises(ValueError):
-        _check_input_arrays([np.random.rand(10, 5), np.random.rand(10, 6)])
+    invalid_dict = {
+        "sub-01": np.random.rand(10, 5),
+        "sub-02": np.random.rand(10, 6),
+    }
+    with pytest.raises(
+        ValueError,
+        match="All arrays in the input dict must have the same number of features",
+    ):
+        _check_input_arrays(invalid_dict)
 
     # Invalid input (arrays with different number of samples)
-    with pytest.raises(ValueError):
-        _check_input_arrays([np.random.rand(10, 5), np.random.rand(12, 5)])
+    invalid_dict = {
+        "sub-01": np.random.rand(10, 5),
+        "sub-02": np.random.rand(12, 5),
+    }
+    with pytest.raises(
+        ValueError,
+        match="All arrays in the input dict must have the same number of samples",
+    ):
+        _check_input_arrays(invalid_dict)
 
 
 def test_check_labels():

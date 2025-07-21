@@ -44,37 +44,46 @@ def _rescaled_euclidean_mean(subjects_data, scale_average=False):
 
 
 def _check_input_arrays(X):
-    """Check if the input data is a list of 2D numpy arrays.
+    """Unpack the input data from a dict to a list of keys and arrays.
+
+    This function checks that all arrays in the input dict are valid and have
+    the same shape. It returns the keys and values of the input dict as two separate lists.
 
     Parameters
     ----------
-    X : list of ndarray
-        List of subject data arrays, where each array is of shape (n_samples, n_features).
+    X : dict of ndarray
+        Dict of subject data arrays, where each array is of shape (n_samples, n_features).
 
     Returns
     -------
-    X : list of ndarray
+    subjects_keys : list of str
+        The keys of the input dictionary, representing subject identifiers.
+    subjects_values : list of ndarray
         The validated list of subject data arrays.
     """
-    if not isinstance(X, list):
-        raise ValueError("Input data must be a list of arrays.")
-    if len(X) == 0:
-        raise ValueError("Input data list cannot be empty.")
-    if not all(isinstance(x, np.ndarray) for x in X):
+    subjects_keys = list(X.keys())
+    subjects_values = list(X.values())
+    if len(subjects_values) == 0:
+        raise ValueError("Input data cannot be empty.")
+    if not all(isinstance(x, np.ndarray) for x in subjects_values):
         raise ValueError(
-            "All elements in the input list must be numpy arrays."
+            "All elements in the input dict must be numpy arrays."
         )
-    if not all(x.ndim == 2 for x in X):
-        raise ValueError("All arrays in the input list must be 2D arrays.")
-    if not all(x.shape[0] == X[0].shape[0] for x in X):
+    if not all(x.ndim == 2 for x in subjects_values):
+        raise ValueError("All arrays in the input dict must be 2D arrays.")
+    if not all(
+        x.shape[0] == subjects_values[0].shape[0] for x in subjects_values
+    ):
         raise ValueError(
-            "All arrays in the input list must have the same number of samples."
+            "All arrays in the input dict must have the same number of samples."
         )
-    if not all(x.shape[1] == X[0].shape[1] for x in X):
+    if not all(
+        x.shape[1] == subjects_values[0].shape[1] for x in subjects_values
+    ):
         raise ValueError(
-            "All arrays in the input list must have the same number of features."
+            "All arrays in the input dict must have the same number of features."
         )
-    return X
+    return subjects_keys, subjects_values
 
 
 def _check_method(method):
