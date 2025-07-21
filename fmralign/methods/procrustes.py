@@ -72,6 +72,8 @@ class ScaledOrthogonal(BaseAlignment):
     -----------
     R : ndarray (n_features, n_features)
         Optimal orthogonal transform
+    scale: float,
+               inferred scaling parameter
     """
 
     def __init__(self, scaling=True):
