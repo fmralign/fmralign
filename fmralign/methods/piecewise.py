@@ -67,6 +67,7 @@ def _array_to_list(arr, labels):
 def _list_to_array(lst, labels):
     """
     Convert a list of arrays back to a 2D array based on labels.
+
     Parameters
     ----------
     lst : list of ndarray
