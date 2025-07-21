@@ -9,6 +9,8 @@ from fmralign.methods.ot import (
 
 
 def test_ot_backend():
+    """Test that both OptimalTransport and SparseUOT\n
+    yield similar results in the dense case."""
     n_samples, n_features = 100, 20
     epsilon = 1e-2
     X = np.random.randn(n_samples, n_features)

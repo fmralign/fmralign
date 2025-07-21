@@ -98,4 +98,4 @@ class ScaledOrthogonal(BaseAlignment):
 
     def transform(self, X):
         """Transform X using optimal transform computed during fit."""
-        return X.dot(self.R)
+        return X.dot(self.R) * self.scale
