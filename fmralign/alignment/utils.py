@@ -15,7 +15,7 @@ from fmralign.methods.piecewise import PiecewiseAlignment
 
 def _rescaled_euclidean_mean(subjects_data, scale_average=False):
     """
-    Make the Euclidian average of `numpy.ndarray`.
+    Compute the Euclidean average of `numpy.ndarray`.
 
     Parameters
     ----------
