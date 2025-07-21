@@ -157,7 +157,7 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
                 f"The alignment will be applied on parcels of sizes {counts}"
             )
 
-        if not all(count < threshold for count in counts):
+        if (counts > threshold).any():
             warning = (
                 "\n Some parcels are more than 1000 voxels wide it can slow down alignment,"
                 "especially optimal_transport :"
