@@ -6,7 +6,8 @@ from fmralign.methods.base import BaseAlignment
 class RidgeAlignment(BaseAlignment):
     """
     Compute a scikit-estimator R using a mixing matrix M s.t Frobenius
-    norm || XM - Y ||^2 + alpha * ||M||^2 is minimized with cross-validation
+    norm || XM - Y ||^2 + alpha * ||M||^2 is minimized.
+    cross-validation is used to find the optimal alpha.
 
     Parameters
     ----------
