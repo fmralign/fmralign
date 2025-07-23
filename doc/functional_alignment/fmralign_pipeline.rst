@@ -182,7 +182,7 @@ the correlation of this prediction with the real signal. We also include identit
 
 >>> from fmralign.pairwise_alignment import PairwiseAlignment
 >>> from fmralign._utils import voxelwise_correlation
->>> methods = ['identity','scaled_orthogonal', 'ridge_cv', 'optimal_transport']
+>>> methods = ['identity','procrustes', 'ridge_cv', 'optimal_transport']
 
 >>> for method in methods:
 >>>   alignment_estimator = PairwiseAlignment(alignment_method=method, n_pieces=n_pieces, masker=roi_masker)

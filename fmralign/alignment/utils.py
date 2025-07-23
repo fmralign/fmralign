@@ -7,7 +7,7 @@ from fmralign.methods import (
     Identity,
     OptimalTransport,
     RidgeAlignment,
-    ScaledOrthogonal,
+    Procrustes,
     SparseUOT,
 )
 from fmralign.methods.piecewise import PiecewiseAlignment
@@ -110,7 +110,7 @@ def _check_method(method):
         "identity": Identity(),
         "ot": OptimalTransport(),
         "sparse_uot": SparseUOT(),
-        "scaled_orthogonal": ScaledOrthogonal(),
+        "procrustes": Procrustes(),
         "ridge": RidgeAlignment(),
     }
     # If method is a string, convert it to the corresponding class instance

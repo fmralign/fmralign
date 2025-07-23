@@ -6,7 +6,7 @@ from fmralign.methods import (
     Identity,
     OptimalTransport,
     RidgeAlignment,
-    ScaledOrthogonal,
+    Procrustes,
     SparseUOT,
 )
 from fmralign.methods.piecewise import (
@@ -20,7 +20,7 @@ from fmralign.tests.utils import sample_labels, sample_one_subject
 
 methods = [
     Identity(),
-    ScaledOrthogonal(),
+    Procrustes(),
     SparseUOT(),
     RidgeAlignment(),
     OptimalTransport(),

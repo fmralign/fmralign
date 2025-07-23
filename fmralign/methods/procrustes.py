@@ -58,7 +58,7 @@ def scaled_procrustes(X, Y, scaling=False, primal=None):
     return R.T, sc
 
 
-class ScaledOrthogonal(BaseAlignment):
+class Procrustes(BaseAlignment):
     """
     Compute a orthogonal mixing matrix R and a scaling sc.
     These are calculated such that Frobenius norm ||sc RX - Y||^2 is minimized.

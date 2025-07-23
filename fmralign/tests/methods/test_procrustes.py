@@ -3,7 +3,7 @@ from numpy.testing import assert_array_almost_equal
 from scipy.linalg import orthogonal_procrustes
 
 from fmralign.methods.procrustes import (
-    ScaledOrthogonal,
+    Procrustes,
     scaled_procrustes,
 )
 
@@ -103,7 +103,7 @@ def test_scaled_procrustes_on_simple_exact_cases():
     )
     assert_array_almost_equal(R, R_test.T)
 
-    """Test Scaled_Orthogonal_Alignment on an exact case"""
-    ortho_al = ScaledOrthogonal(scaling=False)
+    """Test Procrustes on an exact case"""
+    ortho_al = Procrustes(scaling=False)
     ortho_al.fit(X.T, Y.T)
     assert_array_almost_equal(ortho_al.transform(X.T), Y.T)
