@@ -21,9 +21,23 @@ a terminal, or use ``jupyter-notebook``.
 # ------------------
 # In this example we use the IBC dataset, which include a large number of
 # different contrasts maps for 12 subjects.
+#
+# The contrasts come from tasks in the Archi and HCP fMRI batteries, designed
+# to probe a range of cognitive functions, including:
+#
+# * Motor control: finger, foot, and tongue movements
+# * Social cognition: interpreting short films and stories
+# * Spatial orientation: judging orientation and hand-side
+# * Numerical reasoning: reading and listening to math problems
+# * Emotion processing: judging facial expressions
+# * Reward processing: responding to gains and losses
+# * Working memory: maintaining sequences of faces and objects
+# * Object categorization: matching and comparing visual stimuli
+
 # We download the images for subjects sub-01 and sub-02.
-# Files is the list of paths for each subjects.
+# files is the list of paths for each subjects.
 # df is a dataframe with metadata about each of them.
+# mask is the common mask for IBC subjects.
 
 from fmralign.fetch_example_data import fetch_ibc_subjects_contrasts
 
