@@ -9,8 +9,8 @@ def test_alignment_template():
     subjects_data, labels = sample_subjects()
     X = dict(enumerate(subjects_data))
 
-    algo = GroupAlignment(target=None, labels=labels)
-    algo.fit(X)
+    algo = GroupAlignment(labels=labels)
+    algo.fit(X, y=None)
 
     assert len(algo.fitted_estimators) == len(X)
     assert algo.template.shape == X[0].shape
@@ -25,8 +25,8 @@ def test_alignment_target():
     X = dict(enumerate(subjects_data))
 
     target = X[0]
-    algo = GroupAlignment(target=target, labels=labels)
-    algo.fit(X)
+    algo = GroupAlignment(labels=labels)
+    algo.fit(X, y=target)
 
     assert len(algo.fitted_estimators) == len(X)
     assert algo.template is None

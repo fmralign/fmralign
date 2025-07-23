@@ -6,6 +6,7 @@ from fmralign.alignment.utils import (
     _check_input_arrays,
     _check_labels,
     _check_method,
+    _check_target,
     _fit_template,
     _map_to_target,
     _rescaled_euclidean_mean,
@@ -83,6 +84,32 @@ def test_check_input_arrays():
         match="All arrays in the input dict must have the same number of samples",
     ):
         _check_input_arrays(invalid_dict)
+
+
+def test_check_target():
+    """Test the target checking function."""
+    subjects_data, _ = sample_subjects()
+
+    y = _check_target(subjects_data[0], None)
+    assert y is None  # Template alignment should return None
+
+    y = _check_target(subjects_data[0], subjects_data[0])
+    assert isinstance(y, np.ndarray)
+    assert y.shape == subjects_data[0].shape
+
+    with pytest.raises(
+        ValueError, match="Target must be an array-like or None."
+    ):
+        _check_target(
+            subjects_data[0],
+            "invalid_target",
+        )
+
+    with pytest.raises(
+        ValueError,
+        match="Target must have the same number of samples as the input data.",
+    ):
+        _check_target(subjects_data[0], np.random.rand(5, 5))
 
 
 def test_check_labels():

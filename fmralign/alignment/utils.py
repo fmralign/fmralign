@@ -86,6 +86,33 @@ def _check_input_arrays(X):
     return subjects_keys, subjects_values
 
 
+def _check_target(X, y):
+    """Validates the target data.
+
+    Parameters
+    ----------
+    X : array-like
+        Input data used for validation. It should be a 2D array of shape
+        (n_samples, n_features).
+    y : array-like or None
+        Target for alignment. If array-like, it should have the same shape as the input data.
+
+    Returns
+    -------
+    y_ : ndarray or None
+        Validated target data for alignment.
+    """
+    if y is None:
+        return None
+    if isinstance(y, np.ndarray):
+        if y.shape != X.shape:
+            raise ValueError(
+                "Target must have the same number of samples as the input data."
+            )
+        return np.asarray(y)
+    raise ValueError("Target must be an array-like or None.")
+
+
 def _check_method(method):
     """Check if the method is part of the valid methods and return the corresponding instance.
 

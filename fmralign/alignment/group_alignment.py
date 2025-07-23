@@ -5,6 +5,7 @@ from fmralign.alignment.utils import (
     _check_input_arrays,
     _check_labels,
     _check_method,
+    _check_target,
     _fit_template,
     _map_to_target,
 )
@@ -22,10 +23,6 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
     method : str or a `BaseAlignment` instance, default="identity"
         The alignment method to use. Supported methods depend on the
         underlying alignment implementation.
-    target : array-like or None, default=None
-        Target for alignment. If None, performs template alignment where
-        a template is computed from all subjects. If array-like, performs
-        pairwise alignment to the specified target data.
     labels : array-like or None, default=None
         Describes each voxel label's in the case of non-overlapping parcels.
         If provided, local alignments can be performed in parallel.
@@ -54,20 +51,19 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
     --------
     >>> # Template alignment
     >>> aligner = GroupAlignment(method="procrustes", n_iter=3)
-    >>> aligner.fit(subject_data_list)
-    >>> aligned_data = aligner.transform(subject_data_list, [0, 1, 2])
+    >>> aligner.fit(alignment_dict)
+    >>> aligned_data = aligner.transform(testing_dict)
 
     >>> # Pairwise alignment to target
     >>> target_data = np.array([[1, 2], [3, 4]])
-    >>> aligner = GroupAlignment(method="procrustes", target=target_data)
-    >>> aligner.fit(subject_data_list)
-    >>> aligned_data = aligner.transform(subject_data_list, [0, 1])
+    >>> aligner = GroupAlignment(method="procrustes")
+    >>> aligner.fit(alignment_dict, y=target_data)
+    >>> aligned_data = aligner.transform(testing_dict)
     """
 
     def __init__(
         self,
         method="identity",
-        target=None,
         labels=None,
         n_jobs=1,
         verbose=0,
@@ -75,7 +71,6 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
         scale_template=False,
     ):
         self.method = method
-        self.target = target
         self.labels = labels
         self.n_jobs = n_jobs
         self.verbose = verbose
@@ -92,16 +87,18 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
             Dictionary where keys are subject identifiers and values are
             arrays of subject data. Each array should have the same number of
             samples and features.
-        y : None, optional
-            Ignored. This parameter exists for compatibility with
-            scikit-learn's API.
+        y : array-like or None, default=None
+            Target for alignment. If None, performs template alignment where
+            a template is computed from all subjects. If array-like, performs
+            pairwise alignment to the specified target data.
         """
         # Validate input data
         self.subject_keys_, X_ = _check_input_arrays(X)
+        y_ = _check_target(X_[0], y)
         self.labels_ = _check_labels(X_[0], self.labels)
         self.method_ = _check_method(self.method)
 
-        if self.target is None:  # Template alignment
+        if y_ is None:  # Template alignment
             fit_, self.template = _fit_template(
                 X_,
                 self.method_,
@@ -111,19 +108,14 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
                 self.n_iter,
                 self.scale_template,
             )
-        elif isinstance(self.target, np.ndarray):  # Pairwise alignment
+        else:  # Pairwise alignment
             fit_ = _map_to_target(
                 X_,
-                self.target,
+                y_,
                 self.method_,
                 self.labels_,
                 self.n_jobs,
                 max(self.verbose - 1, 0),
-            )
-        else:
-            raise ValueError(
-                "Target must be an integer index of the subject "
-                "or None for template alignment."
             )
 
         self.fitted_estimators = dict(zip(self.subject_keys_, fit_))
