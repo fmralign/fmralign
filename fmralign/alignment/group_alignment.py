@@ -27,15 +27,15 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
         a template is computed from all subjects. If array-like, performs
         pairwise alignment to the specified target data.
     labels : array-like or None, default=None
-        Labels for the data features. If provided, local alignments
-        can be performed in parallel. If None, global alignment
-        is performed across all features.
+        Describes each voxel label's in the case of non-overlapping parcels.
+        If provided, local alignments can be performed in parallel.
+        If None, global alignment is performed across all features.
     n_jobs : int, default=1
         Number of parallel jobs to run. -1 means using all processors.
     verbose : int, default=0
         Verbosity level. Higher values provide more detailed output.
     n_iter : int, default=2
-        Number of iterations for the alignment algorithm.
+        Number of iterations for the template alignment algorithm.
     scale_template : bool, default=False
         Whether to scale the template during template alignment.
 
