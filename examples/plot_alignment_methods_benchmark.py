@@ -214,7 +214,9 @@ srm_score = roi_masker.inverse_transform(srm_error)
 titles.append("Correlation of prediction after SRM alignment")
 aligned_scores.append(srm_score)
 
+################################################################################
 # Plot the results
+# ---------------
 import matplotlib.pyplot as plt
 
 fig, axes = plt.subplots(3, 1, figsize=(8, 12))
