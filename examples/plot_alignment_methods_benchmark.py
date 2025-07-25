@@ -154,14 +154,6 @@ from fmralign.template_alignment import TemplateAlignment
 
 methods = ["scaled_orthogonal", "optimal_transport"]
 
-# The IdentifiableFastSRM version of SRM ensures that the solution is unique.
-from fastsrm.identifiable_srm import IdentifiableFastSRM
-
-srm = IdentifiableFastSRM(
-    n_components=30,
-    n_iter=10,
-)
-
 # Prepare to store the results
 titles, aligned_scores = [], []
 
@@ -177,10 +169,8 @@ for i, method in enumerate(methods):
         target_test, target_pred, masker=roi_masker, loss="corr"
     )
 
-    # plot correlation for each method
-    aligned_score = roi_masker.inverse_transform(method_error)
-
     # store the results for plotting later
+    aligned_score = roi_masker.inverse_transform(method_error)
     titles.append(f"Correlation of prediction after {method} alignment")
     aligned_scores.append(aligned_score)
 
@@ -188,6 +178,14 @@ for i, method in enumerate(methods):
 ################################################################################
 # Fit and score the SRM estimator
 # --------------------------------
+
+# The IdentifiableFastSRM version of SRM ensures that the solution is unique.
+from fastsrm.identifiable_srm import IdentifiableFastSRM
+
+srm = IdentifiableFastSRM(
+    n_components=30,
+    n_iter=10,
+)
 
 # Step 1: Fit SRM on training data from source subjects
 shared_response = srm.fit_transform(
@@ -239,5 +237,5 @@ plt.show()
 # --------
 # We compared TemplateAlignment methods (scaled orthogonal, optimal transport)
 # with SRM-based alignment on visual cortex activity.
-# You can see that SRM introduces the most smoothness in the transformation, resulting in
-# higher correlation values.
+# You can see that SRM introduces the most smoothness in the transformation,
+# resulting in higher correlation values.
