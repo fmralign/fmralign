@@ -186,8 +186,8 @@ for i, method in enumerate(methods):
 
 
 ################################################################################
-# Fit the SRM model
-# -----------------
+# Fit and score the SRM estimator
+# --------------------------------
 
 # Step 1: Fit SRM on training data from source subjects
 shared_response = srm.fit_transform(
