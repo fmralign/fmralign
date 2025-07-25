@@ -35,9 +35,9 @@ a terminal, or use ``jupyter-notebook``.
 # * Object categorization: matching and comparing visual stimuli
 
 # We download the images for subjects sub-01 and sub-02.
-# files is the list of paths for each subjects.
-# df is a dataframe with metadata about each of them.
-# mask is the common mask for IBC subjects.
+# ``files`` is the list of paths for each subjects.
+# ``df`` is a dataframe with metadata about each of them.
+# ``mask`` is the common mask for IBC subjects.
 
 from fmralign.fetch_example_data import fetch_ibc_subjects_contrasts
 
