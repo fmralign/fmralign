@@ -139,8 +139,8 @@ print(f"We will cluster them in {n_pieces} regions")
 # On each region, we search for a transformation R that is either :
 #   *  orthogonal, i.e. R orthogonal, scaling sc s.t. ||sc RX - Y ||^2 is minimized
 #   *  the optimal transport plan, which yields the minimal transport cost
-#       while respecting the mass conservation constraints. Calculated with
-#       entropic regularization.
+#      while respecting the mass conservation constraints. Calculated with
+#      entropic regularization.
 #   *  the shared response model (SRM), which computes a shared response space
 #      from different subjects, and then projects individual subject data into it.
 # Then for each method we define the estimator, fit it, predict the new image and plot
