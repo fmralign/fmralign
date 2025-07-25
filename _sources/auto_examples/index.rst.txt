@@ -72,23 +72,6 @@ Examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we compare various methods of alignment on a pairwise alignment problem for Individual Brain Charting subjects. For each subject, we have a lot of functional informations in the form of several task-based contrast per subject. We will just work here on a ROI.">
-
-.. only:: html
-
-  .. image:: /auto_examples/images/thumb/sphx_glr_plot_alignment_methods_benchmark_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_auto_examples_plot_alignment_methods_benchmark.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Alignment methods benchmark (pairwise ROI case).</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we show how to align surface data from two subjects using a pairwise alignment method. We project the data on the fsaverage5 surface and learn a piecewise mapping from one subject to the other using ward clustering.">
 
 .. only:: html
@@ -121,6 +104,23 @@ Examples
     </div>
 
 
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we compare various methods of alignment on a pairwise alignment problem for Individual Brain Charting subjects. For each subject, we have a lot of functional informations in the form of several task-based contrast per subject. We will just work here on a ROI.">
+
+.. only:: html
+
+  .. image:: /auto_examples/images/thumb/sphx_glr_plot_alignment_methods_benchmark_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_plot_alignment_methods_benchmark.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Alignment methods benchmark (template-based ROI case)</div>
+    </div>
+
+
 .. thumbnail-parent-div-close
 
 .. raw:: html
@@ -134,9 +134,9 @@ Examples
    /auto_examples/plot_template_alignment
    /auto_examples/plot_pairwise_alignment
    /auto_examples/plot_pairwise_roi_alignment
-   /auto_examples/plot_alignment_methods_benchmark
    /auto_examples/plot_surf_alignment
    /auto_examples/plot_alignment_simulated_2D_data
+   /auto_examples/plot_alignment_methods_benchmark
 
 
 .. only:: html

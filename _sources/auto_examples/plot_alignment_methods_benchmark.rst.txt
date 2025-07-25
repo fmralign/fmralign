@@ -18,8 +18,8 @@
 .. _sphx_glr_auto_examples_plot_alignment_methods_benchmark.py:
 
 
-Alignment methods benchmark (pairwise ROI case).
-================================================
+Alignment methods benchmark (template-based ROI case)
+=====================================================
 
 In this tutorial, we compare various methods of alignment on a pairwise alignment
 problem for Individual Brain Charting subjects. For each subject, we have a lot
@@ -32,25 +32,39 @@ data in a clean fashion.
 To run this example, you must launch IPython via ``ipython --matplotlib`` in
 a terminal, or use ``jupyter-notebook``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 20-27
+.. GENERATED FROM PYTHON SOURCE LINES 20-36
 
 Retrieve the data
 ------------------
 In this example we use the IBC dataset, which include a large number of
 different contrasts maps for 12 subjects.
-We download the images for subjects sub-01 and sub-02.
-Files is the list of paths for each subjects.
-df is a dataframe with metadata about each of them.
 
-.. GENERATED FROM PYTHON SOURCE LINES 27-33
+The contrasts come from tasks in the Archi and HCP fMRI batteries, designed
+to probe a range of cognitive functions, including:
+
+* Motor control: finger, foot, and tongue movements
+* Social cognition: interpreting short films and stories
+* Spatial orientation: judging orientation and hand-side
+* Numerical reasoning: reading and listening to math problems
+* Emotion processing: judging facial expressions
+* Reward processing: responding to gains and losses
+* Working memory: maintaining sequences of faces and objects
+* Object categorization: matching and comparing visual stimuli
+
+.. GENERATED FROM PYTHON SOURCE LINES 36-47
 
 .. code-block:: Python
 
 
+    # We download the images for subjects sub-01 and sub-02.
+    # ``files`` is the list of paths for each subjects.
+    # ``df`` is a dataframe with metadata about each of them.
+    # ``mask`` is the common mask for IBC subjects.
+
     from fmralign.fetch_example_data import fetch_ibc_subjects_contrasts
 
-    files, df, mask = fetch_ibc_subjects_contrasts(["sub-01", "sub-02"])
-
+    sub_ids = ["sub-01", "sub-02", "sub-04"]
+    files, df, mask = fetch_ibc_subjects_contrasts(sub_ids)
 
 
 
@@ -65,13 +79,13 @@ df is a dataframe with metadata about each of them.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 34-37
+.. GENERATED FROM PYTHON SOURCE LINES 48-51
 
 Extract a mask for the visual cortex from Yeo Atlas
 ---------------------------------------------------
 First, we fetch and plot the complete atlas
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-60
+.. GENERATED FROM PYTHON SOURCE LINES 51-74
 
 .. code-block:: Python
 
@@ -94,7 +108,7 @@ First, we fetch and plot the complete atlas
         resampled_mask_visual,
         title="Visual regions mask extracted from atlas",
         cut_coords=(8, -80, 9),
-        colorbar=True,
+        colorbar=False,
         cmap="Paired",
     )
 
@@ -111,20 +125,20 @@ First, we fetch and plot the complete atlas
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:41: DeprecationWarning: From release >=0.13.0, instead of returning several atlas image accessible via different keys, this fetcher will return the atlas as a dictionary with a single atlas image, accessible through a 'maps' key. To suppress this warning, Please use the parameters 'n_networks' and 'thickness' to specify the exact atlas image you want.
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:55: DeprecationWarning: From release >=0.13.0, instead of returning several atlas image accessible via different keys, this fetcher will return the atlas as a dictionary with a single atlas image, accessible through a 'maps' key. To suppress this warning, Please use the parameters 'n_networks' and 'thickness' to specify the exact atlas image you want.
       atlas_yeo_2011 = datasets.fetch_atlas_yeo_2011()
     [fetch_atlas_yeo_2011] Dataset found in /home/runner/nilearn_data/yeo_2011
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:47: FutureWarning: 'force_resample' will be set to 'True' by default in Nilearn 0.13.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:61: FutureWarning: 'force_resample' will be set to 'True' by default in Nilearn 0.13.0.
     Use 'force_resample=True' to suppress this warning.
       resampled_mask_visual = resample_to_img(
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:47: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:61: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
       resampled_mask_visual = resample_to_img(
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fa0e0510710>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f1c2fe0c9b0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-66
+.. GENERATED FROM PYTHON SOURCE LINES 75-80
 
 Define a masker
 ---------------
@@ -132,7 +146,7 @@ We define a nilearn masker that will be used to handle relevant data.
 For more information, visit :
 'http://nilearn.github.io/manipulating_images/masker_objects.html'
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-71
+.. GENERATED FROM PYTHON SOURCE LINES 80-85
 
 .. code-block:: Python
 
@@ -148,7 +162,7 @@ For more information, visit :
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-81
+.. GENERATED FROM PYTHON SOURCE LINES 86-93
 
 Prepare the data
 ----------------
@@ -156,62 +170,48 @@ For each subject, for each task and conditions, our dataset contains two
 independent acquisitions, similar except for one acquisition parameter, the
 encoding phase used that was either Antero-Posterior (AP) or
 Postero-Anterior (PA). Although this induces small differences
-in the final data, we will take  advantage of these pseudo-duplicates to
-create a training and a testing set that contains roughly the same signals
-but acquired independently.
+in the final data, we will take  advantage of these pseudo-duplicates to define training and test samples.
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-108
+.. GENERATED FROM PYTHON SOURCE LINES 93-121
 
 .. code-block:: Python
 
 
-    # The training set, used to learn alignment from source subject toward target:
-    # * source train: AP contrasts for subject sub-01
-    # * target train: AP contrasts for subject sub-02
+    # The training set:
+    # * source_train: AP acquisitions from source subjects (sub-01, sub-02).
+    # * target_train: AP acquisitions from the target subject (sub-04).
     #
 
-    source_train = concat_imgs(
-        df[df.subject == "sub-01"][df.acquisition == "ap"].path.values
-    )
+    source_subjects = [sub for sub in sub_ids if sub != "sub-04"]
+    source_train = [
+        concat_imgs(df[(df.subject == sub) & (df.acquisition == "ap")].path.values)
+        for sub in source_subjects
+    ]
     target_train = concat_imgs(
-        df[df.subject == "sub-02"][df.acquisition == "ap"].path.values
+        df[(df.subject == "sub-04") & (df.acquisition == "ap")].path.values
     )
 
     # The testing set:
-    # * source test: PA contrasts for subject one, used to predict
-    #   the corresponding contrasts of subject sub-01
-    # * target test: PA contrasts for subject sub-02, used as a ground truth
-    #   to score our predictions
+    # * source_test: PA acquisitions from source subjects (sub-01, sub-02).
+    # * target test: PA acquisitions from the target subject (sub-04).
     #
 
-    source_test = concat_imgs(
-        df[df.subject == "sub-01"][df.acquisition == "pa"].path.values
-    )
+    source_test = [
+        concat_imgs(df[(df.subject == sub) & (df.acquisition == "pa")].path.values)
+        for sub in source_subjects
+    ]
     target_test = concat_imgs(
-        df[df.subject == "sub-02"][df.acquisition == "pa"].path.values
+        df[(df.subject == "sub-04") & (df.acquisition == "pa")].path.values
     )
 
 
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:88: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-      df[df.subject == "sub-01"][df.acquisition == "ap"].path.values
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:91: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-      df[df.subject == "sub-02"][df.acquisition == "ap"].path.values
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:102: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-      df[df.subject == "sub-01"][df.acquisition == "pa"].path.values
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:105: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-      df[df.subject == "sub-02"][df.acquisition == "pa"].path.values
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 109-115
+.. GENERATED FROM PYTHON SOURCE LINES 122-128
 
 Choose the number of regions for local alignment
 ------------------------------------------------
@@ -220,7 +220,7 @@ regions so that each of them is approximately 100 voxels wide. Then our
 estimator will first make a functional clustering of voxels based on train
 data to divide them into meaningful regions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 115-123
+.. GENERATED FROM PYTHON SOURCE LINES 128-136
 
 .. code-block:: Python
 
@@ -246,90 +246,57 @@ data to divide them into meaningful regions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-136
+.. GENERATED FROM PYTHON SOURCE LINES 137-148
 
 Define the estimators, fit them and do a prediction
 ---------------------------------------------------
 On each region, we search for a transformation R that is either :
   *  orthogonal, i.e. R orthogonal, scaling sc s.t. ||sc RX - Y ||^2 is minimized
-  *  a ridge regression : ||XR - Y||^2 + alpha *||R||^2 with a L2 penalization
-     on the norm of R.
   *  the optimal transport plan, which yields the minimal transport cost
-      while respecting the mass conservation constraints. Calculated with
-      entropic regularization.
-  *  we also include identity (no alignment) as a baseline.
-Then for each method we define the estimator fit it, predict the new image and plot
+     while respecting the mass conservation constraints. Calculated with
+     entropic regularization.
+  *  the shared response model (SRM), which computes a shared response space
+     from different subjects, and then projects individual subject data into it.
+Then for each method we define the estimator, fit it, predict the new image and plot
 its correlation with the real signal.
 
-.. GENERATED FROM PYTHON SOURCE LINES 136-168
+.. GENERATED FROM PYTHON SOURCE LINES 150-152
+
+Fit and score the Orthogonal and Optimal Transport estimators
+---------------------------------------------------------------
+
+.. GENERATED FROM PYTHON SOURCE LINES 152-178
 
 .. code-block:: Python
 
-
     from fmralign.metrics import score_voxelwise
-    from fmralign.pairwise_alignment import PairwiseAlignment
+    from fmralign.template_alignment import TemplateAlignment
 
-    methods = ["identity", "scaled_orthogonal", "ridge_cv", "optimal_transport"]
+    methods = ["scaled_orthogonal", "optimal_transport"]
 
-    for method in methods:
-        alignment_estimator = PairwiseAlignment(
-            alignment_method=method,
-            clustering="ward",
-            n_pieces=n_pieces,
-            masker=roi_masker,
+    # Prepare to store the results
+    titles, aligned_scores = [], []
+
+    for i, method in enumerate(methods):
+        alignment_estimator = TemplateAlignment(
+            alignment_method=method, n_pieces=n_pieces, masker=roi_masker
         )
-        alignment_estimator.fit(source_train, target_train)
-        target_pred = alignment_estimator.transform(source_test)
+        alignment_estimator.fit(source_train)
+        target_pred = alignment_estimator.transform(target_train)
 
         # derive correlation between prediction, test
         method_error = score_voxelwise(
             target_test, target_pred, masker=roi_masker, loss="corr"
         )
 
-        # plot correlation for each method
+        # store the results for plotting later
         aligned_score = roi_masker.inverse_transform(method_error)
-        title = f"Correlation of prediction after {method} alignment"
-        display = plotting.plot_stat_map(
-            aligned_score,
-            display_mode="z",
-            cut_coords=[-15, -5],
-            vmax=1,
-            title=title,
-        )
+        titles.append(f"Correlation of prediction after {method} alignment")
+        aligned_scores.append(aligned_score)
 
 
 
 
-.. rst-class:: sphx-glr-horizontal
-
-
-    *
-
-      .. image-sg:: /auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_002.png
-         :alt: plot alignment methods benchmark
-         :srcset: /auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_002.png
-         :class: sphx-glr-multi-img
-
-    *
-
-      .. image-sg:: /auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_003.png
-         :alt: plot alignment methods benchmark
-         :srcset: /auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_003.png
-         :class: sphx-glr-multi-img
-
-    *
-
-      .. image-sg:: /auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_004.png
-         :alt: plot alignment methods benchmark
-         :srcset: /auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_004.png
-         :class: sphx-glr-multi-img
-
-    *
-
-      .. image-sg:: /auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_005.png
-         :alt: plot alignment methods benchmark
-         :srcset: /auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_005.png
-         :class: sphx-glr-multi-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -343,13 +310,13 @@ its correlation with the real signal.
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    [PairwiseAlignment.fit] Resampling mask
+    [TemplateAlignment.fit] Resampling mask
     /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/joblib/memory.py:326: UserWarning: Data array used to create a new image contains 64-bit ints. This is likely due to creating the array with numpy and passing `int` as the `dtype`. Many tools such as FSL and SPM cannot deal with int64 in Nifti images, so for compatibility the data has been converted to int32.
+      return self.func(*args, **kwargs)
     /home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
       pearsonr(X_gt[:, vox], X_pred[:, vox])[
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:160: UserWarning: Non-finite values detected. These values will be replaced with zeros.
-      display = plotting.plot_stat_map(
     /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
     Parameter mask_strategy :
         Masker parameter background - overriding estimator parameter epi
@@ -357,57 +324,131 @@ its correlation with the real signal.
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    [PairwiseAlignment.fit] Resampling mask
+    [TemplateAlignment.fit] Resampling mask
     /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/joblib/memory.py:326: UserWarning: Data array used to create a new image contains 64-bit ints. This is likely due to creating the array with numpy and passing `int` as the `dtype`. Many tools such as FSL and SPM cannot deal with int64 in Nifti images, so for compatibility the data has been converted to int32.
+      return self.func(*args, **kwargs)
     /home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
       pearsonr(X_gt[:, vox], X_pred[:, vox])[
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:160: UserWarning: Non-finite values detected. These values will be replaced with zeros.
-      display = plotting.plot_stat_map(
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
-    Parameter mask_strategy :
-        Masker parameter background - overriding estimator parameter epi
-    Parameter smoothing_fwhm :
-        Masker parameter None - overriding estimator parameter 4.0
-
-      parcellation.fit(images_to_parcel)
-    [PairwiseAlignment.fit] Resampling mask
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
-      connectivity, n_connected_components = _fix_connectivity(
-    /home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
-      pearsonr(X_gt[:, vox], X_pred[:, vox])[
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:160: UserWarning: Non-finite values detected. These values will be replaced with zeros.
-      display = plotting.plot_stat_map(
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
-    Parameter mask_strategy :
-        Masker parameter background - overriding estimator parameter epi
-    Parameter smoothing_fwhm :
-        Masker parameter None - overriding estimator parameter 4.0
-
-      parcellation.fit(images_to_parcel)
-    [PairwiseAlignment.fit] Resampling mask
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
-      connectivity, n_connected_components = _fix_connectivity(
-    /home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
-      pearsonr(X_gt[:, vox], X_pred[:, vox])[
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:160: UserWarning: Non-finite values detected. These values will be replaced with zeros.
-      display = plotting.plot_stat_map(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 169-174
+.. GENERATED FROM PYTHON SOURCE LINES 179-181
 
-We can observe that all alignment methods perform better than identity
-(no alignment). Ridge is the best performing method, followed by Optimal
-Transport. If you use Ridge though, be careful about the smooth predictions
-it yields.
+Fit and score the SRM estimator
+--------------------------------
 
+.. GENERATED FROM PYTHON SOURCE LINES 181-215
+
+.. code-block:: Python
+
+
+    # The IdentifiableFastSRM version of SRM ensures that the solution is unique.
+    from fastsrm.identifiable_srm import IdentifiableFastSRM
+
+    srm = IdentifiableFastSRM(
+        n_components=30,
+        n_iter=10,
+    )
+
+    # Step 1: Fit SRM on training data from source subjects
+    shared_response = srm.fit_transform(
+        [roi_masker.transform(s).T for s in source_train]
+    )
+
+    # Step 2: Freeze the SRM model and add target subject data. This projects the
+    # target subject data into the shared response space.
+    srm.aggregate = None
+    srm.add_subjects([roi_masker.transform(target_train).T], shared_response)
+
+    # Step 3: Use SRM to transform new test data from the target subject
+    aligned_test = srm.transform([roi_masker.transform(target_test).T])
+    aligned_pred = roi_masker.inverse_transform(
+        srm.inverse_transform(aligned_test[0])[0].T
+    )
+
+    # Step 4: Evaluate voxelwise correlation between predicted and true test
+    # signals. Store the results for plotting later.
+    srm_error = score_voxelwise(
+        target_test, aligned_pred, masker=roi_masker, loss="corr"
+    )
+    srm_score = roi_masker.inverse_transform(srm_error)
+    titles.append("Correlation of prediction after SRM alignment")
+    aligned_scores.append(srm_score)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    ProbSRM did not converge. Current diff is 23.758430
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 216-218
+
+Plot the results
+---------------
+
+.. GENERATED FROM PYTHON SOURCE LINES 218-235
+
+.. code-block:: Python
+
+    import matplotlib.pyplot as plt
+
+    fig, axes = plt.subplots(3, 1, figsize=(8, 12))
+
+    for i, (score, title) in enumerate(zip(aligned_scores, titles)):
+        plotting.plot_stat_map(
+            score,
+            display_mode="z",
+            cut_coords=[-15, -5],
+            vmax=1,
+            title=title,
+            axes=axes[i],
+            colorbar=True,
+        )
+
+    plt.show()
+
+
+
+
+.. image-sg:: /auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_002.png
+   :alt: plot alignment methods benchmark
+   :srcset: /auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_002.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:223: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+      plotting.plot_stat_map(
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 236-242
+
+Summary:
+--------
+We compared TemplateAlignment methods (scaled orthogonal, optimal transport)
+with SRM-based alignment on visual cortex activity.
+You can see that SRM introduces the most smoothness in the transformation,
+resulting in higher correlation values.
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 50.862 seconds)
+   **Total running time of the script:** (1 minutes 6.201 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_methods_benchmark.py:

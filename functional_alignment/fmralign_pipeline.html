@@ -13,17 +13,17 @@
 <meta name="description" content="As seen in the previous section, functional alignment searches for a transform between images of two or several subjects in order to match voxels which have similar profile of activation. This sect..." />
 <link rel="search" title="Search" href="../search.html" /><link rel="next" title="3. Reference documentation: all fmralign functions" href="../modules/reference.html" /><link rel="prev" title="2.1. An introduction to functional alignment" href="introduction.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
         <title>2.2. Functional alignment pipeline - fmralign</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=2da93098" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=25af2a20" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=b8ac60d5" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
@@ -218,7 +218,6 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
-  
   <span class="sidebar-brand-text">fmralign</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
@@ -233,9 +232,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../auto_examples/plot_template_alignment.html">Template-based prediction.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../auto_examples/plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../auto_examples/plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../auto_examples/plot_alignment_methods_benchmark.html">Alignment methods benchmark (pairwise ROI case).</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../auto_examples/plot_surf_alignment.html">Pairwise surface alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../auto_examples/plot_alignment_simulated_2D_data.html">Alignment on simulated 2D data.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../auto_examples/plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../user_guide.html">User guide</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of User guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -401,7 +400,7 @@ while minimizign the overall cost of this transport. <cite>R</cite> is here the 
 <aside class="topic">
 <p class="topic-title"><strong>Full code example</strong></p>
 <p>The full code example of this section is :
-<a class="reference internal" href="../auto_examples/plot_alignment_methods_benchmark.html#sphx-glr-auto-examples-plot-alignment-methods-benchmark-py"><span class="std std-ref">Alignment methods benchmark (pairwise ROI case).</span></a>.</p>
+<a class="reference internal" href="../auto_examples/plot_alignment_methods_benchmark.html#sphx-glr-auto-examples-plot-alignment-methods-benchmark-py"><span class="std std-ref">Alignment methods benchmark (template-based ROI case)</span></a>.</p>
 </aside>
 <p>Now let’s compare the performance of these various methods on our simple example:
 the prediction of left-out data for a new subject from another subjects data.</p>
@@ -435,7 +434,7 @@ with metadata about each of them.</p>
 </pre></div>
 </div>
 <figure class="align-left">
-<a class="reference internal image-reference" href="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png"><img alt="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png" src="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png" style="width: 219.0px; height: 105.0px;" />
+<a class="reference internal image-reference" href="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png"><img alt="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png" src="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png" style="width: 198.0px; height: 105.0px;" />
 </a>
 </figure>
 </section>
@@ -504,9 +503,9 @@ the correlation of this prediction with the real signal. We also include identit
 </pre></div>
 </div>
 <img alt="../_images/sphx_glr_plot_alignment_methods_benchmark_002.png" src="../_images/sphx_glr_plot_alignment_methods_benchmark_002.png" />
-<img alt="../_images/sphx_glr_plot_alignment_methods_benchmark_003.png" src="../_images/sphx_glr_plot_alignment_methods_benchmark_003.png" />
-<img alt="../_images/sphx_glr_plot_alignment_methods_benchmark_004.png" src="../_images/sphx_glr_plot_alignment_methods_benchmark_004.png" />
-<img alt="../_images/sphx_glr_plot_alignment_methods_benchmark_005.png" src="../_images/sphx_glr_plot_alignment_methods_benchmark_005.png" />
+<img alt="auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_003.png" src="auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_003.png" />
+<img alt="auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_004.png" src="auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_004.png" />
+<img alt="auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_005.png" src="auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_005.png" />
 <p>We can observe that all alignment methods perform better than identity (no alignment).
 Ridge is the best performing method, followed by Optimal Transport. If you use
 Ridge though, be careful about the smooth predictions it yields.</p>
@@ -599,7 +598,7 @@ Ridge though, be careful about the smooth predictions it yields.</p>
 </div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=4ea706d9"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>

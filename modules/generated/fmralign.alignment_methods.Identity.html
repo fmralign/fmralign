@@ -11,17 +11,17 @@
 <meta property="og:image:alt" content="Nilearn" />
 <link rel="search" title="Search" href="../../search.html" /><link rel="next" title="3.3.2. fmralign.alignment_methods.DiagonalAlignment" href="fmralign.alignment_methods.DiagonalAlignment.html" /><link rel="prev" title="3.2.1. fmralign.template_alignment.TemplateAlignment" href="fmralign.template_alignment.TemplateAlignment.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
         <title>3.3.1. fmralign.alignment_methods.Identity - fmralign</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=2da93098" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=25af2a20" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=b8ac60d5" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
@@ -216,7 +216,6 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
   
-  
   <span class="sidebar-brand-text">fmralign</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
@@ -231,9 +230,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_template_alignment.html">Template-based prediction.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_alignment_methods_benchmark.html">Alignment methods benchmark (pairwise ROI case).</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_surf_alignment.html">Pairwise surface alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_alignment_simulated_2D_data.html">Alignment on simulated 2D data.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../../user_guide.html">User guide</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of User guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
@@ -326,11 +325,11 @@ signature, and not how to use it. Please refer to the
 <h1><span class="section-number">3.3.1. </span>fmralign.alignment_methods.Identity<a class="headerlink" href="#fmralign-alignment-methods-identity" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="fmralign.alignment_methods.Identity">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fmralign.alignment_methods.</span></span><span class="sig-name descname"><span class="pre">Identity</span></span><a class="reference external" href="https://github.com/nilearn/nilearn/blob/eb207de/nilearn/../../../../../fmralign/alignment_methods.py#L133"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../../_modules/fmralign/alignment_methods.html#Identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.alignment_methods.Identity" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fmralign.alignment_methods.</span></span><span class="sig-name descname"><span class="pre">Identity</span></span><a class="reference external" href="https://github.com/nilearn/nilearn/blob/177a155/nilearn/../../../../../fmralign/alignment_methods.py#L133"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="reference internal" href="../../_modules/fmralign/alignment_methods.html#Identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.alignment_methods.Identity" title="Link to this definition">¶</a></dt>
 <dd><p>Compute no alignment, used as baseline for benchmarks : RX = X.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="fmralign.alignment_methods.Identity.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/nilearn/nilearn/blob/eb207de/nilearn/../../../../../fmralign/alignment_methods.py#L123"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.alignment_methods.Identity.__init__" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/nilearn/nilearn/blob/177a155/nilearn/../../../../../fmralign/alignment_methods.py#L123"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.alignment_methods.Identity.__init__" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -411,7 +410,7 @@ signature, and not how to use it. Please refer to the
 </div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=4ea706d9"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>

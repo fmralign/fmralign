@@ -122,7 +122,9 @@ First, we fetch and plot the complete atlas
     [fetch_atlas_yeo_2011] Dataset created in /home/runner/nilearn_data/yeo_2011
     [fetch_atlas_yeo_2011] Downloading data from 
     ftp://surfer.nmr.mgh.harvard.edu/pub/data/Yeo_JNeurophysiol11_MNI152.zip ...
-    [fetch_atlas_yeo_2011]  ...done. (1 seconds, 0 min)
+    [fetch_atlas_yeo_2011] Downloaded 1007616 of ? bytes.
+    [fetch_atlas_yeo_2011] Downloaded 2048000 of ? bytes.
+    [fetch_atlas_yeo_2011]  ...done. (4 seconds, 0 min)
 
     [fetch_atlas_yeo_2011] Extracting data from 
     /home/runner/nilearn_data/yeo_2011/622858b56913b19ae0865d9fa8ad47cc/Yeo_JNeuroph
@@ -135,7 +137,7 @@ First, we fetch and plot the complete atlas
     /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:52: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
       resampled_mask_visual = resample_to_img(
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fa0e0d70290>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f1c241cd670>
 
 
 
@@ -371,7 +373,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 16.013 seconds)
+   **Total running time of the script:** (0 minutes 18.873 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_roi_alignment.py:
