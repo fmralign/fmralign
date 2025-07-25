@@ -153,8 +153,6 @@ from fmralign.template_alignment import TemplateAlignment
 methods = ["scaled_orthogonal", "optimal_transport"]
 
 # The IdentifiableFastSRM version of SRM ensures that the solution is unique.
-#
-
 from fastsrm.identifiable_srm import IdentifiableFastSRM
 
 srm = IdentifiableFastSRM(
