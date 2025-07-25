@@ -89,7 +89,7 @@ roi_masker = NiftiMasker(mask_img=resampled_mask_visual).fit()
 # independent acquisitions, similar except for one acquisition parameter, the
 # encoding phase used that was either Antero-Posterior (AP) or
 # Postero-Anterior (PA). Although this induces small differences
-# in the final data, we will take  advantage of these pseudo-duplicates later.
+# in the final data, we will take  advantage of these pseudo-duplicates to define training and test samples.
 
 # The training set:
 # * source_train: AP acquisitions from source subjects (sub-01, sub-02).
