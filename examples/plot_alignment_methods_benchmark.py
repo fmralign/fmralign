@@ -146,7 +146,9 @@ print(f"We will cluster them in {n_pieces} regions")
 # Then for each method we define the estimator, fit it, predict the new image and plot
 # its correlation with the real signal.
 
-
+################################################################################
+# Fit and score the Orthogonal and Optimal Transport estimators
+# ---------------------------------------------------------------
 from fmralign.metrics import score_voxelwise
 from fmralign.template_alignment import TemplateAlignment
 
