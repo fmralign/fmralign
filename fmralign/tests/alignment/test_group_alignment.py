@@ -10,7 +10,7 @@ def test_alignment_template():
     X = dict(enumerate(subjects_data))
 
     algo = GroupAlignment(labels=labels)
-    algo.fit(X, y=None)
+    algo.fit(X, y="template")
 
     assert len(algo.fitted_estimators) == len(X)
     assert algo.template.shape == X[0].shape

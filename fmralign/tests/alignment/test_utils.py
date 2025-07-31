@@ -90,7 +90,7 @@ def test_check_target():
     """Test the target checking function."""
     subjects_data, _ = sample_subjects()
 
-    y = _check_target(subjects_data[0], None)
+    y = _check_target(subjects_data[0], "template")
     assert y is None  # Template alignment should return None
 
     y = _check_target(subjects_data[0], subjects_data[0])

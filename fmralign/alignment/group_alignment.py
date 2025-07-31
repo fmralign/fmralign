@@ -78,7 +78,7 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
         self.scale_template = scale_template
         self.template = None
 
-    def fit(self, X, y=None) -> None:
+    def fit(self, X, y="template") -> None:
         """Fit the group alignment model to the data.
 
         Parameters
@@ -87,8 +87,8 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
             Dictionary where keys are subject identifiers and values are
             arrays of subject data. Each array should have the same number of
             samples and features.
-        y : array-like or None, default=None
-            Target for alignment. If None, performs template alignment where
+        y : str or array-like, default="template"
+            Target for alignment. If "template", performs template alignment where
             a template is computed from all subjects. If array-like, performs
             pairwise alignment to the specified target data.
         """

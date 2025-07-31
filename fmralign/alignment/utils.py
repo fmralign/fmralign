@@ -94,7 +94,7 @@ def _check_target(X, y):
     X : array-like
         Input data used for validation. It should be a 2D array of shape
         (n_samples, n_features).
-    y : array-like or None
+    y : array-like or str
         Target for alignment. If array-like, it should have the same shape as the input data.
 
     Returns
@@ -102,7 +102,7 @@ def _check_target(X, y):
     y_ : ndarray or None
         Validated target data for alignment.
     """
-    if y is None:
+    if isinstance(y, str) and y.lower() == "template":
         return None
     if isinstance(y, np.ndarray):
         if y.shape != X.shape:
