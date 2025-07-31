@@ -2,6 +2,7 @@ from numpy.testing import assert_array_equal
 
 from fmralign import GroupAlignment
 from fmralign.tests.utils import sample_subjects
+from fmralign.methods import Identity
 
 
 def test_alignment_template():
@@ -12,6 +13,7 @@ def test_alignment_template():
     algo = GroupAlignment(labels=labels)
     algo.fit(X, y="template")
 
+    assert isinstance(algo.method_, Identity)
     assert len(algo.fitted_estimators) == len(X)
     assert algo.template.shape == X[0].shape
     for i, x in enumerate(X):
@@ -28,6 +30,7 @@ def test_alignment_target():
     algo = GroupAlignment(labels=labels)
     algo.fit(X, y=target)
 
+    assert isinstance(algo.method_, Identity)
     assert len(algo.fitted_estimators) == len(X)
     assert algo.template is None
     for i, x in enumerate(X):
