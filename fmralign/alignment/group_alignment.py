@@ -105,7 +105,7 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
                 self.method_,
                 self.labels_,
                 self.n_jobs,
-                max(self.verbose - 1, 0),
+                self.verbose,
                 self.n_iter,
                 self.scale_template,
             )
@@ -116,7 +116,7 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
                 self.method_,
                 self.labels_,
                 self.n_jobs,
-                max(self.verbose - 1, 0),
+                self.verbose,
             )
 
         self.fitted_estimators = dict(zip(self.subject_keys_, fit_))

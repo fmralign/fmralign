@@ -251,10 +251,7 @@ def _map_to_target(
     for subject_data in X:
         if n_labels > 1:
             estimator = PiecewiseAlignment(
-                method=method,
-                labels=labels,
-                n_jobs=n_jobs,
-                verbose=max(verbose - 1, 0),
+                method=method, labels=labels, n_jobs=n_jobs, verbose=verbose
             )
             estimator.fit(subject_data, target_data)
             fitted_estimators.append(estimator)
@@ -309,13 +306,6 @@ def _fit_template(
     # Fit template alignment
     for _ in range(n_iter):
         template = _rescaled_euclidean_mean(aligned_data, scale_template)
-        fit_ = _map_to_target(
-            X,
-            template,
-            method,
-            labels,
-            n_jobs,
-            max(verbose - 1, 0),
-        )
+        fit_ = _map_to_target(X, template, method, labels, n_jobs, verbose)
         aligned_data = [fit_[i].transform(X[i]) for i in range(len(X))]
     return fit_, template

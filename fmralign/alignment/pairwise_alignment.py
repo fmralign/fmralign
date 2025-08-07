@@ -83,7 +83,7 @@ class PairwiseAlignment(BaseEstimator, TransformerMixin):
             self.method_,
             self.labels_,
             self.n_jobs,
-            max(self.verbose - 1, 0),
+            self.verbose,
         )
 
         self.fitted_estimator = fit_[0]
