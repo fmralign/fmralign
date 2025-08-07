@@ -190,5 +190,5 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
         Will raise AttributeError if called.
         """
         raise AttributeError(
-            "type object 'PairwiseAlignment' has no 'fit_transform' attribute"
+            "type object 'GroupwiseAlignment' has no 'fit_transform' attribute"
         )
