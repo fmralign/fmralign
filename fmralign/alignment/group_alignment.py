@@ -50,7 +50,7 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
     --------
     >>> # Template alignment
     >>> aligner = GroupAlignment(method="procrustes", n_iter=3)
-    >>> aligner.fit(alignment_dict)
+    >>> aligner.fit(alignment_dict, target="template")
     >>> aligned_data = aligner.transform(testing_dict)
 
     >>> # Pairwise alignment to target
