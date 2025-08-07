@@ -74,6 +74,7 @@ def _list_to_array(lst, labels):
         List of arrays, where each array corresponds to a unique label.
     labels : list or ndarray
         Labels for each sample.
+
     Returns
     -------
     ndarray
