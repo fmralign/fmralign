@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from numpy.testing import assert_array_almost_equal
+from numpy.testing import assert_array_equal
 
 from fmralign.methods import (
     Identity,
@@ -42,7 +42,7 @@ def test_transform_one_piece():
     method = Identity()
     fitted_piece = _fit_one_piece(X, X, method)
     transformed_piece = _transform_one_piece(X, fitted_piece)
-    assert_array_almost_equal(transformed_piece, X)
+    assert_array_equal(transformed_piece, X)
 
 
 def test_array_to_list():
@@ -62,9 +62,9 @@ def test_list_to_array():
     labels = np.array([0, 1, 0, 1, 2])
     result = _list_to_array(lst, labels)
     assert result.shape == (10, 5)  # Should match original shape
-    assert_array_almost_equal(result[:, labels == 0], lst[0])
-    assert_array_almost_equal(result[:, labels == 1], lst[1])
-    assert_array_almost_equal(result[:, labels == 2], lst[2])
+    assert_array_equal(result[:, labels == 0], lst[0])
+    assert_array_equal(result[:, labels == 1], lst[1])
+    assert_array_equal(result[:, labels == 2], lst[2])
 
 
 @pytest.mark.parametrize("method", methods)
