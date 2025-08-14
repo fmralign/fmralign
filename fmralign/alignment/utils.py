@@ -195,7 +195,7 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
 
         if (counts > threshold).any():
             warning = (
-                "\n Some parcels are more than 1000 voxels wide it can slow down alignment,"
+                f"\n Some parcels are more than {threshold} voxels wide it can slow down alignment,"
                 "especially optimal_transport :"
             )
             for i in range(len(counts)):
