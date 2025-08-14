@@ -161,7 +161,7 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
         The data array of shape (n_samples, n_features).
     labels : 1D np.ndarray or None
         Labels for the parcellation of the data.
-    threshold : int
+    threshold : int, default=1000
         The threshold for the maximum size of a parcel. If any parcel exceeds this size,
         a warning will be raised.
     verbose : int
