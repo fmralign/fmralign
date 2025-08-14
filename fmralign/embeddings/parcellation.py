@@ -23,20 +23,22 @@ def get_labels(
     ----------
     imgs: Niimgs
         data to cluster
-    clustering: string or 3D Niimg
-        If you aim for speed, choose k-means (and check kmeans_smoothing_fwhm parameter)
-        If you want spatially connected and/or reproducible regions use 'ward'
-        If you want balanced clusters (especially from timeseries) used 'hierarchical_kmeans'
-        If 3D Niimg, image used as predefined clustering, n_pieces is ignored
     n_pieces: int
         number of different labels
     masker: a fitted instance of NiftiMasker or MultiNiftiMasker
         Masker to be used on the data. For more information see:
         http://nilearn.github.io/manipulating_images/masker_objects.html
+    clustering: string or 3D Niimg
+        If you aim for speed, choose k-means (and check kmeans_smoothing_fwhm parameter)
+        If you want spatially connected and/or reproducible regions use 'ward'
+        If you want balanced clusters (especially from timeseries) used 'hierarchical_kmeans'
+        If 3D Niimg, image used as predefined clustering, n_pieces is ignored
     smoothing_fwhm: None or int
         By default 5mm smoothing will be applied before kmeans clustering to have
         more compact clusters (but this will not change the data later).
         To disable this option, this parameter should be None.
+    verbose: int, default=0
+        Verbosity level.
 
     Returns
     -------
