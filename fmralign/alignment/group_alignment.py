@@ -50,13 +50,25 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
 
     Examples
     --------
+    >>> import numpy as np
+    >>> from fmralign import GroupAlignment
+    >>> n_voxels = 5
+
     >>> # Template alignment
+    >>> alignment_dict = {
+    ...     "sub-01": np.random.rand(10, n_voxels),
+    ...     "sub-02": np.random.rand(10, n_voxels),
+    ... }
+    >>> testing_dict = {
+    ...     "sub-01": np.random.rand(8, n_voxels),
+    ...     "sub-02": np.random.rand(8, n_voxels),
+    ... }
     >>> aligner = GroupAlignment(method="procrustes", n_iter=3)
-    >>> aligner.fit(alignment_dict, target="template")
+    >>> aligner.fit(alignment_dict, y="template")
     >>> aligned_data = aligner.transform(testing_dict)
 
     >>> # Pairwise alignment to target
-    >>> target_data = np.array([[1, 2], [3, 4]])
+    >>> target_data = np.random.rand(10, n_voxels)
     >>> aligner = GroupAlignment(method="procrustes")
     >>> aligner.fit(alignment_dict, y=target_data)
     >>> aligned_data = aligner.transform(testing_dict)
