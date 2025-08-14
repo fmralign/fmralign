@@ -143,12 +143,6 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
         ValueError
             If the estimator has not been fitted yet.
         """
-        # Check if estimator is fitted
-        if not hasattr(estimator, "fit"):
-            raise ValueError(
-                "This instance has not been fitted yet. "
-                "Please call 'fit' before 'transform'."
-            )
         return estimator.transform(X)
 
     def transform(self, X):
