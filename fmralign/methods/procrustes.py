@@ -41,7 +41,7 @@ def scaled_procrustes(X, Y, scaling=False, primal=None):
     if primal:
         A = Y.T.dot(X)
         if A.shape[0] == A.shape[1]:
-            A += +1.0e-18 * np.eye(A.shape[0])
+            A += 1.0e-18 * np.eye(A.shape[0])
         U, s, V = linalg.svd(A, full_matrices=0)
         R = U.dot(V)
     else:  # "dual" mode
