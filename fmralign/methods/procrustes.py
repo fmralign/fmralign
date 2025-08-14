@@ -26,7 +26,7 @@ def scaled_procrustes(X, Y, scaling=False, primal=None):
          if None primal is used iff n_features <= n_timeframes
 
     Returns
-    ----------
+    -------
     R: (n_features, n_features) nd array
         transformation matrix
     sc: int
