@@ -164,7 +164,7 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
     threshold : int, default=1000
         The threshold for the maximum size of a parcel. If any parcel exceeds this size,
         a warning will be raised.
-    verbose : int
+    verbose : int, default=0
         Verbosity level. If greater than 0, prints the sizes of the parcels.
 
     Returns
@@ -288,7 +288,7 @@ def _fit_template(
     n_jobs : int, default=1
         Number of jobs to run in parallel. If -1, all CPUs are used.
         If 1, no parallel computing code is used at all, by default 1
-    verbose : int, optional
+    verbose : int, default=0
         Verbosity level, by default 0
     n_iter : int, optional
         Number of template updates, by default 2

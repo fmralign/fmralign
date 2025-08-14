@@ -106,7 +106,7 @@ class PiecewiseAlignment(BaseAlignment):
         Alignment method to be used for each piece.
     labels : 1D np.ndarray
         Labels used to determine how to split the data between parcels.
-    n_jobs : int, optional
+    n_jobs : int, default=1
         Number of jobs to run in parallel. Default is 1.
     verbose : int, optional
         Verbosity level. Default is 0.
