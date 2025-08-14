@@ -95,7 +95,7 @@ average_subject = masker.inverse_transform(average_img)
 #     new template space.
 #
 
-from fmralign.template.template_alignment import TemplateAlignment
+from fmralign.template_alignment import TemplateAlignment
 
 # We use Procrustes/scaled orthogonal alignment method
 template_estim = TemplateAlignment(

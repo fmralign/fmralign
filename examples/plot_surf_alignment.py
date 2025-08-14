@@ -68,7 +68,7 @@ surf_target_train = project_to_surface(target_train)
 # a rigid piecewise alignment mapping and the `ward` clustering method to
 # parcellate the cortical surface.
 
-from fmralign.pairwise.pairwise_alignment import PairwiseAlignment
+from fmralign.pairwise_alignment import PairwiseAlignment
 
 alignment_estimator = PairwiseAlignment(
     alignment_method="scaled_orthogonal",

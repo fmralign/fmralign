@@ -172,9 +172,9 @@ _plot_distributions_and_alignment(
 # source `X` and the target `Y` that will handle that. Now we will showcase
 # on our simple 2D example different kind of transformation we can look for.
 
-from fmralign.methods.alignment_methods import (
-    OptimalTransport,
-    ScaledOrthogonal,
+from fmralign.alignment_methods import (
+    OptimalTransportAlignment,
+    ScaledOrthogonalAlignment,
 )
 
 ###############################################################################
@@ -184,7 +184,7 @@ from fmralign.methods.alignment_methods import (
 # matrix `R` and a scaling `sc` such that Frobenius norm: math:
 # ` | |sc RX - Y | | ^ 2` is minimized.
 
-scaled_orthogonal_alignment = ScaledOrthogonal()
+scaled_orthogonal_alignment = ScaledOrthogonalAlignment()
 scaled_orthogonal_alignment.fit(X.T, Y.T)
 _plot_distributions_and_alignment(
     X,
@@ -208,7 +208,7 @@ _plot_mixing_matrix(
 # This way of finding a transform uses more geometrical information from the
 # distributions.
 
-ot_alignment = OptimalTransport(reg=0.1)
+ot_alignment = OptimalTransportAlignment(reg=0.1)
 ot_alignment.fit(X.T, Y.T)
 _plot_distributions_and_alignment(
     X, Y, R=ot_alignment.R, title="Optimal Transport", thr=0.1

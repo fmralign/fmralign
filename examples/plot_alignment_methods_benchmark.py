@@ -135,7 +135,7 @@ print(f"We will cluster them in {n_pieces} regions")
 # its correlation with the real signal.
 
 from fmralign.metrics import score_voxelwise
-from fmralign.pairwise.pairwise_alignment import PairwiseAlignment
+from fmralign.pairwise_alignment import PairwiseAlignment
 
 methods = ["identity", "scaled_orthogonal", "ridge_cv", "optimal_transport"]
 

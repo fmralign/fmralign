@@ -119,7 +119,7 @@ target_test = concat_imgs(
 # predict target test data.
 #
 
-from fmralign.pairwise.pairwise_alignment import PairwiseAlignment
+from fmralign.pairwise_alignment import PairwiseAlignment
 
 alignment_estimator = PairwiseAlignment(
     alignment_method="scaled_orthogonal", n_pieces=1, masker=roi_masker
