@@ -5,6 +5,7 @@ import numpy as np
 
 
 def test_get_adjacency_from_mask():
+    """Test get_adjacency_from_mask on a simple 2x2 mask."""
     _, mask_img = random_niimg((2, 2, 1))
     out = get_adjacency_from_mask(mask_img, radius=1)
     expected = np.matrix(

@@ -50,7 +50,7 @@ def test_get_labels():
 
 
 def test_get_adjacency_from_labels():
-    """Test _sparse_cluster_matrix on 2 clusters."""
+    """Test get_adjacency_from_labels on 2 clusters."""
     labels = np.array([1, 1, 2, 2, 2])
     sparse_matrix = get_adjacency_from_labels(labels)
 
