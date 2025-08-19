@@ -3,22 +3,7 @@ import datetime
 from pathlib import Path
 
 import joblib
-import nibabel as nib
-import numpy as np
-from nilearn.image import new_img_like
-from nilearn.masking import intersect_masks
 from sklearn.exceptions import NotFittedError
-
-
-def _intersect_clustering_mask(clustering, mask):
-    """Take 3D Niimg clustering and bigger mask, output reduced mask."""
-    dat = clustering.get_fdata()
-    new_ = np.zeros_like(dat)
-    new_[dat > 0] = 1
-    clustering_mask = new_img_like(clustering, new_)
-    return intersect_masks(
-        [clustering_mask, mask], threshold=1, connected=True
-    )
 
 
 def save_alignment(alignment_estimator, output_path):
