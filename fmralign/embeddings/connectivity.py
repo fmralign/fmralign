@@ -31,10 +31,15 @@ def get_connectivity_features(data, labels):
         ],
         axis=1,
     )
+    averaged_signals_standardized = signal.standardize_signal(
+        averaged_signals, detrend=True, standardize=True
+    )
 
     # Compute the correlation features (n_labels x n_voxels)
     correlation_features = (
-        averaged_signals.T @ standardized_data / averaged_signals.shape[0]
+        averaged_signals_standardized.T
+        @ standardized_data
+        / averaged_signals_standardized.shape[0]
     )
     correlation_features = np.nan_to_num(correlation_features)
     return correlation_features
