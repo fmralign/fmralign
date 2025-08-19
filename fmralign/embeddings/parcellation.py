@@ -5,8 +5,7 @@ from nilearn.surface import SurfaceImage
 from nilearn.regions import Parcellations
 from nilearn._utils.niimg_conversions import check_same_fov
 from nilearn.masking import apply_mask_fmri
-from collections import defaultdict
-from scipy.sparse import coo_matrix
+from scipy.sparse import csc_matrix
 
 
 def get_labels(
@@ -109,29 +108,14 @@ def get_adjacency_from_labels(labels):
         of shape (len(labels), len(labels))
     """
 
-    n = len(labels)
+    n_rows = len(labels)
+    unique_labels, col = np.unique(labels, return_inverse=True)
+    n_cols = len(unique_labels)
+    data = np.ones(n_rows, dtype=bool)
+    row = np.arange(n_rows)
+    incidence_matrix = csc_matrix(
+        (data, (row, col)),
+        shape=(n_rows, n_cols),
+    )
 
-    # Create a dictionary mapping each value to its indices
-    value_to_indices = defaultdict(list)
-    for i, val in enumerate(labels.tolist()):
-        value_to_indices[val].append(i)
-
-    # Create lists to store indices and values for the sparse matrix
-    rows = []
-    cols = []
-
-    # For each value, add all pairs of indices where that value appears
-    for indices in value_to_indices.values():
-        for i in indices:
-            rows += [i] * len(indices)
-            cols += indices
-
-    # Convert to numpy arrays
-    rows = np.array(rows)
-    cols = np.array(cols)
-    values = np.ones(len(rows), dtype=bool)
-
-    # Create sparse COO matrix
-    sparse_matrix = coo_matrix((values, (rows, cols)), shape=(n, n))
-
-    return sparse_matrix
+    return (incidence_matrix @ incidence_matrix.T).tocoo()
