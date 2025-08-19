@@ -1,6 +1,5 @@
 import nibabel
 import numpy as np
-from nilearn.maskers import NiftiMasker
 from nilearn.surface import InMemoryMesh, PolyMesh, SurfaceImage
 from numpy.random import default_rng
 from numpy.testing import assert_array_almost_equal
@@ -102,15 +101,6 @@ def random_niimg(shape):
     )
     mask_img = nibabel.Nifti1Image(np.ones(shape[0:3]), np.eye(4))
     return im, mask_img
-
-
-def sample_parceled_data(n_pieces=1):
-    """Create sample data for testing"""
-    img, mask_img = random_niimg((8, 7, 6, 20))
-    masker = NiftiMasker(mask_img=mask_img)
-    data = masker.fit_transform(img)
-    labels = _make_parcellation(img, "kmeans", n_pieces, masker)
-    return data, masker, labels
 
 
 def _make_mesh():
