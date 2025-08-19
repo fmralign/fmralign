@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-Alignment methods benchmark (pairwise ROI case).
-================================================
+Alignment methods benchmark (template-based ROI case)
+=====================================================
 
 In this tutorial, we compare various methods of alignment on a pairwise alignment
 problem for Individual Brain Charting subjects. For each subject, we have a lot
@@ -21,14 +21,28 @@ a terminal, or use ``jupyter-notebook``.
 # ------------------
 # In this example we use the IBC dataset, which include a large number of
 # different contrasts maps for 12 subjects.
+#
+# The contrasts come from tasks in the Archi and HCP fMRI batteries, designed
+# to probe a range of cognitive functions, including:
+#
+# * Motor control: finger, foot, and tongue movements
+# * Social cognition: interpreting short films and stories
+# * Spatial orientation: judging orientation and hand-side
+# * Numerical reasoning: reading and listening to math problems
+# * Emotion processing: judging facial expressions
+# * Reward processing: responding to gains and losses
+# * Working memory: maintaining sequences of faces and objects
+# * Object categorization: matching and comparing visual stimuli
+
 # We download the images for subjects sub-01 and sub-02.
-# Files is the list of paths for each subjects.
-# df is a dataframe with metadata about each of them.
+# ``files`` is the list of paths for each subjects.
+# ``df`` is a dataframe with metadata about each of them.
+# ``mask`` is the common mask for IBC subjects.
 
 from fmralign.fetch_example_data import fetch_ibc_subjects_contrasts
 
-files, df, mask = fetch_ibc_subjects_contrasts(["sub-01", "sub-02"])
-
+sub_ids = ["sub-01", "sub-02", "sub-04"]
+files, df, mask = fetch_ibc_subjects_contrasts(sub_ids)
 
 ###############################################################################
 # Extract a mask for the visual cortex from Yeo Atlas
@@ -53,7 +67,7 @@ plotting.plot_roi(
     resampled_mask_visual,
     title="Visual regions mask extracted from atlas",
     cut_coords=(8, -80, 9),
-    colorbar=True,
+    colorbar=False,
     cmap="Paired",
 )
 
@@ -75,34 +89,33 @@ roi_masker = NiftiMasker(mask_img=resampled_mask_visual).fit()
 # independent acquisitions, similar except for one acquisition parameter, the
 # encoding phase used that was either Antero-Posterior (AP) or
 # Postero-Anterior (PA). Although this induces small differences
-# in the final data, we will take  advantage of these pseudo-duplicates to
-# create a training and a testing set that contains roughly the same signals
-# but acquired independently.
+# in the final data, we will take  advantage of these pseudo-duplicates to define training and test samples.
 
-# The training set, used to learn alignment from source subject toward target:
-# * source train: AP contrasts for subject sub-01
-# * target train: AP contrasts for subject sub-02
+# The training set:
+# * source_train: AP acquisitions from source subjects (sub-01, sub-02).
+# * target_train: AP acquisitions from the target subject (sub-04).
 #
 
-source_train = concat_imgs(
-    df[df.subject == "sub-01"][df.acquisition == "ap"].path.values
-)
+source_subjects = [sub for sub in sub_ids if sub != "sub-04"]
+source_train = [
+    concat_imgs(df[(df.subject == sub) & (df.acquisition == "ap")].path.values)
+    for sub in source_subjects
+]
 target_train = concat_imgs(
-    df[df.subject == "sub-02"][df.acquisition == "ap"].path.values
+    df[(df.subject == "sub-04") & (df.acquisition == "ap")].path.values
 )
 
 # The testing set:
-# * source test: PA contrasts for subject one, used to predict
-#   the corresponding contrasts of subject sub-01
-# * target test: PA contrasts for subject sub-02, used as a ground truth
-#   to score our predictions
+# * source_test: PA acquisitions from source subjects (sub-01, sub-02).
+# * target test: PA acquisitions from the target subject (sub-04).
 #
 
-source_test = concat_imgs(
-    df[df.subject == "sub-01"][df.acquisition == "pa"].path.values
-)
+source_test = [
+    concat_imgs(df[(df.subject == sub) & (df.acquisition == "pa")].path.values)
+    for sub in source_subjects
+]
 target_test = concat_imgs(
-    df[df.subject == "sub-02"][df.acquisition == "pa"].path.values
+    df[(df.subject == "sub-04") & (df.acquisition == "pa")].path.values
 )
 
 ###############################################################################
@@ -125,49 +138,104 @@ print(f"We will cluster them in {n_pieces} regions")
 # ---------------------------------------------------
 # On each region, we search for a transformation R that is either :
 #   *  orthogonal, i.e. R orthogonal, scaling sc s.t. ||sc RX - Y ||^2 is minimized
-#   *  a ridge regression : ||XR - Y||^2 + alpha *||R||^2 with a L2 penalization
-#      on the norm of R.
 #   *  the optimal transport plan, which yields the minimal transport cost
-#       while respecting the mass conservation constraints. Calculated with
-#       entropic regularization.
-#   *  we also include identity (no alignment) as a baseline.
-# Then for each method we define the estimator fit it, predict the new image and plot
+#      while respecting the mass conservation constraints. Calculated with
+#      entropic regularization.
+#   *  the shared response model (SRM), which computes a shared response space
+#      from different subjects, and then projects individual subject data into it.
+# Then for each method we define the estimator, fit it, predict the new image and plot
 # its correlation with the real signal.
 
+################################################################################
+# Fit and score the Orthogonal and Optimal Transport estimators
+# ---------------------------------------------------------------
 from fmralign.metrics import score_voxelwise
-from fmralign.pairwise_alignment import PairwiseAlignment
+from fmralign.template_alignment import TemplateAlignment
 
-methods = ["identity", "scaled_orthogonal", "ridge_cv", "optimal_transport"]
+methods = ["scaled_orthogonal", "optimal_transport"]
 
-for method in methods:
-    alignment_estimator = PairwiseAlignment(
-        alignment_method=method,
-        clustering="ward",
-        n_pieces=n_pieces,
-        masker=roi_masker,
+# Prepare to store the results
+titles, aligned_scores = [], []
+
+for i, method in enumerate(methods):
+    alignment_estimator = TemplateAlignment(
+        alignment_method=method, n_pieces=n_pieces, masker=roi_masker
     )
-    alignment_estimator.fit(source_train, target_train)
-    target_pred = alignment_estimator.transform(source_test)
+    alignment_estimator.fit(source_train)
+    target_pred = alignment_estimator.transform(target_train)
 
     # derive correlation between prediction, test
     method_error = score_voxelwise(
         target_test, target_pred, masker=roi_masker, loss="corr"
     )
 
-    # plot correlation for each method
+    # store the results for plotting later
     aligned_score = roi_masker.inverse_transform(method_error)
-    title = f"Correlation of prediction after {method} alignment"
-    display = plotting.plot_stat_map(
-        aligned_score,
+    titles.append(f"Correlation of prediction after {method} alignment")
+    aligned_scores.append(aligned_score)
+
+
+################################################################################
+# Fit and score the SRM estimator
+# --------------------------------
+
+# The IdentifiableFastSRM version of SRM ensures that the solution is unique.
+from fastsrm.identifiable_srm import IdentifiableFastSRM
+
+srm = IdentifiableFastSRM(
+    n_components=30,
+    n_iter=10,
+)
+
+# Step 1: Fit SRM on training data from source subjects
+shared_response = srm.fit_transform(
+    [roi_masker.transform(s).T for s in source_train]
+)
+
+# Step 2: Freeze the SRM model and add target subject data. This projects the
+# target subject data into the shared response space.
+srm.aggregate = None
+srm.add_subjects([roi_masker.transform(target_train).T], shared_response)
+
+# Step 3: Use SRM to transform new test data from the target subject
+aligned_test = srm.transform([roi_masker.transform(target_test).T])
+aligned_pred = roi_masker.inverse_transform(
+    srm.inverse_transform(aligned_test[0])[0].T
+)
+
+# Step 4: Evaluate voxelwise correlation between predicted and true test
+# signals. Store the results for plotting later.
+srm_error = score_voxelwise(
+    target_test, aligned_pred, masker=roi_masker, loss="corr"
+)
+srm_score = roi_masker.inverse_transform(srm_error)
+titles.append("Correlation of prediction after SRM alignment")
+aligned_scores.append(srm_score)
+
+################################################################################
+# Plot the results
+# ---------------
+import matplotlib.pyplot as plt
+
+fig, axes = plt.subplots(3, 1, figsize=(8, 12))
+
+for i, (score, title) in enumerate(zip(aligned_scores, titles)):
+    plotting.plot_stat_map(
+        score,
         display_mode="z",
         cut_coords=[-15, -5],
         vmax=1,
         title=title,
+        axes=axes[i],
+        colorbar=True,
     )
 
+plt.show()
+
 ###############################################################################
-# We can observe that all alignment methods perform better than identity
-# (no alignment). Ridge is the best performing method, followed by Optimal
-# Transport. If you use Ridge though, be careful about the smooth predictions
-# it yields.
-#
+# Summary:
+# --------
+# We compared TemplateAlignment methods (scaled orthogonal, optimal transport)
+# with SRM-based alignment on visual cortex activity.
+# You can see that SRM introduces the most smoothness in the transformation,
+# resulting in higher correlation values.
