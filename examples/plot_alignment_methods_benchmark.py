@@ -237,5 +237,5 @@ plt.show()
 # --------
 # We compared TemplateAlignment methods (scaled orthogonal, optimal transport)
 # with SRM-based alignment on visual cortex activity.
-# You can see that SRM introduces the most smoothness in the transformation,
+# You can see that SRM introduces more smoothness in the transformation,
 # resulting in higher correlation values.
