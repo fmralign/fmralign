@@ -79,7 +79,7 @@ def get_labels(
         except ValueError as err:
             errmsg = (
                 f"Clustering method {clustering} should be supported by "
-                "nilearn.regions.Parcellation or a 3D Niimg."
+                "nilearn.regions.Parcellation or be supplied as a 3D Niimg."
             )
             err.args += (errmsg,)
             raise err
