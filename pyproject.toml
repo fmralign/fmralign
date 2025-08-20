@@ -87,7 +87,8 @@ ignore = [
 ]
 select = [
     "E",  # pycodestyle
-    "F"  # pyflakes
+    "F",  # pyflakes
+    "I",  # isort
 ]
 unfixable = []
 
