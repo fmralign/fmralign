@@ -7,9 +7,11 @@ from nilearn.regions import Parcellations
 from nilearn.surface import SurfaceImage
 from scipy.sparse import csc_matrix
 
+import warnings
+
 
 def get_labels(
-    imgs, n_pieces, masker, clustering="ward", smoothing_fwhm=5, verbose=0
+    imgs, masker, n_pieces=1, clustering="ward", smoothing_fwhm=5, verbose=0
 ):
     """Generate an array of labels for each voxel in the data.
 
@@ -46,6 +48,8 @@ def get_labels(
     """
     # check if clustering is provided
     if isinstance(clustering, nib.nifti1.Nifti1Image):
+        if n_pieces != 1:
+            warnings.warn("Clustering image provided, n_pieces ignored.")
         check_same_fov(masker.mask_img_, clustering)
         labels = apply_mask_fmri(clustering, masker.mask_img_).astype(int)
 
