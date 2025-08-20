@@ -1,13 +1,14 @@
-import pytest
-import numpy as np
 import nibabel as nib
-from fmralign.embeddings.parcellation import (
-    get_labels,
-    get_adjacency_from_labels,
-)
-from fmralign.tests.utils import random_niimg, surf_img
+import numpy as np
+import pytest
 from nilearn.maskers import NiftiMasker, SurfaceMasker
 from numpy.testing import assert_array_equal
+
+from fmralign.embeddings.parcellation import (
+    get_adjacency_from_labels,
+    get_labels,
+)
+from fmralign.tests.utils import random_niimg, surf_img
 
 
 def test_get_labels():

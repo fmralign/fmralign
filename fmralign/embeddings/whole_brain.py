@@ -1,7 +1,7 @@
 import numpy as np
-from sklearn import neighbors
-from nilearn.masking import load_mask_img
 from nilearn.image import resampling
+from nilearn.masking import load_mask_img
+from sklearn import neighbors
 
 
 def get_adjacency_from_mask(mask_img, radius):

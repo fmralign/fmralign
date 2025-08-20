@@ -1,7 +1,8 @@
+import numpy as np
+from numpy.testing import assert_array_equal
+
 from fmralign.embeddings.whole_brain import get_adjacency_from_mask
 from fmralign.tests.utils import random_niimg
-from numpy.testing import assert_array_equal
-import numpy as np
 
 
 def test_get_adjacency_from_mask():

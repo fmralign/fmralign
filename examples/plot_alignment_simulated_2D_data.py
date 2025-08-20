@@ -173,8 +173,8 @@ _plot_distributions_and_alignment(
 # on our simple 2D example different kind of transformation we can look for.
 
 from fmralign.methods import (
-    Procrustes,
     OptimalTransport,
+    Procrustes,
 )
 
 ###############################################################################

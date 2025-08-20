@@ -1,5 +1,6 @@
-from fmralign.embeddings.connectivity import get_connectivity_features
 import numpy as np
+
+from fmralign.embeddings.connectivity import get_connectivity_features
 
 
 def test_get_connectivity_features():

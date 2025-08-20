@@ -33,8 +33,8 @@ files, df, _ = fetch_ibc_subjects_contrasts(["sub-01", "sub-04"])
 # surface template.
 
 from nilearn.datasets import load_fsaverage, load_fsaverage_data
-from nilearn.surface import SurfaceImage
 from nilearn.maskers import SurfaceMasker
+from nilearn.surface import SurfaceImage
 
 fsaverage_meshes = load_fsaverage()
 
@@ -71,6 +71,7 @@ masker = SurfaceMasker().fit([surf_source_train, surf_target_train])
 # and plot it on the surface using nilearn.
 
 from nilearn import plotting
+
 from fmralign import PairwiseAlignment
 from fmralign.embeddings.parcellation import get_labels
 
