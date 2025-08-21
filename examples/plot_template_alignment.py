@@ -32,9 +32,8 @@ To run this example, you must launch IPython via ``ipython
 
 from fmralign.fetch_example_data import fetch_ibc_subjects_contrasts
 
-imgs, df, mask_img = fetch_ibc_subjects_contrasts(
-    ["sub-01", "sub-02", "sub-04", "sub-05", "sub-06", "sub-07"]
-)
+subjects = ["sub-01", "sub-02", "sub-04", "sub-05", "sub-06", "sub-07"]
+imgs, df, mask_img = fetch_ibc_subjects_contrasts(subjects)
 
 ###############################################################################
 # Define a masker
@@ -88,33 +87,43 @@ average_subject = masker.inverse_transform(average_img)
 # ---------------------------------------------
 # We define an estimator using the class TemplateAlignment:
 #   * We align the whole brain through 'multiple' local alignments.
-#   * These alignments are calculated on a parcellation of the brain in 50 pieces,
+#   * These alignments are calculated on a parcellation of the brain in 150 pieces,
 #     this parcellation creates group of functionnally similar voxels.
 #   * The template is created iteratively, aligning all subjects data into a
 #     common space, from which the template is inferred and aligning again to this
 #     new template space.
 #
 
-from fmralign.template_alignment import TemplateAlignment
+from fmralign import GroupAlignment
+from fmralign.embeddings.parcellation import get_labels
+
+# Use only the first image to speed up the computation of the labels
+labels = get_labels(imgs[0], n_pieces=150, masker=masker)
+
+# We create a dictionary with the subject names as keys and the subjects data as values
+dict_alignment = dict(zip(subjects, masked_imgs))
 
 # We use Procrustes/scaled orthogonal alignment method
-template_estim = TemplateAlignment(
-    n_pieces=50,
-    alignment_method="scaled_orthogonal",
-    masker=masker,
-)
-template_estim.fit(template_train)
+template_estim = GroupAlignment(method="procrustes", labels=labels)
+template_estim.fit(X=dict_alignment, y="template")
 procrustes_template = template_estim.template
 
 ###############################################################################
 # Predict new data for left-out subject
 # -------------------------------------
 # We predict the contrasts of the left-out subject using the template we just
-# created. We use the transform method of the estimator. This method takes the
-# left-out subject as input, computes a pairwise alignment with the template
-# and returns the aligned data.
+# created. This method takes the left-out subject as input, computes a pairwise
+# alignment with the template and returns the aligned data.
 
-predictions_from_template = template_estim.transform(left_out_subject)
+from fmralign import PairwiseAlignment
+
+left_out_data = masker.transform(left_out_subject)
+pairwise_estim = PairwiseAlignment(method="procrustes", labels=labels).fit(
+    left_out_data, procrustes_template
+)
+
+predictions_from_template = pairwise_estim.transform(left_out_data)
+predicted_img = masker.inverse_transform(predictions_from_template)
 
 ###############################################################################
 # Score the baseline and the prediction
@@ -129,10 +138,9 @@ from fmralign.metrics import score_voxelwise
 average_score = masker.inverse_transform(
     score_voxelwise(left_out_subject, average_subject, masker, loss="corr")
 )
+template_img = masker.inverse_transform(procrustes_template)
 template_score = masker.inverse_transform(
-    score_voxelwise(
-        predictions_from_template, procrustes_template, masker, loss="corr"
-    )
+    score_voxelwise(predicted_img, template_img, masker, loss="corr")
 )
 
 ###############################################################################

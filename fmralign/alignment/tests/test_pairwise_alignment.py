@@ -1,8 +1,8 @@
 from numpy.testing import assert_array_equal
 
 from fmralign import PairwiseAlignment
-from fmralign.tests.utils import sample_subjects
 from fmralign.methods import Identity
+from fmralign.tests.utils import sample_subjects
 
 
 def test_fit():

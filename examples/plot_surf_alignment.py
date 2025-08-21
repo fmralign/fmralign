@@ -33,6 +33,7 @@ files, df, _ = fetch_ibc_subjects_contrasts(["sub-01", "sub-04"])
 # surface template.
 
 from nilearn.datasets import load_fsaverage, load_fsaverage_data
+from nilearn.maskers import SurfaceMasker
 from nilearn.surface import SurfaceImage
 
 fsaverage_meshes = load_fsaverage()
@@ -50,43 +51,38 @@ def project_to_surface(img):
 from nilearn.image import concat_imgs
 
 source_train = concat_imgs(
-    df[df.subject == "sub-01"][df.acquisition == "ap"].path.values
+    df[(df.subject == "sub-01") & (df.acquisition == "ap")].path.values
 )
 target_train = concat_imgs(
-    df[df.subject == "sub-04"][df.acquisition == "ap"].path.values
+    df[(df.subject == "sub-04") & (df.acquisition == "ap")].path.values
 )
 
 surf_source_train = project_to_surface(source_train)
 surf_target_train = project_to_surface(target_train)
 
-
-###############################################################################
-# Fitting the alignment operator
-# ------------------------------
-# We use the `PairwiseAlignment` class to learn the alignment operator from
-# one subject to the other. We select the `scaled_orthogonal` method to compute
-# a rigid piecewise alignment mapping and the `ward` clustering method to
-# parcellate the cortical surface.
-
-from fmralign.pairwise_alignment import PairwiseAlignment
-
-alignment_estimator = PairwiseAlignment(
-    alignment_method="scaled_orthogonal",
-    n_pieces=100,
-    clustering="ward",
-)
-# Learn alignment operator from subject 1 to subject 2 on training data
-alignment_estimator.fit(surf_source_train, surf_target_train)
+masker = SurfaceMasker().fit([surf_source_train, surf_target_train])
 
 
 ###############################################################################
-# Plot the computed parcellation
-# ------------------------------
-# We can retrieve the computed parcellation and plot it on the surface.
+# Compute and plot a parcellation
+# -------------------------------
+# We compute a parcellation for local alignments with
+# :func:`fmralign.embeddings.parcellation.get_labels`
+# and plot it on the surface using nilearn.
+
 from nilearn import plotting
 
-_, clustering_img = alignment_estimator.get_parcellation()
+from fmralign import PairwiseAlignment
+from fmralign.embeddings.parcellation import get_labels
 
+labels = get_labels(
+    [surf_source_train, surf_target_train],
+    n_pieces=100,
+    masker=masker,
+    clustering="ward",
+)
+
+clustering_img = masker.inverse_transform(labels)
 
 plotting.plot_surf_roi(
     surf_mesh=fsaverage_meshes["pial"],
@@ -96,6 +92,28 @@ plotting.plot_surf_roi(
     title="Ward parcellation on the left hemisphere",
 )
 plotting.show()
+
+
+###############################################################################
+# Fitting the alignment operator
+# ------------------------------
+# We use the :class:`fmralign.PairwiseAlignment` class to learn the alignment operator from
+# one subject to the other. We select the `procrutses` method to compute
+# a rigid piecewise alignment mapping and the `ward` clustering method to
+# parcellate the cortical surface.
+
+
+data_source_train = masker.transform(surf_source_train)
+data_target_train = masker.transform(surf_target_train)
+
+alignment_estimator = PairwiseAlignment(
+    method="procrustes",
+    labels=labels,
+)
+
+# Learn alignment operator from subject 1 to subject 2 on training data
+alignment_estimator.fit(data_source_train, data_target_train)
+
 
 ###############################################################################
 # Projecting the left-out data
@@ -119,7 +137,9 @@ surf_audio_target = project_to_surface(
     ].path.values
 )
 
-surf_aligned = alignment_estimator.transform(surf_audio_source)
+audio_source_data = masker.transform(surf_audio_source)
+aligned_target_data = alignment_estimator.transform(audio_source_data)
+surf_aligned = masker.inverse_transform(aligned_target_data)
 
 ###############################################################################
 # Visualizing the alignment in action

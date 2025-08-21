@@ -5,8 +5,8 @@ from numpy.testing import assert_array_equal
 from fmralign.methods import (
     Identity,
     OptimalTransport,
-    RidgeAlignment,
     Procrustes,
+    RidgeAlignment,
     SparseUOT,
 )
 from fmralign.methods.piecewise import (

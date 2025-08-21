@@ -6,8 +6,8 @@ from sklearn.base import clone
 from fmralign.methods import (
     Identity,
     OptimalTransport,
-    RidgeAlignment,
     Procrustes,
+    RidgeAlignment,
     SparseUOT,
 )
 from fmralign.methods.piecewise import PiecewiseAlignment
