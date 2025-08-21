@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.base import clone
 
 from fmralign.methods import (
+    DetSRM,
     Identity,
     OptimalTransport,
     Procrustes,
@@ -139,6 +140,7 @@ def _check_method(method):
         "sparse_uot": SparseUOT(),
         "procrustes": Procrustes(),
         "ridge": RidgeAlignment(),
+        "srm": DetSRM(),
     }
     # If method is a string, convert it to the corresponding class instance
     if isinstance(method, str):
@@ -146,7 +148,7 @@ def _check_method(method):
         if method is None:
             raise ValueError(
                 f"Method '{method}' is not recognized. "
-                f"Valid methods are: {valid_methods.keys()}"
+                f"Valid methods are: {list(valid_methods.keys())}"
             )
 
     return method
@@ -301,11 +303,35 @@ def _fit_template(
     template : ndarray
         The template data array.
     """
-    # Template is initialized as the mean of all subjects
-    aligned_data = X
+    # Initialize the template
+    template = _init_template(X, method, scale_template)
     # Fit template alignment
     for _ in range(n_iter):
-        template = _rescaled_euclidean_mean(aligned_data, scale_template)
         fit_ = _map_to_target(X, template, method, labels, n_jobs, verbose)
         aligned_data = [fit_[i].transform(X[i]) for i in range(len(X))]
+        template = _rescaled_euclidean_mean(aligned_data, scale_template)
     return fit_, template
+
+
+def _init_template(X, method, scale_template=False):
+    """Initializes the template according to the alignment method.
+
+    Parameters
+    ----------
+    X : list of 2D ndarray
+        List of subject data arrays, where each array is of shape (n_samples, n_features).
+    method : an instance of any class derived from `BaseAlignment`
+        Algorithm used to perform alignment between sources and target.
+    scale_template : bool, optional
+        Rescale the euclidean template, by default False
+
+    Returns
+    -------
+    2D ndarray: Initial estimation of the template
+    """
+    if isinstance(method, DetSRM):
+        n_components = method.n_components
+        n_samples = X[0].shape[0]
+        return np.random.randn(n_samples, n_components)
+    else:
+        return _rescaled_euclidean_mean(X, scale_template)
