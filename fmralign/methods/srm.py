@@ -4,21 +4,17 @@ from fmralign.methods.base import BaseAlignment
 
 
 class DetSRM(BaseAlignment):
-    """
-    Compute a orthogonal mixing matrix R and a scaling sc.
-    These are calculated such that Frobenius norm ||sc RX - Y||^2 is minimized.
+    """Compute the alignment from one subjects to the shared latent response.
 
     Parameters
-    -----------
-    scaling : boolean, optional
-        Determines whether a scaling parameter is applied to improve transform.
+    ----------
+    n_components: int
+        Number of shared components. Defaults to 20.
 
     Attributes
-    -----------
-    R : ndarray (n_features, n_features)
-        Optimal orthogonal transform
-    scale: float,
-               inferred scaling parameter
+    ----------
+    W : (n_components, n_voxels) ndarray
+        Optimal mixing matrix
     """
 
     def __init__(self, n_components=20):
@@ -26,13 +22,13 @@ class DetSRM(BaseAlignment):
 
     def fit(self, X, S):
         """
-        Fit orthogonal R s.t. ||sc XR - Y||^2
+        Fit orthogonal W s.t. ||X - SW||^2 is minimized
 
         Parameters
         -----------
-        X: (n_samples, n_features) nd array
+        X: (n_samples, n_features) ndarray
             Source data
-        S: (n_samples, n_components) nd array
+        S: (n_samples, n_components) ndarray
             Shared response
         """
         U, _, V = linalg.svd(S.T @ X, full_matrices=False)
