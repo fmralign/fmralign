@@ -31,10 +31,10 @@ class DetSRM(BaseAlignment):
         S: (n_samples, n_components) ndarray
             Shared response
         """
-        U, _, V = linalg.svd(S.T @ X, full_matrices=False)
-        self.W = U @ V
+        U, _, V = linalg.svd((S.T @ X).T, full_matrices=False)
+        self.Wt = U @ V
         return self
 
     def transform(self, X):
         """Transform X using optimal transform computed during fit."""
-        return X @ self.W.T
+        return X @ self.Wt

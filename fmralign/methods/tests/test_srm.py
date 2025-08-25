@@ -11,7 +11,7 @@ def test_identity():
 
     srm = DetSRM(n_components=n_components)
     srm.fit(X, X)
-    assert_array_almost_equal(srm.W, np.eye(n_components))
+    assert_array_almost_equal(srm.Wt.T, np.eye(n_components))
     assert_array_almost_equal(srm.transform(X), X)
 
 
@@ -21,5 +21,5 @@ def test_basis_orthogonality():
     X = np.random.rand(n_samples, n_voxels)
     S = np.random.rand(n_samples, n_components)
     srm = DetSRM(n_components).fit(X, S)
-    W = srm.W
+    W = srm.Wt.T
     assert_array_almost_equal(W @ W.T, np.eye(n_components))
