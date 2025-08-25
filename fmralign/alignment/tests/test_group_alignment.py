@@ -26,7 +26,7 @@ def test_alignment_template(method):
         if method == "identity":
             assert_array_equal(transformed, x)
         elif method == "srm":
-            n_components = algo.fitted_estimators[0].W.shape[0]
+            n_components = algo.fitted_estimators[0].Wt.shape[1]
             assert transformed.shape == (x.shape[0], n_components)
         else:
             assert transformed.shape == x.shape
@@ -50,7 +50,7 @@ def test_alignment_target(method):
         if method == "identity":
             assert_array_equal(transformed, x)
         elif method == "srm":
-            n_components = algo.fitted_estimators[0].W.shape[0]
+            n_components = algo.fitted_estimators[0].Wt.shape[1]
             assert transformed.shape == (x.shape[0], n_components)
         else:
             assert transformed.shape == x.shape
@@ -70,7 +70,7 @@ def test_transform(method):
         if method == "identity":
             assert_array_equal(transformed_arrays[i], x)
         elif method == "srm":
-            n_components = algo.fitted_estimators[0].W.shape[0]
+            n_components = algo.fitted_estimators[0].Wt.shape[1]
             assert transformed_arrays[i].shape == (x.shape[0], n_components)
         else:
             assert transformed_arrays[i].shape == x.shape
