@@ -106,7 +106,7 @@ def _check_target(X, y):
     if isinstance(y, str) and y.lower() == "template":
         return None
     if isinstance(y, np.ndarray):
-        if y.shape != X.shape:
+        if y.shape[0] != X.shape[0]:
             raise ValueError(
                 "Target must have the same number of samples as the input data."
             )
