@@ -2,6 +2,7 @@ import numpy as np
 from joblib import Parallel, delayed
 from sklearn.base import clone
 
+from fmralign.methods import DetSRM
 from fmralign.methods.base import BaseAlignment
 
 
@@ -44,16 +45,17 @@ def _transform_one_piece(X, estimator):
     return estimator.transform(X)
 
 
-def _array_to_list(arr, labels):
+def _array_to_list(arr, labels=None):
     """
     Convert a 2D array to a list of arrays based on labels.
 
     Parameters
     ----------
     arr : ndarray
-        2D array of shape (n_samples, n_features).
-    labels : list or ndarray
-        Labels for each sample.
+        2D array of shape (n_samples, n_features)
+        or 3D array of shape (n_labels, n_samples, n_components)
+    labels : list or ndarray, optional
+        Labels for each sample. Defaults to None
 
     Returns
     -------
@@ -61,6 +63,8 @@ def _array_to_list(arr, labels):
         List of arrays corresponding to each label.
     """
     unique_labels = np.unique(labels)
+    if len(arr.shape) == 3:
+        return list(arr)
     return [arr[:, labels == label] for label in unique_labels]
 
 
@@ -137,7 +141,7 @@ class PiecewiseAlignment(BaseAlignment):
         )
         return self
 
-    def transform(self, X):
+    def transform(self, X, srm_space=True):
         """
         Transform X using the fitted estimator.
 
@@ -145,11 +149,17 @@ class PiecewiseAlignment(BaseAlignment):
         ----------
         X : ndarray
             Source data of shape (n_samples, n_features).
+        srm_space: bool, optional
+            In the case of SRM, return the
+            data in latent shared space.
 
         Returns
         -------
         np.ndarray
             Transformed data of shape (n_samples, n_features).
+            In the case SRM is used and srm_space is True,
+            data is returned with the shape
+            (n_labels, n_samples, n_components).
         """
         X_ = _array_to_list(X, self.labels)
         piecewise_transforms = Parallel(
@@ -158,4 +168,7 @@ class PiecewiseAlignment(BaseAlignment):
             delayed(_transform_one_piece)(X_[i], self.fit_[i])
             for i in range(len(X_))
         )
-        return _list_to_array(piecewise_transforms, self.labels)
+        if isinstance(self.method, DetSRM) and srm_space:
+            return np.array(piecewise_transforms)
+        else:
+            return _list_to_array(piecewise_transforms, self.labels)
