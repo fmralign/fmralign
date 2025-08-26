@@ -41,7 +41,7 @@ class OptimalTransport(BaseAlignment):
         self,
         solver="sinkhorn_epsilon_scaling",
         metric="euclidean",
-        reg=1,
+        reg=1e-2,
         max_iter=1000,
         tol=1e-3,
     ):
@@ -136,7 +136,7 @@ class SparseUOT(BaseAlignment):
         self,
         sparsity_mask=None,
         rho=float("inf"),
-        reg=1,
+        reg=1e-2,
         max_iter=1000,
         tol=1e-3,
         eval_freq=10,
