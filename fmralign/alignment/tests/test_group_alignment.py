@@ -1,3 +1,4 @@
+import numpy as np
 import pytest
 from numpy.testing import assert_array_equal
 
@@ -74,3 +75,25 @@ def test_transform(method):
             assert transformed_arrays[i].shape == (x.shape[0], n_components)
         else:
             assert transformed_arrays[i].shape == x.shape
+
+
+@pytest.mark.parametrize("method", methods)
+def test_predict_subject(method):
+    """Test prediction of a new subject using the template."""
+    data_train, labels = sample_subjects(
+        n_subjects=3, n_features=10, n_voxels=40
+    )
+    data_test, _ = sample_subjects(n_subjects=3, n_features=15, n_voxels=40)
+
+    X_train = dict(enumerate(data_train[:2]))
+    X_test = dict(enumerate(data_test[:2]))
+    Y_train, Y_test = data_train[2], data_test[2]
+
+    algo = GroupAlignment(method=method, labels=labels)
+    algo.fit(X_train)
+    Y_pred = algo.predict_subject(X_test, Y_train)
+
+    if method == "identity":
+        assert_array_equal(Y_pred, np.mean(list(X_test.values()), axis=0))
+    else:
+        assert Y_pred.shape == Y_test.shape

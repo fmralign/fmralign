@@ -1,3 +1,4 @@
+import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 
 from fmralign.alignment.utils import (
@@ -8,6 +9,7 @@ from fmralign.alignment.utils import (
     _fit_template,
     _map_to_target,
 )
+from fmralign.methods import DetSRM
 
 
 class GroupAlignment(BaseEstimator, TransformerMixin):
@@ -200,3 +202,45 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
         raise AttributeError(
             "type object 'GroupwiseAlignment' has no 'fit_transform' attribute"
         )
+
+    def predict_subject(self, X_test, Y_new):
+        """Fit a new subject to the template and predict test data.
+
+        Parameters
+        ----------
+        X_test : dict of array-like
+            Dictionary where keys are subject identifiers and values are
+            array of subject held-out data used to make a prediction on
+            the template.
+        Y_new : array-like
+            Data used to fit the new subject to a pre-existing template.
+
+        Returns
+        -------
+        array-like
+            Predicted response on the new subject using the response
+            computed on the template.
+        """
+        # Predict test data from Sources -> Template
+        template_test = np.mean(list(self.transform(X_test).values()), axis=0)
+        # Learn Template -> Target
+        [pairwise_estimator] = _map_to_target(
+            [self.template],
+            Y_new,
+            self.method_,
+            self.labels_,
+            self.n_jobs,
+            self.verbose,
+        )
+        # Predict test data from Template -> Target
+        if len(np.unique(self.labels_)) > 1 and isinstance(
+            self.method_, DetSRM
+        ):
+            # Special case for Piecewise SRM
+            # Data should be sent back to brain space
+            y_pred = pairwise_estimator.transform(
+                template_test, srm_space=False
+            )
+        else:
+            y_pred = pairwise_estimator.transform(template_test)
+        return y_pred
