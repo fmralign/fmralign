@@ -134,6 +134,24 @@ n_pieces = int(np.round(n_voxels / 100))
 print(f"We will cluster them in {n_pieces} regions")
 
 ###############################################################################
+# Extract the parcels labels
+# --------------------------
+# We will use intra-parcel alignments, fmralign provides a simple utility
+# to extract the labels of associated to each voxel:
+# :func:`fmralign.embeddings.parcellation.get_labels`.
+# We then organize the data in dictionaries of pairs of subjects names and data.
+
+from fmralign.embeddings.parcellation import get_labels
+
+labels = get_labels(source_train, roi_masker, n_pieces)
+dict_source_train = dict(
+    zip(source_subjects, [roi_masker.transform(img) for img in source_train])
+)
+dict_source_test = dict(
+    zip(source_subjects, [roi_masker.transform(img) for img in source_test])
+)
+
+###############################################################################
 # Define the estimators, fit them and do a prediction
 # ---------------------------------------------------
 # On each region, we search for a transformation R that is either :
@@ -145,79 +163,46 @@ print(f"We will cluster them in {n_pieces} regions")
 #      from different subjects, and then projects individual subject data into it.
 # Then for each method we define the estimator, fit it, predict the new image and plot
 # its correlation with the real signal.
+# We use the identity (euclidean averaging) as the baseline.
 
-################################################################################
-# Fit and score the Orthogonal and Optimal Transport estimators
-# ---------------------------------------------------------------
+from fmralign import GroupAlignment
 from fmralign.metrics import score_voxelwise
-from fmralign.template_alignment import TemplateAlignment
 
-methods = ["scaled_orthogonal", "optimal_transport"]
+methods = ["identity", "procrustes", "ot", "SRM"]
 
 # Prepare to store the results
 titles, aligned_scores = [], []
 
 for i, method in enumerate(methods):
-    alignment_estimator = TemplateAlignment(
-        alignment_method=method, n_pieces=n_pieces, masker=roi_masker
+    # Fit the group estimator on the training data
+    group_estimator = GroupAlignment(method=method, labels=labels).fit(
+        dict_source_train
     )
-    alignment_estimator.fit(source_train)
-    target_pred = alignment_estimator.transform(target_train)
+    # Compute a mapping between the template and the new subject
+    # using `target_train` and make a prediction using the left-out-data
+    target_pred = group_estimator.predict_subject(
+        dict_source_test, roi_masker.transform(target_train)
+    )
 
-    # derive correlation between prediction, test
+    # Derive correlation between prediction, test
     method_error = score_voxelwise(
-        target_test, target_pred, masker=roi_masker, loss="corr"
+        target_test,
+        roi_masker.inverse_transform(target_pred),
+        masker=roi_masker,
+        loss="corr",
     )
 
-    # store the results for plotting later
+    # Store the results for plotting later
     aligned_score = roi_masker.inverse_transform(method_error)
     titles.append(f"Correlation of prediction after {method} alignment")
     aligned_scores.append(aligned_score)
-
-
-################################################################################
-# Fit and score the SRM estimator
-# --------------------------------
-
-# The IdentifiableFastSRM version of SRM ensures that the solution is unique.
-from fastsrm.identifiable_srm import IdentifiableFastSRM
-
-srm = IdentifiableFastSRM(
-    n_components=30,
-    n_iter=10,
-)
-
-# Step 1: Fit SRM on training data from source subjects
-shared_response = srm.fit_transform(
-    [roi_masker.transform(s).T for s in source_train]
-)
-
-# Step 2: Freeze the SRM model and add target subject data. This projects the
-# target subject data into the shared response space.
-srm.aggregate = None
-srm.add_subjects([roi_masker.transform(target_train).T], shared_response)
-
-# Step 3: Use SRM to transform new test data from the target subject
-aligned_test = srm.transform([roi_masker.transform(target_test).T])
-aligned_pred = roi_masker.inverse_transform(
-    srm.inverse_transform(aligned_test[0])[0].T
-)
-
-# Step 4: Evaluate voxelwise correlation between predicted and true test
-# signals. Store the results for plotting later.
-srm_error = score_voxelwise(
-    target_test, aligned_pred, masker=roi_masker, loss="corr"
-)
-srm_score = roi_masker.inverse_transform(srm_error)
-titles.append("Correlation of prediction after SRM alignment")
-aligned_scores.append(srm_score)
 
 ################################################################################
 # Plot the results
 # ---------------
 import matplotlib.pyplot as plt
 
-fig, axes = plt.subplots(3, 1, figsize=(8, 12))
+fig, axes = plt.subplots(4, 1, figsize=(8, 12))
 
 for i, (score, title) in enumerate(zip(aligned_scores, titles)):
     plotting.plot_stat_map(
@@ -238,4 +223,4 @@ plt.show()
 # We compared TemplateAlignment methods (scaled orthogonal, optimal transport)
 # with SRM-based alignment on visual cortex activity.
 # You can see that SRM introduces more smoothness in the transformation,
-# resulting in higher correlation values.
+# resulting in slightly higher correlation values.
