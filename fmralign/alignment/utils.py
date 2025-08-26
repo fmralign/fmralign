@@ -304,7 +304,7 @@ def _fit_template(
         The template data array.
     """
     # Initialize the template
-    template = _init_template(X, method, scale_template)
+    template = _init_template(X, method, scale_template, labels)
     # Fit template alignment
     for _ in range(n_iter):
         fit_ = _map_to_target(X, template, method, labels, n_jobs, verbose)
@@ -313,7 +313,7 @@ def _fit_template(
     return fit_, template
 
 
-def _init_template(X, method, scale_template=False):
+def _init_template(X, method, scale_template=False, labels=None):
     """Initializes the template according to the alignment method.
 
     Parameters
@@ -324,14 +324,28 @@ def _init_template(X, method, scale_template=False):
         Algorithm used to perform alignment between sources and target.
     scale_template : bool, optional
         Rescale the euclidean template, by default False
+    labels : 1D np.ndarray
+        Labels for the parcellation of the data.
 
     Returns
     -------
-    2D ndarray: Initial estimation of the template
+    2D or 3D ndarray: Initial estimation of the template.
+        In the case of Piecewise SRM, a 3D array of shape (n_labels, n_samples, n_components)
+        is returned, otherwise a 2D array of shape (n_samples, n_features).
     """
     if isinstance(method, DetSRM):
+        n_labels = len(np.unique(labels))
         n_components = method.n_components
         n_samples = X[0].shape[0]
-        return np.random.randn(n_samples, n_components)
+        if n_labels == 1:
+            template = np.random.randn(n_samples, n_components)
+        else:
+            template = np.array(
+                [
+                    np.random.randn(n_samples, n_components)
+                    for _ in range(n_labels)
+                ]
+            )
     else:
-        return _rescaled_euclidean_mean(X, scale_template)
+        template = _rescaled_euclidean_mean(X, scale_template)
+    return template

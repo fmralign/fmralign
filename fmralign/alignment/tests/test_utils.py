@@ -198,3 +198,9 @@ def test_init_template():
     method = DetSRM()
     template_srm = _init_template(X, method)
     assert template_srm.shape == (X[0].shape[0], method.n_components)
+
+    labels = np.array([1, 1, 1, 2, 2])
+    template_piecewise_srm = _init_template(X, method, labels=labels)
+    assert isinstance(template_piecewise_srm, np.ndarray)
+    for x in template_piecewise_srm:
+        assert x.shape == (X[0].shape[0], method.n_components)
