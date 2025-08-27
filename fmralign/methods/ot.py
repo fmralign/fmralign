@@ -6,7 +6,7 @@ import torch
 from fugw.solvers.utils import (
     batch_elementwise_prod_and_sum,
     crow_indices_to_row_indices,
-    solver_sinkhorn_log_sparse,
+    solver_sinkhorn_sparse,
 )
 from fugw.utils import _low_rank_squared_l2, _make_csr_matrix
 from scipy.spatial.distance import cdist
@@ -234,7 +234,7 @@ class SparseUOT(BaseAlignment):
         tuple_weights = (weights, weights, ws_dot_wt)
         train_params = (self.max_iter, self.tol, self.eval_freq)
 
-        _, pi = solver_sinkhorn_log_sparse(
+        _, pi = solver_sinkhorn_sparse(
             cost=cost,
             init_duals=init_duals,
             uot_params=uot_params,
