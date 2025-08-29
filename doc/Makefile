@@ -18,6 +18,14 @@ help:
 	@echo "  htmlhelp  to make HTML files and a HTML help project"
 
 
+clean:
+	rm -rf $(BUILDDIR)/
+	rm -rf auto_examples/
+	rm -rf gen_modules/
+	rm -rf generated/
+	rm -rf modules/generated/
+
+
 force_html: force html
 
 force:
