@@ -19,7 +19,6 @@ dependencies = [
     "nibabel",
     "nilearn>=0.12.0",
     "POT",
-    "fastsrm",
     "fugw>=0.1.1",
     "torch"
 ]
@@ -88,7 +87,7 @@ ignore = [
 select = [
     "E",  # pycodestyle
     "F",  # pyflakes
-    "I",  # isort
+    "I"  # isort
 ]
 unfixable = []
 

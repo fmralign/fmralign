@@ -8,10 +8,11 @@ from fmralign.alignment.utils import (
     _check_method,
     _check_target,
     _fit_template,
+    _init_template,
     _map_to_target,
     _rescaled_euclidean_mean,
 )
-from fmralign.methods import Identity
+from fmralign.methods import DetSRM, Identity
 from fmralign.tests.utils import sample_subjects
 
 
@@ -19,12 +20,20 @@ from fmralign.tests.utils import sample_subjects
 def test_rescaled_euclidean_mean(scale_average):
     """Test the rescaled Euclidean mean function."""
     subjects_data, _ = sample_subjects()
-    average_data = _rescaled_euclidean_mean(subjects_data)
+    average_data = _rescaled_euclidean_mean(subjects_data, scale_average)
     assert average_data.shape == subjects_data[0].shape
     assert average_data.dtype == subjects_data[0].dtype
 
+    euclidean_mean = np.mean(subjects_data, axis=0)
     if scale_average is False:
-        assert_array_equal(average_data, np.mean(subjects_data, axis=0))
+        assert_array_equal(average_data, euclidean_mean)
+    else:
+        avg_norm = np.mean([np.linalg.norm(x) for x in subjects_data])
+        scale = avg_norm / np.linalg.norm(euclidean_mean)
+        assert_array_equal(
+            average_data,
+            euclidean_mean * scale,
+        )
 
 
 def test_check_input_arrays():
@@ -176,3 +185,22 @@ def test_map_to_target():
         transformed_data = estimator.transform(X[0])
         assert transformed_data.shape == target_data.shape
         assert transformed_data.dtype == target_data.dtype
+
+
+def test_init_template():
+    """Test template initialization according to the method"""
+    X = [np.random.rand(10, 5) for _ in range(3)]
+
+    method = Identity()
+    template = _init_template(X, method)
+    assert_array_equal(template, np.mean(X, axis=0))
+
+    method = DetSRM()
+    template_srm = _init_template(X, method)
+    assert template_srm.shape == (X[0].shape[0], method.n_components)
+
+    labels = np.array([1, 1, 1, 2, 2])
+    template_piecewise_srm = _init_template(X, method, labels=labels)
+    assert isinstance(template_piecewise_srm, np.ndarray)
+    for x in template_piecewise_srm:
+        assert x.shape == (X[0].shape[0], method.n_components)

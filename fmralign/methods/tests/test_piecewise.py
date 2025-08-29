@@ -3,6 +3,7 @@ import pytest
 from numpy.testing import assert_array_equal
 
 from fmralign.methods import (
+    DetSRM,
     Identity,
     OptimalTransport,
     Procrustes,
@@ -24,6 +25,7 @@ methods = [
     SparseUOT(),
     RidgeAlignment(),
     OptimalTransport(),
+    DetSRM(),
 ]
 
 
@@ -55,6 +57,13 @@ def test_array_to_list():
     assert result[1].shape == (10, 2)  # Two columns for label 1
     assert result[2].shape == (10, 1)  # One column for label 2
 
+    # Test the case of a 3D array
+    arr = np.random.rand(2, 10, 5)
+    result = _array_to_list(arr)
+    assert isinstance(result, list)
+    assert result[0].shape == (10, 5)
+    assert result[1].shape == (10, 5)
+
 
 def test_list_to_array():
     """Test converting a list back to an array based on labels."""
@@ -78,8 +87,8 @@ def test_piecewise_all_methods(method):
         labels=labels,
     )
     algo.fit(X, Y)
-    transformed = algo.transform(X)
+    if isinstance(method, DetSRM):
+        transformed = algo.transform(X, srm_space=False)
+    else:
+        transformed = algo.transform(X)
     assert transformed.shape == X.shape
-
-
-test_piecewise_all_methods(RidgeAlignment())
