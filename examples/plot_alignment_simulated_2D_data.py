@@ -214,3 +214,9 @@ _plot_distributions_and_alignment(
     X, Y, R=ot_alignment.R, title="Optimal Transport", thr=0.1
 )
 _plot_mixing_matrix(R=ot_alignment.R, title="Optimal Transport coupling")
+
+###############################################################################
+# References
+# ----------
+#
+# .. footbibliography::
