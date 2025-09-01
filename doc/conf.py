@@ -8,7 +8,6 @@
 
 # -- Path setup --------------------------------------------------------------
 
-import os
 import sys
 from pathlib import Path
 
@@ -18,11 +17,11 @@ import fmralign
 # directory, add these directories to sys.path here. If the directory
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
-sys.path.insert(0, os.path.abspath("sphinxext"))
-from github_link import make_linkcode_resolve
+sys.path.insert(0, str(Path("sphinxext").absolute()))
+
 
 # We also add the directory just above to enable local imports of fmralign
-sys.path.insert(0, os.path.abspath(".."))
+sys.path.insert(0, str(Path("..").absolute()))
 
 # -- Project information -----------------------------------------------------
 
@@ -46,7 +45,6 @@ extensions = [
     "sphinx.ext.extlinks",
     "sphinx.ext.imgmath",
     "sphinx.ext.intersphinx",
-    "sphinx.ext.linkcode",
     "sphinxext.opengraph",
     "sphinx.ext.viewcode",
     "sphinxcontrib.bibtex",
@@ -108,7 +106,6 @@ language = "en"
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = [
-    "tune_toc.rst",
     "includes/big_toc_css.rst",
     "includes/bigger_toc_css.rst",
 ]
@@ -274,9 +271,9 @@ nitpick_ignore = [
 binder_branch = "main" if "dev" in current_version else current_version
 
 sphinx_gallery_conf = {
-    "doc_module": "nilearn",
+    "doc_module": "fmralign",
     "backreferences_dir": Path("modules", "generated"),
-    "reference_url": {"nilearn": None},
+    "reference_url": {"fmralign": None},
     "junit": "../test-results/sphinx-gallery/junit.xml",
     "examples_dirs": "../examples/",
     "gallery_dirs": "auto_examples",
@@ -286,15 +283,6 @@ sphinx_gallery_conf = {
     "remove_config_comments": True,
     "matplotlib_animations": True,
     "nested_sections": True,
-    "binder": {
-        "org": "nilearn",
-        "repo": "nilearn",
-        "binderhub_url": "https://mybinder.org",
-        "branch": binder_branch,
-        "dependencies": "./binder/requirements.txt",
-        "use_jupyter_lab": True,
-    },
-    "default_thumb_file": "logos/nilearn-desaturate-100.png",
 }
 
 
@@ -318,14 +306,6 @@ def touch_example_backreferences(
 def setup(app):
     app.connect("autodoc-process-docstring", touch_example_backreferences)
 
-
-# The following is used by sphinx.ext.linkcode to provide links to github
-linkcode_resolve = make_linkcode_resolve(
-    "nilearn",
-    "https://github.com/nilearn/"
-    "nilearn/blob/{revision}/"
-    "{package}/{path}#L{lineno}",
-)
 
 # -- sphinxext.opengraph configuration -------------------------------------
 ogp_site_url = "https://nilearn.github.io/"
