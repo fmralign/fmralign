@@ -1,6 +1,3 @@
-.. include:: ../tune_toc.rst
-
-
 .. _functional_alignment:
 
 =====================================================
