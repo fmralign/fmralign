@@ -180,9 +180,9 @@ from fmralign.methods import (
 ###############################################################################
 # Orthogonal alignment
 # --------------------
-# The first idea proposed in Haxby, 2011 was to compute an orthogonal mixing
+# The first idea proposed in :footcite:t:`Haxby2001` was to compute an orthogonal mixing
 # matrix `R` and a scaling `sc` such that Frobenius norm: math:
-# ` | |sc RX - Y | | ^ 2` is minimized.
+# :math:`\| sc R X - Y \|^2` is minimized.
 
 scaled_orthogonal_alignment = Procrustes()
 scaled_orthogonal_alignment.fit(X.T, Y.T)

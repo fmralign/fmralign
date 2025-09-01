@@ -82,11 +82,11 @@ target_test_imgs = concat_imgs(
 
 ###############################################################################
 # Generate a parcellation from the images
-# --------------------------------------
+# ---------------------------------------
 # We will compute the alignment in a piecewise manner, that is, we will align
 # the data in small parcels of the brain, which are groups of functionally
 # similar voxels. To do so, we need to generate a parcellation of the
-# functional data. We use the :func:`fmralign.embeddings.parcellation.get_labels`
+# functional data. We use the :func:`!fmralign.embeddings.parcellation.get_labels`
 # utility, which will generate a parcellation of the data in 150 pieces.
 #
 
@@ -102,7 +102,7 @@ labels = get_labels(
 ###############################################################################
 # Define the estimator, fit it and predict
 # ----------------------------------------
-# To proceed with the alignment we use :class:`fmralign.PairwiseAlignment`,
+# To proceed with the alignment we use :class:`fmralign.alignment.pairwise_alignment.PairwiseAlignment`,
 # which implements various functional alignment methods between data from two
 # subjects. In this example, we use the Procrustes method. Since we want to
 # align the data in parcels, we pass the labels we just computed to the
