@@ -134,7 +134,7 @@ Featured examples
    quickstart.md
    auto_examples/index.rst
    user_guide.rst
-   modules/index.rst
+   modules/reference.rst
 
 .. toctree::
    :hidden:
