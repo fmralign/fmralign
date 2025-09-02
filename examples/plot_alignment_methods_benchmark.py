@@ -138,7 +138,7 @@ print(f"We will cluster them in {n_pieces} regions")
 # --------------------------
 # We will use intra-parcel alignments, fmralign provides a simple utility
 # to extract the labels of associated to each voxel:
-# :func:`fmralign.embeddings.parcellation.get_labels`.
+# :func:`!fmralign.embeddings.parcellation.get_labels`.
 # We then organize the data in dictionaries of pairs of subjects names and data.
 
 from fmralign.embeddings.parcellation import get_labels
@@ -155,15 +155,17 @@ dict_source_test = dict(
 # Define the estimators, fit them and do a prediction
 # ---------------------------------------------------
 # On each region, we search for a transformation R that is either :
+#
 #   *  orthogonal, i.e. R orthogonal, scaling sc s.t. ||sc RX - Y ||^2 is minimized
 #   *  the optimal transport plan, which yields the minimal transport cost
 #      while respecting the mass conservation constraints. Calculated with
 #      entropic regularization.
 #   *  the shared response model (SRM), which computes a shared response space
 #      from different subjects, and then projects individual subject data into it.
+#
 # Then for each method we define the estimator, fit it, predict the new image and plot
-# its correlation with the real signal.
-# We use the identity (euclidean averaging) as the baseline.
+# its correlation with the real signal. We use the identity (euclidean averaging)
+# as the baseline.
 
 from fmralign import GroupAlignment
 from fmralign.metrics import score_voxelwise
@@ -199,7 +201,7 @@ for i, method in enumerate(methods):
 
 ################################################################################
 # Plot the results
-# ---------------
+# ----------------
 import matplotlib.pyplot as plt
 
 fig, axes = plt.subplots(4, 1, figsize=(8, 12))

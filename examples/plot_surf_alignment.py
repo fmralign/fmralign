@@ -67,7 +67,7 @@ masker = SurfaceMasker().fit([surf_source_train, surf_target_train])
 # Compute and plot a parcellation
 # -------------------------------
 # We compute a parcellation for local alignments with
-# :func:`fmralign.embeddings.parcellation.get_labels`
+# :func:`!fmralign.embeddings.parcellation.get_labels`
 # and plot it on the surface using nilearn.
 
 from nilearn import plotting
@@ -97,7 +97,7 @@ plotting.show()
 ###############################################################################
 # Fitting the alignment operator
 # ------------------------------
-# We use the :class:`fmralign.PairwiseAlignment` class to learn the alignment operator from
+# We use the :class:`fmralign.alignment.pairwise_alignment.PairwiseAlignment` class to learn the alignment operator from
 # one subject to the other. We select the `procrutses` method to compute
 # a rigid piecewise alignment mapping and the `ward` clustering method to
 # parcellate the cortical surface.

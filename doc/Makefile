@@ -18,6 +18,14 @@ help:
 	@echo "  htmlhelp  to make HTML files and a HTML help project"
 
 
+clean:
+	rm -rf $(BUILDDIR)/
+	rm -rf auto_examples/
+	rm -rf gen_modules/
+	rm -rf generated/
+	rm -rf modules/generated/
+
+
 force_html: force html
 
 force:
@@ -35,10 +43,11 @@ html:
 html-strict:
 	# Build html documentation using a strict mode: Warnings are
 	# considered as errors.
-	make check
+	rm -rf $(BUILDDIR)/html/_images
+	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) -W $(BUILDDIR)/html
 	touch $(BUILDDIR)/html/.nojekyll
 	@echo
-	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+	@echo "Strict build finished. The HTML pages are in $(BUILDDIR)/html."
 
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml

@@ -180,9 +180,9 @@ from fmralign.methods import (
 ###############################################################################
 # Orthogonal alignment
 # --------------------
-# The first idea proposed in Haxby, 2011 was to compute an orthogonal mixing
+# The first idea proposed in :footcite:t:`Haxby2001` was to compute an orthogonal mixing
 # matrix `R` and a scaling `sc` such that Frobenius norm: math:
-# ` | |sc RX - Y | | ^ 2` is minimized.
+# :math:`\| sc R X - Y \|^2` is minimized.
 
 scaled_orthogonal_alignment = Procrustes()
 scaled_orthogonal_alignment.fit(X.T, Y.T)
@@ -214,3 +214,9 @@ _plot_distributions_and_alignment(
     X, Y, R=ot_alignment.R, title="Optimal Transport", thr=0.1
 )
 _plot_mixing_matrix(R=ot_alignment.R, title="Optimal Transport coupling")
+
+###############################################################################
+# References
+# ----------
+#
+# .. footbibliography::
