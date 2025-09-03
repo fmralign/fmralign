@@ -112,3 +112,10 @@ max-branches = 48
 max-returns = 7
 # https://docs.astral.sh/ruff/settings/#lint_pylint_max-statements
 max-statements = 151
+
+[tool.codespell]
+# Ref: https://github.com/codespell-project/codespell#using-a-config-file
+skip = '.git*,*.css'
+check-hidden = true
+# ignore-regex = ''
+ignore-words-list = 'nd,ot'
