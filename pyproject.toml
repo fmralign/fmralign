@@ -119,3 +119,4 @@ skip = '.git*,*.css'
 check-hidden = true
 # ignore-regex = ''
 ignore-words-list = 'nd,ot'
+ignore-words = '.github/codespell_ignore_words.txt'
