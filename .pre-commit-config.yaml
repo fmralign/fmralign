@@ -37,3 +37,9 @@ repos:
         args: ["check", "--select", "I", "--fix", "--show-fixes"]
     # Run the formatter.
       - id: ruff-format
+  
+  - repo: https://github.com/codespell-project/codespell
+    # Configuration for codespell is in .pre-commit-config.yaml
+    rev: v2.4.1
+    hooks:
+    - id: codespell
