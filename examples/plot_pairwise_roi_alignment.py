@@ -63,7 +63,7 @@ plot_roi(
 )
 
 ###############################################################################
-# Definine a masker
+# Define a masker
 # -----------------
 # We define a nilearn masker that will be used to handle relevant data.
 # For more information, visit :
