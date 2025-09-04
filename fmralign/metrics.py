@@ -4,9 +4,7 @@ from scipy.stats import pearsonr
 from sklearn.metrics import r2_score
 
 
-def score_voxelwise(
-    ground_truth, prediction, masker, loss, multioutput="raw_values"
-):
+def score_voxelwise(X_gt, X_pred, loss, multioutput="raw_values"):
     """
     Calculate loss function for predicted, ground truth arrays.
     Supported scores are R2, correlation, and normalized
@@ -14,13 +12,10 @@ def score_voxelwise(
 
     Parameters
     ----------
-    ground_truth: 3D or 4D Niimg
-        Reference image
-    prediction : 3D or 4D Niimg
-        Same shape as `ground_truth`
-    masker: instance of NiftiMasker or MultiNiftiMasker
-        Masker to be used on ground_truth and prediction. For more information see:
-        http://nilearn.github.io/manipulating_images/masker_objects.html
+    X_gt: 2D ndarray (n_samples, n_voxels)
+        Reference data
+    X_pred : 2D ndarray (n_samples, n_voxels)
+        Same shape as `X_gt`
     loss : str in ['R2', 'corr', 'n_reconstruction_err']
         The loss function used in scoring. Default is normalized
         reconstruction error.
@@ -47,8 +42,6 @@ def score_voxelwise(
         The score or ndarray of scores if ‘multioutput’ is ‘raw_values’.
         The worst possible score is arbitrarily set to -1 for all metrics.
     """
-    X_gt = masker.transform(ground_truth)
-    X_pred = masker.transform(prediction)
 
     if loss == "R2":
         score = r2_score(X_gt, X_pred, multioutput=multioutput)

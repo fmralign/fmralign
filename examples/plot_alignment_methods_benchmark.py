@@ -183,21 +183,16 @@ for i, method in enumerate(methods):
     # Compute a mapping between the template and the new subject
     # using `target_train` and make a prediction using the left-out-data
     target_pred = group_estimator.predict_subject(
-        dict_source_test, roi_masker.transform(target_train)
+        dict_source_test, target_train
     )
 
     # Derive correlation between prediction, test
-    method_error = score_voxelwise(
-        target_test,
-        roi_masker.inverse_transform(target_pred),
-        masker=roi_masker,
-        loss="corr",
-    )
+    method_error = score_voxelwise(target_test, target_pred, loss="corr")
 
     # Store the results for plotting later
-    aligned_score = roi_masker.inverse_transform(method_error)
+    aligned_score_img = roi_masker.inverse_transform(method_error)
     titles.append(f"Correlation of prediction after {method} alignment")
-    aligned_scores.append(aligned_score)
+    aligned_scores.append(aligned_score_img)
 
 ################################################################################
 # Plot the results
