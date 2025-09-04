@@ -102,7 +102,7 @@ class PiecewiseAlignment(BaseAlignment):
     where each piece corresponds to a unique label in the provided labels array.
 
     It uses parallel processing to fit the alignment method to each piece of data
-    and agregates the results in a estimator at the whole-brain level.
+    and aggregates the results in a estimator at the whole-brain level.
 
     Parameters
     ----------

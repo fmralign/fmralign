@@ -11,7 +11,7 @@ An introduction to functional alignment
 This section gives an introduction to the concept of functional alignment:
 finding transformation between subjects to handle the functional variability.
 
-In this documentation we use a subset of `Individual Brain Charting dataset <https://project.inria.fr/IBC/>`_ where we have a lot of functional informations on several subjects, in the form of several task-based contrast per subject.
+In this documentation we use a subset of `Individual Brain Charting dataset <https://project.inria.fr/IBC/>`_ where we have a lot of functional information on several subjects, in the form of several task-based contrast per subject.
 
 .. topic:: **Full code example**
 
@@ -27,7 +27,7 @@ functional images. Some rely on task and contrasts with a semantic,
 (`Human Connectome Project <http://www.humanconnectomeproject.org/>`_ , `Individual Brain Charting <https://project.inria.fr/IBC/>`_),
 others use complex naturalistic stimulis such as movies.
 This accumulation help characterize better individual structure of brain function,
-however it's hard to use precise individual informations in group study setting
+however it's hard to use precise individual information in group study setting
 because they show a lot of variability across subjects. As a first step,
 let's illustrate this variability on an example.
 
@@ -138,5 +138,5 @@ our previous results.
 .. image:: ../auto_examples/images/sphx_glr_plot_pairwise_alignment_002.png
 
 We can observe that the correlations values are overall higher than initially,
-with bigger regions well predicted. It is a sign that alignment succesfully
+with bigger regions well predicted. It is a sign that alignment successfully
 handled part of the inter-subject variability.

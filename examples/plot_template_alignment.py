@@ -88,7 +88,7 @@ average_subject = masker.inverse_transform(average_img)
 # We define an estimator using the class TemplateAlignment:
 #   * We align the whole brain through 'multiple' local alignments.
 #   * These alignments are calculated on a parcellation of the brain in 150 pieces,
-#     this parcellation creates group of functionnally similar voxels.
+#     this parcellation creates group of functionally similar voxels.
 #   * The template is created iteratively, aligning all subjects data into a
 #     common space, from which the template is inferred and aligning again to this
 #     new template space.

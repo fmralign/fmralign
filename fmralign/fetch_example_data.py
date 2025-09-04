@@ -85,7 +85,7 @@ def fetch_ibc_subjects_contrasts(subjects, data_dir=None, verbose=1):
         verbose=verbose,
     )[0]
 
-    # list all url keys for downloading separetely each subject data
+    # list all url keys for downloading separately each subject data
     url_keys = {
         "sub-01": "8z23h",
         "sub-02": "e9kbm",

@@ -6,7 +6,7 @@ Alignment methods benchmark (template-based ROI case)
 
 In this tutorial, we compare various methods of alignment on a template-based alignment
 problem for Individual Brain Charting subjects. For each subject, we have a lot
-of functional informations in the form of several task-based
+of functional information in the form of several task-based
 contrast per subject. We will just work here on a ROI.
 
 We mostly rely on python common packages and on nilearn to handle functional
