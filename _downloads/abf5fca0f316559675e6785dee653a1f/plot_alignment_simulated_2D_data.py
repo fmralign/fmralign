@@ -4,7 +4,7 @@
 Alignment on simulated 2D data.
 ===============================
 
-As we mentionned several times, we search for a transformation, let's call it
+As we mentioned several times, we search for a transformation, let's call it
 `R`, between the source subject data `X` and the target data `Y`. `X` and `Y`
 are arrays of dimensions `(n_voxels, n_samples)` where each image is a sample.
 So we can see each signal as a distribution where each voxel as a point
@@ -12,7 +12,7 @@ in a multidimensional functional space (each dimension is a sample).
 
 We show below a 2D example, with 2 distributions: `X` in green, `Y` in red.
 Both have 20 voxels (points) characterized by 2 samples (images). And the
-alignment we search for is the matching of both distibutions, optimally in
+alignment we search for is the matching of both distributions, optimally in
 some sense.
 
 To run this example, you must launch IPython via ``ipython --matplotlib``
@@ -153,10 +153,10 @@ Y = np.asarray(
     ]
 )
 # Our to distributions : X in green and Y in red
-_plot_distributions_and_alignment(X, Y, title="Example distibutions")
+_plot_distributions_and_alignment(X, Y, title="Example distributions")
 
 # We permutate its points to mimic functional variability. So now we have two
-# distributions that seem to have some correspondance but are ill aligned.
+# distributions that seem to have some correspondence but are ill aligned.
 Y = np.roll(Y, 6, axis=0)
 # We plot them and observe that their initial matching is wrong
 R_identity = np.eye(n_points, dtype=np.float64)

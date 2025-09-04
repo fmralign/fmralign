@@ -378,9 +378,7 @@ mask is an appropriate nifti image to select the data.</p>
 [fetch_atlas_yeo_2011] Dataset created in /home/runner/nilearn_data/yeo_2011
 [fetch_atlas_yeo_2011] Downloading data from
 ftp://surfer.nmr.mgh.harvard.edu/pub/data/Yeo_JNeurophysiol11_MNI152.zip ...
-[fetch_atlas_yeo_2011] Downloaded 942080 of ? bytes.
-[fetch_atlas_yeo_2011] Downloaded 1982464 of ? bytes.
-[fetch_atlas_yeo_2011]  ...done. (4 seconds, 0 min)
+[fetch_atlas_yeo_2011]  ...done. (1 seconds, 0 min)
 
 [fetch_atlas_yeo_2011] Extracting data from
 /home/runner/nilearn_data/yeo_2011/622858b56913b19ae0865d9fa8ad47cc/Yeo_JNeuroph
@@ -393,12 +391,12 @@ Use &#39;force_resample=True&#39; to suppress this warning.
 /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:52: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
   resampled_mask_visual = resample_to_img(
 
-&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f2ed6e57b30&gt;
+&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fc2e57da180&gt;
 </pre></div>
 </div>
 </section>
-<section id="definine-a-masker">
-<h2>Definine a masker<a class="headerlink" href="#definine-a-masker" title="Link to this heading">¶</a></h2>
+<section id="define-a-masker">
+<h2>Define a masker<a class="headerlink" href="#define-a-masker" title="Link to this heading">¶</a></h2>
 <p>We define a nilearn masker that will be used to handle relevant data.
 For more information, visit :
 ‘<a class="reference external" href="http://nilearn.github.io/manipulating_images/masker_objects.html">http://nilearn.github.io/manipulating_images/masker_objects.html</a>’</p>
@@ -521,7 +519,7 @@ alike the ground truth.</p>
 </div>
 <p>We can see on the plot that after alignment, the prediction made for one
 subject data, informed by another subject are greatly improved.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 18.613 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 15.355 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-pairwise-roi-alignment-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/d5f9258ebaaa3446b17d5c0324441f8c/plot_pairwise_roi_alignment.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_pairwise_roi_alignment.ipynb</span></code></a></p>
@@ -595,7 +593,7 @@ subject data, informed by another subject are greatly improved.</p>
 <li><a class="reference internal" href="#">Pairwise functional alignment on a ROI.</a><ul>
 <li><a class="reference internal" href="#retrieve-the-data">Retrieve the data</a></li>
 <li><a class="reference internal" href="#extract-a-mask-for-the-visual-cortex-from-yeo-atlas">Extract a mask for the visual cortex from Yeo Atlas</a></li>
-<li><a class="reference internal" href="#definine-a-masker">Definine a masker</a></li>
+<li><a class="reference internal" href="#define-a-masker">Define a masker</a></li>
 <li><a class="reference internal" href="#prepare-the-data">Prepare the data</a></li>
 <li><a class="reference internal" href="#define-the-estimator-fit-it-and-predict">Define the estimator, fit it and predict</a></li>
 <li><a class="reference internal" href="#score-the-baseline-and-the-prediction">Score the baseline and the prediction</a></li>

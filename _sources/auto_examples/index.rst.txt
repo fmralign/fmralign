@@ -72,7 +72,7 @@ Examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we compare various methods of alignment on a template-based alignment problem for Individual Brain Charting subjects. For each subject, we have a lot of functional informations in the form of several task-based contrast per subject. We will just work here on a ROI.">
+    <div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we compare various methods of alignment on a template-based alignment problem for Individual Brain Charting subjects. For each subject, we have a lot of functional information in the form of several task-based contrast per subject. We will just work here on a ROI.">
 
 .. only:: html
 
@@ -106,7 +106,7 @@ Examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="As we mentionned several times, we search for a transformation, let&#x27;s call it R, between the source subject data X and the target data Y. X and Y are arrays of dimensions (n_voxels, n_samples) where each image is a sample. So we can see each signal as a distribution where each voxel as a point in a multidimensional functional space (each dimension is a sample).">
+    <div class="sphx-glr-thumbcontainer" tooltip="As we mentioned several times, we search for a transformation, let&#x27;s call it R, between the source subject data X and the target data Y. X and Y are arrays of dimensions (n_voxels, n_samples) where each image is a sample. So we can see each signal as a distribution where each voxel as a point in a multidimensional functional space (each dimension is a sample).">
 
 .. only:: html
 

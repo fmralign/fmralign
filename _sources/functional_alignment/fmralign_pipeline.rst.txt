@@ -9,7 +9,7 @@ functional alignment searches for a transform between images of two or several s
 This section explains how this transform is found in fmralign to make the process easy, efficient and scalable.
 
 We compare various methods of alignment on a pairwise alignment problem for `Individual Brain Charting <https://project.inria.fr/IBC/>`_ subjects.
-For each subject, we have a lot of functional informations in the form of several task-based contrast per subject.
+For each subject, we have a lot of functional information in the form of several task-based contrast per subject.
 We will just work here on a ROI.
 
 
@@ -23,7 +23,7 @@ Local functional alignment
 Aligning images of various size is not always easy because when we search a
 transformation for `n` voxels yields at least a complexity of :math:`n^2`. Moreover,
 finding just one transformation for similarity of functional signal in the whole
-brain could create unrealistic correspondances, for example inter-hemispheric.
+brain could create unrealistic correspondences, for example inter-hemispheric.
 
 To avoid these issues, we keep alignment local, i.e. on local and functionally meaningful regions.
 Thus, in a first step cluster the voxels in the image into `n_pieces` sub-regions, based on functional information.
@@ -47,13 +47,13 @@ Alignment methods on a region
     All the figures in this section were generated from a dedicated example:
     :ref:`sphx_glr_auto_examples_plot_alignment_simulated_2D_data.py`.
 
-As we mentionned several times, we search for a transformation, let's call it `R`,
+As we mentioned several times, we search for a transformation, let's call it `R`,
 between the source subject data `X` and the target data `Y`. `X` and `Y` are arrays of
 dimensions `(n_voxels, n_samples)` where each image is a sample.
 So we can see each signal as a distribution where each voxel as a point
 in a multidimensional functional space (each dimension is a sample).
 
-We show below a 2D example, with 2 distributions: `X` in green, `Y` in red. Both have 20 voxels (points) characterized by 2 samples (images). And the alignment we search for is the matching of both distibutions, optimally in some sense.
+We show below a 2D example, with 2 distributions: `X` in green, `Y` in red. Both have 20 voxels (points) characterized by 2 samples (images). And the alignment we search for is the matching of both distributions, optimally in some sense.
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_001.png
    :align: left

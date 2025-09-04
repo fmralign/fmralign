@@ -7,10 +7,10 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://nilearn.github.io/auto_examples/plot_alignment_simulated_2D_data.html" />
 <meta property="og:site_name" content="Nilearn" />
-<meta property="og:description" content="As we mentionned several times, we search for a transformation, let’s call it R, between the source subject data X and the target data Y. X and Y are arrays of dimensions(n_voxels, n_samples) where..." />
+<meta property="og:description" content="As we mentioned several times, we search for a transformation, let’s call it R, between the source subject data X and the target data Y. X and Y are arrays of dimensions(n_voxels, n_samples) where ..." />
 <meta property="og:image" content="https://nilearn.github.io/_static/nilearn-logo.png" />
 <meta property="og:image:alt" content="Nilearn" />
-<meta name="description" content="As we mentionned several times, we search for a transformation, let’s call it R, between the source subject data X and the target data Y. X and Y are arrays of dimensions(n_voxels, n_samples) where..." />
+<meta name="description" content="As we mentioned several times, we search for a transformation, let’s call it R, between the source subject data X and the target data Y. X and Y are arrays of dimensions(n_voxels, n_samples) where ..." />
 <link rel="search" title="Search" href="../search.html" /><link rel="next" title="User guide" href="../user_guide.html" /><link rel="prev" title="Pairwise surface alignment." href="plot_surf_alignment.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
@@ -319,14 +319,14 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="alignment-on-simulated-2d-data">
 <span id="sphx-glr-auto-examples-plot-alignment-simulated-2d-data-py"></span><h1>Alignment on simulated 2D data.<a class="headerlink" href="#alignment-on-simulated-2d-data" title="Link to this heading">¶</a></h1>
-<p>As we mentionned several times, we search for a transformation, let’s call it
+<p>As we mentioned several times, we search for a transformation, let’s call it
 <cite>R</cite>, between the source subject data <cite>X</cite> and the target data <cite>Y</cite>. <cite>X</cite> and <cite>Y</cite>
 are arrays of dimensions <cite>(n_voxels, n_samples)</cite> where each image is a sample.
 So we can see each signal as a distribution where each voxel as a point
 in a multidimensional functional space (each dimension is a sample).</p>
 <p>We show below a 2D example, with 2 distributions: <cite>X</cite> in green, <cite>Y</cite> in red.
 Both have 20 voxels (points) characterized by 2 samples (images). And the
-alignment we search for is the matching of both distibutions, optimally in
+alignment we search for is the matching of both distributions, optimally in
 some sense.</p>
 <p>To run this example, you must launch IPython via <code class="docutils literal notranslate"><span class="pre">ipython</span> <span class="pre">--matplotlib</span></code>
 in a terminal, or use <code class="docutils literal notranslate"><span class="pre">jupyter-notebook</span></code>.</p>
@@ -463,10 +463,10 @@ however we have tens or hundreds of observations that characterize each point.</
     <span class="p">]</span>
 <span class="p">)</span>
 <span class="c1"># Our to distributions : X in green and Y in red</span>
-<span class="n">_plot_distributions_and_alignment</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">Y</span></a><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Example distibutions&quot;</span><span class="p">)</span>
+<span class="n">_plot_distributions_and_alignment</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">Y</span></a><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Example distributions&quot;</span><span class="p">)</span>
 
 <span class="c1"># We permutate its points to mimic functional variability. So now we have two</span>
-<span class="c1"># distributions that seem to have some correspondance but are ill aligned.</span>
+<span class="c1"># distributions that seem to have some correspondence but are ill aligned.</span>
 <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">Y</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.roll.html#numpy.roll" title="numpy.roll" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">roll</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">Y</span></a><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="c1"># We plot them and observe that their initial matching is wrong</span>
 <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">R_identity</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.eye.html#numpy.eye" title="numpy.eye" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">eye</span></a><span class="p">(</span><a href="https://docs.python.org/3.9/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_points</span></a><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">np</span><span class="o">.</span><span class="n">float64</span></a><span class="p">)</span>
@@ -476,7 +476,7 @@ however we have tens or hundreds of observations that characterize each point.</
 </pre></div>
 </div>
 <ul class="sphx-glr-horizontal">
-<li><img src="../_images/sphx_glr_plot_alignment_simulated_2D_data_001.png" srcset="../_images/sphx_glr_plot_alignment_simulated_2D_data_001.png" alt="Example distibutions" class = "sphx-glr-multi-img"/></li>
+<li><img src="../_images/sphx_glr_plot_alignment_simulated_2D_data_001.png" srcset="../_images/sphx_glr_plot_alignment_simulated_2D_data_001.png" alt="Example distributions" class = "sphx-glr-multi-img"/></li>
 <li><img src="../_images/sphx_glr_plot_alignment_simulated_2D_data_002.png" srcset="../_images/sphx_glr_plot_alignment_simulated_2D_data_002.png" alt="Initial Matching" class = "sphx-glr-multi-img"/></li>
 </ul>
 </section>
@@ -549,7 +549,7 @@ distributions.</p>
 </aside>
 </aside>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.661 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.549 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-alignment-simulated-2d-data-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/acb66ee7f529e387ab2018ae6055b46c/plot_alignment_simulated_2D_data.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_alignment_simulated_2D_data.ipynb</span></code></a></p>

@@ -318,7 +318,7 @@
 functional alignment searches for a transform between images of two or several subjects in order to match voxels which have similar profile of activation.
 This section explains how this transform is found in fmralign to make the process easy, efficient and scalable.</p>
 <p>We compare various methods of alignment on a pairwise alignment problem for <a class="reference external" href="https://project.inria.fr/IBC/">Individual Brain Charting</a> subjects.
-For each subject, we have a lot of functional informations in the form of several task-based contrast per subject.
+For each subject, we have a lot of functional information in the form of several task-based contrast per subject.
 We will just work here on a ROI.</p>
 <section id="local-functional-alignment">
 <h2><span class="section-number">2.2.1. </span>Local functional alignment<a class="headerlink" href="#local-functional-alignment" title="Link to this heading">¶</a></h2>
@@ -329,7 +329,7 @@ We will just work here on a ROI.</p>
 <p>Aligning images of various size is not always easy because when we search a
 transformation for <cite>n</cite> voxels yields at least a complexity of <span class="math">n^2</span>. Moreover,
 finding just one transformation for similarity of functional signal in the whole
-brain could create unrealistic correspondances, for example inter-hemispheric.</p>
+brain could create unrealistic correspondences, for example inter-hemispheric.</p>
 <p>To avoid these issues, we keep alignment local, i.e. on local and functionally meaningful regions.
 Thus, in a first step cluster the voxels in the image into <cite>n_pieces</cite> sub-regions, based on functional information.
 Then we find local alignment on each parcel and we recompose the global matrix from these.</p>
@@ -348,12 +348,12 @@ We therefore recommend working with smaller regions when using this method.</p>
 <p>All the figures in this section were generated from a dedicated example:
 <a class="reference internal" href="../auto_examples/plot_alignment_simulated_2D_data.html#sphx-glr-auto-examples-plot-alignment-simulated-2d-data-py"><span class="std std-ref">Alignment on simulated 2D data.</span></a>.</p>
 </aside>
-<p>As we mentionned several times, we search for a transformation, let’s call it <cite>R</cite>,
+<p>As we mentioned several times, we search for a transformation, let’s call it <cite>R</cite>,
 between the source subject data <cite>X</cite> and the target data <cite>Y</cite>. <cite>X</cite> and <cite>Y</cite> are arrays of
 dimensions <cite>(n_voxels, n_samples)</cite> where each image is a sample.
 So we can see each signal as a distribution where each voxel as a point
 in a multidimensional functional space (each dimension is a sample).</p>
-<p>We show below a 2D example, with 2 distributions: <cite>X</cite> in green, <cite>Y</cite> in red. Both have 20 voxels (points) characterized by 2 samples (images). And the alignment we search for is the matching of both distibutions, optimally in some sense.</p>
+<p>We show below a 2D example, with 2 distributions: <cite>X</cite> in green, <cite>Y</cite> in red. Both have 20 voxels (points) characterized by 2 samples (images). And the alignment we search for is the matching of both distributions, optimally in some sense.</p>
 <figure class="align-left">
 <img alt="../_images/sphx_glr_plot_alignment_simulated_2D_data_001.png" src="../_images/sphx_glr_plot_alignment_simulated_2D_data_001.png" />
 </figure>
