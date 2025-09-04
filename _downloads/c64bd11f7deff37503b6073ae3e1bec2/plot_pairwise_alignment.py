@@ -38,9 +38,9 @@ files, df, mask = fetch_ibc_subjects_contrasts(["sub-01", "sub-02"])
 #
 
 from nilearn.image import concat_imgs
-from nilearn.maskers import NiftiMasker
+from nilearn.maskers import MultiNiftiMasker
 
-masker = NiftiMasker(mask_img=mask)
+masker = MultiNiftiMasker(mask_img=mask)
 mask
 masker.fit()
 
@@ -60,11 +60,11 @@ masker.fit()
 # * source train: AP contrasts for subject sub-01
 # * target train: AP contrasts for subject sub-02
 
-source_train = concat_imgs(
-    df[df.subject == "sub-01"][df.acquisition == "ap"].path.values
+source_train_imgs = concat_imgs(
+    df[(df.subject == "sub-01") & (df.acquisition == "ap")].path.values
 )
-target_train = concat_imgs(
-    df[df.subject == "sub-02"][df.acquisition == "ap"].path.values
+target_train_imgs = concat_imgs(
+    df[(df.subject == "sub-02") & (df.acquisition == "ap")].path.values
 )
 
 # The testing fold:
@@ -73,33 +73,55 @@ target_train = concat_imgs(
 # * target test: PA contrasts for subject sub-02, used as a ground truth
 #   to score our predictions
 
-source_test = concat_imgs(
-    df[df.subject == "sub-01"][df.acquisition == "pa"].path.values
+source_test_imgs = concat_imgs(
+    df[(df.subject == "sub-01") & (df.acquisition == "pa")].path.values
 )
-target_test = concat_imgs(
-    df[df.subject == "sub-02"][df.acquisition == "pa"].path.values
+target_test_imgs = concat_imgs(
+    df[(df.subject == "sub-02") & (df.acquisition == "pa")].path.values
+)
+
+###############################################################################
+# Generate a parcellation from the images
+# ---------------------------------------
+# We will compute the alignment in a piecewise manner, that is, we will align
+# the data in small parcels of the brain, which are groups of functionally
+# similar voxels. To do so, we need to generate a parcellation of the
+# functional data. We use the :func:`!fmralign.embeddings.parcellation.get_labels`
+# utility, which will generate a parcellation of the data in 150 pieces.
+#
+
+from fmralign.embeddings.parcellation import get_labels
+
+labels = get_labels(
+    imgs=[source_train_imgs, target_train_imgs],
+    n_pieces=150,
+    masker=masker,
 )
 
 
 ###############################################################################
 # Define the estimator, fit it and predict
 # ----------------------------------------
-# To proceed with alignment we use PairwiseAlignment class. We will use the
-# common model proposed in the literature:
-# * we will align the whole brain through multiple local alignments.
-# * these alignments are calculated on a parcellation of the brain in 150
-#   pieces, this parcellation creates group of functionnally similar voxels.
+# To proceed with the alignment we use :class:`fmralign.alignment.pairwise_alignment.PairwiseAlignment`,
+# which implements various functional alignment methods between data from two
+# subjects. In this example, we use the Procrustes method. Since we want to
+# align the data in parcels, we pass the labels we just computed to the
+# estimator. The labels are used to compute the alignment in each parcel
+# separately, and then to aggregate the local transformations into a global
+# transformation that is applied to the whole brain.
 #
 
-from fmralign.pairwise_alignment import PairwiseAlignment
+from fmralign import PairwiseAlignment
 
-alignment_estimator = PairwiseAlignment(
-    alignment_method="scaled_orthogonal", n_pieces=150, masker=masker
+source_train_data, target_train_data, source_test_data = masker.transform(
+    [source_train_imgs, target_train_imgs, source_test_imgs]
 )
+
+alignment_estimator = PairwiseAlignment(method="procrustes", labels=labels)
 # Learn alignment operator from subject 1 to subject 2 on training data
-alignment_estimator.fit(source_train, target_train)
+alignment_estimator.fit(source_train_data, target_train_data)
 # Predict test data for subject 2 from subject 1
-target_pred = alignment_estimator.transform(source_test)
+target_pred_data = alignment_estimator.transform(source_test_data)
 
 ###############################################################################
 # Score the baseline and the prediction
@@ -115,11 +137,12 @@ from fmralign.metrics import score_voxelwise
 # Now we use this scoring function to compare the correlation of aligned and
 # original data from sub-01 made with the real PA contrasts of sub-02.
 
+target_pred_imgs = masker.inverse_transform(target_pred_data)
 baseline_score = masker.inverse_transform(
-    score_voxelwise(target_test, source_test, masker, loss="corr")
+    score_voxelwise(target_test_imgs, source_test_imgs, masker, loss="corr")
 )
 aligned_score = masker.inverse_transform(
-    score_voxelwise(target_test, target_pred, masker, loss="corr")
+    score_voxelwise(target_test_imgs, target_pred_imgs, masker, loss="corr")
 )
 
 ###############################################################################

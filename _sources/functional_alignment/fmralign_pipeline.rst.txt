@@ -60,7 +60,7 @@ We show below a 2D example, with 2 distributions: `X` in green, `Y` in red. Both
 
 Orthogonal alignment (Procrustes)
 ---------------------------------
-The first idea proposed in Haxby, 2011 was to compute an orthogonal mixing
+The first idea proposed in :footcite:t:`Haxby2001` was to compute an orthogonal mixing
 matrix `R` and a scaling `sc` such that Frobenius norm :math:`||sc RX - Y||^2` is minimized.
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_003.png
@@ -69,26 +69,16 @@ matrix `R` and a scaling `sc` such that Frobenius norm :math:`||sc RX - Y||^2` i
 .. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_004.png
    :align: left
 
-Ridge alignment
----------------
-Another simple idea to regularize the transform `R` searched for is to penalize its L2 norm. This is a ridge regression, which means we search `R` such that Frobenius  norm :math:`|| XR - Y ||^2 + alpha * ||R||^2` is minimized with cross-validation.
-
-.. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_005.png
-   :align: left
-
-.. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_006.png
-   :align: left
-
 
 Optimal Transport alignment
 ---------------------------
 Finally this package comes with a new method that build on the Wasserstein distance which is well-suited for this problem. This is the framework of Optimal Transport that search to transport all signal from `X` to `Y`
 while minimizign the overall cost of this transport. `R` is here the optimal coupling between `X` and `Y` with entropic regularization.
 
-.. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_007.png
+.. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_005.png
    :align: left
 
-.. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_008.png
+.. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_006.png
   :align: left
 
 
@@ -172,31 +162,41 @@ Define the estimators, fit them and do a prediction
 ---------------------------------------------------
 To proceed with alignment we use the class PairwiseAlignment with the masker we created before.
 
-First we choose a suitable number of regions such that each regions is approximately 200 voxels wide.
+First we choose a suitable number of regions such that each regions is approximately 100 voxels wide.
 
 >>> n_voxels = roi_masker.mask_img_.get_fdata().sum()
->>> n_pieces = np.round(n_voxels / 200)
+>>> n_pieces = np.round(n_voxels / 100)
 
 Then for each method we define the estimator, fit it, and predict new image. We then plot
 the correlation of this prediction with the real signal. We also include identity (no alignment) as a baseline.
 
->>> from fmralign.pairwise_alignment import PairwiseAlignment
->>> from fmralign._utils import voxelwise_correlation
->>> methods = ['identity','scaled_orthogonal', 'ridge_cv', 'optimal_transport']
-
->>> for method in methods:
->>>   alignment_estimator = PairwiseAlignment(alignment_method=method, n_pieces=n_pieces, masker=roi_masker)
->>>   alignment_estimator.fit(source_train, target_train)
->>>   target_pred = alignment_estimator.transform(source_test)
->>>   aligned_score = voxelwise_correlation(target_test, target_pred, roi_masker)
->>>   display = plotting.plot_stat_map(aligned_score, display_mode="z", cut_coords=[-15, -5],
->>>         vmax=1, title=f"Correlation of prediction after {method} alignment")
+>>> from fmralign import GroupAlignment
+>>> from fmralign.metrics import score_voxelwise
+>>> methods = ["identity", "procrustes", "ot", "SRM"]
+>>> titles, aligned_scores = [], []
+>>> for i, method in enumerate(methods):
+>>>     # Fit the group estimator on the training data
+>>>     group_estimator = GroupAlignment(method=method, labels=labels).fit(
+>>>         dict_source_train
+>>>     )
+>>>     # Compute a mapping between the template and the new subject
+>>>     # using `target_train` and make a prediction using the left-out-data
+>>>     target_pred = group_estimator.predict_subject(
+>>>         dict_source_test, roi_masker.transform(target_train)
+>>>     )
+>>>     # Derive correlation between prediction, test
+>>>     method_error = score_voxelwise(
+>>>         target_test,
+>>>         roi_masker.inverse_transform(target_pred),
+>>>         masker=roi_masker,
+>>>         loss="corr",
+>>>     )
 
 .. image:: ../auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_002.png
-.. image:: ../auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_003.png
-.. image:: ../auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_004.png
-.. image:: ../auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_005.png
 
 We can observe that all alignment methods perform better than identity (no alignment).
-Ridge is the best performing method, followed by Optimal Transport. If you use
-Ridge though, be careful about the smooth predictions it yields.
+
+References
+==========
+
+.. footbibliography::

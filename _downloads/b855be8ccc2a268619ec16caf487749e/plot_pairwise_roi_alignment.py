@@ -70,9 +70,9 @@ plot_roi(
 # 'http://nilearn.github.io/manipulating_images/masker_objects.html'
 #
 
-from nilearn.maskers import NiftiMasker
+from nilearn.maskers import MultiNiftiMasker
 
-roi_masker = NiftiMasker(mask_img=resampled_mask_visual).fit()
+roi_masker = MultiNiftiMasker(mask_img=resampled_mask_visual).fit()
 
 ###############################################################################
 # Prepare the data
@@ -87,11 +87,11 @@ roi_masker = NiftiMasker(mask_img=resampled_mask_visual).fit()
 # * source train: AP contrasts for subject sub-01
 # * target train: AP contrasts for subject sub-02
 
-source_train = concat_imgs(
-    df[df.subject == "sub-01"][df.acquisition == "ap"].path.values
+source_train_imgs = concat_imgs(
+    df[(df.subject == "sub-01") & (df.acquisition == "ap")].path.values
 )
-target_train = concat_imgs(
-    df[df.subject == "sub-02"][df.acquisition == "ap"].path.values
+target_train_imgs = concat_imgs(
+    df[(df.subject == "sub-02") & (df.acquisition == "ap")].path.values
 )
 
 # The testing fold:
@@ -100,11 +100,11 @@ target_train = concat_imgs(
 # * target test: PA contrasts for subject sub-02, used as a ground truth
 #   to score our predictions
 
-source_test = concat_imgs(
-    df[df.subject == "sub-01"][df.acquisition == "pa"].path.values
+source_test_imgs = concat_imgs(
+    df[(df.subject == "sub-01") & (df.acquisition == "pa")].path.values
 )
-target_test = concat_imgs(
-    df[df.subject == "sub-02"][df.acquisition == "pa"].path.values
+target_test_imgs = concat_imgs(
+    df[(df.subject == "sub-02") & (df.acquisition == "pa")].path.values
 )
 
 ###############################################################################
@@ -119,13 +119,15 @@ target_test = concat_imgs(
 # predict target test data.
 #
 
-from fmralign.pairwise_alignment import PairwiseAlignment
+from fmralign import PairwiseAlignment
 
-alignment_estimator = PairwiseAlignment(
-    alignment_method="scaled_orthogonal", n_pieces=1, masker=roi_masker
+source_train_data, target_train_data, source_test_data = roi_masker.transform(
+    [source_train_imgs, target_train_imgs, source_test_imgs]
 )
-alignment_estimator.fit(source_train, target_train)
-target_pred = alignment_estimator.transform(source_test)
+
+alignment_estimator = PairwiseAlignment(method="procrustes")
+alignment_estimator.fit(source_train_data, target_train_data)
+target_pred_data = alignment_estimator.transform(source_test_data)
 
 ###############################################################################
 # Score the baseline and the prediction
@@ -142,11 +144,16 @@ from fmralign.metrics import score_voxelwise
 # Now we use this scoring function to compare the correlation of aligned and
 # original data from sub-01 made with the real PA contrasts of sub-02.
 
+target_pred_imgs = roi_masker.inverse_transform(target_pred_data)
 baseline_score = roi_masker.inverse_transform(
-    score_voxelwise(target_test, source_test, roi_masker, loss="corr")
+    score_voxelwise(
+        target_test_imgs, source_test_imgs, roi_masker, loss="corr"
+    )
 )
 aligned_score = roi_masker.inverse_transform(
-    score_voxelwise(target_test, target_pred, roi_masker, loss="corr")
+    score_voxelwise(
+        target_test_imgs, target_pred_imgs, roi_masker, loss="corr"
+    )
 )
 
 ###############################################################################

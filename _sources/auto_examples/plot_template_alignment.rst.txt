@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_plot_template_alignment.py>`
-        to download the full example code. or to run this example in your browser via Binder
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -48,16 +48,15 @@ df is a dataframe with metadata about each of them.
 mask is a binary image used to extract grey matter regions.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-39
+.. GENERATED FROM PYTHON SOURCE LINES 32-38
 
 .. code-block:: Python
 
 
     from fmralign.fetch_example_data import fetch_ibc_subjects_contrasts
 
-    imgs, df, mask_img = fetch_ibc_subjects_contrasts(
-        ["sub-01", "sub-02", "sub-04", "sub-05", "sub-06", "sub-07"]
-    )
+    subjects = ["sub-01", "sub-02", "sub-04", "sub-05", "sub-06", "sub-07"]
+    imgs, df, mask_img = fetch_ibc_subjects_contrasts(subjects)
 
 
 
@@ -77,32 +76,33 @@ mask is a binary image used to extract grey matter regions.
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/yvju3/download ...
-    [fetch_files]  ...done. (3 seconds, 0 min)
+    [fetch_files]  ...done. (2 seconds, 0 min)
 
     [fetch_files] Extracting data from 
     /home/runner/nilearn_data/ibc/fe06df963fcb3fd454f63a33f0864e8d/download...
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/8z23h/download ...
-    [fetch_files] Downloaded 11313152 of 21185337 bytes (53.4%%,    0.9s remaining)
-    [fetch_files]  ...done. (3 seconds, 0 min)
+    [fetch_files] Downloaded 3760128 of 21185337 bytes (17.7%%,    4.6s remaining)
+    [fetch_files] Downloaded 18890752 of 21185337 bytes (89.2%%,    0.2s remaining)
+    [fetch_files]  ...done. (4 seconds, 0 min)
 
     [fetch_files] Extracting data from 
     /home/runner/nilearn_data/ibc/100352739b7501f0ed04920933b4be36/download...
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/e9kbm/download ...
-    [fetch_files] Downloaded 2105344 of 21196887 bytes (9.9%%,    9.1s remaining)
-    [fetch_files] Downloaded 14901248 of 21196887 bytes (70.3%%,    0.9s remaining)
-    [fetch_files]  ...done. (5 seconds, 0 min)
+    [fetch_files] Downloaded 1826816 of 21196887 bytes (8.6%%,   10.6s remaining)
+    [fetch_files] Downloaded 16785408 of 21196887 bytes (79.2%%,    0.5s remaining)
+    [fetch_files]  ...done. (4 seconds, 0 min)
 
     [fetch_files] Extracting data from 
     /home/runner/nilearn_data/ibc/331a0a579c6e46c0911502a96215b358/download...
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/qn5b6/download ...
-    [fetch_files] Downloaded 2359296 of 21197218 bytes (11.1%%,    8.1s remaining)
-    [fetch_files] Downloaded 17334272 of 21197218 bytes (81.8%%,    0.4s remaining)
+    [fetch_files] Downloaded 2179072 of 21197218 bytes (10.3%%,    8.7s remaining)
+    [fetch_files] Downloaded 16777216 of 21197218 bytes (79.1%%,    0.5s remaining)
     [fetch_files]  ...done. (4 seconds, 0 min)
 
     [fetch_files] Extracting data from 
@@ -110,8 +110,8 @@ mask is a binary image used to extract grey matter regions.
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/u74a3/download ...
-    [fetch_files] Downloaded 2121728 of 21185350 bytes (10.0%%,    9.0s remaining)
-    [fetch_files] Downloaded 16785408 of 21185350 bytes (79.2%%,    0.5s remaining)
+    [fetch_files] Downloaded 4325376 of 21185350 bytes (20.4%%,    3.9s remaining)
+    [fetch_files] Downloaded 20430848 of 21185350 bytes (96.4%%,    0.1s remaining)
     [fetch_files]  ...done. (4 seconds, 0 min)
 
     [fetch_files] Extracting data from 
@@ -119,18 +119,18 @@ mask is a binary image used to extract grey matter regions.
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/83bje/download ...
-    [fetch_files] Downloaded 2195456 of 21188335 bytes (10.4%%,    8.7s remaining)
-    [fetch_files] Downloaded 16793600 of 21188335 bytes (79.3%%,    0.5s remaining)
-    [fetch_files]  ...done. (4 seconds, 0 min)
+    [fetch_files] Downloaded 2031616 of 21188335 bytes (9.6%%,    9.4s remaining)
+    [fetch_files] Downloaded 16785408 of 21188335 bytes (79.2%%,    0.5s remaining)
+    [fetch_files]  ...done. (5 seconds, 0 min)
 
     [fetch_files] Extracting data from 
     /home/runner/nilearn_data/ibc/1beaa1b5a1734a1afbf1c844e1f7a60e/download...
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/43j69/download ...
-    [fetch_files] Downloaded 2023424 of 21187400 bytes (9.6%%,    9.5s remaining)
-    [fetch_files] Downloaded 16793600 of 21187400 bytes (79.3%%,    0.5s remaining)
-    [fetch_files]  ...done. (5 seconds, 0 min)
+    [fetch_files] Downloaded 2162688 of 21187400 bytes (10.2%%,    8.8s remaining)
+    [fetch_files] Downloaded 16826368 of 21187400 bytes (79.4%%,    0.5s remaining)
+    [fetch_files]  ...done. (4 seconds, 0 min)
 
     [fetch_files] Extracting data from 
     /home/runner/nilearn_data/ibc/75e62c44985852e000c2b2865badf72d/download...
@@ -140,7 +140,7 @@ mask is a binary image used to extract grey matter regions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 40-46
+.. GENERATED FROM PYTHON SOURCE LINES 39-45
 
 Define a masker
 -----------------
@@ -149,7 +149,7 @@ We define a nilearn masker that will be used to handle relevant data.
   'http://nilearn.github.io/manipulating_images/masker_objects.html'
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-51
+.. GENERATED FROM PYTHON SOURCE LINES 45-50
 
 .. code-block:: Python
 
@@ -165,7 +165,7 @@ We define a nilearn masker that will be used to handle relevant data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-58
+.. GENERATED FROM PYTHON SOURCE LINES 51-57
 
 Prepare the data
 ----------------
@@ -174,7 +174,7 @@ two independent sessions with a different phase encoding:
 Antero-posterior(AP) or Postero-anterior(PA).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-74
+.. GENERATED FROM PYTHON SOURCE LINES 57-73
 
 .. code-block:: Python
 
@@ -201,14 +201,14 @@ Antero-posterior(AP) or Postero-anterior(PA).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-79
+.. GENERATED FROM PYTHON SOURCE LINES 74-78
 
 Compute a baseline (average of subjects)
 ----------------------------------------
 We create an image with as many contrasts as any subject representing for
 each contrast the average of all train subjects maps.
 
-.. GENERATED FROM PYTHON SOURCE LINES 79-86
+.. GENERATED FROM PYTHON SOURCE LINES 78-85
 
 .. code-block:: Python
 
@@ -226,33 +226,36 @@ each contrast the average of all train subjects maps.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 87-97
+.. GENERATED FROM PYTHON SOURCE LINES 86-96
 
 Create a template from the training subjects.
 ---------------------------------------------
 We define an estimator using the class TemplateAlignment:
   * We align the whole brain through 'multiple' local alignments.
-  * These alignments are calculated on a parcellation of the brain in 50 pieces,
+  * These alignments are calculated on a parcellation of the brain in 150 pieces,
     this parcellation creates group of functionnally similar voxels.
   * The template is created iteratively, aligning all subjects data into a
     common space, from which the template is inferred and aligning again to this
     new template space.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 97-109
+.. GENERATED FROM PYTHON SOURCE LINES 96-111
 
 .. code-block:: Python
 
 
-    from fmralign.template_alignment import TemplateAlignment
+    from fmralign import GroupAlignment
+    from fmralign.embeddings.parcellation import get_labels
+
+    # Use only the first image to speed up the computation of the labels
+    labels = get_labels(imgs[0], n_pieces=150, masker=masker)
+
+    # We create a dictionary with the subject names as keys and the subjects data as values
+    dict_alignment = dict(zip(subjects, masked_imgs))
 
     # We use Procrustes/scaled orthogonal alignment method
-    template_estim = TemplateAlignment(
-        n_pieces=50,
-        alignment_method="scaled_orthogonal",
-        masker=masker,
-    )
-    template_estim.fit(template_train)
+    template_estim = GroupAlignment(method="procrustes", labels=labels)
+    template_estim.fit(X=dict_alignment, y="template")
     procrustes_template = template_estim.template
 
 
@@ -263,68 +266,56 @@ We define an estimator using the class TemplateAlignment:
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:82: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
     Parameter mask_strategy :
         Masker parameter background - overriding estimator parameter epi
     Parameter smoothing_fwhm :
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    [TemplateAlignment.fit] Resampling mask
     /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:189: UserWarning: 
+    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:208: UserWarning: 
      Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
-     parcel 1 : 1799 voxels
-     parcel 3 : 1815 voxels
-     parcel 4 : 2710 voxels
-     parcel 5 : 1174 voxels
-     parcel 9 : 1582 voxels
-     parcel 15 : 1002 voxels
-     parcel 18 : 1158 voxels
-     parcel 19 : 2657 voxels
-     parcel 20 : 1582 voxels
-     parcel 24 : 1167 voxels
-     parcel 31 : 5248 voxels
-     parcel 34 : 1659 voxels
-     parcel 36 : 1684 voxels
-     parcel 38 : 2314 voxels
+     parcel 11 : 1026 voxels
+     parcel 37 : 1370 voxels
+     parcel 42 : 2251 voxels
       warnings.warn(warning)
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 110-116
+.. GENERATED FROM PYTHON SOURCE LINES 112-117
 
 Predict new data for left-out subject
 -------------------------------------
 We predict the contrasts of the left-out subject using the template we just
-created. We use the transform method of the estimator. This method takes the
-left-out subject as input, computes a pairwise alignment with the template
-and returns the aligned data.
+created. This method takes the left-out subject as input, computes a pairwise
+alignment with the template and returns the aligned data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 116-119
+.. GENERATED FROM PYTHON SOURCE LINES 117-128
 
 .. code-block:: Python
 
 
-    predictions_from_template = template_estim.transform(left_out_subject)
+    from fmralign import PairwiseAlignment
+
+    left_out_data = masker.transform(left_out_subject)
+    pairwise_estim = PairwiseAlignment(method="procrustes", labels=labels).fit(
+        left_out_data, procrustes_template
+    )
+
+    predictions_from_template = pairwise_estim.transform(left_out_data)
+    predicted_img = masker.inverse_transform(predictions_from_template)
 
 
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/joblib/memory.py:326: UserWarning: Data array used to create a new image contains 64-bit ints. This is likely due to creating the array with numpy and passing `int` as the `dtype`. Many tools such as FSL and SPM cannot deal with int64 in Nifti images, so for compatibility the data has been converted to int32.
-      return self.func(*args, **kwargs)
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 120-126
+.. GENERATED FROM PYTHON SOURCE LINES 129-135
 
 Score the baseline and the prediction
 -------------------------------------
@@ -333,7 +324,7 @@ between the images. That is, for each voxel, we measure the correlation between
 its profile of activation without and with alignment, to see if template-based
 alignment was able to improve inter-subject similarity.
 
-.. GENERATED FROM PYTHON SOURCE LINES 126-138
+.. GENERATED FROM PYTHON SOURCE LINES 135-146
 
 .. code-block:: Python
 
@@ -343,10 +334,9 @@ alignment was able to improve inter-subject similarity.
     average_score = masker.inverse_transform(
         score_voxelwise(left_out_subject, average_subject, masker, loss="corr")
     )
+    template_img = masker.inverse_transform(procrustes_template)
     template_score = masker.inverse_transform(
-        score_voxelwise(
-            predictions_from_template, procrustes_template, masker, loss="corr"
-        )
+        score_voxelwise(predicted_img, template_img, masker, loss="corr")
     )
 
 
@@ -356,14 +346,14 @@ alignment was able to improve inter-subject similarity.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 139-143
+.. GENERATED FROM PYTHON SOURCE LINES 147-151
 
 Plotting the measures
 ---------------------
 Finally we plot both scores
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 143-155
+.. GENERATED FROM PYTHON SOURCE LINES 151-163
 
 .. code-block:: Python
 
@@ -403,7 +393,7 @@ Finally we plot both scores
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 156-158
+.. GENERATED FROM PYTHON SOURCE LINES 164-166
 
 We observe that creating a template and aligning a new subject to it yields
 better inter-subject similarity than regular euclidean averaging.
@@ -411,7 +401,7 @@ better inter-subject similarity than regular euclidean averaging.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (4 minutes 0.233 seconds)
+   **Total running time of the script:** (4 minutes 29.161 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_template_alignment.py:
@@ -419,13 +409,6 @@ better inter-subject similarity than regular euclidean averaging.
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
-
-    .. container:: binder-badge
-
-      .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/nilearn/nilearn/main?urlpath=lab/tree/notebooks/auto_examples/plot_template_alignment.ipynb
-        :alt: Launch binder
-        :width: 150 px
 
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 

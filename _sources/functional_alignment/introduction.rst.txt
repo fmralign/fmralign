@@ -110,7 +110,7 @@ As we want to learn the transformation on 'AP' images, we should retrieve these 
 We align the whole brain through multiple local alignment, each applied on a piece of the brain, isolated through a functional clustering. We define the estimator used and fit it.
 
 >>> from fmralign.pairwise_alignment import PairwiseAlignment
->>> alignement_estimator = PairwiseAlignment(alignment_method='scaled_orthogonal',
+>>> alignement_estimator = PairwiseAlignment(alignment_method='procrustes',
 >>>                                                   n_pieces=150, masker=masker)
 
 We learn alignment operator from subject 1 to subject 2 on 'AP' data.

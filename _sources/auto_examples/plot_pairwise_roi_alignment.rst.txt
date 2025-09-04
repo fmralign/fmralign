@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_plot_pairwise_roi_alignment.py>`
-        to download the full example code. or to run this example in your browser via Binder
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -122,8 +122,8 @@ First, we fetch and plot the complete atlas
     [fetch_atlas_yeo_2011] Dataset created in /home/runner/nilearn_data/yeo_2011
     [fetch_atlas_yeo_2011] Downloading data from 
     ftp://surfer.nmr.mgh.harvard.edu/pub/data/Yeo_JNeurophysiol11_MNI152.zip ...
-    [fetch_atlas_yeo_2011] Downloaded 1007616 of ? bytes.
-    [fetch_atlas_yeo_2011] Downloaded 2048000 of ? bytes.
+    [fetch_atlas_yeo_2011] Downloaded 942080 of ? bytes.
+    [fetch_atlas_yeo_2011] Downloaded 1982464 of ? bytes.
     [fetch_atlas_yeo_2011]  ...done. (4 seconds, 0 min)
 
     [fetch_atlas_yeo_2011] Extracting data from 
@@ -137,7 +137,7 @@ First, we fetch and plot the complete atlas
     /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:52: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
       resampled_mask_visual = resample_to_img(
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f1c241cd670>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f2ed6e57b30>
 
 
 
@@ -155,9 +155,9 @@ For more information, visit :
 .. code-block:: Python
 
 
-    from nilearn.maskers import NiftiMasker
+    from nilearn.maskers import MultiNiftiMasker
 
-    roi_masker = NiftiMasker(mask_img=resampled_mask_visual).fit()
+    roi_masker = MultiNiftiMasker(mask_img=resampled_mask_visual).fit()
 
 
 
@@ -185,11 +185,11 @@ Antero-posterior(AP) or Postero-anterior(PA).
     # * source train: AP contrasts for subject sub-01
     # * target train: AP contrasts for subject sub-02
 
-    source_train = concat_imgs(
-        df[df.subject == "sub-01"][df.acquisition == "ap"].path.values
+    source_train_imgs = concat_imgs(
+        df[(df.subject == "sub-01") & (df.acquisition == "ap")].path.values
     )
-    target_train = concat_imgs(
-        df[df.subject == "sub-02"][df.acquisition == "ap"].path.values
+    target_train_imgs = concat_imgs(
+        df[(df.subject == "sub-02") & (df.acquisition == "ap")].path.values
     )
 
     # The testing fold:
@@ -198,29 +198,16 @@ Antero-posterior(AP) or Postero-anterior(PA).
     # * target test: PA contrasts for subject sub-02, used as a ground truth
     #   to score our predictions
 
-    source_test = concat_imgs(
-        df[df.subject == "sub-01"][df.acquisition == "pa"].path.values
+    source_test_imgs = concat_imgs(
+        df[(df.subject == "sub-01") & (df.acquisition == "pa")].path.values
     )
-    target_test = concat_imgs(
-        df[df.subject == "sub-02"][df.acquisition == "pa"].path.values
+    target_test_imgs = concat_imgs(
+        df[(df.subject == "sub-02") & (df.acquisition == "pa")].path.values
     )
 
 
 
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:91: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-      df[df.subject == "sub-01"][df.acquisition == "ap"].path.values
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:94: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-      df[df.subject == "sub-02"][df.acquisition == "ap"].path.values
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:104: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-      df[df.subject == "sub-01"][df.acquisition == "pa"].path.values
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:107: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-      df[df.subject == "sub-02"][df.acquisition == "pa"].path.values
 
 
 
@@ -238,18 +225,20 @@ n_pieces to 1. We learn alignment estimator on train data and use it to
 predict target test data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 121-130
+.. GENERATED FROM PYTHON SOURCE LINES 121-132
 
 .. code-block:: Python
 
 
-    from fmralign.pairwise_alignment import PairwiseAlignment
+    from fmralign import PairwiseAlignment
 
-    alignment_estimator = PairwiseAlignment(
-        alignment_method="scaled_orthogonal", n_pieces=1, masker=roi_masker
+    source_train_data, target_train_data, source_test_data = roi_masker.transform(
+        [source_train_imgs, target_train_imgs, source_test_imgs]
     )
-    alignment_estimator.fit(source_train, target_train)
-    target_pred = alignment_estimator.transform(source_test)
+
+    alignment_estimator = PairwiseAlignment(method="procrustes")
+    alignment_estimator.fit(source_train_data, target_train_data)
+    target_pred_data = alignment_estimator.transform(source_test_data)
 
 
 
@@ -259,15 +248,13 @@ predict target test data.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:189: UserWarning: 
-     Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
-     parcel 1 : 6631 voxels
-      warnings.warn(warning)
+    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:180: UserWarning: No labels provided, using a single label for all features.
+      warnings.warn(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 131-139
+.. GENERATED FROM PYTHON SOURCE LINES 133-141
 
 Score the baseline and the prediction
 -------------------------------------
@@ -278,7 +265,7 @@ and with alignment, to see if alignment was able to predict a signal more
 alike the ground truth.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 139-152
+.. GENERATED FROM PYTHON SOURCE LINES 141-159
 
 .. code-block:: Python
 
@@ -288,11 +275,16 @@ alike the ground truth.
     # Now we use this scoring function to compare the correlation of aligned and
     # original data from sub-01 made with the real PA contrasts of sub-02.
 
+    target_pred_imgs = roi_masker.inverse_transform(target_pred_data)
     baseline_score = roi_masker.inverse_transform(
-        score_voxelwise(target_test, source_test, roi_masker, loss="corr")
+        score_voxelwise(
+            target_test_imgs, source_test_imgs, roi_masker, loss="corr"
+        )
     )
     aligned_score = roi_masker.inverse_transform(
-        score_voxelwise(target_test, target_pred, roi_masker, loss="corr")
+        score_voxelwise(
+            target_test_imgs, target_pred_imgs, roi_masker, loss="corr"
+        )
     )
 
 
@@ -309,14 +301,14 @@ alike the ground truth.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 153-157
+.. GENERATED FROM PYTHON SOURCE LINES 160-164
 
 Plotting the measures
 ---------------------
 Finally we plot both scores.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 157-169
+.. GENERATED FROM PYTHON SOURCE LINES 164-176
 
 .. code-block:: Python
 
@@ -357,15 +349,15 @@ Finally we plot both scores.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:160: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:167: UserWarning: Non-finite values detected. These values will be replaced with zeros.
       baseline_display = plotting.plot_stat_map(
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:164: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:171: UserWarning: Non-finite values detected. These values will be replaced with zeros.
       display = plotting.plot_stat_map(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 170-172
+.. GENERATED FROM PYTHON SOURCE LINES 177-179
 
 We can see on the plot that after alignment, the prediction made for one
 subject data, informed by another subject are greatly improved.
@@ -373,7 +365,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 18.873 seconds)
+   **Total running time of the script:** (0 minutes 18.613 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_roi_alignment.py:
@@ -381,13 +373,6 @@ subject data, informed by another subject are greatly improved.
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
-
-    .. container:: binder-badge
-
-      .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/nilearn/nilearn/main?urlpath=lab/tree/notebooks/auto_examples/plot_pairwise_roi_alignment.ipynb
-        :alt: Launch binder
-        :width: 150 px
 
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 

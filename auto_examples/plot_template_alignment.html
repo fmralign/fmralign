@@ -232,9 +232,9 @@
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Template-based prediction.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_surf_alignment.html">Pairwise surface alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_alignment_simulated_2D_data.html">Alignment on simulated 2D data.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide.html">User guide</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of User guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -244,14 +244,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../functional_alignment/fmralign_pipeline.html">2.2. Functional alignment pipeline</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/reference.html">3. Reference documentation: all fmralign functions</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of 3. Reference documentation: all fmralign functions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.pairwise_alignment.PairwiseAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.template_alignment.TemplateAlignment.html">3.2.1. fmralign.template_alignment.TemplateAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.Identity.html">3.3.1. fmralign.alignment_methods.Identity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.DiagonalAlignment.html">3.3.2. fmralign.alignment_methods.DiagonalAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.ScaledOrthogonalAlignment.html">3.3.3. fmralign.alignment_methods.ScaledOrthogonalAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.RidgeAlignment.html">3.3.4. fmralign.alignment_methods.RidgeAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.OptimalTransportAlignment.html">3.3.5. fmralign.alignment_methods.OptimalTransportAlignment</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/reference.html">3. Reference documentation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of 3. Reference documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.alignment.pairwise_alignment.PairwiseAlignment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html">3.2.1. fmralign.alignment.group_alignment.GroupAlignment</a></li>
 </ul>
 </li>
 </ul>
@@ -320,7 +315,7 @@
           <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference internal" href="#sphx-glr-download-auto-examples-plot-template-alignment-py"><span class="std std-ref">Go to the end</span></a>
-to download the full example code. or to run this example in your browser via Binder</p>
+to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="template-based-prediction">
 <span id="sphx-glr-auto-examples-plot-template-alignment-py"></span><h1>Template-based prediction.<a class="headerlink" href="#template-based-prediction" title="Link to this heading">¶</a></h1>
@@ -345,9 +340,8 @@ df is a dataframe with metadata about each of them.
 mask is a binary image used to extract grey matter regions.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.fetch_example_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_ibc_subjects_contrasts</span>
 
-<a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">imgs</span></a><span class="p">,</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">,</span> <a href="https://docs.python.org/3.9/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mask_img</span></a> <span class="o">=</span> <span class="n">fetch_ibc_subjects_contrasts</span><span class="p">(</span>
-    <span class="p">[</span><span class="s2">&quot;sub-01&quot;</span><span class="p">,</span> <span class="s2">&quot;sub-02&quot;</span><span class="p">,</span> <span class="s2">&quot;sub-04&quot;</span><span class="p">,</span> <span class="s2">&quot;sub-05&quot;</span><span class="p">,</span> <span class="s2">&quot;sub-06&quot;</span><span class="p">,</span> <span class="s2">&quot;sub-07&quot;</span><span class="p">]</span>
-<span class="p">)</span>
+<a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects</span></a> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sub-01&quot;</span><span class="p">,</span> <span class="s2">&quot;sub-02&quot;</span><span class="p">,</span> <span class="s2">&quot;sub-04&quot;</span><span class="p">,</span> <span class="s2">&quot;sub-05&quot;</span><span class="p">,</span> <span class="s2">&quot;sub-06&quot;</span><span class="p">,</span> <span class="s2">&quot;sub-07&quot;</span><span class="p">]</span>
+<a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">imgs</span></a><span class="p">,</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">,</span> <a href="https://docs.python.org/3.9/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mask_img</span></a> <span class="o">=</span> <span class="n">fetch_ibc_subjects_contrasts</span><span class="p">(</span><a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects</span></a><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[get_dataset_dir] Added README.md to /home/runner/nilearn_data
@@ -360,32 +354,33 @@ mask is a binary image used to extract grey matter regions.</p>
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/yvju3/download ...
-[fetch_files]  ...done. (3 seconds, 0 min)
+[fetch_files]  ...done. (2 seconds, 0 min)
 
 [fetch_files] Extracting data from
 /home/runner/nilearn_data/ibc/fe06df963fcb3fd454f63a33f0864e8d/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/8z23h/download ...
-[fetch_files] Downloaded 11313152 of 21185337 bytes (53.4%%,    0.9s remaining)
-[fetch_files]  ...done. (3 seconds, 0 min)
+[fetch_files] Downloaded 3760128 of 21185337 bytes (17.7%%,    4.6s remaining)
+[fetch_files] Downloaded 18890752 of 21185337 bytes (89.2%%,    0.2s remaining)
+[fetch_files]  ...done. (4 seconds, 0 min)
 
 [fetch_files] Extracting data from
 /home/runner/nilearn_data/ibc/100352739b7501f0ed04920933b4be36/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/e9kbm/download ...
-[fetch_files] Downloaded 2105344 of 21196887 bytes (9.9%%,    9.1s remaining)
-[fetch_files] Downloaded 14901248 of 21196887 bytes (70.3%%,    0.9s remaining)
-[fetch_files]  ...done. (5 seconds, 0 min)
+[fetch_files] Downloaded 1826816 of 21196887 bytes (8.6%%,   10.6s remaining)
+[fetch_files] Downloaded 16785408 of 21196887 bytes (79.2%%,    0.5s remaining)
+[fetch_files]  ...done. (4 seconds, 0 min)
 
 [fetch_files] Extracting data from
 /home/runner/nilearn_data/ibc/331a0a579c6e46c0911502a96215b358/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/qn5b6/download ...
-[fetch_files] Downloaded 2359296 of 21197218 bytes (11.1%%,    8.1s remaining)
-[fetch_files] Downloaded 17334272 of 21197218 bytes (81.8%%,    0.4s remaining)
+[fetch_files] Downloaded 2179072 of 21197218 bytes (10.3%%,    8.7s remaining)
+[fetch_files] Downloaded 16777216 of 21197218 bytes (79.1%%,    0.5s remaining)
 [fetch_files]  ...done. (4 seconds, 0 min)
 
 [fetch_files] Extracting data from
@@ -393,8 +388,8 @@ mask is a binary image used to extract grey matter regions.</p>
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/u74a3/download ...
-[fetch_files] Downloaded 2121728 of 21185350 bytes (10.0%%,    9.0s remaining)
-[fetch_files] Downloaded 16785408 of 21185350 bytes (79.2%%,    0.5s remaining)
+[fetch_files] Downloaded 4325376 of 21185350 bytes (20.4%%,    3.9s remaining)
+[fetch_files] Downloaded 20430848 of 21185350 bytes (96.4%%,    0.1s remaining)
 [fetch_files]  ...done. (4 seconds, 0 min)
 
 [fetch_files] Extracting data from
@@ -402,18 +397,18 @@ mask is a binary image used to extract grey matter regions.</p>
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/83bje/download ...
-[fetch_files] Downloaded 2195456 of 21188335 bytes (10.4%%,    8.7s remaining)
-[fetch_files] Downloaded 16793600 of 21188335 bytes (79.3%%,    0.5s remaining)
-[fetch_files]  ...done. (4 seconds, 0 min)
+[fetch_files] Downloaded 2031616 of 21188335 bytes (9.6%%,    9.4s remaining)
+[fetch_files] Downloaded 16785408 of 21188335 bytes (79.2%%,    0.5s remaining)
+[fetch_files]  ...done. (5 seconds, 0 min)
 
 [fetch_files] Extracting data from
 /home/runner/nilearn_data/ibc/1beaa1b5a1734a1afbf1c844e1f7a60e/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/43j69/download ...
-[fetch_files] Downloaded 2023424 of 21187400 bytes (9.6%%,    9.5s remaining)
-[fetch_files] Downloaded 16793600 of 21187400 bytes (79.3%%,    0.5s remaining)
-[fetch_files]  ...done. (5 seconds, 0 min)
+[fetch_files] Downloaded 2162688 of 21187400 bytes (10.2%%,    8.8s remaining)
+[fetch_files] Downloaded 16826368 of 21187400 bytes (79.4%%,    0.5s remaining)
+[fetch_files]  ...done. (4 seconds, 0 min)
 
 [fetch_files] Extracting data from
 /home/runner/nilearn_data/ibc/75e62c44985852e000c2b2865badf72d/download...
@@ -472,7 +467,7 @@ each contrast the average of all train subjects maps.</p>
 <dl class="simple">
 <dt>We define an estimator using the class TemplateAlignment:</dt><dd><ul class="simple">
 <li><p>We align the whole brain through ‘multiple’ local alignments.</p></li>
-<li><p>These alignments are calculated on a parcellation of the brain in 50 pieces,
+<li><p>These alignments are calculated on a parcellation of the brain in 150 pieces,
 this parcellation creates group of functionnally similar voxels.</p></li>
 <li><p>The template is created iteratively, aligning all subjects data into a
 common space, from which the template is inferred and aligning again to this
@@ -480,44 +475,35 @@ new template space.</p></li>
 </ul>
 </dd>
 </dl>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.template_alignment</span><span class="w"> </span><span class="kn">import</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">TemplateAlignment</span></a>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign</span><span class="w"> </span><span class="kn">import</span> <a href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html#fmralign.alignment.group_alignment.GroupAlignment" title="fmralign.alignment.group_alignment.GroupAlignment" class="sphx-glr-backref-module-fmralign-alignment-group_alignment sphx-glr-backref-type-py-class"><span class="n">GroupAlignment</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.embeddings.parcellation</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_labels</span>
+
+<span class="c1"># Use only the first image to speed up the computation of the labels</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a> <span class="o">=</span> <span class="n">get_labels</span><span class="p">(</span><a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">imgs</span></a><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">n_pieces</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">masker</span><span class="o">=</span><span class="n">masker</span><span class="p">)</span>
+
+<span class="c1"># We create a dictionary with the subject names as keys and the subjects data as values</span>
+<a href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dict_alignment</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects</span></a><span class="p">,</span> <a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">masked_imgs</span></a><span class="p">))</span>
 
 <span class="c1"># We use Procrustes/scaled orthogonal alignment method</span>
-<span class="n">template_estim</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">TemplateAlignment</span></a><span class="p">(</span>
-    <span class="n">n_pieces</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-    <span class="n">alignment_method</span><span class="o">=</span><span class="s2">&quot;scaled_orthogonal&quot;</span><span class="p">,</span>
-    <span class="n">masker</span><span class="o">=</span><span class="n">masker</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">template_estim</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">template_train</span></a><span class="p">)</span>
-<a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">procrustes_template</span></a> <span class="o">=</span> <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">template_estim</span><span class="o">.</span><span class="n">template</span></a>
+<a href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html#fmralign.alignment.group_alignment.GroupAlignment" title="fmralign.alignment.group_alignment.GroupAlignment" class="sphx-glr-backref-module-fmralign-alignment-group_alignment sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">template_estim</span></a> <span class="o">=</span> <a href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html#fmralign.alignment.group_alignment.GroupAlignment" title="fmralign.alignment.group_alignment.GroupAlignment" class="sphx-glr-backref-module-fmralign-alignment-group_alignment sphx-glr-backref-type-py-class"><span class="n">GroupAlignment</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;procrustes&quot;</span><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="o">=</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="p">)</span>
+<a href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html#fmralign.alignment.group_alignment.GroupAlignment" title="fmralign.alignment.group_alignment.GroupAlignment" class="sphx-glr-backref-module-fmralign-alignment-group_alignment sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">template_estim</span></a><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><a href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dict_alignment</span></a><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;template&quot;</span><span class="p">)</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">procrustes_template</span></a> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">template_estim</span><span class="o">.</span><span class="n">template</span></a>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:82: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
 Parameter mask_strategy :
     Masker parameter background - overriding estimator parameter epi
 Parameter smoothing_fwhm :
     Masker parameter None - overriding estimator parameter 4.0
 
   parcellation.fit(images_to_parcel)
-[TemplateAlignment.fit] Resampling mask
 /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 35 &gt; 1. Completing it to avoid stopping the tree early.
   connectivity, n_connected_components = _fix_connectivity(
-/home/runner/work/fmralign/fmralign/fmralign/_utils.py:189: UserWarning:
+/home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:208: UserWarning:
  Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
- parcel 1 : 1799 voxels
- parcel 3 : 1815 voxels
- parcel 4 : 2710 voxels
- parcel 5 : 1174 voxels
- parcel 9 : 1582 voxels
- parcel 15 : 1002 voxels
- parcel 18 : 1158 voxels
- parcel 19 : 2657 voxels
- parcel 20 : 1582 voxels
- parcel 24 : 1167 voxels
- parcel 31 : 5248 voxels
- parcel 34 : 1659 voxels
- parcel 36 : 1684 voxels
- parcel 38 : 2314 voxels
+ parcel 11 : 1026 voxels
+ parcel 37 : 1370 voxels
+ parcel 42 : 2251 voxels
   warnings.warn(warning)
 </pre></div>
 </div>
@@ -525,14 +511,17 @@ Parameter smoothing_fwhm :
 <section id="predict-new-data-for-left-out-subject">
 <h2>Predict new data for left-out subject<a class="headerlink" href="#predict-new-data-for-left-out-subject" title="Link to this heading">¶</a></h2>
 <p>We predict the contrasts of the left-out subject using the template we just
-created. We use the transform method of the estimator. This method takes the
-left-out subject as input, computes a pairwise alignment with the template
-and returns the aligned data.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">predictions_from_template</span></a> <span class="o">=</span> <span class="n">template_estim</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">left_out_subject</span></a><span class="p">)</span>
-</pre></div>
-</div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/joblib/memory.py:326: UserWarning: Data array used to create a new image contains 64-bit ints. This is likely due to creating the array with numpy and passing `int` as the `dtype`. Many tools such as FSL and SPM cannot deal with int64 in Nifti images, so for compatibility the data has been converted to int32.
-  return self.func(*args, **kwargs)
+created. This method takes the left-out subject as input, computes a pairwise
+alignment with the template and returns the aligned data.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign</span><span class="w"> </span><span class="kn">import</span> <a href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment" title="fmralign.alignment.pairwise_alignment.PairwiseAlignment" class="sphx-glr-backref-module-fmralign-alignment-pairwise_alignment sphx-glr-backref-type-py-class"><span class="n">PairwiseAlignment</span></a>
+
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">left_out_data</span></a> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">left_out_subject</span></a><span class="p">)</span>
+<a href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment" title="fmralign.alignment.pairwise_alignment.PairwiseAlignment" class="sphx-glr-backref-module-fmralign-alignment-pairwise_alignment sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pairwise_estim</span></a> <span class="o">=</span> <a href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment" title="fmralign.alignment.pairwise_alignment.PairwiseAlignment" class="sphx-glr-backref-module-fmralign-alignment-pairwise_alignment sphx-glr-backref-type-py-class"><span class="n">PairwiseAlignment</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;procrustes&quot;</span><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="o">=</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">left_out_data</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">procrustes_template</span></a>
+<span class="p">)</span>
+
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">predictions_from_template</span></a> <span class="o">=</span> <a href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment" title="fmralign.alignment.pairwise_alignment.PairwiseAlignment" class="sphx-glr-backref-module-fmralign-alignment-pairwise_alignment sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pairwise_estim</span></a><span class="o">.</span><span class="n">transform</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">left_out_data</span></a><span class="p">)</span>
+<a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">predicted_img</span></a> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">predictions_from_template</span></a><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -547,10 +536,9 @@ alignment was able to improve inter-subject similarity.</p>
 <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">average_score</span></a> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span>
     <span class="n">score_voxelwise</span><span class="p">(</span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">left_out_subject</span></a><span class="p">,</span> <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">average_subject</span></a><span class="p">,</span> <span class="n">masker</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;corr&quot;</span><span class="p">)</span>
 <span class="p">)</span>
+<a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">template_img</span></a> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">procrustes_template</span></a><span class="p">)</span>
 <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">template_score</span></a> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span>
-    <span class="n">score_voxelwise</span><span class="p">(</span>
-        <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">predictions_from_template</span></a><span class="p">,</span> <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">procrustes_template</span></a><span class="p">,</span> <span class="n">masker</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;corr&quot;</span>
-    <span class="p">)</span>
+    <span class="n">score_voxelwise</span><span class="p">(</span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">predicted_img</span></a><span class="p">,</span> <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">template_img</span></a><span class="p">,</span> <span class="n">masker</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;corr&quot;</span><span class="p">)</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -576,12 +564,8 @@ alignment was able to improve inter-subject similarity.</p>
 </ul>
 <p>We observe that creating a template and aligning a new subject to it yields
 better inter-subject similarity than regular euclidean averaging.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (4 minutes 0.233 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (4 minutes 29.161 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-template-alignment-py">
-<div class="binder-badge docutils container">
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/nilearn/nilearn/main?urlpath=lab/tree/notebooks/auto_examples/plot_template_alignment.ipynb"><img alt="Launch binder" src="../_images/binder_badge_logo.svg" style="width: 150px;" />
-</a>
-</div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/6a8e52be39106976d962600901ce6235/plot_template_alignment.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_template_alignment.ipynb</span></code></a></p>
 </div>

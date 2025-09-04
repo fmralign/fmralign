@@ -11,7 +11,7 @@
 <meta property="og:image" content="https://nilearn.github.io/_static/nilearn-logo.png" />
 <meta property="og:image:alt" content="Nilearn" />
 <meta name="description" content="As we mentionned several times, we search for a transformation, let’s call it R, between the source subject data X and the target data Y. X and Y are arrays of dimensions(n_voxels, n_samples) where..." />
-<link rel="search" title="Search" href="../search.html" /><link rel="next" title="Alignment methods benchmark (template-based ROI case)" href="plot_alignment_methods_benchmark.html" /><link rel="prev" title="Pairwise surface alignment." href="plot_surf_alignment.html" />
+<link rel="search" title="Search" href="../search.html" /><link rel="next" title="User guide" href="../user_guide.html" /><link rel="prev" title="Pairwise surface alignment." href="plot_surf_alignment.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
         <title>Alignment on simulated 2D data. - fmralign</title>
@@ -232,9 +232,9 @@
 <li class="toctree-l2"><a class="reference internal" href="plot_template_alignment.html">Template-based prediction.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_surf_alignment.html">Pairwise surface alignment.</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Alignment on simulated 2D data.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide.html">User guide</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of User guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -244,14 +244,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../functional_alignment/fmralign_pipeline.html">2.2. Functional alignment pipeline</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/reference.html">3. Reference documentation: all fmralign functions</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of 3. Reference documentation: all fmralign functions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.pairwise_alignment.PairwiseAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.template_alignment.TemplateAlignment.html">3.2.1. fmralign.template_alignment.TemplateAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.Identity.html">3.3.1. fmralign.alignment_methods.Identity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.DiagonalAlignment.html">3.3.2. fmralign.alignment_methods.DiagonalAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.ScaledOrthogonalAlignment.html">3.3.3. fmralign.alignment_methods.ScaledOrthogonalAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.RidgeAlignment.html">3.3.4. fmralign.alignment_methods.RidgeAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.OptimalTransportAlignment.html">3.3.5. fmralign.alignment_methods.OptimalTransportAlignment</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/reference.html">3. Reference documentation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of 3. Reference documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.alignment.pairwise_alignment.PairwiseAlignment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html">3.2.1. fmralign.alignment.group_alignment.GroupAlignment</a></li>
 </ul>
 </li>
 </ul>
@@ -320,7 +315,7 @@
           <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference internal" href="#sphx-glr-download-auto-examples-plot-alignment-simulated-2d-data-py"><span class="std std-ref">Go to the end</span></a>
-to download the full example code. or to run this example in your browser via Binder</p>
+to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="alignment-on-simulated-2d-data">
 <span id="sphx-glr-auto-examples-plot-alignment-simulated-2d-data-py"></span><h1>Alignment on simulated 2D data.<a class="headerlink" href="#alignment-on-simulated-2d-data" title="Link to this heading">¶</a></h1>
@@ -491,19 +486,19 @@ however we have tens or hundreds of observations that characterize each point.</
 idea of alignment is to find a transform, let’s call it <cite>R</cite>, between the
 source <cite>X</cite> and the target <cite>Y</cite> that will handle that. Now we will showcase
 on our simple 2D example different kind of transformation we can look for.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.alignment_methods</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">OptimalTransportAlignment</span></a><span class="p">,</span>
-    <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">ScaledOrthogonalAlignment</span></a><span class="p">,</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.methods</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">OptimalTransport</span></a><span class="p">,</span>
+    <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">Procrustes</span></a><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="orthogonal-alignment">
 <h2>Orthogonal alignment<a class="headerlink" href="#orthogonal-alignment" title="Link to this heading">¶</a></h2>
-<p>The first idea proposed in Haxby, 2011 was to compute an orthogonal mixing
+<p>The first idea proposed in Haxby <em>et al.</em><a class="footnote-reference brackets" href="#footcite-haxby2001" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> was to compute an orthogonal mixing
 matrix <cite>R</cite> and a scaling <cite>sc</cite> such that Frobenius norm: math:
-` | <a href="#id1"><span class="problematic" id="id2">|</span></a>sc RX - Y | | ^ 2` is minimized.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">scaled_orthogonal_alignment</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">ScaledOrthogonalAlignment</span></a><span class="p">()</span>
+<span class="math">\| sc R X - Y \|^2</span> is minimized.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">scaled_orthogonal_alignment</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">Procrustes</span></a><span class="p">()</span>
 <span class="n">scaled_orthogonal_alignment</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X</span><span class="o">.</span><span class="n">T</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">Y</span><span class="o">.</span><span class="n">T</span></a><span class="p">)</span>
 <span class="n">_plot_distributions_and_alignment</span><span class="p">(</span>
     <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X</span></a><span class="p">,</span>
@@ -531,7 +526,7 @@ while minimizing the overall cost of this transport. <cite>R</cite> is here the
 optimal coupling between <cite>X</cite> and <cite>Y</cite> with entropic regularization.
 This way of finding a transform uses more geometrical information from the
 distributions.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">ot_alignment</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">OptimalTransportAlignment</span></a><span class="p">(</span><span class="n">reg</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">ot_alignment</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">OptimalTransport</span></a><span class="p">(</span><span class="n">reg</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="n">ot_alignment</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X</span><span class="o">.</span><span class="n">T</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">Y</span><span class="o">.</span><span class="n">T</span></a><span class="p">)</span>
 <span class="n">_plot_distributions_and_alignment</span><span class="p">(</span>
     <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">Y</span></a><span class="p">,</span> <span class="n">R</span><span class="o">=</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ot_alignment</span><span class="o">.</span><span class="n">R</span></a><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Optimal Transport&quot;</span><span class="p">,</span> <span class="n">thr</span><span class="o">=</span><span class="mf">0.1</span>
@@ -543,12 +538,19 @@ distributions.</p>
 <li><img src="../_images/sphx_glr_plot_alignment_simulated_2D_data_005.png" srcset="../_images/sphx_glr_plot_alignment_simulated_2D_data_005.png" alt="Optimal Transport" class = "sphx-glr-multi-img"/></li>
 <li><img src="../_images/sphx_glr_plot_alignment_simulated_2D_data_006.png" srcset="../_images/sphx_glr_plot_alignment_simulated_2D_data_006.png" alt="Optimal Transport coupling" class = "sphx-glr-multi-img"/></li>
 </ul>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.551 seconds)</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-alignment-simulated-2d-data-py">
-<div class="binder-badge docutils container">
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/nilearn/nilearn/main?urlpath=lab/tree/notebooks/auto_examples/plot_alignment_simulated_2D_data.ipynb"><img alt="Launch binder" src="../_images/binder_badge_logo.svg" style="width: 150px;" />
-</a>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<div class="docutils container" id="id2">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-haxby2001" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>James V. Haxby, M. Ida Gobbini, Maura L. Furey, Alumit Ishai, Jennifer L. Schouten, and Pietro Pietrini. Distributed and overlapping representations of faces and objects in ventral temporal cortex. <em>Science</em>, 293(5539):2425–2430, 2001. <a class="reference external" href="https://doi.org/10.1126/science.1063736">doi:10.1126/science.1063736</a>.</p>
+</aside>
+</aside>
 </div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.661 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-alignment-simulated-2d-data-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/acb66ee7f529e387ab2018ae6055b46c/plot_alignment_simulated_2D_data.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_alignment_simulated_2D_data.ipynb</span></code></a></p>
 </div>
@@ -568,12 +570,12 @@ distributions.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="plot_alignment_methods_benchmark.html">
+          <a class="next-page" href="../user_guide.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Alignment methods benchmark (template-based ROI case)</div>
+                <div class="title">User guide</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -624,6 +626,7 @@ distributions.</p>
 <li><a class="reference internal" href="#alignment-finding-the-right-transform">Alignment : finding the right transform</a></li>
 <li><a class="reference internal" href="#orthogonal-alignment">Orthogonal alignment</a></li>
 <li><a class="reference internal" href="#optimal-transport-alignment">Optimal Transport alignment</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
 </ul>

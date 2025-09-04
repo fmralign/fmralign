@@ -7,10 +7,10 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://nilearn.github.io/auto_examples/sg_execution_times.html" />
 <meta property="og:site_name" content="Nilearn" />
-<meta property="og:description" content="07:25.098 total execution time for 6 files from auto_examples:,,, Example, Time, Mem (MB),,, Template-based prediction.( plot_template_alignment.py), 04:00.233, 0.0,, Pairwise surface alignment.( p..." />
+<meta property="og:description" content="07:38.764 total execution time for 6 files from auto_examples:,,, Example, Time, Mem (MB),,, Template-based prediction.( plot_template_alignment.py), 04:29.161, 0.0,, Pairwise surface alignment.( p..." />
 <meta property="og:image" content="https://nilearn.github.io/_static/nilearn-logo.png" />
 <meta property="og:image:alt" content="Nilearn" />
-<meta name="description" content="07:25.098 total execution time for 6 files from auto_examples:,,, Example, Time, Mem (MB),,, Template-based prediction.( plot_template_alignment.py), 04:00.233, 0.0,, Pairwise surface alignment.( p..." />
+<meta name="description" content="07:38.764 total execution time for 6 files from auto_examples:,,, Example, Time, Mem (MB),,, Template-based prediction.( plot_template_alignment.py), 04:29.161, 0.0,, Pairwise surface alignment.( p..." />
 <link rel="search" title="Search" href="../search.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
@@ -232,9 +232,9 @@
 <li class="toctree-l2"><a class="reference internal" href="plot_template_alignment.html">Template-based prediction.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_surf_alignment.html">Pairwise surface alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_alignment_simulated_2D_data.html">Alignment on simulated 2D data.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide.html">User guide</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of User guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -244,14 +244,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../functional_alignment/fmralign_pipeline.html">2.2. Functional alignment pipeline</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/reference.html">3. Reference documentation: all fmralign functions</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of 3. Reference documentation: all fmralign functions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.pairwise_alignment.PairwiseAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.template_alignment.TemplateAlignment.html">3.2.1. fmralign.template_alignment.TemplateAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.Identity.html">3.3.1. fmralign.alignment_methods.Identity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.DiagonalAlignment.html">3.3.2. fmralign.alignment_methods.DiagonalAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.ScaledOrthogonalAlignment.html">3.3.3. fmralign.alignment_methods.ScaledOrthogonalAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.RidgeAlignment.html">3.3.4. fmralign.alignment_methods.RidgeAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.OptimalTransportAlignment.html">3.3.5. fmralign.alignment_methods.OptimalTransportAlignment</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/reference.html">3. Reference documentation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of 3. Reference documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.alignment.pairwise_alignment.PairwiseAlignment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html">3.2.1. fmralign.alignment.group_alignment.GroupAlignment</a></li>
 </ul>
 </li>
 </ul>
@@ -319,7 +314,7 @@
         <article role="main" id="furo-main-content">
           <section id="computation-times">
 <span id="sphx-glr-auto-examples-sg-execution-times"></span><h1>Computation times<a class="headerlink" href="#computation-times" title="Link to this heading">¶</a></h1>
-<p><strong>07:25.098</strong> total execution time for 6 files <strong>from auto_examples</strong>:</p>
+<p><strong>07:38.764</strong> total execution time for 6 files <strong>from auto_examples</strong>:</p>
 <div class="docutils container">
 <style scoped>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
@@ -342,27 +337,27 @@ $(document).ready( function () {
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference internal" href="plot_template_alignment.html#sphx-glr-auto-examples-plot-template-alignment-py"><span class="std std-ref">Template-based prediction.</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_template_alignment.py</span></code>)</p></td>
-<td><p>04:00.233</p></td>
+<td><p>04:29.161</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="plot_surf_alignment.html#sphx-glr-auto-examples-plot-surf-alignment-py"><span class="std std-ref">Pairwise surface alignment.</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_surf_alignment.py</span></code>)</p></td>
-<td><p>01:15.363</p></td>
+<td><p>01:12.677</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="plot_alignment_methods_benchmark.html#sphx-glr-auto-examples-plot-alignment-methods-benchmark-py"><span class="std std-ref">Alignment methods benchmark (template-based ROI case)</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_alignment_methods_benchmark.py</span></code>)</p></td>
-<td><p>01:06.201</p></td>
+<td><p>00:56.153</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="plot_pairwise_alignment.html#sphx-glr-auto-examples-plot-pairwise-alignment-py"><span class="std std-ref">Pairwise functional alignment.</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_pairwise_alignment.py</span></code>)</p></td>
-<td><p>00:43.876</p></td>
+<td><p>00:41.500</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="plot_pairwise_roi_alignment.html#sphx-glr-auto-examples-plot-pairwise-roi-alignment-py"><span class="std std-ref">Pairwise functional alignment on a ROI.</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_pairwise_roi_alignment.py</span></code>)</p></td>
-<td><p>00:18.873</p></td>
+<td><p>00:18.613</p></td>
 <td><p>0.0</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="plot_alignment_simulated_2D_data.html#sphx-glr-auto-examples-plot-alignment-simulated-2d-data-py"><span class="std std-ref">Alignment on simulated 2D data.</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_alignment_simulated_2D_data.py</span></code>)</p></td>
-<td><p>00:00.551</p></td>
+<td><p>00:00.661</p></td>
 <td><p>0.0</p></td>
 </tr>
 </tbody>

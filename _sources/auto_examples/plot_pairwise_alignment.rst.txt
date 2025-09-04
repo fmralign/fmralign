@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_plot_pairwise_alignment.py>`
-        to download the full example code. or to run this example in your browser via Binder
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -80,9 +80,9 @@ We define a nilearn masker that will be used to handle relevant data.
 
 
     from nilearn.image import concat_imgs
-    from nilearn.maskers import NiftiMasker
+    from nilearn.maskers import MultiNiftiMasker
 
-    masker = NiftiMasker(mask_img=mask)
+    masker = MultiNiftiMasker(mask_img=mask)
     mask
     masker.fit()
 
@@ -571,8 +571,7 @@ We define a nilearn masker that will be used to handle relevant data.
         height: 14px;
         cursor: pointer;
     }
-    </style><body><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>NiftiMasker(mask_img=&#x27;/home/runner/nilearn_data/ibc/gm_mask_3mm.nii.gz&#x27;,
-                memory=Memory(location=None))</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>NiftiMasker</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+    </style><body><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>MultiNiftiMasker(mask_img=&#x27;/home/runner/nilearn_data/ibc/gm_mask_3mm.nii.gz&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>MultiNiftiMasker</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
             <div class="estimator-table">
                 <details>
                     <summary>Parameters</summary>
@@ -731,21 +730,31 @@ We define a nilearn masker that will be used to handle relevant data.
 
             <tr class="default">
                 <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('memory_level',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">memory_level&nbsp;</td>
-                <td class="value">1</td>
-            </tr>
-    
-
-            <tr class="user-set">
-                <td><i class="copy-paste-icon"
                      onclick="copyToClipboard('memory',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
                 <td class="param">memory&nbsp;</td>
-                <td class="value">Memory(location=None)</td>
+                <td class="value">None</td>
+            </tr>
+    
+
+            <tr class="default">
+                <td><i class="copy-paste-icon"
+                     onclick="copyToClipboard('memory_level',
+                              this.parentElement.nextElementSibling)"
+                ></i></td>
+                <td class="param">memory_level&nbsp;</td>
+                <td class="value">0</td>
+            </tr>
+    
+
+            <tr class="default">
+                <td><i class="copy-paste-icon"
+                     onclick="copyToClipboard('n_jobs',
+                              this.parentElement.nextElementSibling)"
+                ></i></td>
+                <td class="param">n_jobs&nbsp;</td>
+                <td class="value">1</td>
             </tr>
     
 
@@ -852,7 +861,7 @@ advantage of these "duplicates to create a training and a testing set that
 contains roughly the same signals but acquired totally independently.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-84
+.. GENERATED FROM PYTHON SOURCE LINES 58-83
 
 .. code-block:: Python
 
@@ -861,11 +870,11 @@ contains roughly the same signals but acquired totally independently.
     # * source train: AP contrasts for subject sub-01
     # * target train: AP contrasts for subject sub-02
 
-    source_train = concat_imgs(
-        df[df.subject == "sub-01"][df.acquisition == "ap"].path.values
+    source_train_imgs = concat_imgs(
+        df[(df.subject == "sub-01") & (df.acquisition == "ap")].path.values
     )
-    target_train = concat_imgs(
-        df[df.subject == "sub-02"][df.acquisition == "ap"].path.values
+    target_train_imgs = concat_imgs(
+        df[(df.subject == "sub-02") & (df.acquisition == "ap")].path.values
     )
 
     # The testing fold:
@@ -874,11 +883,11 @@ contains roughly the same signals but acquired totally independently.
     # * target test: PA contrasts for subject sub-02, used as a ground truth
     #   to score our predictions
 
-    source_test = concat_imgs(
-        df[df.subject == "sub-01"][df.acquisition == "pa"].path.values
+    source_test_imgs = concat_imgs(
+        df[(df.subject == "sub-01") & (df.acquisition == "pa")].path.values
     )
-    target_test = concat_imgs(
-        df[df.subject == "sub-02"][df.acquisition == "pa"].path.values
+    target_test_imgs = concat_imgs(
+        df[(df.subject == "sub-02") & (df.acquisition == "pa")].path.values
     )
 
 
@@ -886,47 +895,32 @@ contains roughly the same signals but acquired totally independently.
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_alignment.py:64: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-      df[df.subject == "sub-01"][df.acquisition == "ap"].path.values
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_alignment.py:67: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-      df[df.subject == "sub-02"][df.acquisition == "ap"].path.values
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_alignment.py:77: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-      df[df.subject == "sub-01"][df.acquisition == "pa"].path.values
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_alignment.py:80: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
-      df[df.subject == "sub-02"][df.acquisition == "pa"].path.values
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 84-92
+
+Generate a parcellation from the images
+---------------------------------------
+We will compute the alignment in a piecewise manner, that is, we will align
+the data in small parcels of the brain, which are groups of functionally
+similar voxels. To do so, we need to generate a parcellation of the
+functional data. We use the :func:`!fmralign.embeddings.parcellation.get_labels`
+utility, which will generate a parcellation of the data in 150 pieces.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-93
-
-Define the estimator, fit it and predict
-----------------------------------------
-To proceed with alignment we use PairwiseAlignment class. We will use the
-common model proposed in the literature:
-* we will align the whole brain through multiple local alignments.
-* these alignments are calculated on a parcellation of the brain in 150
-  pieces, this parcellation creates group of functionnally similar voxels.
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 93-104
+.. GENERATED FROM PYTHON SOURCE LINES 92-102
 
 .. code-block:: Python
 
 
-    from fmralign.pairwise_alignment import PairwiseAlignment
+    from fmralign.embeddings.parcellation import get_labels
 
-    alignment_estimator = PairwiseAlignment(
-        alignment_method="scaled_orthogonal", n_pieces=150, masker=masker
+    labels = get_labels(
+        imgs=[source_train_imgs, target_train_imgs],
+        n_pieces=150,
+        masker=masker,
     )
-    # Learn alignment operator from subject 1 to subject 2 on training data
-    alignment_estimator.fit(source_train, target_train)
-    # Predict test data for subject 2 from subject 1
-    target_pred = alignment_estimator.transform(source_test)
+
 
 
 
@@ -936,17 +930,58 @@ common model proposed in the literature:
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:82: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
     Parameter mask_strategy :
         Masker parameter background - overriding estimator parameter epi
     Parameter smoothing_fwhm :
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    [PairwiseAlignment.fit] Resampling mask
     /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:189: UserWarning: 
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 103-113
+
+Define the estimator, fit it and predict
+----------------------------------------
+To proceed with the alignment we use :class:`fmralign.alignment.pairwise_alignment.PairwiseAlignment`,
+which implements various functional alignment methods between data from two
+subjects. In this example, we use the Procrustes method. Since we want to
+align the data in parcels, we pass the labels we just computed to the
+estimator. The labels are used to compute the alignment in each parcel
+separately, and then to aggregate the local transformations into a global
+transformation that is applied to the whole brain.
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 113-126
+
+.. code-block:: Python
+
+
+    from fmralign import PairwiseAlignment
+
+    source_train_data, target_train_data, source_test_data = masker.transform(
+        [source_train_imgs, target_train_imgs, source_test_imgs]
+    )
+
+    alignment_estimator = PairwiseAlignment(method="procrustes", labels=labels)
+    # Learn alignment operator from subject 1 to subject 2 on training data
+    alignment_estimator.fit(source_train_data, target_train_data)
+    # Predict test data for subject 2 from subject 1
+    target_pred_data = alignment_estimator.transform(source_test_data)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:208: UserWarning: 
      Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
      parcel 8 : 1062 voxels
      parcel 9 : 1393 voxels
@@ -959,7 +994,7 @@ common model proposed in the literature:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-112
+.. GENERATED FROM PYTHON SOURCE LINES 127-134
 
 Score the baseline and the prediction
 -------------------------------------
@@ -969,7 +1004,7 @@ correlation between its profile of activation without and with alignment,
 to see if alignment was able to predict a signal more alike the ground truth.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 112-125
+.. GENERATED FROM PYTHON SOURCE LINES 134-148
 
 .. code-block:: Python
 
@@ -979,11 +1014,12 @@ to see if alignment was able to predict a signal more alike the ground truth.
     # Now we use this scoring function to compare the correlation of aligned and
     # original data from sub-01 made with the real PA contrasts of sub-02.
 
+    target_pred_imgs = masker.inverse_transform(target_pred_data)
     baseline_score = masker.inverse_transform(
-        score_voxelwise(target_test, source_test, masker, loss="corr")
+        score_voxelwise(target_test_imgs, source_test_imgs, masker, loss="corr")
     )
     aligned_score = masker.inverse_transform(
-        score_voxelwise(target_test, target_pred, masker, loss="corr")
+        score_voxelwise(target_test_imgs, target_pred_imgs, masker, loss="corr")
     )
 
 
@@ -993,14 +1029,14 @@ to see if alignment was able to predict a signal more alike the ground truth.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 126-130
+.. GENERATED FROM PYTHON SOURCE LINES 149-153
 
 Plotting the measures
 ---------------------
 Finally we plot both scores
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-142
+.. GENERATED FROM PYTHON SOURCE LINES 153-165
 
 .. code-block:: Python
 
@@ -1040,7 +1076,7 @@ Finally we plot both scores
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 143-146
+.. GENERATED FROM PYTHON SOURCE LINES 166-169
 
 We can see on the plot that after alignment the prediction made for one
 subject data, informed by another subject are greatly improved.
@@ -1049,7 +1085,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 43.876 seconds)
+   **Total running time of the script:** (0 minutes 41.500 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_alignment.py:
@@ -1057,13 +1093,6 @@ subject data, informed by another subject are greatly improved.
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
-
-    .. container:: binder-badge
-
-      .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/nilearn/nilearn/main?urlpath=lab/tree/notebooks/auto_examples/plot_pairwise_alignment.ipynb
-        :alt: Launch binder
-        :width: 150 px
 
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 

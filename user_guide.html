@@ -11,7 +11,7 @@
 <meta property="og:image" content="https://nilearn.github.io/_static/nilearn-logo.png" />
 <meta property="og:image:alt" content="Nilearn" />
 <meta name="description" content="Table of contents: Introduction: fmralign in a nutshell- Functional alignment: handling functional variability, Installing fmralign., Functional alignment: handling functional variability- An intro..." />
-<link rel="search" title="Search" href="search.html" /><link rel="next" title="1. Introduction: fmralign in a nutshell" href="overview.html" /><link rel="prev" title="Alignment methods benchmark (template-based ROI case)" href="auto_examples/plot_alignment_methods_benchmark.html" />
+<link rel="search" title="Search" href="search.html" /><link rel="next" title="1. Introduction: fmralign in a nutshell" href="overview.html" /><link rel="prev" title="Alignment on simulated 2D data." href="auto_examples/plot_alignment_simulated_2D_data.html" />
 
     <link rel="shortcut icon" href="_static/favicon.ico"/><!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
         <title>User guide - fmralign</title>
@@ -232,9 +232,9 @@
 <li class="toctree-l2"><a class="reference internal" href="auto_examples/plot_template_alignment.html">Template-based prediction.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="auto_examples/plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="auto_examples/plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auto_examples/plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="auto_examples/plot_surf_alignment.html">Pairwise surface alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="auto_examples/plot_alignment_simulated_2D_data.html">Alignment on simulated 2D data.</a></li>
-<li class="toctree-l2"><a class="reference internal" href="auto_examples/plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">User guide</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of User guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -244,14 +244,9 @@
 <li class="toctree-l3"><a class="reference internal" href="functional_alignment/fmralign_pipeline.html">2.2. Functional alignment pipeline</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="modules/reference.html">3. Reference documentation: all fmralign functions</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of 3. Reference documentation: all fmralign functions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.pairwise_alignment.PairwiseAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.template_alignment.TemplateAlignment.html">3.2.1. fmralign.template_alignment.TemplateAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment_methods.Identity.html">3.3.1. fmralign.alignment_methods.Identity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment_methods.DiagonalAlignment.html">3.3.2. fmralign.alignment_methods.DiagonalAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment_methods.ScaledOrthogonalAlignment.html">3.3.3. fmralign.alignment_methods.ScaledOrthogonalAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment_methods.RidgeAlignment.html">3.3.4. fmralign.alignment_methods.RidgeAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment_methods.OptimalTransportAlignment.html">3.3.5. fmralign.alignment_methods.OptimalTransportAlignment</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="modules/reference.html">3. Reference documentation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of 3. Reference documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.alignment.pairwise_alignment.PairwiseAlignment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html">3.2.1. fmralign.alignment.group_alignment.GroupAlignment</a></li>
 </ul>
 </li>
 </ul>
@@ -338,25 +333,18 @@
 <li class="toctree-l3"><a class="reference internal" href="functional_alignment/fmralign_pipeline.html#local-functional-alignment">2.2.1. Local functional alignment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="functional_alignment/fmralign_pipeline.html#alignment-methods-on-a-region">2.2.2. Alignment methods on a region</a></li>
 <li class="toctree-l3"><a class="reference internal" href="functional_alignment/fmralign_pipeline.html#comparing-those-methods-on-a-region-of-interest">2.2.3. Comparing those methods on a region of interest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functional_alignment/fmralign_pipeline.html#references">2.2.4. References</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="modules/reference.html">3. Reference documentation: all fmralign functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="modules/reference.html#module-fmralign.pairwise_alignment">3.1. <code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.pairwise_alignment</span></code>: Pairwise Alignment</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.pairwise_alignment.PairwiseAlignment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/reference.html">3. Reference documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="modules/reference.html#module-fmralign.alignment.pairwise_alignment">3.1. <code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.alignment.pairwise_alignment</span></code>: Pairwise Alignment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.alignment.pairwise_alignment.PairwiseAlignment</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="modules/reference.html#module-fmralign.template_alignment">3.2. <code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.template_alignment</span></code>: Template Alignment</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.template_alignment.TemplateAlignment.html">3.2.1. fmralign.template_alignment.TemplateAlignment</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="modules/reference.html#module-fmralign.alignment_methods">3.3. <code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.alignment_methods</span></code>: Alignment Methods</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment_methods.Identity.html">3.3.1. fmralign.alignment_methods.Identity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment_methods.DiagonalAlignment.html">3.3.2. fmralign.alignment_methods.DiagonalAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment_methods.ScaledOrthogonalAlignment.html">3.3.3. fmralign.alignment_methods.ScaledOrthogonalAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment_methods.RidgeAlignment.html">3.3.4. fmralign.alignment_methods.RidgeAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment_methods.OptimalTransportAlignment.html">3.3.5. fmralign.alignment_methods.OptimalTransportAlignment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/reference.html#module-fmralign.alignment.group_alignment">3.2. <code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.alignment.group_alignment</span></code>: Group Alignment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html">3.2.1. fmralign.alignment.group_alignment.GroupAlignment</a></li>
 </ul>
 </li>
 </ul>
@@ -380,14 +368,14 @@
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="auto_examples/plot_alignment_methods_benchmark.html">
+          <a class="prev-page" href="auto_examples/plot_alignment_simulated_2D_data.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Alignment methods benchmark (template-based ROI case)</div>
+                <div class="title">Alignment on simulated 2D data.</div>
                 
               </div>
             </a>

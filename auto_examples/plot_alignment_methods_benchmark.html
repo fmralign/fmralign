@@ -7,11 +7,11 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://nilearn.github.io/auto_examples/plot_alignment_methods_benchmark.html" />
 <meta property="og:site_name" content="Nilearn" />
-<meta property="og:description" content="In this tutorial, we compare various methods of alignment on a pairwise alignment problem for Individual Brain Charting subjects. For each subject, we have a lot of functional informations in the f..." />
+<meta property="og:description" content="In this tutorial, we compare various methods of alignment on a template-based alignment problem for Individual Brain Charting subjects. For each subject, we have a lot of functional informations in..." />
 <meta property="og:image" content="https://nilearn.github.io/_static/nilearn-logo.png" />
 <meta property="og:image:alt" content="Nilearn" />
-<meta name="description" content="In this tutorial, we compare various methods of alignment on a pairwise alignment problem for Individual Brain Charting subjects. For each subject, we have a lot of functional informations in the f..." />
-<link rel="search" title="Search" href="../search.html" /><link rel="next" title="User guide" href="../user_guide.html" /><link rel="prev" title="Alignment on simulated 2D data." href="plot_alignment_simulated_2D_data.html" />
+<meta name="description" content="In this tutorial, we compare various methods of alignment on a template-based alignment problem for Individual Brain Charting subjects. For each subject, we have a lot of functional informations in..." />
+<link rel="search" title="Search" href="../search.html" /><link rel="next" title="Pairwise surface alignment." href="plot_surf_alignment.html" /><link rel="prev" title="Pairwise functional alignment on a ROI." href="plot_pairwise_roi_alignment.html" />
 
     <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 8.2.3 and Furo 2025.07.19 -->
         <title>Alignment methods benchmark (template-based ROI case) - fmralign</title>
@@ -232,9 +232,9 @@
 <li class="toctree-l2"><a class="reference internal" href="plot_template_alignment.html">Template-based prediction.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Alignment methods benchmark (template-based ROI case)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_surf_alignment.html">Pairwise surface alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_alignment_simulated_2D_data.html">Alignment on simulated 2D data.</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Alignment methods benchmark (template-based ROI case)</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide.html">User guide</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of User guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -244,14 +244,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../functional_alignment/fmralign_pipeline.html">2.2. Functional alignment pipeline</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/reference.html">3. Reference documentation: all fmralign functions</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of 3. Reference documentation: all fmralign functions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.pairwise_alignment.PairwiseAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.template_alignment.TemplateAlignment.html">3.2.1. fmralign.template_alignment.TemplateAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.Identity.html">3.3.1. fmralign.alignment_methods.Identity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.DiagonalAlignment.html">3.3.2. fmralign.alignment_methods.DiagonalAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.ScaledOrthogonalAlignment.html">3.3.3. fmralign.alignment_methods.ScaledOrthogonalAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.RidgeAlignment.html">3.3.4. fmralign.alignment_methods.RidgeAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment_methods.OptimalTransportAlignment.html">3.3.5. fmralign.alignment_methods.OptimalTransportAlignment</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/reference.html">3. Reference documentation</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of 3. Reference documentation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.alignment.pairwise_alignment.PairwiseAlignment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html">3.2.1. fmralign.alignment.group_alignment.GroupAlignment</a></li>
 </ul>
 </li>
 </ul>
@@ -320,11 +315,11 @@
           <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference internal" href="#sphx-glr-download-auto-examples-plot-alignment-methods-benchmark-py"><span class="std std-ref">Go to the end</span></a>
-to download the full example code. or to run this example in your browser via Binder</p>
+to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="alignment-methods-benchmark-template-based-roi-case">
 <span id="sphx-glr-auto-examples-plot-alignment-methods-benchmark-py"></span><h1>Alignment methods benchmark (template-based ROI case)<a class="headerlink" href="#alignment-methods-benchmark-template-based-roi-case" title="Link to this heading">¶</a></h1>
-<p>In this tutorial, we compare various methods of alignment on a pairwise alignment
+<p>In this tutorial, we compare various methods of alignment on a template-based alignment
 problem for Individual Brain Charting subjects. For each subject, we have a lot
 of functional informations in the form of several task-based
 contrast per subject. We will just work here on a ROI.</p>
@@ -398,7 +393,7 @@ Use &#39;force_resample=True&#39; to suppress this warning.
 /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:61: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
   resampled_mask_visual = resample_to_img(
 
-&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f1c2fe0c9b0&gt;
+&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f2ee46a1760&gt;
 </pre></div>
 </div>
 </section>
@@ -468,10 +463,40 @@ We will cluster them in 66 regions
 </pre></div>
 </div>
 </section>
+<section id="extract-the-parcels-labels">
+<h2>Extract the parcels labels<a class="headerlink" href="#extract-the-parcels-labels" title="Link to this heading">¶</a></h2>
+<p>We will use intra-parcel alignments, fmralign provides a simple utility
+to extract the labels of associated to each voxel:
+<code class="xref py py-func docutils literal notranslate"><span class="pre">fmralign.embeddings.parcellation.get_labels</span></code>.
+We then organize the data in dictionaries of pairs of subjects names and data.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.embeddings.parcellation</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_labels</span>
+
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a> <span class="o">=</span> <span class="n">get_labels</span><span class="p">(</span><a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_train</span></a><span class="p">,</span> <span class="n">roi_masker</span><span class="p">,</span> <a href="https://docs.python.org/3.9/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_pieces</span></a><span class="p">)</span>
+<a href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dict_source_train</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="nb">zip</span><span class="p">(</span><a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_subjects</span></a><span class="p">,</span> <span class="p">[</span><span class="n">roi_masker</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_train</span></a><span class="p">])</span>
+<span class="p">)</span>
+<a href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dict_source_test</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="nb">zip</span><span class="p">(</span><a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_subjects</span></a><span class="p">,</span> <span class="p">[</span><span class="n">roi_masker</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_test</span></a><span class="p">])</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:82: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+Parameter mask_strategy :
+    Masker parameter background - overriding estimator parameter epi
+Parameter smoothing_fwhm :
+    Masker parameter None - overriding estimator parameter 4.0
+
+  parcellation.fit(images_to_parcel)
+/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 &gt; 1. Completing it to avoid stopping the tree early.
+  connectivity, n_connected_components = _fix_connectivity(
+</pre></div>
+</div>
+</section>
 <section id="define-the-estimators-fit-them-and-do-a-prediction">
 <h2>Define the estimators, fit them and do a prediction<a class="headerlink" href="#define-the-estimators-fit-them-and-do-a-prediction" title="Link to this heading">¶</a></h2>
-<dl class="simple">
-<dt>On each region, we search for a transformation R that is either :</dt><dd><ul class="simple">
+<p>On each region, we search for a transformation R that is either :</p>
+<blockquote>
+<div><ul class="simple">
 <li><p>orthogonal, i.e. R orthogonal, scaling sc s.t. ||sc RX - Y ||^2 is minimized</p></li>
 <li><p>the optimal transport plan, which yields the minimal transport cost
 while respecting the mass conservation constraints. Calculated with
@@ -479,107 +504,47 @@ entropic regularization.</p></li>
 <li><p>the shared response model (SRM), which computes a shared response space
 from different subjects, and then projects individual subject data into it.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 <p>Then for each method we define the estimator, fit it, predict the new image and plot
-its correlation with the real signal.</p>
-</section>
-<section id="fit-and-score-the-orthogonal-and-optimal-transport-estimators">
-<h2>Fit and score the Orthogonal and Optimal Transport estimators<a class="headerlink" href="#fit-and-score-the-orthogonal-and-optimal-transport-estimators" title="Link to this heading">¶</a></h2>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">score_voxelwise</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.template_alignment</span><span class="w"> </span><span class="kn">import</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">TemplateAlignment</span></a>
+its correlation with the real signal. We use the identity (euclidean averaging)
+as the baseline.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign</span><span class="w"> </span><span class="kn">import</span> <a href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html#fmralign.alignment.group_alignment.GroupAlignment" title="fmralign.alignment.group_alignment.GroupAlignment" class="sphx-glr-backref-module-fmralign-alignment-group_alignment sphx-glr-backref-type-py-class"><span class="n">GroupAlignment</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">score_voxelwise</span>
 
-<a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;scaled_orthogonal&quot;</span><span class="p">,</span> <span class="s2">&quot;optimal_transport&quot;</span><span class="p">]</span>
+<a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">,</span> <span class="s2">&quot;procrustes&quot;</span><span class="p">,</span> <span class="s2">&quot;ot&quot;</span><span class="p">,</span> <span class="s2">&quot;SRM&quot;</span><span class="p">]</span>
 
 <span class="c1"># Prepare to store the results</span>
 <a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">titles</span></a><span class="p">,</span> <a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aligned_scores</span></a> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
 
 <span class="k">for</span> <a href="https://docs.python.org/3.9/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">i</span></a><span class="p">,</span> <a href="https://docs.python.org/3.9/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">methods</span></a><span class="p">):</span>
-    <span class="n">alignment_estimator</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">TemplateAlignment</span></a><span class="p">(</span>
-        <span class="n">alignment_method</span><span class="o">=</span><a href="https://docs.python.org/3.9/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">,</span> <a href="https://docs.python.org/3.9/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_pieces</span></a><span class="o">=</span><a href="https://docs.python.org/3.9/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_pieces</span></a><span class="p">,</span> <span class="n">masker</span><span class="o">=</span><span class="n">roi_masker</span>
+    <span class="c1"># Fit the group estimator on the training data</span>
+    <a href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html#fmralign.alignment.group_alignment.GroupAlignment" title="fmralign.alignment.group_alignment.GroupAlignment" class="sphx-glr-backref-module-fmralign-alignment-group_alignment sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">group_estimator</span></a> <span class="o">=</span> <a href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html#fmralign.alignment.group_alignment.GroupAlignment" title="fmralign.alignment.group_alignment.GroupAlignment" class="sphx-glr-backref-module-fmralign-alignment-group_alignment sphx-glr-backref-type-py-class"><span class="n">GroupAlignment</span></a><span class="p">(</span><a href="https://docs.python.org/3.9/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="o">=</span><a href="https://docs.python.org/3.9/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="o">=</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+        <a href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dict_source_train</span></a>
     <span class="p">)</span>
-    <span class="n">alignment_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_train</span></a><span class="p">)</span>
-    <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_pred</span></a> <span class="o">=</span> <span class="n">alignment_estimator</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_train</span></a><span class="p">)</span>
+    <span class="c1"># Compute a mapping between the template and the new subject</span>
+    <span class="c1"># using `target_train` and make a prediction using the left-out-data</span>
+    <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_pred</span></a> <span class="o">=</span> <a href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html#fmralign.alignment.group_alignment.GroupAlignment" title="fmralign.alignment.group_alignment.GroupAlignment" class="sphx-glr-backref-module-fmralign-alignment-group_alignment sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">group_estimator</span></a><span class="o">.</span><span class="n">predict_subject</span><span class="p">(</span>
+        <a href="https://docs.python.org/3.9/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dict_source_test</span></a><span class="p">,</span> <span class="n">roi_masker</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_train</span></a><span class="p">)</span>
+    <span class="p">)</span>
 
-    <span class="c1"># derive correlation between prediction, test</span>
+    <span class="c1"># Derive correlation between prediction, test</span>
     <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method_error</span></a> <span class="o">=</span> <span class="n">score_voxelwise</span><span class="p">(</span>
-        <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_test</span></a><span class="p">,</span> <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_pred</span></a><span class="p">,</span> <span class="n">masker</span><span class="o">=</span><span class="n">roi_masker</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;corr&quot;</span>
+        <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_test</span></a><span class="p">,</span>
+        <span class="n">roi_masker</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_pred</span></a><span class="p">),</span>
+        <span class="n">masker</span><span class="o">=</span><span class="n">roi_masker</span><span class="p">,</span>
+        <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;corr&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1"># store the results for plotting later</span>
+    <span class="c1"># Store the results for plotting later</span>
     <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aligned_score</span></a> <span class="o">=</span> <span class="n">roi_masker</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method_error</span></a><span class="p">)</span>
     <a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">titles</span></a><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Correlation of prediction after </span><span class="si">{</span><a href="https://docs.python.org/3.9/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">method</span></a><span class="si">}</span><span class="s2"> alignment&quot;</span><span class="p">)</span>
     <a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aligned_scores</span></a><span class="o">.</span><span class="n">append</span><span class="p">(</span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aligned_score</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
-Parameter mask_strategy :
-    Masker parameter background - overriding estimator parameter epi
-Parameter smoothing_fwhm :
-    Masker parameter None - overriding estimator parameter 4.0
-
-  parcellation.fit(images_to_parcel)
-[TemplateAlignment.fit] Resampling mask
-/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 &gt; 1. Completing it to avoid stopping the tree early.
-  connectivity, n_connected_components = _fix_connectivity(
-/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/joblib/memory.py:326: UserWarning: Data array used to create a new image contains 64-bit ints. This is likely due to creating the array with numpy and passing `int` as the `dtype`. Many tools such as FSL and SPM cannot deal with int64 in Nifti images, so for compatibility the data has been converted to int32.
-  return self.func(*args, **kwargs)
-/home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
   pearsonr(X_gt[:, vox], X_pred[:, vox])[
-/home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
-Parameter mask_strategy :
-    Masker parameter background - overriding estimator parameter epi
-Parameter smoothing_fwhm :
-    Masker parameter None - overriding estimator parameter 4.0
-
-  parcellation.fit(images_to_parcel)
-[TemplateAlignment.fit] Resampling mask
-/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 &gt; 1. Completing it to avoid stopping the tree early.
-  connectivity, n_connected_components = _fix_connectivity(
-/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/joblib/memory.py:326: UserWarning: Data array used to create a new image contains 64-bit ints. This is likely due to creating the array with numpy and passing `int` as the `dtype`. Many tools such as FSL and SPM cannot deal with int64 in Nifti images, so for compatibility the data has been converted to int32.
-  return self.func(*args, **kwargs)
-/home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
-  pearsonr(X_gt[:, vox], X_pred[:, vox])[
-</pre></div>
-</div>
-</section>
-<section id="fit-and-score-the-srm-estimator">
-<h2>Fit and score the SRM estimator<a class="headerlink" href="#fit-and-score-the-srm-estimator" title="Link to this heading">¶</a></h2>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># The IdentifiableFastSRM version of SRM ensures that the solution is unique.</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">fastsrm.identifiable_srm</span><span class="w"> </span><span class="kn">import</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">IdentifiableFastSRM</span></a>
-
-<span class="n">srm</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">IdentifiableFastSRM</span></a><span class="p">(</span>
-    <span class="n">n_components</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-    <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="c1"># Step 1: Fit SRM on training data from source subjects</span>
-<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">shared_response</span></a> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin.fit_transform" title="sklearn.base.TransformerMixin.fit_transform" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-method"><span class="n">srm</span><span class="o">.</span><span class="n">fit_transform</span></a><span class="p">(</span>
-    <span class="p">[</span><span class="n">roi_masker</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_train</span></a><span class="p">]</span>
-<span class="p">)</span>
-
-<span class="c1"># Step 2: Freeze the SRM model and add target subject data. This projects the</span>
-<span class="c1"># target subject data into the shared response space.</span>
-<span class="n">srm</span><span class="o">.</span><span class="n">aggregate</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">srm</span><span class="o">.</span><span class="n">add_subjects</span><span class="p">([</span><span class="n">roi_masker</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_train</span></a><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">],</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">shared_response</span></a><span class="p">)</span>
-
-<span class="c1"># Step 3: Use SRM to transform new test data from the target subject</span>
-<a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aligned_test</span></a> <span class="o">=</span> <span class="n">srm</span><span class="o">.</span><span class="n">transform</span><span class="p">([</span><span class="n">roi_masker</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_test</span></a><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">])</span>
-<a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aligned_pred</span></a> <span class="o">=</span> <span class="n">roi_masker</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span>
-    <span class="n">srm</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aligned_test</span></a><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
-<span class="p">)</span>
-
-<span class="c1"># Step 4: Evaluate voxelwise correlation between predicted and true test</span>
-<span class="c1"># signals. Store the results for plotting later.</span>
-<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">srm_error</span></a> <span class="o">=</span> <span class="n">score_voxelwise</span><span class="p">(</span>
-    <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_test</span></a><span class="p">,</span> <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aligned_pred</span></a><span class="p">,</span> <span class="n">masker</span><span class="o">=</span><span class="n">roi_masker</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;corr&quot;</span>
-<span class="p">)</span>
-<a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">srm_score</span></a> <span class="o">=</span> <span class="n">roi_masker</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">srm_error</span></a><span class="p">)</span>
-<a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">titles</span></a><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Correlation of prediction after SRM alignment&quot;</span><span class="p">)</span>
-<a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aligned_scores</span></a><span class="o">.</span><span class="n">append</span><span class="p">(</span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">srm_score</span></a><span class="p">)</span>
-</pre></div>
-</div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ProbSRM did not converge. Current diff is 23.758430
+/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/ot/bregman/_sinkhorn.py:1331: UserWarning: Sinkhorn did not converge. You might want to increase the number of iterations `numItermax` or the regularization parameter `reg`.
+  warnings.warn(
 </pre></div>
 </div>
 </section>
@@ -587,7 +552,7 @@ Parameter smoothing_fwhm :
 <h2>Plot the results<a class="headerlink" href="#plot-the-results" title="Link to this heading">¶</a></h2>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">axes</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
 
 <span class="k">for</span> <a href="https://docs.python.org/3.9/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">i</span></a><span class="p">,</span> <span class="p">(</span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">score</span></a><span class="p">,</span> <a href="https://docs.python.org/3.9/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">title</span></a><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aligned_scores</span></a><span class="p">,</span> <a href="https://docs.python.org/3.9/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">titles</span></a><span class="p">)):</span>
     <span class="n">plotting</span><span class="o">.</span><span class="n">plot_stat_map</span><span class="p">(</span>
@@ -603,7 +568,7 @@ Parameter smoothing_fwhm :
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../_images/sphx_glr_plot_alignment_methods_benchmark_002.png" srcset="../_images/sphx_glr_plot_alignment_methods_benchmark_002.png" alt="plot alignment methods benchmark" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:223: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+<img src="../_images/sphx_glr_plot_alignment_methods_benchmark_002.png" srcset="../_images/sphx_glr_plot_alignment_methods_benchmark_002.png" alt="plot alignment methods benchmark" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:210: UserWarning: Non-finite values detected. These values will be replaced with zeros.
   plotting.plot_stat_map(
 </pre></div>
 </div>
@@ -612,14 +577,10 @@ Parameter smoothing_fwhm :
 <h2>Summary:<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
 <p>We compared TemplateAlignment methods (scaled orthogonal, optimal transport)
 with SRM-based alignment on visual cortex activity.
-You can see that SRM introduces the most smoothness in the transformation,
-resulting in higher correlation values.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 6.201 seconds)</p>
+You can see that SRM introduces more smoothness in the transformation,
+resulting in slightly higher correlation values.</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 56.153 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-alignment-methods-benchmark-py">
-<div class="binder-badge docutils container">
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/nilearn/nilearn/main?urlpath=lab/tree/notebooks/auto_examples/plot_alignment_methods_benchmark.ipynb"><img alt="Launch binder" src="../_images/binder_badge_logo.svg" style="width: 150px;" />
-</a>
-</div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/b885fb894b22be261ce320523a208b83/plot_alignment_methods_benchmark.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_alignment_methods_benchmark.ipynb</span></code></a></p>
 </div>
@@ -639,23 +600,23 @@ resulting in higher correlation values.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../user_guide.html">
+          <a class="next-page" href="plot_surf_alignment.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">User guide</div>
+                <div class="title">Pairwise surface alignment.</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="plot_alignment_simulated_2D_data.html">
+          <a class="prev-page" href="plot_pairwise_roi_alignment.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Alignment on simulated 2D data.</div>
+                <div class="title">Pairwise functional alignment on a ROI.</div>
                 
               </div>
             </a>
@@ -695,9 +656,8 @@ resulting in higher correlation values.</p>
 <li><a class="reference internal" href="#define-a-masker">Define a masker</a></li>
 <li><a class="reference internal" href="#prepare-the-data">Prepare the data</a></li>
 <li><a class="reference internal" href="#choose-the-number-of-regions-for-local-alignment">Choose the number of regions for local alignment</a></li>
+<li><a class="reference internal" href="#extract-the-parcels-labels">Extract the parcels labels</a></li>
 <li><a class="reference internal" href="#define-the-estimators-fit-them-and-do-a-prediction">Define the estimators, fit them and do a prediction</a></li>
-<li><a class="reference internal" href="#fit-and-score-the-orthogonal-and-optimal-transport-estimators">Fit and score the Orthogonal and Optimal Transport estimators</a></li>
-<li><a class="reference internal" href="#fit-and-score-the-srm-estimator">Fit and score the SRM estimator</a></li>
 <li><a class="reference internal" href="#plot-the-results">Plot the results</a></li>
 <li><a class="reference internal" href="#summary">Summary:</a></li>
 </ul>

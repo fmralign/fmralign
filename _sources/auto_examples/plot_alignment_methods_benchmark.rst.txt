@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_plot_alignment_methods_benchmark.py>`
-        to download the full example code. or to run this example in your browser via Binder
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -21,7 +21,7 @@
 Alignment methods benchmark (template-based ROI case)
 =====================================================
 
-In this tutorial, we compare various methods of alignment on a pairwise alignment
+In this tutorial, we compare various methods of alignment on a template-based alignment
 problem for Individual Brain Charting subjects. For each subject, we have a lot
 of functional informations in the form of several task-based
 contrast per subject. We will just work here on a ROI.
@@ -134,7 +134,7 @@ First, we fetch and plot the complete atlas
     /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:61: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
       resampled_mask_visual = resample_to_img(
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f1c2fe0c9b0>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f2ee46a1760>
 
 
 
@@ -246,50 +246,101 @@ data to divide them into meaningful regions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 137-148
+.. GENERATED FROM PYTHON SOURCE LINES 137-143
+
+Extract the parcels labels
+--------------------------
+We will use intra-parcel alignments, fmralign provides a simple utility
+to extract the labels of associated to each voxel:
+:func:`!fmralign.embeddings.parcellation.get_labels`.
+We then organize the data in dictionaries of pairs of subjects names and data.
+
+.. GENERATED FROM PYTHON SOURCE LINES 143-154
+
+.. code-block:: Python
+
+
+    from fmralign.embeddings.parcellation import get_labels
+
+    labels = get_labels(source_train, roi_masker, n_pieces)
+    dict_source_train = dict(
+        zip(source_subjects, [roi_masker.transform(img) for img in source_train])
+    )
+    dict_source_test = dict(
+        zip(source_subjects, [roi_masker.transform(img) for img in source_test])
+    )
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:82: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+    Parameter mask_strategy :
+        Masker parameter background - overriding estimator parameter epi
+    Parameter smoothing_fwhm :
+        Masker parameter None - overriding estimator parameter 4.0
+
+      parcellation.fit(images_to_parcel)
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
+      connectivity, n_connected_components = _fix_connectivity(
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 155-169
 
 Define the estimators, fit them and do a prediction
 ---------------------------------------------------
 On each region, we search for a transformation R that is either :
+
   *  orthogonal, i.e. R orthogonal, scaling sc s.t. ||sc RX - Y ||^2 is minimized
   *  the optimal transport plan, which yields the minimal transport cost
      while respecting the mass conservation constraints. Calculated with
      entropic regularization.
   *  the shared response model (SRM), which computes a shared response space
      from different subjects, and then projects individual subject data into it.
+
 Then for each method we define the estimator, fit it, predict the new image and plot
-its correlation with the real signal.
+its correlation with the real signal. We use the identity (euclidean averaging)
+as the baseline.
 
-.. GENERATED FROM PYTHON SOURCE LINES 150-152
-
-Fit and score the Orthogonal and Optimal Transport estimators
----------------------------------------------------------------
-
-.. GENERATED FROM PYTHON SOURCE LINES 152-178
+.. GENERATED FROM PYTHON SOURCE LINES 169-202
 
 .. code-block:: Python
 
-    from fmralign.metrics import score_voxelwise
-    from fmralign.template_alignment import TemplateAlignment
 
-    methods = ["scaled_orthogonal", "optimal_transport"]
+    from fmralign import GroupAlignment
+    from fmralign.metrics import score_voxelwise
+
+    methods = ["identity", "procrustes", "ot", "SRM"]
 
     # Prepare to store the results
     titles, aligned_scores = [], []
 
     for i, method in enumerate(methods):
-        alignment_estimator = TemplateAlignment(
-            alignment_method=method, n_pieces=n_pieces, masker=roi_masker
+        # Fit the group estimator on the training data
+        group_estimator = GroupAlignment(method=method, labels=labels).fit(
+            dict_source_train
         )
-        alignment_estimator.fit(source_train)
-        target_pred = alignment_estimator.transform(target_train)
+        # Compute a mapping between the template and the new subject
+        # using `target_train` and make a prediction using the left-out-data
+        target_pred = group_estimator.predict_subject(
+            dict_source_test, roi_masker.transform(target_train)
+        )
 
-        # derive correlation between prediction, test
+        # Derive correlation between prediction, test
         method_error = score_voxelwise(
-            target_test, target_pred, masker=roi_masker, loss="corr"
+            target_test,
+            roi_masker.inverse_transform(target_pred),
+            masker=roi_masker,
+            loss="corr",
         )
 
-        # store the results for plotting later
+        # Store the results for plotting later
         aligned_score = roi_masker.inverse_transform(method_error)
         titles.append(f"Correlation of prediction after {method} alignment")
         aligned_scores.append(aligned_score)
@@ -298,111 +349,30 @@ Fit and score the Orthogonal and Optimal Transport estimators
 
 
 
-
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
-    Parameter mask_strategy :
-        Masker parameter background - overriding estimator parameter epi
-    Parameter smoothing_fwhm :
-        Masker parameter None - overriding estimator parameter 4.0
-
-      parcellation.fit(images_to_parcel)
-    [TemplateAlignment.fit] Resampling mask
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
-      connectivity, n_connected_components = _fix_connectivity(
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/joblib/memory.py:326: UserWarning: Data array used to create a new image contains 64-bit ints. This is likely due to creating the array with numpy and passing `int` as the `dtype`. Many tools such as FSL and SPM cannot deal with int64 in Nifti images, so for compatibility the data has been converted to int32.
-      return self.func(*args, **kwargs)
     /home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
       pearsonr(X_gt[:, vox], X_pred[:, vox])[
-    /home/runner/work/fmralign/fmralign/fmralign/_utils.py:258: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
-    Parameter mask_strategy :
-        Masker parameter background - overriding estimator parameter epi
-    Parameter smoothing_fwhm :
-        Masker parameter None - overriding estimator parameter 4.0
-
-      parcellation.fit(images_to_parcel)
-    [TemplateAlignment.fit] Resampling mask
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
-      connectivity, n_connected_components = _fix_connectivity(
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/joblib/memory.py:326: UserWarning: Data array used to create a new image contains 64-bit ints. This is likely due to creating the array with numpy and passing `int` as the `dtype`. Many tools such as FSL and SPM cannot deal with int64 in Nifti images, so for compatibility the data has been converted to int32.
-      return self.func(*args, **kwargs)
-    /home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
-      pearsonr(X_gt[:, vox], X_pred[:, vox])[
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/ot/bregman/_sinkhorn.py:1331: UserWarning: Sinkhorn did not converge. You might want to increase the number of iterations `numItermax` or the regularization parameter `reg`.
+      warnings.warn(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 179-181
-
-Fit and score the SRM estimator
---------------------------------
-
-.. GENERATED FROM PYTHON SOURCE LINES 181-215
-
-.. code-block:: Python
-
-
-    # The IdentifiableFastSRM version of SRM ensures that the solution is unique.
-    from fastsrm.identifiable_srm import IdentifiableFastSRM
-
-    srm = IdentifiableFastSRM(
-        n_components=30,
-        n_iter=10,
-    )
-
-    # Step 1: Fit SRM on training data from source subjects
-    shared_response = srm.fit_transform(
-        [roi_masker.transform(s).T for s in source_train]
-    )
-
-    # Step 2: Freeze the SRM model and add target subject data. This projects the
-    # target subject data into the shared response space.
-    srm.aggregate = None
-    srm.add_subjects([roi_masker.transform(target_train).T], shared_response)
-
-    # Step 3: Use SRM to transform new test data from the target subject
-    aligned_test = srm.transform([roi_masker.transform(target_test).T])
-    aligned_pred = roi_masker.inverse_transform(
-        srm.inverse_transform(aligned_test[0])[0].T
-    )
-
-    # Step 4: Evaluate voxelwise correlation between predicted and true test
-    # signals. Store the results for plotting later.
-    srm_error = score_voxelwise(
-        target_test, aligned_pred, masker=roi_masker, loss="corr"
-    )
-    srm_score = roi_masker.inverse_transform(srm_error)
-    titles.append("Correlation of prediction after SRM alignment")
-    aligned_scores.append(srm_score)
-
-
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    ProbSRM did not converge. Current diff is 23.758430
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 216-218
+.. GENERATED FROM PYTHON SOURCE LINES 203-205
 
 Plot the results
----------------
+----------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 218-235
+.. GENERATED FROM PYTHON SOURCE LINES 205-222
 
 .. code-block:: Python
 
     import matplotlib.pyplot as plt
 
-    fig, axes = plt.subplots(3, 1, figsize=(8, 12))
+    fig, axes = plt.subplots(4, 1, figsize=(8, 12))
 
     for i, (score, title) in enumerate(zip(aligned_scores, titles)):
         plotting.plot_stat_map(
@@ -430,25 +400,25 @@ Plot the results
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:223: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:210: UserWarning: Non-finite values detected. These values will be replaced with zeros.
       plotting.plot_stat_map(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 236-242
+.. GENERATED FROM PYTHON SOURCE LINES 223-229
 
 Summary:
 --------
 We compared TemplateAlignment methods (scaled orthogonal, optimal transport)
 with SRM-based alignment on visual cortex activity.
-You can see that SRM introduces the most smoothness in the transformation,
-resulting in higher correlation values.
+You can see that SRM introduces more smoothness in the transformation,
+resulting in slightly higher correlation values.
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 6.201 seconds)
+   **Total running time of the script:** (0 minutes 56.153 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_methods_benchmark.py:
@@ -456,13 +426,6 @@ resulting in higher correlation values.
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
-
-    .. container:: binder-badge
-
-      .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/nilearn/nilearn/main?urlpath=lab/tree/notebooks/auto_examples/plot_alignment_methods_benchmark.ipynb
-        :alt: Launch binder
-        :width: 150 px
 
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 

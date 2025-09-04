@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_plot_alignment_simulated_2D_data.py>`
-        to download the full example code. or to run this example in your browser via Binder
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -236,9 +236,9 @@ on our simple 2D example different kind of transformation we can look for.
 .. code-block:: Python
 
 
-    from fmralign.alignment_methods import (
-        OptimalTransportAlignment,
-        ScaledOrthogonalAlignment,
+    from fmralign.methods import (
+        OptimalTransport,
+        Procrustes,
     )
 
 
@@ -252,16 +252,16 @@ on our simple 2D example different kind of transformation we can look for.
 
 Orthogonal alignment
 --------------------
-The first idea proposed in Haxby, 2011 was to compute an orthogonal mixing
+The first idea proposed in :footcite:t:`Haxby2001` was to compute an orthogonal mixing
 matrix `R` and a scaling `sc` such that Frobenius norm: math:
-` | |sc RX - Y | | ^ 2` is minimized.
+:math:`\| sc R X - Y \|^2` is minimized.
 
 .. GENERATED FROM PYTHON SOURCE LINES 186-200
 
 .. code-block:: Python
 
 
-    scaled_orthogonal_alignment = ScaledOrthogonalAlignment()
+    scaled_orthogonal_alignment = Procrustes()
     scaled_orthogonal_alignment.fit(X.T, Y.T)
     _plot_distributions_and_alignment(
         X,
@@ -310,17 +310,18 @@ optimal coupling between `X` and `Y` with entropic regularization.
 This way of finding a transform uses more geometrical information from the
 distributions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 210-217
+.. GENERATED FROM PYTHON SOURCE LINES 210-218
 
 .. code-block:: Python
 
 
-    ot_alignment = OptimalTransportAlignment(reg=0.1)
+    ot_alignment = OptimalTransport(reg=0.1)
     ot_alignment.fit(X.T, Y.T)
     _plot_distributions_and_alignment(
         X, Y, R=ot_alignment.R, title="Optimal Transport", thr=0.1
     )
     _plot_mixing_matrix(R=ot_alignment.R, title="Optimal Transport coupling")
+
 
 
 
@@ -345,10 +346,17 @@ distributions.
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 219-223
+
+References
+----------
+
+.. footbibliography::
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.551 seconds)
+   **Total running time of the script:** (0 minutes 0.661 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_simulated_2D_data.py:
@@ -356,13 +364,6 @@ distributions.
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
-
-    .. container:: binder-badge
-
-      .. image:: images/binder_badge_logo.svg
-        :target: https://mybinder.org/v2/gh/nilearn/nilearn/main?urlpath=lab/tree/notebooks/auto_examples/plot_alignment_simulated_2D_data.ipynb
-        :alt: Launch binder
-        :width: 150 px
 
     .. container:: sphx-glr-download sphx-glr-download-jupyter
 
