@@ -77,21 +77,18 @@ class OptimalTransport(BaseAlignment):
 
             M = cdist(X.T, Y.T, metric=self.metric)
 
-            if self.solver == "exact":
-                self.R = ot.lp.emd(a, b, M) * n
-            else:
-                self.R = (
-                    ot.sinkhorn(
-                        a,
-                        b,
-                        M,
-                        self.reg,
-                        method=self.solver,
-                        numItermax=self.max_iter,
-                        stopThr=self.tol,
-                    )
-                    * n
+            self.R = (
+                ot.sinkhorn(
+                    a,
+                    b,
+                    M,
+                    self.reg,
+                    method=self.solver,
+                    numItermax=self.max_iter,
+                    stopThr=self.tol,
                 )
+                * n
+            )
             return self
 
     def transform(self, X):
