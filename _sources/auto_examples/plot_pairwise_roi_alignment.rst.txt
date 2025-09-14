@@ -135,7 +135,7 @@ First, we fetch and plot the complete atlas
     /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:52: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
       resampled_mask_visual = resample_to_img(
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fc2e57da180>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f7f96c51eb0>
 
 
 
@@ -223,15 +223,25 @@ n_pieces to 1. We learn alignment estimator on train data and use it to
 predict target test data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 121-132
+.. GENERATED FROM PYTHON SOURCE LINES 121-142
 
 .. code-block:: Python
 
 
     from fmralign import PairwiseAlignment
 
-    source_train_data, target_train_data, source_test_data = roi_masker.transform(
-        [source_train_imgs, target_train_imgs, source_test_imgs]
+    (
+        source_train_data,
+        target_train_data,
+        source_test_data,
+        target_test_data,
+    ) = roi_masker.transform(
+        [
+            source_train_imgs,
+            target_train_imgs,
+            source_test_imgs,
+            target_test_imgs,
+        ]
     )
 
     alignment_estimator = PairwiseAlignment(method="procrustes")
@@ -252,7 +262,7 @@ predict target test data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-141
+.. GENERATED FROM PYTHON SOURCE LINES 143-151
 
 Score the baseline and the prediction
 -------------------------------------
@@ -263,7 +273,7 @@ and with alignment, to see if alignment was able to predict a signal more
 alike the ground truth.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 141-159
+.. GENERATED FROM PYTHON SOURCE LINES 151-164
 
 .. code-block:: Python
 
@@ -273,16 +283,11 @@ alike the ground truth.
     # Now we use this scoring function to compare the correlation of aligned and
     # original data from sub-01 made with the real PA contrasts of sub-02.
 
-    target_pred_imgs = roi_masker.inverse_transform(target_pred_data)
-    baseline_score = roi_masker.inverse_transform(
-        score_voxelwise(
-            target_test_imgs, source_test_imgs, roi_masker, loss="corr"
-        )
+    baseline_score = score_voxelwise(
+        target_test_data, source_test_data, loss="corr"
     )
-    aligned_score = roi_masker.inverse_transform(
-        score_voxelwise(
-            target_test_imgs, target_pred_imgs, roi_masker, loss="corr"
-        )
+    aligned_score = score_voxelwise(
+        target_test_data, target_pred_data, loss="corr"
     )
 
 
@@ -293,32 +298,34 @@ alike the ground truth.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+    /home/runner/work/fmralign/fmralign/fmralign/metrics.py:55: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
       pearsonr(X_gt[:, vox], X_pred[:, vox])[
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 160-164
+.. GENERATED FROM PYTHON SOURCE LINES 165-169
 
 Plotting the measures
 ---------------------
 Finally we plot both scores.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 164-176
+.. GENERATED FROM PYTHON SOURCE LINES 169-183
 
 .. code-block:: Python
 
 
     from nilearn import plotting
 
+    baseline_score_img = roi_masker.inverse_transform(baseline_score)
+    aligned_score_img = roi_masker.inverse_transform(aligned_score)
     baseline_display = plotting.plot_stat_map(
-        baseline_score, display_mode="z", vmax=1, cut_coords=[-15, -5]
+        baseline_score_img, display_mode="z", vmax=1, cut_coords=[-15, -5]
     )
     baseline_display.title("Baseline correlation wt ground truth")
     display = plotting.plot_stat_map(
-        aligned_score, display_mode="z", cut_coords=[-15, -5], vmax=1
+        aligned_score_img, display_mode="z", cut_coords=[-15, -5], vmax=1
     )
     display.title("Prediction correlation wt ground truth")
 
@@ -347,15 +354,15 @@ Finally we plot both scores.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:167: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:174: UserWarning: Non-finite values detected. These values will be replaced with zeros.
       baseline_display = plotting.plot_stat_map(
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:171: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:178: UserWarning: Non-finite values detected. These values will be replaced with zeros.
       display = plotting.plot_stat_map(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 177-179
+.. GENERATED FROM PYTHON SOURCE LINES 184-186
 
 We can see on the plot that after alignment, the prediction made for one
 subject data, informed by another subject are greatly improved.
@@ -363,7 +370,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 15.355 seconds)
+   **Total running time of the script:** (0 minutes 15.762 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_roi_alignment.py:

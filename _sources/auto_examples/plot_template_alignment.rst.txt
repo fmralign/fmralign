@@ -69,7 +69,7 @@ mask is a binary image used to extract grey matter regions.
     [get_dataset_dir] Added README.md to /home/runner/nilearn_data
     [get_dataset_dir] Dataset created in /home/runner/nilearn_data/ibc
     [fetch_files] Downloading data from https://osf.io/pcvje/download ...
-    [fetch_files]  ...done. (1 seconds, 0 min)
+    [fetch_files]  ...done. (2 seconds, 0 min)
 
     [fetch_files] Extracting data from 
     /home/runner/nilearn_data/ibc/8e275a34345802c5c273312d85957d6c/download...
@@ -83,15 +83,14 @@ mask is a binary image used to extract grey matter regions.
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/8z23h/download ...
-    [fetch_files] Downloaded 10493952 of 21185337 bytes (49.5%%,    1.0s remaining)
-    [fetch_files]  ...done. (3 seconds, 0 min)
+    [fetch_files] Downloaded 20594688 of 21185337 bytes (97.2%%,    0.0s remaining)
+    [fetch_files]  ...done. (2 seconds, 0 min)
 
     [fetch_files] Extracting data from 
     /home/runner/nilearn_data/ibc/100352739b7501f0ed04920933b4be36/download...
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/e9kbm/download ...
-    [fetch_files] Downloaded 12574720 of 21196887 bytes (59.3%%,    0.7s remaining)
     [fetch_files]  ...done. (3 seconds, 0 min)
 
     [fetch_files] Extracting data from 
@@ -99,8 +98,8 @@ mask is a binary image used to extract grey matter regions.
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/qn5b6/download ...
-    [fetch_files] Downloaded 10240000 of 21197218 bytes (48.3%%,    1.1s remaining)
-    [fetch_files]  ...done. (3 seconds, 0 min)
+    [fetch_files] Downloaded 19742720 of 21197218 bytes (93.1%%,    0.1s remaining)
+    [fetch_files]  ...done. (2 seconds, 0 min)
 
     [fetch_files] Extracting data from 
     /home/runner/nilearn_data/ibc/cd396fed594eb866baecd48b70ddf7e7/download...
@@ -114,7 +113,7 @@ mask is a binary image used to extract grey matter regions.
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/83bje/download ...
-    [fetch_files] Downloaded 14712832 of 21188335 bytes (69.4%%,    0.4s remaining)
+    [fetch_files] Downloaded 10485760 of 21188335 bytes (49.5%%,    1.0s remaining)
     [fetch_files]  ...done. (3 seconds, 0 min)
 
     [fetch_files] Extracting data from 
@@ -122,7 +121,7 @@ mask is a binary image used to extract grey matter regions.
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/43j69/download ...
-    [fetch_files] Downloaded 10477568 of 21187400 bytes (49.5%%,    1.0s remaining)
+    [fetch_files] Downloaded 6299648 of 21187400 bytes (29.7%%,    2.4s remaining)
     [fetch_files]  ...done. (3 seconds, 0 min)
 
     [fetch_files] Extracting data from 
@@ -201,7 +200,7 @@ Compute a baseline (average of subjects)
 We create an image with as many contrasts as any subject representing for
 each contrast the average of all train subjects maps.
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-85
+.. GENERATED FROM PYTHON SOURCE LINES 78-84
 
 .. code-block:: Python
 
@@ -209,8 +208,7 @@ each contrast the average of all train subjects maps.
     import numpy as np
 
     masked_imgs = [masker.transform(img) for img in template_train]
-    average_img = np.mean(masked_imgs, axis=0)
-    average_subject = masker.inverse_transform(average_img)
+    euclidean_avg = np.mean(masked_imgs, axis=0)
 
 
 
@@ -219,7 +217,7 @@ each contrast the average of all train subjects maps.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-96
+.. GENERATED FROM PYTHON SOURCE LINES 85-95
 
 Create a template from the training subjects.
 ---------------------------------------------
@@ -232,7 +230,7 @@ We define an estimator using the class TemplateAlignment:
     new template space.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 96-111
+.. GENERATED FROM PYTHON SOURCE LINES 95-110
 
 .. code-block:: Python
 
@@ -278,7 +276,7 @@ We define an estimator using the class TemplateAlignment:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 112-117
+.. GENERATED FROM PYTHON SOURCE LINES 111-116
 
 Predict new data for left-out subject
 -------------------------------------
@@ -286,7 +284,7 @@ We predict the contrasts of the left-out subject using the template we just
 created. This method takes the left-out subject as input, computes a pairwise
 alignment with the template and returns the aligned data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-128
+.. GENERATED FROM PYTHON SOURCE LINES 116-126
 
 .. code-block:: Python
 
@@ -299,7 +297,6 @@ alignment with the template and returns the aligned data.
     )
 
     predictions_from_template = pairwise_estim.transform(left_out_data)
-    predicted_img = masker.inverse_transform(predictions_from_template)
 
 
 
@@ -308,7 +305,7 @@ alignment with the template and returns the aligned data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-135
+.. GENERATED FROM PYTHON SOURCE LINES 127-133
 
 Score the baseline and the prediction
 -------------------------------------
@@ -317,19 +314,16 @@ between the images. That is, for each voxel, we measure the correlation between
 its profile of activation without and with alignment, to see if template-based
 alignment was able to improve inter-subject similarity.
 
-.. GENERATED FROM PYTHON SOURCE LINES 135-146
+.. GENERATED FROM PYTHON SOURCE LINES 133-141
 
 .. code-block:: Python
 
 
     from fmralign.metrics import score_voxelwise
 
-    average_score = masker.inverse_transform(
-        score_voxelwise(left_out_subject, average_subject, masker, loss="corr")
-    )
-    template_img = masker.inverse_transform(procrustes_template)
-    template_score = masker.inverse_transform(
-        score_voxelwise(predicted_img, template_img, masker, loss="corr")
+    average_score = score_voxelwise(left_out_data, euclidean_avg, loss="corr")
+    template_score = score_voxelwise(
+        predictions_from_template, procrustes_template, loss="corr"
     )
 
 
@@ -339,26 +333,28 @@ alignment was able to improve inter-subject similarity.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 147-151
+.. GENERATED FROM PYTHON SOURCE LINES 142-146
 
 Plotting the measures
 ---------------------
 Finally we plot both scores
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 151-163
+.. GENERATED FROM PYTHON SOURCE LINES 146-160
 
 .. code-block:: Python
 
 
     from nilearn import plotting
 
+    average_score_img = masker.inverse_transform(average_score)
+    template_score_img = masker.inverse_transform(template_score)
     baseline_display = plotting.plot_stat_map(
-        average_score, display_mode="z", vmax=1, cut_coords=[-15, -5]
+        average_score_img, display_mode="z", vmax=1, cut_coords=[-15, -5]
     )
     baseline_display.title("Left-out subject correlation with group average")
     display = plotting.plot_stat_map(
-        template_score, display_mode="z", cut_coords=[-15, -5], vmax=1
+        template_score_img, display_mode="z", cut_coords=[-15, -5], vmax=1
     )
     display.title("Aligned subject correlation with Procrustes template")
 
@@ -386,7 +382,7 @@ Finally we plot both scores
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 164-166
+.. GENERATED FROM PYTHON SOURCE LINES 161-163
 
 We observe that creating a template and aligning a new subject to it yields
 better inter-subject similarity than regular euclidean averaging.
@@ -394,7 +390,7 @@ better inter-subject similarity than regular euclidean averaging.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (4 minutes 30.191 seconds)
+   **Total running time of the script:** (4 minutes 43.449 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_template_alignment.py:

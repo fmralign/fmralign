@@ -121,8 +121,18 @@ target_test_imgs = concat_imgs(
 
 from fmralign import PairwiseAlignment
 
-source_train_data, target_train_data, source_test_data = roi_masker.transform(
-    [source_train_imgs, target_train_imgs, source_test_imgs]
+(
+    source_train_data,
+    target_train_data,
+    source_test_data,
+    target_test_data,
+) = roi_masker.transform(
+    [
+        source_train_imgs,
+        target_train_imgs,
+        source_test_imgs,
+        target_test_imgs,
+    ]
 )
 
 alignment_estimator = PairwiseAlignment(method="procrustes")
@@ -144,16 +154,11 @@ from fmralign.metrics import score_voxelwise
 # Now we use this scoring function to compare the correlation of aligned and
 # original data from sub-01 made with the real PA contrasts of sub-02.
 
-target_pred_imgs = roi_masker.inverse_transform(target_pred_data)
-baseline_score = roi_masker.inverse_transform(
-    score_voxelwise(
-        target_test_imgs, source_test_imgs, roi_masker, loss="corr"
-    )
+baseline_score = score_voxelwise(
+    target_test_data, source_test_data, loss="corr"
 )
-aligned_score = roi_masker.inverse_transform(
-    score_voxelwise(
-        target_test_imgs, target_pred_imgs, roi_masker, loss="corr"
-    )
+aligned_score = score_voxelwise(
+    target_test_data, target_pred_data, loss="corr"
 )
 
 ###############################################################################
@@ -164,12 +169,14 @@ aligned_score = roi_masker.inverse_transform(
 
 from nilearn import plotting
 
+baseline_score_img = roi_masker.inverse_transform(baseline_score)
+aligned_score_img = roi_masker.inverse_transform(aligned_score)
 baseline_display = plotting.plot_stat_map(
-    baseline_score, display_mode="z", vmax=1, cut_coords=[-15, -5]
+    baseline_score_img, display_mode="z", vmax=1, cut_coords=[-15, -5]
 )
 baseline_display.title("Baseline correlation wt ground truth")
 display = plotting.plot_stat_map(
-    aligned_score, display_mode="z", cut_coords=[-15, -5], vmax=1
+    aligned_score_img, display_mode="z", cut_coords=[-15, -5], vmax=1
 )
 display.title("Prediction correlation wt ground truth")
 

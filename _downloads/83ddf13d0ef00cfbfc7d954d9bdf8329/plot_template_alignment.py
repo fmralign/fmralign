@@ -79,8 +79,7 @@ left_out_subject = concat_imgs(imgs[5])
 import numpy as np
 
 masked_imgs = [masker.transform(img) for img in template_train]
-average_img = np.mean(masked_imgs, axis=0)
-average_subject = masker.inverse_transform(average_img)
+euclidean_avg = np.mean(masked_imgs, axis=0)
 
 ###############################################################################
 # Create a template from the training subjects.
@@ -123,7 +122,6 @@ pairwise_estim = PairwiseAlignment(method="procrustes", labels=labels).fit(
 )
 
 predictions_from_template = pairwise_estim.transform(left_out_data)
-predicted_img = masker.inverse_transform(predictions_from_template)
 
 ###############################################################################
 # Score the baseline and the prediction
@@ -135,12 +133,9 @@ predicted_img = masker.inverse_transform(predictions_from_template)
 
 from fmralign.metrics import score_voxelwise
 
-average_score = masker.inverse_transform(
-    score_voxelwise(left_out_subject, average_subject, masker, loss="corr")
-)
-template_img = masker.inverse_transform(procrustes_template)
-template_score = masker.inverse_transform(
-    score_voxelwise(predicted_img, template_img, masker, loss="corr")
+average_score = score_voxelwise(left_out_data, euclidean_avg, loss="corr")
+template_score = score_voxelwise(
+    predictions_from_template, procrustes_template, loss="corr"
 )
 
 ###############################################################################
@@ -151,12 +146,14 @@ template_score = masker.inverse_transform(
 
 from nilearn import plotting
 
+average_score_img = masker.inverse_transform(average_score)
+template_score_img = masker.inverse_transform(template_score)
 baseline_display = plotting.plot_stat_map(
-    average_score, display_mode="z", vmax=1, cut_coords=[-15, -5]
+    average_score_img, display_mode="z", vmax=1, cut_coords=[-15, -5]
 )
 baseline_display.title("Left-out subject correlation with group average")
 display = plotting.plot_stat_map(
-    template_score, display_mode="z", cut_coords=[-15, -5], vmax=1
+    template_score_img, display_mode="z", cut_coords=[-15, -5], vmax=1
 )
 display.title("Aligned subject correlation with Procrustes template")
 

@@ -134,7 +134,7 @@ First, we fetch and plot the complete atlas
     /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:61: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
       resampled_mask_visual = resample_to_img(
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fc2e7ce3230>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f7fa54ac410>
 
 
 
@@ -183,11 +183,11 @@ in the final data, we will take  advantage of these pseudo-duplicates to define 
     #
 
     source_subjects = [sub for sub in sub_ids if sub != "sub-04"]
-    source_train = [
+    source_train_imgs = [
         concat_imgs(df[(df.subject == sub) & (df.acquisition == "ap")].path.values)
         for sub in source_subjects
     ]
-    target_train = concat_imgs(
+    target_train_img = concat_imgs(
         df[(df.subject == "sub-04") & (df.acquisition == "ap")].path.values
     )
 
@@ -196,11 +196,11 @@ in the final data, we will take  advantage of these pseudo-duplicates to define 
     # * target test: PA acquisitions from the target subject (sub-04).
     #
 
-    source_test = [
+    source_test_imgs = [
         concat_imgs(df[(df.subject == sub) & (df.acquisition == "pa")].path.values)
         for sub in source_subjects
     ]
-    target_test = concat_imgs(
+    target_test_img = concat_imgs(
         df[(df.subject == "sub-04") & (df.acquisition == "pa")].path.values
     )
 
@@ -255,20 +255,28 @@ to extract the labels of associated to each voxel:
 :func:`!fmralign.embeddings.parcellation.get_labels`.
 We then organize the data in dictionaries of pairs of subjects names and data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 143-154
+.. GENERATED FROM PYTHON SOURCE LINES 143-162
 
 .. code-block:: Python
 
 
     from fmralign.embeddings.parcellation import get_labels
 
-    labels = get_labels(source_train, roi_masker, n_pieces)
+    labels = get_labels(source_train_imgs, roi_masker, n_pieces)
     dict_source_train = dict(
-        zip(source_subjects, [roi_masker.transform(img) for img in source_train])
+        zip(
+            source_subjects,
+            [roi_masker.transform(img) for img in source_train_imgs],
+        )
     )
     dict_source_test = dict(
-        zip(source_subjects, [roi_masker.transform(img) for img in source_test])
+        zip(
+            source_subjects,
+            [roi_masker.transform(img) for img in source_test_imgs],
+        )
     )
+    target_train = roi_masker.transform(target_train_img)
+    target_test = roi_masker.transform(target_test_img)
 
 
 
@@ -291,7 +299,7 @@ We then organize the data in dictionaries of pairs of subjects names and data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 155-169
+.. GENERATED FROM PYTHON SOURCE LINES 163-177
 
 Define the estimators, fit them and do a prediction
 ---------------------------------------------------
@@ -308,7 +316,7 @@ Then for each method we define the estimator, fit it, predict the new image and 
 its correlation with the real signal. We use the identity (euclidean averaging)
 as the baseline.
 
-.. GENERATED FROM PYTHON SOURCE LINES 169-202
+.. GENERATED FROM PYTHON SOURCE LINES 177-205
 
 .. code-block:: Python
 
@@ -329,21 +337,16 @@ as the baseline.
         # Compute a mapping between the template and the new subject
         # using `target_train` and make a prediction using the left-out-data
         target_pred = group_estimator.predict_subject(
-            dict_source_test, roi_masker.transform(target_train)
+            dict_source_test, target_train
         )
 
         # Derive correlation between prediction, test
-        method_error = score_voxelwise(
-            target_test,
-            roi_masker.inverse_transform(target_pred),
-            masker=roi_masker,
-            loss="corr",
-        )
+        method_error = score_voxelwise(target_test, target_pred, loss="corr")
 
         # Store the results for plotting later
-        aligned_score = roi_masker.inverse_transform(method_error)
+        aligned_score_img = roi_masker.inverse_transform(method_error)
         titles.append(f"Correlation of prediction after {method} alignment")
-        aligned_scores.append(aligned_score)
+        aligned_scores.append(aligned_score_img)
 
 
 
@@ -353,7 +356,7 @@ as the baseline.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/fmralign/metrics.py:62: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+    /home/runner/work/fmralign/fmralign/fmralign/metrics.py:55: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
       pearsonr(X_gt[:, vox], X_pred[:, vox])[
     /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/ot/bregman/_sinkhorn.py:1331: UserWarning: Sinkhorn did not converge. You might want to increase the number of iterations `numItermax` or the regularization parameter `reg`.
       warnings.warn(
@@ -361,12 +364,12 @@ as the baseline.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 203-205
+.. GENERATED FROM PYTHON SOURCE LINES 206-208
 
 Plot the results
 ----------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 205-222
+.. GENERATED FROM PYTHON SOURCE LINES 208-225
 
 .. code-block:: Python
 
@@ -400,13 +403,13 @@ Plot the results
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:210: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:213: UserWarning: Non-finite values detected. These values will be replaced with zeros.
       plotting.plot_stat_map(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 223-229
+.. GENERATED FROM PYTHON SOURCE LINES 226-232
 
 Summary:
 --------
@@ -418,7 +421,7 @@ resulting in slightly higher correlation values.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 54.927 seconds)
+   **Total running time of the script:** (0 minutes 51.916 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_methods_benchmark.py:

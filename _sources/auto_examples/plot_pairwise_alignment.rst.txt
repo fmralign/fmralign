@@ -74,7 +74,7 @@ We define a nilearn masker that will be used to handle relevant data.
   'http://nilearn.github.io/manipulating_images/masker_objects.html'
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-47
+.. GENERATED FROM PYTHON SOURCE LINES 39-45
 
 .. code-block:: Python
 
@@ -82,773 +82,16 @@ We define a nilearn masker that will be used to handle relevant data.
     from nilearn.image import concat_imgs
     from nilearn.maskers import MultiNiftiMasker
 
-    masker = MultiNiftiMasker(mask_img=mask)
-    mask
-    masker.fit()
+    masker = MultiNiftiMasker(mask_img=mask).fit()
 
 
 
 
 
 
-.. raw:: html
 
-    <div class="output_subarea output_html rendered_html output_result">
-    <style>#sk-container-id-1 {
-      /* Definition of color scheme common for light and dark mode */
-      --sklearn-color-text: #000;
-      --sklearn-color-text-muted: #666;
-      --sklearn-color-line: gray;
-      /* Definition of color scheme for unfitted estimators */
-      --sklearn-color-unfitted-level-0: #fff5e6;
-      --sklearn-color-unfitted-level-1: #f6e4d2;
-      --sklearn-color-unfitted-level-2: #ffe0b3;
-      --sklearn-color-unfitted-level-3: chocolate;
-      /* Definition of color scheme for fitted estimators */
-      --sklearn-color-fitted-level-0: #f0f8ff;
-      --sklearn-color-fitted-level-1: #d4ebff;
-      --sklearn-color-fitted-level-2: #b3dbfd;
-      --sklearn-color-fitted-level-3: cornflowerblue;
 
-      /* Specific color for light theme */
-      --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-      --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
-      --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-      --sklearn-color-icon: #696969;
-
-      @media (prefers-color-scheme: dark) {
-        /* Redefinition of color scheme for dark theme */
-        --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-        --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
-        --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-        --sklearn-color-icon: #878787;
-      }
-    }
-
-    #sk-container-id-1 {
-      color: var(--sklearn-color-text);
-    }
-
-    #sk-container-id-1 pre {
-      padding: 0;
-    }
-
-    #sk-container-id-1 input.sk-hidden--visually {
-      border: 0;
-      clip: rect(1px 1px 1px 1px);
-      clip: rect(1px, 1px, 1px, 1px);
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      padding: 0;
-      position: absolute;
-      width: 1px;
-    }
-
-    #sk-container-id-1 div.sk-dashed-wrapped {
-      border: 1px dashed var(--sklearn-color-line);
-      margin: 0 0.4em 0.5em 0.4em;
-      box-sizing: border-box;
-      padding-bottom: 0.4em;
-      background-color: var(--sklearn-color-background);
-    }
-
-    #sk-container-id-1 div.sk-container {
-      /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
-         but bootstrap.min.css set `[hidden] { display: none !important; }`
-         so we also need the `!important` here to be able to override the
-         default hidden behavior on the sphinx rendered scikit-learn.org.
-         See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
-      display: inline-block !important;
-      position: relative;
-    }
-
-    #sk-container-id-1 div.sk-text-repr-fallback {
-      display: none;
-    }
-
-    div.sk-parallel-item,
-    div.sk-serial,
-    div.sk-item {
-      /* draw centered vertical line to link estimators */
-      background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-      background-size: 2px 100%;
-      background-repeat: no-repeat;
-      background-position: center center;
-    }
-
-    /* Parallel-specific style estimator block */
-
-    #sk-container-id-1 div.sk-parallel-item::after {
-      content: "";
-      width: 100%;
-      border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-      flex-grow: 1;
-    }
-
-    #sk-container-id-1 div.sk-parallel {
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-      background-color: var(--sklearn-color-background);
-      position: relative;
-    }
-
-    #sk-container-id-1 div.sk-parallel-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    #sk-container-id-1 div.sk-parallel-item:first-child::after {
-      align-self: flex-end;
-      width: 50%;
-    }
-
-    #sk-container-id-1 div.sk-parallel-item:last-child::after {
-      align-self: flex-start;
-      width: 50%;
-    }
-
-    #sk-container-id-1 div.sk-parallel-item:only-child::after {
-      width: 0;
-    }
-
-    /* Serial-specific style estimator block */
-
-    #sk-container-id-1 div.sk-serial {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: var(--sklearn-color-background);
-      padding-right: 1em;
-      padding-left: 1em;
-    }
-
-
-    /* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
-    clickable and can be expanded/collapsed.
-    - Pipeline and ColumnTransformer use this feature and define the default style
-    - Estimators will overwrite some part of the style using the `sk-estimator` class
-    */
-
-    /* Pipeline and ColumnTransformer style (default) */
-
-    #sk-container-id-1 div.sk-toggleable {
-      /* Default theme specific background. It is overwritten whether we have a
-      specific estimator or a Pipeline/ColumnTransformer */
-      background-color: var(--sklearn-color-background);
-    }
-
-    /* Toggleable label */
-    #sk-container-id-1 label.sk-toggleable__label {
-      cursor: pointer;
-      display: flex;
-      width: 100%;
-      margin-bottom: 0;
-      padding: 0.5em;
-      box-sizing: border-box;
-      text-align: center;
-      align-items: start;
-      justify-content: space-between;
-      gap: 0.5em;
-    }
-
-    #sk-container-id-1 label.sk-toggleable__label .caption {
-      font-size: 0.6rem;
-      font-weight: lighter;
-      color: var(--sklearn-color-text-muted);
-    }
-
-    #sk-container-id-1 label.sk-toggleable__label-arrow:before {
-      /* Arrow on the left of the label */
-      content: "▸";
-      float: left;
-      margin-right: 0.25em;
-      color: var(--sklearn-color-icon);
-    }
-
-    #sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
-      color: var(--sklearn-color-text);
-    }
-
-    /* Toggleable content - dropdown */
-
-    #sk-container-id-1 div.sk-toggleable__content {
-      display: none;
-      text-align: left;
-      /* unfitted */
-      background-color: var(--sklearn-color-unfitted-level-0);
-    }
-
-    #sk-container-id-1 div.sk-toggleable__content.fitted {
-      /* fitted */
-      background-color: var(--sklearn-color-fitted-level-0);
-    }
-
-    #sk-container-id-1 div.sk-toggleable__content pre {
-      margin: 0.2em;
-      border-radius: 0.25em;
-      color: var(--sklearn-color-text);
-      /* unfitted */
-      background-color: var(--sklearn-color-unfitted-level-0);
-    }
-
-    #sk-container-id-1 div.sk-toggleable__content.fitted pre {
-      /* unfitted */
-      background-color: var(--sklearn-color-fitted-level-0);
-    }
-
-    #sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-      /* Expand drop-down */
-      display: block;
-      width: 100%;
-      overflow: visible;
-    }
-
-    #sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-      content: "▾";
-    }
-
-    /* Pipeline/ColumnTransformer-specific style */
-
-    #sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-      color: var(--sklearn-color-text);
-      background-color: var(--sklearn-color-unfitted-level-2);
-    }
-
-    #sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-      background-color: var(--sklearn-color-fitted-level-2);
-    }
-
-    /* Estimator-specific style */
-
-    /* Colorize estimator box */
-    #sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-      /* unfitted */
-      background-color: var(--sklearn-color-unfitted-level-2);
-    }
-
-    #sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-      /* fitted */
-      background-color: var(--sklearn-color-fitted-level-2);
-    }
-
-    #sk-container-id-1 div.sk-label label.sk-toggleable__label,
-    #sk-container-id-1 div.sk-label label {
-      /* The background is the default theme color */
-      color: var(--sklearn-color-text-on-default-background);
-    }
-
-    /* On hover, darken the color of the background */
-    #sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
-      color: var(--sklearn-color-text);
-      background-color: var(--sklearn-color-unfitted-level-2);
-    }
-
-    /* Label box, darken color on hover, fitted */
-    #sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-      color: var(--sklearn-color-text);
-      background-color: var(--sklearn-color-fitted-level-2);
-    }
-
-    /* Estimator label */
-
-    #sk-container-id-1 div.sk-label label {
-      font-family: monospace;
-      font-weight: bold;
-      display: inline-block;
-      line-height: 1.2em;
-    }
-
-    #sk-container-id-1 div.sk-label-container {
-      text-align: center;
-    }
-
-    /* Estimator-specific */
-    #sk-container-id-1 div.sk-estimator {
-      font-family: monospace;
-      border: 1px dotted var(--sklearn-color-border-box);
-      border-radius: 0.25em;
-      box-sizing: border-box;
-      margin-bottom: 0.5em;
-      /* unfitted */
-      background-color: var(--sklearn-color-unfitted-level-0);
-    }
-
-    #sk-container-id-1 div.sk-estimator.fitted {
-      /* fitted */
-      background-color: var(--sklearn-color-fitted-level-0);
-    }
-
-    /* on hover */
-    #sk-container-id-1 div.sk-estimator:hover {
-      /* unfitted */
-      background-color: var(--sklearn-color-unfitted-level-2);
-    }
-
-    #sk-container-id-1 div.sk-estimator.fitted:hover {
-      /* fitted */
-      background-color: var(--sklearn-color-fitted-level-2);
-    }
-
-    /* Specification for estimator info (e.g. "i" and "?") */
-
-    /* Common style for "i" and "?" */
-
-    .sk-estimator-doc-link,
-    a:link.sk-estimator-doc-link,
-    a:visited.sk-estimator-doc-link {
-      float: right;
-      font-size: smaller;
-      line-height: 1em;
-      font-family: monospace;
-      background-color: var(--sklearn-color-background);
-      border-radius: 1em;
-      height: 1em;
-      width: 1em;
-      text-decoration: none !important;
-      margin-left: 0.5em;
-      text-align: center;
-      /* unfitted */
-      border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-      color: var(--sklearn-color-unfitted-level-1);
-    }
-
-    .sk-estimator-doc-link.fitted,
-    a:link.sk-estimator-doc-link.fitted,
-    a:visited.sk-estimator-doc-link.fitted {
-      /* fitted */
-      border: var(--sklearn-color-fitted-level-1) 1pt solid;
-      color: var(--sklearn-color-fitted-level-1);
-    }
-
-    /* On hover */
-    div.sk-estimator:hover .sk-estimator-doc-link:hover,
-    .sk-estimator-doc-link:hover,
-    div.sk-label-container:hover .sk-estimator-doc-link:hover,
-    .sk-estimator-doc-link:hover {
-      /* unfitted */
-      background-color: var(--sklearn-color-unfitted-level-3);
-      color: var(--sklearn-color-background);
-      text-decoration: none;
-    }
-
-    div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-    .sk-estimator-doc-link.fitted:hover,
-    div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-    .sk-estimator-doc-link.fitted:hover {
-      /* fitted */
-      background-color: var(--sklearn-color-fitted-level-3);
-      color: var(--sklearn-color-background);
-      text-decoration: none;
-    }
-
-    /* Span, style for the box shown on hovering the info icon */
-    .sk-estimator-doc-link span {
-      display: none;
-      z-index: 9999;
-      position: relative;
-      font-weight: normal;
-      right: .2ex;
-      padding: .5ex;
-      margin: .5ex;
-      width: min-content;
-      min-width: 20ex;
-      max-width: 50ex;
-      color: var(--sklearn-color-text);
-      box-shadow: 2pt 2pt 4pt #999;
-      /* unfitted */
-      background: var(--sklearn-color-unfitted-level-0);
-      border: .5pt solid var(--sklearn-color-unfitted-level-3);
-    }
-
-    .sk-estimator-doc-link.fitted span {
-      /* fitted */
-      background: var(--sklearn-color-fitted-level-0);
-      border: var(--sklearn-color-fitted-level-3);
-    }
-
-    .sk-estimator-doc-link:hover span {
-      display: block;
-    }
-
-    /* "?"-specific style due to the `<a>` HTML tag */
-
-    #sk-container-id-1 a.estimator_doc_link {
-      float: right;
-      font-size: 1rem;
-      line-height: 1em;
-      font-family: monospace;
-      background-color: var(--sklearn-color-background);
-      border-radius: 1rem;
-      height: 1rem;
-      width: 1rem;
-      text-decoration: none;
-      /* unfitted */
-      color: var(--sklearn-color-unfitted-level-1);
-      border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-    }
-
-    #sk-container-id-1 a.estimator_doc_link.fitted {
-      /* fitted */
-      border: var(--sklearn-color-fitted-level-1) 1pt solid;
-      color: var(--sklearn-color-fitted-level-1);
-    }
-
-    /* On hover */
-    #sk-container-id-1 a.estimator_doc_link:hover {
-      /* unfitted */
-      background-color: var(--sklearn-color-unfitted-level-3);
-      color: var(--sklearn-color-background);
-      text-decoration: none;
-    }
-
-    #sk-container-id-1 a.estimator_doc_link.fitted:hover {
-      /* fitted */
-      background-color: var(--sklearn-color-fitted-level-3);
-    }
-
-    .estimator-table summary {
-        padding: .5rem;
-        font-family: monospace;
-        cursor: pointer;
-    }
-
-    .estimator-table details[open] {
-        padding-left: 0.1rem;
-        padding-right: 0.1rem;
-        padding-bottom: 0.3rem;
-    }
-
-    .estimator-table .parameters-table {
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    .estimator-table .parameters-table tr:nth-child(odd) {
-        background-color: #fff;
-    }
-
-    .estimator-table .parameters-table tr:nth-child(even) {
-        background-color: #f6f6f6;
-    }
-
-    .estimator-table .parameters-table tr:hover {
-        background-color: #e0e0e0;
-    }
-
-    .estimator-table table td {
-        border: 1px solid rgba(106, 105, 104, 0.232);
-    }
-
-    .user-set td {
-        color:rgb(255, 94, 0);
-        text-align: left;
-    }
-
-    .user-set td.value pre {
-        color:rgb(255, 94, 0) !important;
-        background-color: transparent !important;
-    }
-
-    .default td {
-        color: black;
-        text-align: left;
-    }
-
-    .user-set td i,
-    .default td i {
-        color: black;
-    }
-
-    .copy-paste-icon {
-        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
-        background-repeat: no-repeat;
-        background-size: 14px 14px;
-        background-position: 0;
-        display: inline-block;
-        width: 14px;
-        height: 14px;
-        cursor: pointer;
-    }
-    </style><body><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>MultiNiftiMasker(mask_img=&#x27;/home/runner/nilearn_data/ibc/gm_mask_3mm.nii.gz&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>MultiNiftiMasker</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
-            <div class="estimator-table">
-                <details>
-                    <summary>Parameters</summary>
-                    <table class="parameters-table">
-                      <tbody>
-                    
-            <tr class="user-set">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('mask_img',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">mask_img&nbsp;</td>
-                <td class="value">&#x27;/home/runner/nilearn_data/ibc/gm_mask_3mm.nii.gz&#x27;</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('runs',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">runs&nbsp;</td>
-                <td class="value">None</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('smoothing_fwhm',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">smoothing_fwhm&nbsp;</td>
-                <td class="value">None</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('standardize',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">standardize&nbsp;</td>
-                <td class="value">False</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('standardize_confounds',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">standardize_confounds&nbsp;</td>
-                <td class="value">True</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('detrend',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">detrend&nbsp;</td>
-                <td class="value">False</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('high_variance_confounds',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">high_variance_confounds&nbsp;</td>
-                <td class="value">False</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('low_pass',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">low_pass&nbsp;</td>
-                <td class="value">None</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('high_pass',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">high_pass&nbsp;</td>
-                <td class="value">None</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('t_r',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">t_r&nbsp;</td>
-                <td class="value">None</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('target_affine',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">target_affine&nbsp;</td>
-                <td class="value">None</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('target_shape',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">target_shape&nbsp;</td>
-                <td class="value">None</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('mask_strategy',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">mask_strategy&nbsp;</td>
-                <td class="value">&#x27;background&#x27;</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('mask_args',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">mask_args&nbsp;</td>
-                <td class="value">None</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('dtype',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">dtype&nbsp;</td>
-                <td class="value">None</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('memory',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">memory&nbsp;</td>
-                <td class="value">None</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('memory_level',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">memory_level&nbsp;</td>
-                <td class="value">0</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('n_jobs',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">n_jobs&nbsp;</td>
-                <td class="value">1</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('verbose',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">verbose&nbsp;</td>
-                <td class="value">0</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('reports',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">reports&nbsp;</td>
-                <td class="value">True</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('cmap',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">cmap&nbsp;</td>
-                <td class="value">&#x27;gray&#x27;</td>
-            </tr>
-    
-
-            <tr class="default">
-                <td><i class="copy-paste-icon"
-                     onclick="copyToClipboard('clean_args',
-                              this.parentElement.nextElementSibling)"
-                ></i></td>
-                <td class="param">clean_args&nbsp;</td>
-                <td class="value">None</td>
-            </tr>
-    
-                      </tbody>
-                    </table>
-                </details>
-            </div>
-        </div></div></div></div></div><script>function copyToClipboard(text, element) {
-        // Get the parameter prefix from the closest toggleable content
-        const toggleableContent = element.closest('.sk-toggleable__content');
-        const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-        const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
-
-        const originalStyle = element.style;
-        const computedStyle = window.getComputedStyle(element);
-        const originalWidth = computedStyle.width;
-        const originalHTML = element.innerHTML.replace('Copied!', '');
-
-        navigator.clipboard.writeText(fullParamName)
-            .then(() => {
-                element.style.width = originalWidth;
-                element.style.color = 'green';
-                element.innerHTML = "Copied!";
-
-                setTimeout(() => {
-                    element.innerHTML = originalHTML;
-                    element.style = originalStyle;
-                }, 2000);
-            })
-            .catch(err => {
-                console.error('Failed to copy:', err);
-                element.style.color = 'red';
-                element.innerHTML = "Failed!";
-                setTimeout(() => {
-                    element.innerHTML = originalHTML;
-                    element.style = originalStyle;
-                }, 2000);
-            });
-        return false;
-    }
-
-    document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
-        const toggleableContent = element.closest('.sk-toggleable__content');
-        const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-        const paramName = element.parentElement.nextElementSibling.textContent.trim();
-        const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
-
-        element.setAttribute('title', fullParamName);
-    });
-    </script></body>
-    </div>
-    <br />
-    <br />
-
-.. GENERATED FROM PYTHON SOURCE LINES 48-58
+.. GENERATED FROM PYTHON SOURCE LINES 46-56
 
 Prepare the data
 ----------------
@@ -861,7 +104,7 @@ advantage of these "duplicates to create a training and a testing set that
 contains roughly the same signals but acquired totally independently.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-83
+.. GENERATED FROM PYTHON SOURCE LINES 56-81
 
 .. code-block:: Python
 
@@ -897,7 +140,7 @@ contains roughly the same signals but acquired totally independently.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-92
+.. GENERATED FROM PYTHON SOURCE LINES 82-90
 
 Generate a parcellation from the images
 ---------------------------------------
@@ -908,7 +151,7 @@ functional data. We use the :func:`!fmralign.embeddings.parcellation.get_labels`
 utility, which will generate a parcellation of the data in 150 pieces.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-102
+.. GENERATED FROM PYTHON SOURCE LINES 90-100
 
 .. code-block:: Python
 
@@ -943,7 +186,7 @@ utility, which will generate a parcellation of the data in 150 pieces.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 103-113
+.. GENERATED FROM PYTHON SOURCE LINES 101-111
 
 Define the estimator, fit it and predict
 ----------------------------------------
@@ -956,15 +199,22 @@ separately, and then to aggregate the local transformations into a global
 transformation that is applied to the whole brain.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-126
+.. GENERATED FROM PYTHON SOURCE LINES 111-131
 
 .. code-block:: Python
 
 
     from fmralign import PairwiseAlignment
 
-    source_train_data, target_train_data, source_test_data = masker.transform(
-        [source_train_imgs, target_train_imgs, source_test_imgs]
+    (source_train_data, target_train_data, source_test_data, target_test_data) = (
+        masker.transform(
+            [
+                source_train_imgs,
+                target_train_imgs,
+                source_test_imgs,
+                target_test_imgs,
+            ]
+        )
     )
 
     alignment_estimator = PairwiseAlignment(method="procrustes", labels=labels)
@@ -994,7 +244,7 @@ transformation that is applied to the whole brain.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 127-134
+.. GENERATED FROM PYTHON SOURCE LINES 132-139
 
 Score the baseline and the prediction
 -------------------------------------
@@ -1004,7 +254,7 @@ correlation between its profile of activation without and with alignment,
 to see if alignment was able to predict a signal more alike the ground truth.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 134-148
+.. GENERATED FROM PYTHON SOURCE LINES 139-153
 
 .. code-block:: Python
 
@@ -1015,11 +265,11 @@ to see if alignment was able to predict a signal more alike the ground truth.
     # original data from sub-01 made with the real PA contrasts of sub-02.
 
     target_pred_imgs = masker.inverse_transform(target_pred_data)
-    baseline_score = masker.inverse_transform(
-        score_voxelwise(target_test_imgs, source_test_imgs, masker, loss="corr")
+    baseline_score = score_voxelwise(
+        target_test_data, source_test_data, loss="corr"
     )
-    aligned_score = masker.inverse_transform(
-        score_voxelwise(target_test_imgs, target_pred_imgs, masker, loss="corr")
+    aligned_score = score_voxelwise(
+        target_test_data, target_pred_data, loss="corr"
     )
 
 
@@ -1029,26 +279,28 @@ to see if alignment was able to predict a signal more alike the ground truth.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 149-153
+.. GENERATED FROM PYTHON SOURCE LINES 154-158
 
 Plotting the measures
 ---------------------
 Finally we plot both scores
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 153-165
+.. GENERATED FROM PYTHON SOURCE LINES 158-172
 
 .. code-block:: Python
 
 
     from nilearn import plotting
 
+    baseline_score_img = masker.inverse_transform(baseline_score)
+    aligned_score_img = masker.inverse_transform(aligned_score)
     baseline_display = plotting.plot_stat_map(
-        baseline_score, display_mode="z", vmax=1, cut_coords=[-15, -5]
+        baseline_score_img, display_mode="z", vmax=1, cut_coords=[-15, -5]
     )
     baseline_display.title("Baseline correlation wt ground truth")
     display = plotting.plot_stat_map(
-        aligned_score, display_mode="z", cut_coords=[-15, -5], vmax=1
+        aligned_score_img, display_mode="z", cut_coords=[-15, -5], vmax=1
     )
     display.title("Prediction correlation wt ground truth")
 
@@ -1076,7 +328,7 @@ Finally we plot both scores
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 166-169
+.. GENERATED FROM PYTHON SOURCE LINES 173-176
 
 We can see on the plot that after alignment the prediction made for one
 subject data, informed by another subject are greatly improved.
@@ -1085,7 +337,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 42.352 seconds)
+   **Total running time of the script:** (0 minutes 43.808 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_alignment.py:
