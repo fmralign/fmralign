@@ -11,10 +11,10 @@ def save_alignment(alignment_estimator, output_path):
 
     Parameters
     ----------
-    alignment_estimator : :obj:`PairwiseAlignment` or :obj:`TemplateAlignment`
+    alignment_estimator : :obj:`PairwiseAlignment` or :obj:`GroupAlignment`
         The alignment estimator object to be saved.
         It should be an instance of either `PairwiseAlignment` or
-        `TemplateAlignment`.
+        `GroupAlignment`.
         The object should have been fitted before saving.
     output_path : str or Path
         Path to the file or directory where the model will be saved.
@@ -58,10 +58,10 @@ def load_alignment(input_path):
 
     Returns
     -------
-    alignment_estimator : :obj:`PairwiseAlignment` or :obj:`TemplateAlignment`
+    alignment_estimator : :obj:`PairwiseAlignment` or :obj:`GroupAlignment`
         The loaded alignment estimator object.
         It will be an instance of either `PairwiseAlignment` or
-        `TemplateAlignment`, depending on what was saved.
+        `GroupAlignment`, depending on what was saved.
 
     Raises
     ------

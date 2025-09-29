@@ -27,7 +27,7 @@ Citing Nilearn and scikit-learn
 -------------------------------
 
 This package can be lightweight and efficient because it relies on great toolboxes,
-notably :nilearn:`nilearn <>` and :sklearn:`scikit-learn <>`.
+notably `nilearn <https://nilearn.github.io/stable>`_ and :sklearn:`scikit-learn <>`.
 
 A huge amount of work goes into both of these packages.
 Researchers who invest their time in developing and maintaining the package

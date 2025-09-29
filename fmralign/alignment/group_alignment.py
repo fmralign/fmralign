@@ -200,7 +200,7 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
         Will raise AttributeError if called.
         """
         raise AttributeError(
-            "type object 'GroupwiseAlignment' has no 'fit_transform' attribute"
+            "type object 'GroupAlignment' has no 'fit_transform' attribute"
         )
 
     def predict_subject(self, X_test, Y_new):

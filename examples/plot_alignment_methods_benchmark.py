@@ -3,8 +3,7 @@
 """
 Alignment methods benchmark (template-based ROI case)
 =====================================================
-
-In this tutorial, we compare various methods of alignment on a template-based alignment
+In this tutorial, we compare various methods of alignment on a group-based alignment
 problem for Individual Brain Charting subjects. For each subject, we have a lot
 of functional information in the form of several task-based
 contrast per subject. We will just work here on a ROI.
@@ -75,8 +74,9 @@ plotting.plot_roi(
 # Define a masker
 # ---------------
 # We define a nilearn masker that will be used to handle relevant data.
-# For more information, visit :
-# 'http://nilearn.github.io/manipulating_images/masker_objects.html'
+# For more information, consult Nilearn's documentation on
+# :external+nilearn:ref:`masker objects <masker_objects>`.
+#
 
 from nilearn.maskers import NiftiMasker
 
@@ -89,7 +89,8 @@ roi_masker = NiftiMasker(mask_img=resampled_mask_visual).fit()
 # independent acquisitions, similar except for one acquisition parameter, the
 # encoding phase used that was either Antero-Posterior (AP) or
 # Postero-Anterior (PA). Although this induces small differences
-# in the final data, we will take  advantage of these pseudo-duplicates to define training and test samples.
+# in the final data, we will take  advantage of these pseudo-duplicates
+# to define training and test samples.
 
 # The training set:
 # * source_train: AP acquisitions from source subjects (sub-01, sub-02).
@@ -138,7 +139,7 @@ print(f"We will cluster them in {n_pieces} regions")
 # --------------------------
 # We will use intra-parcel alignments, fmralign provides a simple utility
 # to extract the labels of associated to each voxel:
-# :func:`!fmralign.embeddings.parcellation.get_labels`.
+# :func:`~fmralign.embeddings.parcellation.get_labels`.
 # We then organize the data in dictionaries of pairs of subjects names and data.
 
 from fmralign.embeddings.parcellation import get_labels
@@ -162,14 +163,16 @@ target_test = roi_masker.transform(target_test_img)
 ###############################################################################
 # Define the estimators, fit them and do a prediction
 # ---------------------------------------------------
-# On each region, we search for a transformation R that is either :
+# On each region, we search for a transformation :math:`R` that is either:
 #
-#   *  orthogonal, i.e. R orthogonal, scaling sc s.t. ||sc RX - Y ||^2 is minimized
-#   *  the optimal transport plan, which yields the minimal transport cost
-#      while respecting the mass conservation constraints. Calculated with
-#      entropic regularization.
-#   *  the shared response model (SRM), which computes a shared response space
-#      from different subjects, and then projects individual subject data into it.
+#   *  orthogonal, using :class:`~fmralign.methods.Procrustes`
+#      s.t. :math:`||sc RX - Y ||^2` is minimized, where :math:`sc` is a scaling factor
+#   *  the :class:`~fmralign.methods.OptimalTransport` plan,
+#      which yields the minimal transport cost while respecting the mass conservation constraints.
+#      Calculated with entropic regularization.
+#   *  the deterministic shared response model (:class:`~fmralign.methods.DetSRM`),
+#      which computes a shared response space from different subjects,
+#      and then projects individual subject data into it.
 #
 # Then for each method we define the estimator, fit it, predict the new image and plot
 # its correlation with the real signal. We use the identity (euclidean averaging)
@@ -225,7 +228,9 @@ plt.show()
 ###############################################################################
 # Summary:
 # --------
-# We compared TemplateAlignment methods (scaled orthogonal, optimal transport)
-# with SRM-based alignment on visual cortex activity.
-# You can see that SRM introduces more smoothness in the transformation,
-# resulting in slightly higher correlation values.
+# We compared :class:`~fmralign.alignment.group_alignment.GroupAlignment` methods
+# (i.e., :class:`~fmralign.methods.OptimalTransport`,
+# :class:`~fmralign.methods.Procrustes`)
+# with :class:`~fmralign.methods.DetSRM` alignment on visual cortex activity.
+# You can see that :class:`~fmralign.methods.DetSRM` introduces more
+# smoothness in the transformation, resulting in slightly higher correlation values.

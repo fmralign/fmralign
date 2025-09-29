@@ -56,7 +56,7 @@ extensions = [
     "numpydoc",
 ]
 
-
+imgmath_image_format = "svg"
 autosummary_generate = True
 
 autodoc_typehints = "none"
@@ -249,6 +249,7 @@ intersphinx_mapping = {
     "scipy": ("https://scipy.github.io/devdocs/", None),
     "matplotlib": ("https://matplotlib.org/stable/", None),
     "sklearn": ("https://scikit-learn.org/stable/", None),
+    "nilearn": ("https://nilearn.github.io/stable/", None),
     "nibabel": ("https://nipy.org/nibabel", None),
     "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
     "joblib": ("https://joblib.readthedocs.io/en/latest/", None),
@@ -257,7 +258,6 @@ intersphinx_mapping = {
 extlinks = {
     "sklearn": ("https://scikit-learn.org/stable/%s", None),
     "inria": ("https://team.inria.fr/%s", None),
-    "nilearn": ("https://nilearn.github.io/stable/%s", None),
     "nipy": ("https://nipy.org/%s", None),
 }
 

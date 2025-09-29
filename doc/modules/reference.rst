@@ -47,3 +47,45 @@ uses.
   GroupAlignment
 
 .. _alignment_methods_ref:
+
+:mod:`fmralign.methods`: Alignment Methods
+==========================================================
+
+.. automodule:: fmralign.methods
+ :no-members:
+ :no-inherited-members:
+
+**Classes**:
+
+.. currentmodule:: fmralign.methods
+
+.. autosummary::
+   :toctree: generated/
+   :template: class.rst
+
+   Identity
+   DetSRM
+   Procrustes
+   RidgeAlignment
+   OptimalTransport
+
+.. _embeddings_ref:
+
+:mod:`fmralign.embeddings`: Embedding Methods
+==========================================================
+
+.. automodule:: fmralign.embeddings
+ :no-members:
+ :no-inherited-members:
+
+**Functions**:
+
+.. currentmodule:: fmralign.embeddings
+
+.. autosummary::
+   :toctree: generated/
+   :template: function.rst
+
+   connectivity.get_connectivity_features
+   parcellation.get_labels
+   whole_brain.get_adjacency_from_mask

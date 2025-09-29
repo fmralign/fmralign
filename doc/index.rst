@@ -74,7 +74,7 @@ Featured examples
         Explore how to functionally align two subjects
 
   .. grid-item-card::
-    :link: auto_examples/plot_template_alignment.html
+    :link: auto_examples/plot_group_alignment.html
     :link-type: url
     :columns: 12 12 12 12
     :class-card: sd-shadow-sm
@@ -88,14 +88,14 @@ Featured examples
       .. grid-item::
         :columns: 12 4 4 4
 
-        .. image:: auto_examples/images/sphx_glr_plot_template_alignment_002.png
+        .. image:: auto_examples/images/sphx_glr_plot_group_alignment_002.png
 
       .. grid-item::
         :columns: 12 8 8 8
 
         .. div:: sd-font-weight-bold
 
-          Template alignment
+          Group alignment
 
         Align a group of subjects to create a functional template
 

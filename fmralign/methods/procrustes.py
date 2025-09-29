@@ -5,9 +5,9 @@ from fmralign.methods.base import BaseAlignment
 
 
 def scaled_procrustes(X, Y, scaling=False, primal=None):
-    """
+    r"""
     Compute a mixing matrix R and a scaling sc such that Frobenius norm
-    ||sc RX - Y||^2 is minimized and R is an orthogonal matrix
+    :math:`||sc RX - Y||^2` is minimized and R is an orthogonal matrix
 
     Parameters
     ----------
@@ -59,17 +59,17 @@ def scaled_procrustes(X, Y, scaling=False, primal=None):
 
 
 class Procrustes(BaseAlignment):
-    """
+    r"""
     Compute a orthogonal mixing matrix R and a scaling sc.
-    These are calculated such that Frobenius norm ||sc RX - Y||^2 is minimized.
+    These are calculated such that Frobenius norm :math:`||sc RX - Y||^2` is minimized.
 
     Parameters
-    -----------
+    ----------
     scaling : boolean, optional
         Determines whether a scaling parameter is applied to improve transform.
 
     Attributes
-    -----------
+    ----------
     R : ndarray (n_features, n_features)
         Optimal orthogonal transform
     scale: float,
@@ -81,11 +81,11 @@ class Procrustes(BaseAlignment):
         self.scale = 1
 
     def fit(self, X, Y):
-        """
-        Fit orthogonal R s.t. ||sc XR - Y||^2
+        r"""
+        Fit orthogonal R s.t. :math:`||sc XR - Y||^2`
 
         Parameters
-        -----------
+        ----------
         X: (n_samples, n_features) nd array
             source data
         Y: (n_samples, n_features) nd array

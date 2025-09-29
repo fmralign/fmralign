@@ -21,11 +21,11 @@ class DetSRM(BaseAlignment):
         self.n_components = n_components
 
     def fit(self, X, S):
-        """
-        Fit orthogonal W s.t. ||X - SW||^2 is minimized
+        r"""
+        Fit orthogonal W s.t. :math:`||X - SW||^2` is minimized
 
         Parameters
-        -----------
+        ----------
         X: (n_samples, n_features) ndarray
             Source data
         S: (n_samples, n_components) ndarray

@@ -4,9 +4,9 @@ from fmralign.methods.base import BaseAlignment
 
 
 class RidgeAlignment(BaseAlignment):
-    """
+    r"""
     Compute a scikit-estimator R using a mixing matrix M s.t Frobenius
-    norm || XM - Y ||^2 + alpha * ||M||^2 is minimized.
+    norm :math:`|| XM - Y ||^2 + alpha * ||M||^2` is minimized.
     cross-validation is used to find the optimal alpha.
 
     Parameters
@@ -33,20 +33,22 @@ class RidgeAlignment(BaseAlignment):
         self.cv = cv
 
     def fit(self, X, Y):
-        """
-        Fit R s.t. || XR - Y ||^2 + alpha ||R||^2 is minimized with cv
+        r"""
+        Fit R s.t. :math:`|| XR - Y ||^2 + alpha ||R||^2` is minimized with cv
 
         Parameters
-        -----------
+        ----------
         X: (n_samples, n_features) nd array
             source data
         Y: (n_samples, n_features) nd array
             target data
         """
         self.R = RidgeCV(
-            alphas=self.alphas
-            if self.alphas is not None
-            else [0.1, 1.0, 10.0, 100, 1000],
+            alphas=(
+                self.alphas
+                if self.alphas is not None
+                else [0.1, 1.0, 10.0, 100, 1000]
+            ),
             fit_intercept=True,
             scoring="r2",
             cv=self.cv,
