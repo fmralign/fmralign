@@ -20,8 +20,7 @@
 
 Alignment methods benchmark (template-based ROI case)
 =====================================================
-
-In this tutorial, we compare various methods of alignment on a template-based alignment
+In this tutorial, we compare various methods of alignment on a group-based alignment
 problem for Individual Brain Charting subjects. For each subject, we have a lot
 of functional information in the form of several task-based
 contrast per subject. We will just work here on a ROI.
@@ -32,7 +31,7 @@ data in a clean fashion.
 To run this example, you must launch IPython via ``ipython --matplotlib`` in
 a terminal, or use ``jupyter-notebook``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 20-36
+.. GENERATED FROM PYTHON SOURCE LINES 19-35
 
 Retrieve the data
 ------------------
@@ -51,7 +50,7 @@ to probe a range of cognitive functions, including:
 * Working memory: maintaining sequences of faces and objects
 * Object categorization: matching and comparing visual stimuli
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-47
+.. GENERATED FROM PYTHON SOURCE LINES 35-46
 
 .. code-block:: Python
 
@@ -79,13 +78,13 @@ to probe a range of cognitive functions, including:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-51
+.. GENERATED FROM PYTHON SOURCE LINES 47-50
 
 Extract a mask for the visual cortex from Yeo Atlas
 ---------------------------------------------------
 First, we fetch and plot the complete atlas
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-74
+.. GENERATED FROM PYTHON SOURCE LINES 50-73
 
 .. code-block:: Python
 
@@ -125,26 +124,27 @@ First, we fetch and plot the complete atlas
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:55: DeprecationWarning: From release >=0.13.0, instead of returning several atlas image accessible via different keys, this fetcher will return the atlas as a dictionary with a single atlas image, accessible through a 'maps' key. To suppress this warning, Please use the parameters 'n_networks' and 'thickness' to specify the exact atlas image you want.
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:54: DeprecationWarning: From release >=0.13.0, instead of returning several atlas image accessible via different keys, this fetcher will return the atlas as a dictionary with a single atlas image, accessible through a 'maps' key. To suppress this warning, Please use the parameters 'n_networks' and 'thickness' to specify the exact atlas image you want.
       atlas_yeo_2011 = datasets.fetch_atlas_yeo_2011()
     [fetch_atlas_yeo_2011] Dataset found in /home/runner/nilearn_data/yeo_2011
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:61: FutureWarning: 'force_resample' will be set to 'True' by default in Nilearn 0.13.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:60: FutureWarning: 'force_resample' will be set to 'True' by default in Nilearn 0.13.0.
     Use 'force_resample=True' to suppress this warning.
       resampled_mask_visual = resample_to_img(
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:61: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:60: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
       resampled_mask_visual = resample_to_img(
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fade8998230>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f5b7c17e390>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-80
+.. GENERATED FROM PYTHON SOURCE LINES 74-80
 
 Define a masker
 ---------------
 We define a nilearn masker that will be used to handle relevant data.
-For more information, visit :
-'http://nilearn.github.io/manipulating_images/masker_objects.html'
+For more information, consult Nilearn's documentation on
+:external+nilearn:ref:`masker objects <masker_objects>`.
+
 
 .. GENERATED FROM PYTHON SOURCE LINES 80-85
 
@@ -162,7 +162,7 @@ For more information, visit :
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-93
+.. GENERATED FROM PYTHON SOURCE LINES 86-94
 
 Prepare the data
 ----------------
@@ -170,9 +170,10 @@ For each subject, for each task and conditions, our dataset contains two
 independent acquisitions, similar except for one acquisition parameter, the
 encoding phase used that was either Antero-Posterior (AP) or
 Postero-Anterior (PA). Although this induces small differences
-in the final data, we will take  advantage of these pseudo-duplicates to define training and test samples.
+in the final data, we will take  advantage of these pseudo-duplicates
+to define training and test samples.
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-121
+.. GENERATED FROM PYTHON SOURCE LINES 94-122
 
 .. code-block:: Python
 
@@ -211,7 +212,7 @@ in the final data, we will take  advantage of these pseudo-duplicates to define 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 122-128
+.. GENERATED FROM PYTHON SOURCE LINES 123-129
 
 Choose the number of regions for local alignment
 ------------------------------------------------
@@ -220,7 +221,7 @@ regions so that each of them is approximately 100 voxels wide. Then our
 estimator will first make a functional clustering of voxels based on train
 data to divide them into meaningful regions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 128-136
+.. GENERATED FROM PYTHON SOURCE LINES 129-137
 
 .. code-block:: Python
 
@@ -246,16 +247,16 @@ data to divide them into meaningful regions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 137-143
+.. GENERATED FROM PYTHON SOURCE LINES 138-144
 
 Extract the parcels labels
 --------------------------
 We will use intra-parcel alignments, fmralign provides a simple utility
 to extract the labels of associated to each voxel:
-:func:`!fmralign.embeddings.parcellation.get_labels`.
+:func:`~fmralign.embeddings.parcellation.get_labels`.
 We then organize the data in dictionaries of pairs of subjects names and data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 143-162
+.. GENERATED FROM PYTHON SOURCE LINES 144-163
 
 .. code-block:: Python
 
@@ -299,24 +300,26 @@ We then organize the data in dictionaries of pairs of subjects names and data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 163-177
+.. GENERATED FROM PYTHON SOURCE LINES 164-180
 
 Define the estimators, fit them and do a prediction
 ---------------------------------------------------
-On each region, we search for a transformation R that is either :
+On each region, we search for a transformation :math:`R` that is either:
 
-  *  orthogonal, i.e. R orthogonal, scaling sc s.t. ||sc RX - Y ||^2 is minimized
-  *  the optimal transport plan, which yields the minimal transport cost
-     while respecting the mass conservation constraints. Calculated with
-     entropic regularization.
-  *  the shared response model (SRM), which computes a shared response space
-     from different subjects, and then projects individual subject data into it.
+  *  orthogonal, using :class:`~fmralign.methods.Procrustes`
+     s.t. :math:`||sc RX - Y ||^2` is minimized, where :math:`sc` is a scaling factor
+  *  the :class:`~fmralign.methods.OptimalTransport` plan,
+     which yields the minimal transport cost while respecting the mass conservation constraints.
+     Calculated with entropic regularization.
+  *  the deterministic shared response model (:class:`~fmralign.methods.DetSRM`),
+     which computes a shared response space from different subjects,
+     and then projects individual subject data into it.
 
 Then for each method we define the estimator, fit it, predict the new image and plot
 its correlation with the real signal. We use the identity (euclidean averaging)
 as the baseline.
 
-.. GENERATED FROM PYTHON SOURCE LINES 177-205
+.. GENERATED FROM PYTHON SOURCE LINES 180-208
 
 .. code-block:: Python
 
@@ -358,18 +361,18 @@ as the baseline.
 
     /home/runner/work/fmralign/fmralign/fmralign/metrics.py:55: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
       pearsonr(X_gt[:, vox], X_pred[:, vox])[
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/ot/bregman/_sinkhorn.py:1331: UserWarning: Sinkhorn did not converge. You might want to increase the number of iterations `numItermax` or the regularization parameter `reg`.
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/ot/bregman/_sinkhorn.py:1330: UserWarning: Sinkhorn did not converge. You might want to increase the number of iterations `numItermax` or the regularization parameter `reg`.
       warnings.warn(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 206-208
+.. GENERATED FROM PYTHON SOURCE LINES 209-211
 
 Plot the results
 ----------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 208-225
+.. GENERATED FROM PYTHON SOURCE LINES 211-228
 
 .. code-block:: Python
 
@@ -403,25 +406,27 @@ Plot the results
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:213: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:216: UserWarning: Non-finite values detected. These values will be replaced with zeros.
       plotting.plot_stat_map(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 226-232
+.. GENERATED FROM PYTHON SOURCE LINES 229-237
 
 Summary:
 --------
-We compared TemplateAlignment methods (scaled orthogonal, optimal transport)
-with SRM-based alignment on visual cortex activity.
-You can see that SRM introduces more smoothness in the transformation,
-resulting in slightly higher correlation values.
+We compared :class:`~fmralign.alignment.group_alignment.GroupAlignment` methods
+(i.e., :class:`~fmralign.methods.OptimalTransport`,
+:class:`~fmralign.methods.Procrustes`)
+with :class:`~fmralign.methods.DetSRM` alignment on visual cortex activity.
+You can see that :class:`~fmralign.methods.DetSRM` introduces more
+smoothness in the transformation, resulting in slightly higher correlation values.
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 51.616 seconds)
+   **Total running time of the script:** (0 minutes 50.655 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_methods_benchmark.py:

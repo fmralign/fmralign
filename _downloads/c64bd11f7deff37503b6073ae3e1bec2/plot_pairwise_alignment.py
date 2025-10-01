@@ -3,7 +3,6 @@
 """
 Pairwise functional alignment.
 ==============================
-This is a comment
 In this tutorial, we show how to better predict new contrasts for a target
 subject using source subject corresponding contrasts and data in common.
 
@@ -33,8 +32,8 @@ files, df, mask = fetch_ibc_subjects_contrasts(["sub-01", "sub-02"])
 # Define a masker
 # ---------------
 # We define a nilearn masker that will be used to handle relevant data.
-#   For more information, visit :
-#   'http://nilearn.github.io/manipulating_images/masker_objects.html'
+# For more information, consult Nilearn's documentation on
+# :external+nilearn:ref:`masker objects <masker_objects>`.
 #
 
 from nilearn.image import concat_imgs
@@ -84,7 +83,7 @@ target_test_imgs = concat_imgs(
 # We will compute the alignment in a piecewise manner, that is, we will align
 # the data in small parcels of the brain, which are groups of functionally
 # similar voxels. To do so, we need to generate a parcellation of the
-# functional data. We use the :func:`!fmralign.embeddings.parcellation.get_labels`
+# functional data. We use the :func:`~fmralign.embeddings.parcellation.get_labels`
 # utility, which will generate a parcellation of the data in 150 pieces.
 #
 
@@ -100,12 +99,14 @@ labels = get_labels(
 ###############################################################################
 # Define the estimator, fit it and predict
 # ----------------------------------------
-# To proceed with the alignment we use :class:`fmralign.alignment.pairwise_alignment.PairwiseAlignment`,
-# which implements various functional alignment methods between data from two
-# subjects. In this example, we use the Procrustes method. Since we want to
-# align the data in parcels, we pass the labels we just computed to the
-# estimator. The labels are used to compute the alignment in each parcel
-# separately, and then to aggregate the local transformations into a global
+# To proceed with the alignment we use
+# :class:`~fmralign.alignment.pairwise_alignment.PairwiseAlignment`,
+# which implements various functional alignment methods between data from two subjects.
+# In this example, we use the :class:`~fmralign.methods.Procrustes` method.
+# Since we want to align the data in parcels,
+# we pass the labels we just computed to the estimator.
+# The labels are used to compute the alignment in each parcel separately,
+# and then to aggregate the local transformations into a global
 # transformation that is applied to the whole brain.
 #
 
@@ -142,7 +143,6 @@ from fmralign.metrics import score_voxelwise
 # Now we use this scoring function to compare the correlation of aligned and
 # original data from sub-01 made with the real PA contrasts of sub-02.
 
-target_pred_imgs = masker.inverse_transform(target_pred_data)
 baseline_score = score_voxelwise(
     target_test_data, source_test_data, loss="corr"
 )

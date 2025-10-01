@@ -66,9 +66,8 @@ plot_roi(
 # Define a masker
 # -----------------
 # We define a nilearn masker that will be used to handle relevant data.
-# For more information, visit :
-# 'http://nilearn.github.io/manipulating_images/masker_objects.html'
-#
+# For more information, consult Nilearn's documentation on
+# :external+nilearn:ref:`masker objects <masker_objects>`.
 
 from nilearn.maskers import MultiNiftiMasker
 
@@ -110,10 +109,12 @@ target_test_imgs = concat_imgs(
 ###############################################################################
 # Define the estimator, fit it and predict
 # ----------------------------------------
-# To proceed with alignment we use the class PairwiseAlignment with the visual
-# mask we created before.
-# We use the scaled orthogonal method, common in the literature under the name
-# hyperalignment. As we work on a single ROI, we will search correspondence
+# To proceed with alignment, we use
+# :class:`~fmralign.alignment.pairwise_alignment.PairwiseAlignment`
+# with the visual mask we created before.
+# We use the :class:`~fmralign.methods.Procrustes` method,
+# proposed in :footcite:t:`Haxby2011` under the name "hyperalignment."
+# As we work on a single ROI, we will search correspondence
 # between the full data of each subject and so we set the number of cluster
 # n_pieces to 1. We learn alignment estimator on train data and use it to
 # predict target test data.

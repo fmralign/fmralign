@@ -4,9 +4,10 @@ Template-based prediction.
 ==========================
 
 In this tutorial, we show how to improve inter-subject similarity using a template
-computed across multiple source subjects. For this purpose, we create a template
-using Procrustes alignment (hyperalignment) to which we align the target subject,
-using shared information. We then compare the voxelwise similarity between the
+computed across multiple source subjects. For this purpose, we leverage GroupAlignment
+to create a template, using Procrustes alignment. Leveraging the learned template,
+we align the target subject using shared information.
+We then compare the voxelwise similarity between the
 target subject and the template to the similarity between the target subject and
 the anatomical Euclidean average of the source subjects.
 
@@ -39,8 +40,8 @@ imgs, df, mask_img = fetch_ibc_subjects_contrasts(subjects)
 # Define a masker
 # -----------------
 # We define a nilearn masker that will be used to handle relevant data.
-#   For more information, visit :
-#   'http://nilearn.github.io/manipulating_images/masker_objects.html'
+# For more information, consult Nilearn's documentation on
+# :external+nilearn:ref:`masker objects <masker_objects>`.
 #
 
 from nilearn.maskers import NiftiMasker
@@ -84,8 +85,8 @@ euclidean_avg = np.mean(masked_imgs, axis=0)
 ###############################################################################
 # Create a template from the training subjects.
 # ---------------------------------------------
-# We define an estimator using the class TemplateAlignment:
-#   * We align the whole brain through 'multiple' local alignments.
+# We define an estimator using :class:`~fmralign.alignment.group_alignment.GroupAlignment`:
+#   * We align the whole brain through multiple local alignments.
 #   * These alignments are calculated on a parcellation of the brain in 150 pieces,
 #     this parcellation creates group of functionally similar voxels.
 #   * The template is created iteratively, aligning all subjects data into a

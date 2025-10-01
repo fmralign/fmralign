@@ -20,7 +20,6 @@
 
 Pairwise functional alignment.
 ==============================
-This is a comment
 In this tutorial, we show how to better predict new contrasts for a target
 subject using source subject corresponding contrasts and data in common.
 
@@ -31,7 +30,7 @@ data in a clean fashion.
 To run this example, you must launch IPython via ``ipython
 --matplotlib`` in a terminal, or use ``jupyter-notebook``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 18-27
+.. GENERATED FROM PYTHON SOURCE LINES 17-26
 
 Retrieve the data
 -----------------
@@ -43,7 +42,7 @@ df is a dataframe with metadata about each of them.
 mask is an appropriate nifti image to select the data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 27-32
+.. GENERATED FROM PYTHON SOURCE LINES 26-31
 
 .. code-block:: Python
 
@@ -65,16 +64,16 @@ mask is an appropriate nifti image to select the data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-39
+.. GENERATED FROM PYTHON SOURCE LINES 32-38
 
 Define a masker
 ---------------
 We define a nilearn masker that will be used to handle relevant data.
-  For more information, visit :
-  'http://nilearn.github.io/manipulating_images/masker_objects.html'
+For more information, consult Nilearn's documentation on
+:external+nilearn:ref:`masker objects <masker_objects>`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-45
+.. GENERATED FROM PYTHON SOURCE LINES 38-44
 
 .. code-block:: Python
 
@@ -91,7 +90,7 @@ We define a nilearn masker that will be used to handle relevant data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-56
+.. GENERATED FROM PYTHON SOURCE LINES 45-55
 
 Prepare the data
 ----------------
@@ -104,7 +103,7 @@ advantage of these "duplicates to create a training and a testing set that
 contains roughly the same signals but acquired totally independently.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-81
+.. GENERATED FROM PYTHON SOURCE LINES 55-80
 
 .. code-block:: Python
 
@@ -140,18 +139,18 @@ contains roughly the same signals but acquired totally independently.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-90
+.. GENERATED FROM PYTHON SOURCE LINES 81-89
 
 Generate a parcellation from the images
 ---------------------------------------
 We will compute the alignment in a piecewise manner, that is, we will align
 the data in small parcels of the brain, which are groups of functionally
 similar voxels. To do so, we need to generate a parcellation of the
-functional data. We use the :func:`!fmralign.embeddings.parcellation.get_labels`
+functional data. We use the :func:`~fmralign.embeddings.parcellation.get_labels`
 utility, which will generate a parcellation of the data in 150 pieces.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 90-100
+.. GENERATED FROM PYTHON SOURCE LINES 89-99
 
 .. code-block:: Python
 
@@ -186,20 +185,22 @@ utility, which will generate a parcellation of the data in 150 pieces.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-111
+.. GENERATED FROM PYTHON SOURCE LINES 100-112
 
 Define the estimator, fit it and predict
 ----------------------------------------
-To proceed with the alignment we use :class:`fmralign.alignment.pairwise_alignment.PairwiseAlignment`,
-which implements various functional alignment methods between data from two
-subjects. In this example, we use the Procrustes method. Since we want to
-align the data in parcels, we pass the labels we just computed to the
-estimator. The labels are used to compute the alignment in each parcel
-separately, and then to aggregate the local transformations into a global
+To proceed with the alignment we use
+:class:`~fmralign.alignment.pairwise_alignment.PairwiseAlignment`,
+which implements various functional alignment methods between data from two subjects.
+In this example, we use the :class:`~fmralign.methods.Procrustes` method.
+Since we want to align the data in parcels,
+we pass the labels we just computed to the estimator.
+The labels are used to compute the alignment in each parcel separately,
+and then to aggregate the local transformations into a global
 transformation that is applied to the whole brain.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-131
+.. GENERATED FROM PYTHON SOURCE LINES 112-132
 
 .. code-block:: Python
 
@@ -244,7 +245,7 @@ transformation that is applied to the whole brain.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 132-139
+.. GENERATED FROM PYTHON SOURCE LINES 133-140
 
 Score the baseline and the prediction
 -------------------------------------
@@ -254,7 +255,7 @@ correlation between its profile of activation without and with alignment,
 to see if alignment was able to predict a signal more alike the ground truth.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 139-153
+.. GENERATED FROM PYTHON SOURCE LINES 140-153
 
 .. code-block:: Python
 
@@ -264,7 +265,6 @@ to see if alignment was able to predict a signal more alike the ground truth.
     # Now we use this scoring function to compare the correlation of aligned and
     # original data from sub-01 made with the real PA contrasts of sub-02.
 
-    target_pred_imgs = masker.inverse_transform(target_pred_data)
     baseline_score = score_voxelwise(
         target_test_data, source_test_data, loss="corr"
     )
@@ -337,7 +337,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 42.736 seconds)
+   **Total running time of the script:** (0 minutes 45.363 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_alignment.py:

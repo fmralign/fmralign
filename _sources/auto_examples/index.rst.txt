@@ -21,14 +21,14 @@ Examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we show how to improve inter-subject similarity using a template computed across multiple source subjects. For this purpose, we create a template using Procrustes alignment (hyperalignment) to which we align the target subject, using shared information. We then compare the voxelwise similarity between the target subject and the template to the similarity between the target subject and the anatomical Euclidean average of the source subjects.">
+    <div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we show how to improve inter-subject similarity using a template computed across multiple source subjects. For this purpose, we leverage GroupAlignment to create a template, using Procrustes alignment. Leveraging the learned template, we align the target subject using shared information. We then compare the voxelwise similarity between the target subject and the template to the similarity between the target subject and the anatomical Euclidean average of the source subjects.">
 
 .. only:: html
 
-  .. image:: /auto_examples/images/thumb/sphx_glr_plot_template_alignment_thumb.png
+  .. image:: /auto_examples/images/thumb/sphx_glr_plot_group_alignment_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_plot_template_alignment.py`
+  :ref:`sphx_glr_auto_examples_plot_group_alignment.py`
 
 .. raw:: html
 
@@ -72,7 +72,7 @@ Examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we compare various methods of alignment on a template-based alignment problem for Individual Brain Charting subjects. For each subject, we have a lot of functional information in the form of several task-based contrast per subject. We will just work here on a ROI.">
+    <div class="sphx-glr-thumbcontainer" tooltip="We mostly rely on python common packages and on nilearn to handle functional data in a clean fashion.">
 
 .. only:: html
 
@@ -106,7 +106,7 @@ Examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="As we mentioned several times, we search for a transformation, let&#x27;s call it R, between the source subject data X and the target data Y. X and Y are arrays of dimensions (n_voxels, n_samples) where each image is a sample. So we can see each signal as a distribution where each voxel as a point in a multidimensional functional space (each dimension is a sample).">
+    <div class="sphx-glr-thumbcontainer" tooltip="In aligning, we search for a transformation, let&#x27;s call it R, between the source subject data X and the target data Y. X and Y are arrays of dimensions (n_voxels, n_samples) where each image is a sample. So we can see each signal as a distribution where each voxel as a point in a multidimensional functional space (each dimension is a sample).">
 
 .. only:: html
 
@@ -131,7 +131,7 @@ Examples
 .. toctree::
    :hidden:
 
-   /auto_examples/plot_template_alignment
+   /auto_examples/plot_group_alignment
    /auto_examples/plot_pairwise_alignment
    /auto_examples/plot_pairwise_roi_alignment
    /auto_examples/plot_alignment_methods_benchmark

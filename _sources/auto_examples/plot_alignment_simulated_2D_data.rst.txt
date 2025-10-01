@@ -21,7 +21,7 @@
 Alignment on simulated 2D data.
 ===============================
 
-As we mentioned several times, we search for a transformation, let's call it
+In aligning, we search for a transformation, let's call it
 `R`, between the source subject data `X` and the target data `Y`. `X` and `Y`
 are arrays of dimensions `(n_voxels, n_samples)` where each image is a sample.
 So we can see each signal as a distribution where each voxel as a point
@@ -46,7 +46,7 @@ In this example we will do a lot of plotting so we first define :
   * _plot2D_samples_mat to plot 2D alignment matrix as matching between distributions.
   * _plot_distributions_and_alignment to plot both the distributions and the matchings
 
-Now you can skip this part.
+Note that you can skip this part.
 
 .. GENERATED FROM PYTHON SOURCE LINES 34-124
 
@@ -250,10 +250,10 @@ on our simple 2D example different kind of transformation we can look for.
 
 .. GENERATED FROM PYTHON SOURCE LINES 181-186
 
-Orthogonal alignment
+Procrustes alignment
 --------------------
-The first idea proposed in :footcite:t:`Haxby2001` was to compute an orthogonal mixing
-matrix `R` and a scaling `sc` such that Frobenius norm: math:
+The first idea proposed in :footcite:t:`Haxby2011` was to compute an orthogonal mixing
+matrix `R` and a scaling `sc` such that Frobenius norm:
 :math:`\| sc R X - Y \|^2` is minimized.
 
 .. GENERATED FROM PYTHON SOURCE LINES 186-200
@@ -298,19 +298,18 @@ matrix `R` and a scaling `sc` such that Frobenius norm: math:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 201-210
+.. GENERATED FROM PYTHON SOURCE LINES 201-209
 
 Optimal Transport alignment
 ---------------------------
-Finally this package comes with a new method that build on the Wasserstein
-distance which is well-suited for this problem. This is the framework of
+An alternative framework is of
 Optimal Transport that search to transport all signal from `X` to `Y`
 while minimizing the overall cost of this transport. `R` is here the
 optimal coupling between `X` and `Y` with entropic regularization.
 This way of finding a transform uses more geometrical information from the
 distributions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 210-218
+.. GENERATED FROM PYTHON SOURCE LINES 209-217
 
 .. code-block:: Python
 
@@ -346,7 +345,7 @@ distributions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 219-223
+.. GENERATED FROM PYTHON SOURCE LINES 218-222
 
 References
 ----------
@@ -356,7 +355,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.547 seconds)
+   **Total running time of the script:** (0 minutes 0.674 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_simulated_2D_data.py:

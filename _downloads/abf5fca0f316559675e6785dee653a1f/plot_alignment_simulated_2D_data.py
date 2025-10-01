@@ -4,7 +4,7 @@
 Alignment on simulated 2D data.
 ===============================
 
-As we mentioned several times, we search for a transformation, let's call it
+In aligning, we search for a transformation, let's call it
 `R`, between the source subject data `X` and the target data `Y`. `X` and `Y`
 are arrays of dimensions `(n_voxels, n_samples)` where each image is a sample.
 So we can see each signal as a distribution where each voxel as a point
@@ -30,7 +30,7 @@ in a terminal, or use ``jupyter-notebook``.
 #   * _plot2D_samples_mat to plot 2D alignment matrix as matching between distributions.
 #   * _plot_distributions_and_alignment to plot both the distributions and the matchings
 #
-# Now you can skip this part.
+# Note that you can skip this part.
 
 import math
 
@@ -178,10 +178,10 @@ from fmralign.methods import (
 )
 
 ###############################################################################
-# Orthogonal alignment
+# Procrustes alignment
 # --------------------
-# The first idea proposed in :footcite:t:`Haxby2001` was to compute an orthogonal mixing
-# matrix `R` and a scaling `sc` such that Frobenius norm: math:
+# The first idea proposed in :footcite:t:`Haxby2011` was to compute an orthogonal mixing
+# matrix `R` and a scaling `sc` such that Frobenius norm:
 # :math:`\| sc R X - Y \|^2` is minimized.
 
 scaled_orthogonal_alignment = Procrustes()
@@ -200,8 +200,7 @@ _plot_mixing_matrix(
 ###############################################################################
 # Optimal Transport alignment
 # ---------------------------
-# Finally this package comes with a new method that build on the Wasserstein
-# distance which is well-suited for this problem. This is the framework of
+# An alternative framework is of
 # Optimal Transport that search to transport all signal from `X` to `Y`
 # while minimizing the overall cost of this transport. `R` is here the
 # optimal coupling between `X` and `Y` with entropic regularization.
