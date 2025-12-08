@@ -11,7 +11,7 @@
 <meta property="og:image" content="https://nilearn.github.io/_static/nilearn-logo.png" />
 <meta property="og:image:alt" content="Nilearn" />
 <meta name="description" content="In this tutorial, we show how to better predict new contrasts for a target subject using source subject corresponding contrasts and data in common. We mostly rely on python common packages and on n..." />
-<link rel="search" title="Search" href="../search.html"><link rel="next" title="Pairwise functional alignment on a ROI." href="plot_pairwise_roi_alignment.html"><link rel="prev" title="Template-based prediction." href="plot_group_alignment.html">
+<link rel="search" title="Search" href="../search.html"><link rel="next" title="Pairwise functional alignment on a ROI." href="plot_pairwise_roi_alignment.html"><link rel="prev" title="Decoupling template generation and alignment" href="plot_template_bias.html">
 
     <link rel="shortcut icon" href="../_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>Pairwise functional alignment. - fmralign</title>
@@ -223,6 +223,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Examples</a><input aria-label="Toggle navigation of Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="plot_group_alignment.html">Template-based prediction.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_template_bias.html">Decoupling template generation and alignment</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
@@ -446,7 +447,7 @@ transformation that is applied to the whole brain.</p>
 <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_pred_data</span></a> <span class="o">=</span> <a href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment" title="fmralign.alignment.pairwise_alignment.PairwiseAlignment" class="sphx-glr-backref-module-fmralign-alignment-pairwise_alignment sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">alignment_estimator</span></a><span class="o">.</span><span class="n">transform</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_test_data</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:208: UserWarning:
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:212: UserWarning:
  Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
  parcel 8 : 1062 voxels
  parcel 9 : 1393 voxels
@@ -501,7 +502,7 @@ to see if alignment was able to predict a signal more alike the ground truth.</p
 </ul>
 <p>We can see on the plot that after alignment the prediction made for one
 subject data, informed by another subject are greatly improved.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 41.997 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 43.396 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-pairwise-alignment-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/0b52291c5d4529d22a4b2d1ae507b098/plot_pairwise_alignment.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_pairwise_alignment.ipynb</span></code></a></p>
@@ -531,14 +532,14 @@ subject data, informed by another subject are greatly improved.</p>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="plot_group_alignment.html">
+          <a class="prev-page" href="plot_template_bias.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Template-based prediction.</div>
+                <div class="title">Decoupling template generation and alignment</div>
                 
               </div>
             </a>

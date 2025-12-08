@@ -7,10 +7,10 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://nilearn.github.io/modules/generated/fmralign.embeddings.parcellation.get_labels.html" />
 <meta property="og:site_name" content="Nilearn" />
-<meta property="og:description" content="Examples using fmralign.embeddings.parcellation.get_labels: Template-based prediction. Pairwise functional alignment. Alignment methods benchmark (template-based ROI case) Pairwise surface alignment." />
+<meta property="og:description" content="Examples using fmralign.embeddings.parcellation.get_labels: Template-based prediction. Decoupling template generation and alignment Pairwise functional alignment. Alignment methods benchmark (templ..." />
 <meta property="og:image" content="https://nilearn.github.io/_images/sphx_glr_plot_group_alignment_thumb.png" />
 <meta property="og:image:alt" content="" />
-<meta name="description" content="Examples using fmralign.embeddings.parcellation.get_labels: Template-based prediction. Pairwise functional alignment. Alignment methods benchmark (template-based ROI case) Pairwise surface alignment." />
+<meta name="description" content="Examples using fmralign.embeddings.parcellation.get_labels: Template-based prediction. Decoupling template generation and alignment Pairwise functional alignment. Alignment methods benchmark (templ..." />
 <link rel="search" title="Search" href="../../search.html"><link rel="next" title="3.4.3. fmralign.embeddings.whole_brain.get_adjacency_from_mask" href="fmralign.embeddings.whole_brain.get_adjacency_from_mask.html"><link rel="prev" title="3.4.1. fmralign.embeddings.connectivity.get_connectivity_features" href="fmralign.embeddings.connectivity.get_connectivity_features.html">
 
     <link rel="shortcut icon" href="../../_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
@@ -223,6 +223,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../auto_examples/index.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_group_alignment.html">Template-based prediction.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_template_bias.html">Decoupling template generation and alignment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
@@ -362,16 +363,19 @@ To disable this option, this parameter should be None.</p>
 <section id="examples-using-fmralign-embeddings-parcellation-get-labels">
 <h2><span class="section-number">3.4.2.1. </span>Examples using <code class="docutils literal notranslate"><span class="pre">fmralign.embeddings.parcellation.get_labels</span></code><a class="headerlink" href="#examples-using-fmralign-embeddings-parcellation-get-labels" title="Link to this heading">¶</a></h2>
 <div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we show how to improve inter-subject similarity using a template computed across multiple source subjects. For this purpose, we leverage GroupAlignment to create a template, using Procrustes alignment. Leveraging the learned template, we align the target subject using shared information. We then compare the voxelwise similarity between the target subject and the template to the similarity between the target subject and the anatomical Euclidean average of the source subjects."><img alt="" src="../../_images/sphx_glr_plot_group_alignment_thumb.png" />
-<p><a class="reference internal" href="../../auto_examples/plot_group_alignment.html#sphx-glr-auto-examples-plot-group-alignment-py"><span class="std std-ref">Template-based prediction.</span></a></p>
+<p><a class="reference internal" href="../../auto_examples/plot_group_alignment.html"><span class="doc">Template-based prediction.</span></a></p>
   <div class="sphx-glr-thumbnail-title">Template-based prediction.</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="To run this example, you must launch IPython via ipython --matplotlib in a terminal, or use jupyter-notebook."><img alt="" src="../../_images/sphx_glr_plot_template_bias_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/plot_template_bias.html"><span class="doc">Decoupling template generation and alignment</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Decoupling template generation and alignment</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="We mostly rely on python common packages and on nilearn to handle functional data in a clean fashion."><img alt="" src="../../_images/sphx_glr_plot_pairwise_alignment_thumb.png" />
-<p><a class="reference internal" href="../../auto_examples/plot_pairwise_alignment.html#sphx-glr-auto-examples-plot-pairwise-alignment-py"><span class="std std-ref">Pairwise functional alignment.</span></a></p>
+<p><a class="reference internal" href="../../auto_examples/plot_pairwise_alignment.html"><span class="doc">Pairwise functional alignment.</span></a></p>
   <div class="sphx-glr-thumbnail-title">Pairwise functional alignment.</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="We mostly rely on python common packages and on nilearn to handle functional data in a clean fashion."><img alt="" src="../../_images/sphx_glr_plot_alignment_methods_benchmark_thumb.png" />
-<p><a class="reference internal" href="../../auto_examples/plot_alignment_methods_benchmark.html#sphx-glr-auto-examples-plot-alignment-methods-benchmark-py"><span class="std std-ref">Alignment methods benchmark (template-based ROI case)</span></a></p>
+<p><a class="reference internal" href="../../auto_examples/plot_alignment_methods_benchmark.html"><span class="doc">Alignment methods benchmark (template-based ROI case)</span></a></p>
   <div class="sphx-glr-thumbnail-title">Alignment methods benchmark (template-based ROI case)</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="In this tutorial, we show how to align surface data from two subjects using a pairwise alignment method. We project the data on the fsaverage5 surface and learn a piecewise mapping from one subject to the other using ward clustering."><img alt="" src="../../_images/sphx_glr_plot_surf_alignment_thumb.png" />
-<p><a class="reference internal" href="../../auto_examples/plot_surf_alignment.html#sphx-glr-auto-examples-plot-surf-alignment-py"><span class="std std-ref">Pairwise surface alignment.</span></a></p>
+<p><a class="reference internal" href="../../auto_examples/plot_surf_alignment.html"><span class="doc">Pairwise surface alignment.</span></a></p>
   <div class="sphx-glr-thumbnail-title">Pairwise surface alignment.</div>
 </div></div><div style='clear:both'></div></section>
 </section>

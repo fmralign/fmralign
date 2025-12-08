@@ -214,6 +214,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../auto_examples/index.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../auto_examples/plot_group_alignment.html">Template-based prediction.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../auto_examples/plot_template_bias.html">Decoupling template generation and alignment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../auto_examples/plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../auto_examples/plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../auto_examples/plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
@@ -385,7 +386,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;template&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;template&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit the group alignment model to the data.</span>
 
 <span class="sd">        Parameters</span>
@@ -395,17 +396,27 @@
 <span class="sd">            arrays of subject data. Each array should have the same number of</span>
 <span class="sd">            samples and features.</span>
 <span class="sd">        y : str or array-like, default=&quot;template&quot;</span>
-<span class="sd">            Target for alignment. If &quot;template&quot;, performs template alignment where</span>
-<span class="sd">            a template is computed from all subjects. If array-like, performs</span>
-<span class="sd">            pairwise alignment to the specified target data.</span>
+<span class="sd">            Alignment target, which determines the alignment strategy:</span>
+
+<span class="sd">            - &quot;template&quot;: Compute a single template from all subjects and align</span>
+<span class="sd">            each subject to this shared template.</span>
+
+<span class="sd">            - &quot;leave_one_subject_out&quot;: Perform Leave-One-Subject-Out alignment. For each subject,</span>
+<span class="sd">            compute a template from all other subjects, then align that subject</span>
+<span class="sd">            to its corresponding template. This process repeats for every subject.</span>
+
+<span class="sd">            - array-like: Align all subjects to the provided target data array.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Validate input data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subject_keys_</span><span class="p">,</span> <span class="n">X_</span> <span class="o">=</span> <span class="n">_check_input_arrays</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="n">y_</span> <span class="o">=</span> <span class="n">_check_target</span><span class="p">(</span><span class="n">X_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">alignment_strategy</span> <span class="o">=</span> <span class="n">_check_target</span><span class="p">(</span><span class="n">X_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">labels_</span> <span class="o">=</span> <span class="n">_check_labels</span><span class="p">(</span><span class="n">X_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">method_</span> <span class="o">=</span> <span class="n">_check_method</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">y_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Template alignment</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">alignment_strategy</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="n">alignment_strategy</span> <span class="o">==</span> <span class="s2">&quot;template&quot;</span>
+        <span class="p">):</span>
             <span class="n">fit_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">_fit_template</span><span class="p">(</span>
                 <span class="n">X_</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">method_</span><span class="p">,</span>
@@ -415,10 +426,35 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">scale_template</span><span class="p">,</span>
             <span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">alignment_strategy</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="n">alignment_strategy</span> <span class="o">==</span> <span class="s2">&quot;leave_one_subject_out&quot;</span>
+        <span class="p">):</span>
+            <span class="n">fit_</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">left_out_sub</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subject_keys_</span><span class="p">:</span>
+                <span class="n">_</span><span class="p">,</span> <span class="n">external_template</span> <span class="o">=</span> <span class="n">_fit_template</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">left_out_sub</span><span class="p">],</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">method_</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">scale_template</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">pairwise_fit_</span> <span class="o">=</span> <span class="n">_map_to_target</span><span class="p">(</span>
+                    <span class="p">[</span><span class="n">X</span><span class="p">[</span><span class="n">left_out_sub</span><span class="p">]],</span>
+                    <span class="n">external_template</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">method_</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+                <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">fit_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pairwise_fit_</span><span class="p">)</span>
+
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># Pairwise alignment</span>
             <span class="n">fit_</span> <span class="o">=</span> <span class="n">_map_to_target</span><span class="p">(</span>
                 <span class="n">X_</span><span class="p">,</span>
-                <span class="n">y_</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">),</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">method_</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span><span class="p">,</span>

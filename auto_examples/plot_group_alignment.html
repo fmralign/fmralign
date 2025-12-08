@@ -11,7 +11,7 @@
 <meta property="og:image" content="https://nilearn.github.io/_static/nilearn-logo.png" />
 <meta property="og:image:alt" content="Nilearn" />
 <meta name="description" content="In this tutorial, we show how to improve inter-subject similarity using a template computed across multiple source subjects. For this purpose, we leverage GroupAlignment to create a template, using..." />
-<link rel="search" title="Search" href="../search.html"><link rel="next" title="Pairwise functional alignment." href="plot_pairwise_alignment.html"><link rel="prev" title="Examples" href="index.html">
+<link rel="search" title="Search" href="../search.html"><link rel="next" title="Decoupling template generation and alignment" href="plot_template_bias.html"><link rel="prev" title="Examples" href="index.html">
 
     <link rel="shortcut icon" href="../_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>Template-based prediction. - fmralign</title>
@@ -223,6 +223,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Examples</a><input aria-label="Toggle navigation of Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Template-based prediction.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_template_bias.html">Decoupling template generation and alignment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_roi_alignment.html">Pairwise functional alignment on a ROI.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_alignment_methods_benchmark.html">Alignment methods benchmark (template-based ROI case)</a></li>
@@ -354,20 +355,22 @@ mask is a binary image used to extract grey matter regions.</p>
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/yvju3/download ...
-[fetch_files]  ...done. (2 seconds, 0 min)
+[fetch_files]  ...done. (3 seconds, 0 min)
 
 [fetch_files] Extracting data from
 /home/runner/nilearn_data/ibc/fe06df963fcb3fd454f63a33f0864e8d/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/8z23h/download ...
-[fetch_files]  ...done. (3 seconds, 0 min)
+[fetch_files] Downloaded 7438336 of 21185337 bytes (35.1%%,    1.8s remaining)
+[fetch_files]  ...done. (4 seconds, 0 min)
 
 [fetch_files] Extracting data from
 /home/runner/nilearn_data/ibc/100352739b7501f0ed04920933b4be36/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/e9kbm/download ...
+[fetch_files] Downloaded 7094272 of 21196887 bytes (33.5%%,    2.0s remaining)
 [fetch_files]  ...done. (3 seconds, 0 min)
 
 [fetch_files] Extracting data from
@@ -375,32 +378,32 @@ mask is a binary image used to extract grey matter regions.</p>
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/qn5b6/download ...
-[fetch_files] Downloaded 9764864 of 21197218 bytes (46.1%%,    1.2s remaining)
-[fetch_files]  ...done. (4 seconds, 0 min)
+[fetch_files] Downloaded 843776 of 21197218 bytes (4.0%%,   24.2s remaining)
+[fetch_files]  ...done. (5 seconds, 0 min)
 
 [fetch_files] Extracting data from
 /home/runner/nilearn_data/ibc/cd396fed594eb866baecd48b70ddf7e7/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/u74a3/download ...
-[fetch_files] Downloaded 14229504 of 21185350 bytes (67.2%%,    0.5s remaining)
-[fetch_files]  ...done. (4 seconds, 0 min)
+[fetch_files] Downloaded 7061504 of 21185350 bytes (33.3%%,    2.0s remaining)
+[fetch_files]  ...done. (5 seconds, 0 min)
 
 [fetch_files] Extracting data from
 /home/runner/nilearn_data/ibc/fc5556cc3678df4f4ab566414382180a/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/83bje/download ...
-[fetch_files]  ...done. (3 seconds, 0 min)
+[fetch_files] Downloaded 7274496 of 21188335 bytes (34.3%%,    1.9s remaining)
+[fetch_files]  ...done. (5 seconds, 0 min)
 
 [fetch_files] Extracting data from
 /home/runner/nilearn_data/ibc/1beaa1b5a1734a1afbf1c844e1f7a60e/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/43j69/download ...
-[fetch_files] Downloaded 9707520 of 21187400 bytes (45.8%%,    1.2s remaining)
-[fetch_files] Downloaded 18071552 of 21187400 bytes (85.3%%,    0.3s remaining)
-[fetch_files]  ...done. (5 seconds, 0 min)
+[fetch_files] Downloaded 7307264 of 21187400 bytes (34.5%%,    1.9s remaining)
+[fetch_files]  ...done. (3 seconds, 0 min)
 
 [fetch_files] Extracting data from
 /home/runner/nilearn_data/ibc/75e62c44985852e000c2b2865badf72d/download...
@@ -488,7 +491,7 @@ Parameter smoothing_fwhm :
   parcellation.fit(images_to_parcel)
 /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 35 &gt; 1. Completing it to avoid stopping the tree early.
   connectivity, n_connected_components = _fix_connectivity(
-/home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:208: UserWarning:
+/home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:212: UserWarning:
  Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
  parcel 11 : 1026 voxels
  parcel 37 : 1370 voxels
@@ -551,7 +554,7 @@ alignment was able to improve inter-subject similarity.</p>
 </ul>
 <p>We observe that creating a template and aligning a new subject to it yields
 better inter-subject similarity than regular euclidean averaging.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (4 minutes 40.934 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (4 minutes 43.331 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-group-alignment-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/a9d2259c803687ed0b0d9f6c413722f5/plot_group_alignment.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_group_alignment.ipynb</span></code></a></p>
@@ -572,12 +575,12 @@ better inter-subject similarity than regular euclidean averaging.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="plot_pairwise_alignment.html">
+          <a class="next-page" href="plot_template_bias.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Pairwise functional alignment.</div>
+                <div class="title">Decoupling template generation and alignment</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

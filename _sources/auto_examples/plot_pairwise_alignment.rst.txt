@@ -232,7 +232,7 @@ transformation that is applied to the whole brain.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:208: UserWarning: 
+    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:212: UserWarning: 
      Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
      parcel 8 : 1062 voxels
      parcel 9 : 1393 voxels
@@ -337,7 +337,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 41.997 seconds)
+   **Total running time of the script:** (0 minutes 43.396 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_alignment.py:

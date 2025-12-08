@@ -28,11 +28,28 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_group_alignment_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_plot_group_alignment.py`
+  :doc:`/auto_examples/plot_group_alignment`
 
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Template-based prediction.</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="To run this example, you must launch IPython via ipython --matplotlib in a terminal, or use jupyter-notebook.">
+
+.. only:: html
+
+  .. image:: /auto_examples/images/thumb/sphx_glr_plot_template_bias_thumb.png
+    :alt:
+
+  :doc:`/auto_examples/plot_template_bias`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Decoupling template generation and alignment</div>
     </div>
 
 
@@ -45,7 +62,7 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_pairwise_alignment_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_plot_pairwise_alignment.py`
+  :doc:`/auto_examples/plot_pairwise_alignment`
 
 .. raw:: html
 
@@ -62,7 +79,7 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_pairwise_roi_alignment_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_plot_pairwise_roi_alignment.py`
+  :doc:`/auto_examples/plot_pairwise_roi_alignment`
 
 .. raw:: html
 
@@ -79,7 +96,7 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_alignment_methods_benchmark_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_plot_alignment_methods_benchmark.py`
+  :doc:`/auto_examples/plot_alignment_methods_benchmark`
 
 .. raw:: html
 
@@ -96,7 +113,7 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_surf_alignment_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_plot_surf_alignment.py`
+  :doc:`/auto_examples/plot_surf_alignment`
 
 .. raw:: html
 
@@ -113,7 +130,7 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_alignment_simulated_2D_data_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_plot_alignment_simulated_2D_data.py`
+  :doc:`/auto_examples/plot_alignment_simulated_2D_data`
 
 .. raw:: html
 
@@ -132,6 +149,7 @@ Examples
    :hidden:
 
    /auto_examples/plot_group_alignment
+   /auto_examples/plot_template_bias
    /auto_examples/plot_pairwise_alignment
    /auto_examples/plot_pairwise_roi_alignment
    /auto_examples/plot_alignment_methods_benchmark
