@@ -9,7 +9,6 @@ from fmralign.methods import (
     OptimalTransport,
     Procrustes,
     RidgeAlignment,
-    SparseUOT,
 )
 from fmralign.methods.piecewise import PiecewiseAlignment
 
@@ -141,7 +140,6 @@ def _check_method(method):
     valid_methods = {
         "identity": Identity(),
         "ot": OptimalTransport(),
-        "sparse_uot": SparseUOT(),
         "procrustes": Procrustes(),
         "ridge": RidgeAlignment(),
         "srm": DetSRM(),
