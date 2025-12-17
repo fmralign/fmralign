@@ -1,6 +1,7 @@
 import numpy as np
 import ot
 import torch
+from pykeops.torch import LazyTensor
 
 from fmralign.methods.base import BaseAlignment
 
@@ -32,11 +33,15 @@ class OptimalTransport(BaseAlignment):
         reg=1e-2,
         max_iter=1000,
         tol=1e-7,
+        scaling=0.95,
+        verbose=False,
         **kwargs,
     ):
         self.reg = reg
         self.max_iter = max_iter
         self.tol = tol
+        self.scaling = scaling
+        self.verbose = verbose
         self.kwargs = kwargs
 
     def fit(self, X, Y):
@@ -59,6 +64,7 @@ class OptimalTransport(BaseAlignment):
                 tol=self.tol,
                 max_iter=self.max_iter,
                 lazy=False,
+                verbose=self.verbose,
                 **self.kwargs,
             )
 
@@ -71,59 +77,31 @@ class OptimalTransport(BaseAlignment):
                 X_torch,
                 Y_torch,
                 reg=self.reg,
-                tol=self.tol,
-                max_iter=self.max_iter,
                 lazy=True,
                 method="geomloss",
+                verbose=self.verbose,
+                scaling=self.scaling,
                 **self.kwargs,
             )
 
-            self.R = res.lazy_plan
+            f, g = res.potentials
+            blur = res.lazy_plan.blur
+            X_i = LazyTensor(X_torch[:, None, :])
+            Y_j = LazyTensor(Y_torch[None, :, :])
+            F = LazyTensor(f[:, None, None] * blur**2)
+            G = LazyTensor(g[None, :, None] * blur**2)
+            C = ((X_i - Y_j) ** 2).sum(-1) / 2
+            self.R = ((F + G - C) / (self.reg / 2)).exp() / (
+                X_torch.shape[0] * Y_torch.shape[0]
+            )
 
     def transform(self, X):
         """Transform X using optimal coupling computed during fit."""
         n_voxels = X.shape[1]
-        if isinstance(self.R, ot.utils.LazyTensor):
-            X_torch = torch.tensor(X, device=DEVICE)
-            X_aligned = self.lazy_matmul(X_torch, self.R).detach() * n_voxels
-            return X_aligned.cpu().numpy()
+        if isinstance(self.R, LazyTensor):
+            X_torch = torch.tensor(np.ascontiguousarray(X.T), device=DEVICE)
+            X_i = LazyTensor(X_torch[:, None, :])
+            X_aligned = (X_i * self.R).sum(axis=0) * n_voxels
+            return X_aligned.cpu().numpy().T
         else:
             return X @ self.R * n_voxels
-
-    @classmethod
-    def lazy_matmul(self, A, B, batch_size=10000):
-        """Internal function to perform lazy matrix multiplication.
-
-        Parameters
-        ----------
-        A : array_like
-            Left operand
-        B : LazyTensor
-            Right operand
-        batch_size : int, optional, by default 10000
-
-        Returns
-        -------
-        array_like
-            The matrix product of A and B.
-        """
-        nx = ot.utils.get_backend(A[0:1], B[0:1])
-        n1, n2 = A.shape
-        n3 = B.shape[1]
-
-        def getitem_AB(i, j, k, A, B):
-            if isinstance(i, int):
-                i = slice(i, i + 1)
-
-            A_block = A[i, j]
-            B_block = B[j, k]
-            return nx.einsum("ij,jk->ijk", A_block, B_block)
-
-        AB = ot.utils.LazyTensor((n1, n2, n3), getitem_AB, A=A, B=B)
-        C = nx.zeros((n1, n3), type_as=A[0])
-        for j in range(0, n3, batch_size):
-            C[:, j : j + batch_size] = nx.sum(
-                AB[:, :, j : j + batch_size], axis=1
-            )
-
-        return C
