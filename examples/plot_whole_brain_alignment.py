@@ -4,7 +4,7 @@ Whole Brain Alignment without Parcellation
 
 In this example, we show how parcellation can lead to undesirable boundary
 artifacts when computing alignments. We then introduce soft constraints based on
-the geometry of the cortical surface to alleviate these issues and show how
+the geometry of the cortical surface to alleviate these issues and showcase how
 the :class:`~fmralign.methods.optimal_transport.OptimalTransport` can be used
 in conjunction with the _geomloss backend (see :footcite:t:`Feydy2019`) to
 perform parcellation-free whole-brain alignment.
@@ -80,7 +80,6 @@ plotting.plot_surf_roi(
     view="lateral",
     title="Ward parcellation on the left hemisphere",
 )
-plotting.show()
 
 ###############################################################################
 # Fitting the alignment operator
@@ -108,9 +107,10 @@ alignment_estimator.fit(data_source_train, data_target_train)
 
 import numpy as np
 
+center_vertex_idx = 2150
+
 simulated = np.zeros((1, data_source_train.shape[1]))
 vertices = surf_source_train.mesh.parts["left"].coordinates
-center_vertex_idx = 2150
 distances = np.linalg.norm(vertices - vertices[center_vertex_idx], axis=1)
 simulated[0, : simulated.shape[1] // 2] = distances < 15
 
@@ -170,6 +170,7 @@ geom_embedding = get_laplacian_embedding(masker.mask_img_.mesh, k=100)
 geom_embedding = geom_embedding / np.max(np.abs(geom_embedding), axis=0)
 
 fig, ax = plt.subplots(1, 3, subplot_kw={"projection": "3d"})
+
 for i, idx in enumerate([2, 20, 100]):
     plotting.plot_surf_stat_map(
         fsaverage_meshes["pial"],
@@ -194,6 +195,7 @@ for i, idx in enumerate([2, 20, 100]):
 squared_cost = (
     (geom_embedding - geom_embedding[:, center_vertex_idx][:, None]) ** 2
 ).sum(axis=0)
+
 plotting.plot_surf_stat_map(
     fsaverage_meshes["pial"],
     masker.inverse_transform(squared_cost),
@@ -244,6 +246,7 @@ affected_voxels = masker.inverse_transform(
 # transported activation avoids any abrupt cut-offs.
 
 fig, ax = plt.subplots(1, 1, subplot_kw={"projection": "3d"})
+
 plotting.plot_surf_roi(
     fsaverage_meshes["inflated"],
     affected_voxels,
