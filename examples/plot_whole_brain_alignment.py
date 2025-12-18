@@ -6,7 +6,7 @@ In this example, we show how parcellation can lead to undesirable boundary
 artifacts when computing alignments. We then introduce soft constraints based on
 the geometry of the cortical surface to alleviate these issues and show how
 the :class:`~fmralign.methods.optimal_transport.OptimalTransport` can be used
-in conjunction with the _geomloss backend (see :footcite:t:`Jeganathan2024`) to
+in conjunction with the _geomloss backend (see :footcite:t:`Feydy2019`) to
 perform parcellation-free whole-brain alignment.
 
 
@@ -21,6 +21,7 @@ perform parcellation-free whole-brain alignment.
 # thoroughly described in the :ref:`surface alignment example <plot_surf_alignment>`.
 
 from nilearn.datasets import load_fsaverage
+from nilearn.image import concat_imgs
 from nilearn.maskers import SurfaceMasker
 from nilearn.surface import SurfaceImage
 
@@ -38,8 +39,6 @@ def project_to_surface(img):
     )
     return surface_image
 
-
-from nilearn.image import concat_imgs
 
 source_train = concat_imgs(
     df[(df.subject == "sub-01") & (df.acquisition == "ap")].path.values
