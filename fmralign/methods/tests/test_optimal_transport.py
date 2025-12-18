@@ -1,6 +1,4 @@
 import numpy as np
-import ot
-import torch
 from numpy.testing import assert_array_almost_equal
 
 from fmralign.methods.optimal_transport import OptimalTransport
@@ -38,17 +36,14 @@ def test_regularization_effect():
 
 def test_geomloss_backend():
     """Test the geomloss backend for large number of voxels."""
-    n_samples, n_features = 100, 1001
-    X = torch.randn(n_samples, n_features)
-    Y = torch.randn(n_samples, n_features)
-    X /= torch.norm(X)
-    Y /= torch.norm(Y)
+    n_samples, n_features = 5, 1001
+    X = np.random.randn(n_samples, n_features)
 
-    algo = OptimalTransport(reg=1e-2, max_iter=100, tol=1e-3)
-    algo.fit(X, Y)
+    algo = OptimalTransport(reg=1e-12)
+    algo.fit(X, X)
     X_transformed = algo.transform(X)
 
+    # Check that we recover the identity mapping
     assert algo.R.shape == (n_features, n_features)
-    assert isinstance(algo.R, ot.utils.LazyTensor)
     assert isinstance(X_transformed, np.ndarray)
-    assert X_transformed.shape == X.shape
+    assert_array_almost_equal(X_transformed, X)
