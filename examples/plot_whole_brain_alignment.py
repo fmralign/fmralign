@@ -213,8 +213,9 @@ plotting.plot_surf_stat_map(
 # to progressively reduce the entropic regularization during optimization.
 # In this example, we set the scaling to 0.5 to speed up convergence.
 # We concatenate the geometric embedding with the functional data
-# using a weighting parameter alpha to balance the influence of the data
-# and the geometry during alignment.
+# using a weighting parameter alpha to balance the relative influence of the data
+# versus the geometry during alignment.
+# We set alpha to 0.1, indicating a stronger weighting for the geometry compared to the activation data.
 
 from fmralign.methods.optimal_transport import OptimalTransport
 
