@@ -18,7 +18,7 @@ perform parcellation-free whole-brain alignment.
 # ---------------------------------
 # We load fMRI images from two subjects from the IBC dataset and project them
 # on the cortical surface using nilearn. The details of this step are more
-# thoroughly described in the :ref:`surface alignment example <plot_surf_alignment>`.
+# thoroughly described in the :doc:`surface alignment example <plot_surf_alignment>`.
 
 from nilearn.datasets import load_fsaverage
 from nilearn.image import concat_imgs
