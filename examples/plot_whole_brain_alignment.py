@@ -240,7 +240,7 @@ affected_voxels = masker.inverse_transform(
 # We use the fitted alignment operator to transport the simulated patch of
 # activation to the target subject. We then visualize the voxels that have been
 # affected by the transport operation and overlay the contours of the
-# original activation patch. Compared to the previous result we see that using
+# original activation patch. Compared to the previous result, we see that using
 # soft constraints based on the Laplace-Beltrami operators alleviates the
 # boundary effects introduced by parcellation. In particular, we see that the
 # transported activation avoids any abrupt cut-offs.
