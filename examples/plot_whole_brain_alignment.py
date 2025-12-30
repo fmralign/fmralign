@@ -6,7 +6,7 @@ In this example, we show how parcellation can lead to undesirable boundary
 artifacts when computing alignments. We then introduce soft constraints based on
 the geometry of the cortical surface to alleviate these issues and showcase how
 the :class:`~fmralign.methods.optimal_transport.OptimalTransport` can be used
-in conjunction with the _geomloss backend (see :footcite:t:`Feydy2019`) to
+in conjunction with the `geomloss`_ backend (see :footcite:t:`Feydy2019`) to
 perform parcellation-free whole-brain alignment.
 
 
