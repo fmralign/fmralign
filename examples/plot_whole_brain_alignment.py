@@ -208,7 +208,7 @@ plotting.plot_surf_stat_map(
 # We can now fit the alignment operator at the whole-brain level by
 # concatenating the geometric embedding with the functional data.
 # The :class:`~fmralign.methods.optimal_transport.OptimalTransport` method
-# will automcatically use the geomloss backend to batch compuatations whenever
+# will automatically use the geomloss backend to batch computations whenever
 # the number of voxels is over 1000. This backend uses a scaling parameter
 # to progressively reduce the entropic regularization during optimization.
 # In this example, we set the scaling to 0.5 to speed up convergence.
