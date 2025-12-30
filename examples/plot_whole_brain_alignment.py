@@ -260,3 +260,32 @@ plotting.plot_surf_contours(
     title="Transported voxels with soft constraints",
     axes=ax,
 )
+
+###############################################################################
+# Hyperparameter tuning via cross-validation
+# ------------------------------------------
+# We can use cross-validation to properly select the optimal weighting parameter
+# alpha between the functional data and the geometric embedding. We rely on
+# scikit-learn's :class:`GridSearchCV` to search over a grid of alpha values
+# and select the one that maximizes the R² score on held-out data. In order
+# to ease the process, the geometric embedding is directly passed to the
+# :class:`OptimalTransport` at initialization.
+
+from sklearn.model_selection import GridSearchCV
+
+estimator = PairwiseAlignment(
+    method=OptimalTransport(scaling=0.5, evecs=geom_embedding)
+)
+
+grid = GridSearchCV(
+    estimator=estimator,
+    param_grid={"method__alpha": [0.1, 0.5, 0.9]},
+    scoring="r2",
+    cv=5,
+    verbose=11,
+)
+grid.fit(data_source_train, data_target_train)
+
+# %%
+# Our initial choice of alpha was indeed optimal
+print(f"Best parameter : {grid.best_params_}")

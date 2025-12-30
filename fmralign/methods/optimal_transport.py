@@ -21,6 +21,20 @@ class OptimalTransport(BaseAlignment):
         Maximum number of iterations. Defaults to 1000.
     tol : float (optional)
         Tolerance for stopping criterion. Defaults to 1e-7.
+    verbose : bool (optional)
+        Allow verbose output. Defaults to False.
+    scaling : float (optional)
+        Scaling parameter for GeomLoss solver when n_features > 1000.
+        Defaults to 0.95.
+    alpha : float (optional)
+        Weighting parameter between functional data and geometric embedding `evecs`.
+        Defaults to 0.1.
+    evecs : (k, n_features) nd array or None (optional)
+        Geometric embedding of the data to be used as additional features
+        during alignment. If None, only functional data is used.
+        Defaults to None.
+    kwargs : dict
+        Additional arguments to be passed to the OT solver.
 
     Attributes
     ----------
@@ -34,6 +48,8 @@ class OptimalTransport(BaseAlignment):
         max_iter=1000,
         tol=1e-7,
         scaling=0.95,
+        alpha=0.1,
+        evecs=None,
         verbose=False,
         **kwargs,
     ):
@@ -41,6 +57,8 @@ class OptimalTransport(BaseAlignment):
         self.max_iter = max_iter
         self.tol = tol
         self.scaling = scaling
+        self.alpha = alpha
+        self.evecs = evecs
         self.verbose = verbose
         self.kwargs = kwargs
 
@@ -54,6 +72,20 @@ class OptimalTransport(BaseAlignment):
         Y: (n_samples, n_features) nd array
             target data
         """
+
+        if self.evecs is not None:
+            X = np.vstack(
+                [
+                    self.alpha * X,
+                    (1 - self.alpha) * self.evecs,
+                ]
+            )
+            Y = np.vstack(
+                [
+                    self.alpha * Y,
+                    (1 - self.alpha) * self.evecs,
+                ]
+            )
 
         n = len(X.T)
         if n < 1000:
