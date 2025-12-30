@@ -121,3 +121,9 @@ class PairwiseAlignment(BaseEstimator, TransformerMixin):
         raise AttributeError(
             "type object 'PairwiseAlignment' has no 'fit_transform' attribute"
         )
+
+    def predict(self, X):
+        """Alias for the transform method. Used for compatibility with
+        sklearn cross-validation utilities. This method should not be called
+        directly."""
+        return self.transform(X)
