@@ -1,9 +1,9 @@
 .. _alignment_ref:
 
-Alignment strategies for two or more subjects.
-
 :mod:`fmralign.alignment`: Alignment Strategies
 ===============================================
+
+Alignment strategies for two or more subjects.
 
 .. automodule:: fmralign.alignment
    :no-members:
