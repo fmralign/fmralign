@@ -38,7 +38,7 @@ class OptimalTransport(BaseAlignment):
 
     Attributes
     ----------
-    R : scipy.sparse.csr_matrix
+    R : (n_features, n_features) nd array or LazyTensor
         Transport plan computed during fitting.
     """
 
