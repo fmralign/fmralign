@@ -282,7 +282,6 @@ grid = GridSearchCV(
     param_grid={"method__alpha": [0.1, 0.5, 0.9]},
     scoring="r2",
     cv=5,
-    verbose=11,
 )
 grid.fit(data_source_train, data_target_train)
 
