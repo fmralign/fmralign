@@ -103,16 +103,17 @@ alignment_estimator.fit(data_source_train, data_target_train)
 # Simulating an activation patch
 # ------------------------------
 # We simulate some data on the source subject by generating a spherical
-# patch of activation on the temporal lobe.
+# patch of activation with a 12mm radius on the prefrontal cortex.
 
 import numpy as np
 
-center_vertex_idx = 2150
+center_vertex_idx = 1200
+radius = 12
 
 simulated = np.zeros((1, data_source_train.shape[1]))
 vertices = surf_source_train.mesh.parts["left"].coordinates
 distances = np.linalg.norm(vertices - vertices[center_vertex_idx], axis=1)
-simulated[0, : simulated.shape[1] // 2] = distances < 15
+simulated[0, : simulated.shape[1] // 2] = distances < radius
 
 plotting.plot_surf_roi(
     fsaverage_meshes["inflated"],
@@ -127,8 +128,11 @@ plotting.plot_surf_roi(
 # activation to the target subject. We then visualize the voxels that have been
 # affected by the transport operation and overlay the contours of the
 # ROIs. We observe that the parcellation
-# introduces some undesirable boundary effects. In particular, we observe that
-# some voxels are completely unaffected on the inferior temporal gyrus.
+# introduces some undesirable boundary effects. In particular, we observe that the
+# spatial continuity of the original signal is not preserved after transport,
+# leading to multiple clusters of activation. This is due to the nature of the
+# matching procedure that is performed independently within each parcel and which
+# relies solely on the functional data.
 
 import matplotlib.pyplot as plt
 
@@ -266,10 +270,11 @@ plotting.plot_surf_contours(
 # ------------------------------------------
 # We can use cross-validation to properly select the optimal weighting parameter
 # alpha between the functional data and the geometric embedding. We rely on
-# scikit-learn's :class:`GridSearchCV` to search over a grid of alpha values
-# and select the one that maximizes the R² score on held-out data. In order
-# to ease the process, the geometric embedding is directly passed to the
-# :class:`OptimalTransport` at initialization.
+# scikit-learn's `GridSearchCV <https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV>`_
+# to search over a grid of alpha values and select the one that maximizes the R² score
+# on held-out data. In order to ease the process, the geometric embedding is
+# directly passed to the :class:`~fmralign.methods.optimal_transport.OptimalTransport`
+# at initialization.
 
 from sklearn.model_selection import GridSearchCV
 
