@@ -14,4 +14,3 @@ Table of contents
 
    overview.rst
    functional_alignment/index.rst
-   modules/reference.rst
