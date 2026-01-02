@@ -12,11 +12,9 @@
 .. currentmodule:: {{ module }}
 
 .. autoclass:: {{ objname }}
-   :no-inherited-members:
-
-   {% block methods %}
-   .. automethod:: __init__
-   {% endblock %}
+   :inherited-members:
+   :special-members: __init__
+   :member-order: alphabetical
 
 .. include:: {{module}}.{{objname}}.examples
 
