@@ -26,7 +26,7 @@ class OptimalTransport(BaseAlignment):
     scaling : float (optional)
         Scaling parameter for GeomLoss solver when n_features > 1000.
         Defaults to 0.95.
-    alpha : float (optional)
+    alpha : float
         Weighting parameter between functional data and geometric embedding `evecs`.
         Defaults to 0.1.
     evecs : (k, n_features) nd array or None
