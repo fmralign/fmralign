@@ -23,7 +23,7 @@ class OptimalTransport(BaseAlignment):
         Tolerance for stopping criterion. Defaults to 1e-7.
     verbose : bool (optional)
         Allow verbose output. Defaults to False.
-    scaling : float (optional)
+    scaling : float
         Scaling parameter for GeomLoss solver when n_features > 1000.
         Defaults to 0.95.
     alpha : float
