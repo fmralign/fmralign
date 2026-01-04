@@ -29,7 +29,7 @@ class OptimalTransport(BaseAlignment):
     alpha : float (optional)
         Weighting parameter between functional data and geometric embedding `evecs`.
         Defaults to 0.1.
-    evecs : (k, n_features) nd array or None (optional)
+    evecs : (k, n_features) nd array or None
         Geometric embedding of the data to be used as additional features
         during alignment. If None, only functional data is used.
         Defaults to None.
