@@ -105,14 +105,12 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
         y : str or array-like, default="template"
             Alignment target, which determines the alignment strategy:
 
-                - "template": Compute a single template from all subjects and align
-                  each subject to this shared template.
-
-                - "leave_one_subject_out": Perform Leave-One-Subject-Out alignment. For each subject,
-                  compute a template from all other subjects, then align that subject
-                  to its corresponding template. This process repeats for every subject.
-
-                - array-like: Align all subjects to the provided target data array.
+            - "template": Compute a single template from all subjects and align
+              each subject to this shared template.
+            - "leave_one_subject_out": Perform Leave-One-Subject-Out alignment. For each subject,
+              compute a template from all other subjects, then align that subject
+              to its corresponding template. This process repeats for every subject.
+            - array-like: Align all subjects to the provided target data array.
         """
         # Validate input data
         self.subject_keys_, X_ = _check_input_arrays(X)

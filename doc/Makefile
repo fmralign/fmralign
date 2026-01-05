@@ -41,9 +41,7 @@ html:
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
 html-noplot:
-	# These two lines make the build a bit more lengthy, and the
-	# the embedding of images more robust
-	rm -rf $(BUILDDIR)/html/_images
+	# Build html without running the examples
 	$(SPHINXBUILD) -D plot_gallery=0 -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	touch $(BUILDDIR)/html/.nojekyll
 	@echo

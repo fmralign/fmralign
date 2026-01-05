@@ -25,9 +25,8 @@ Classes
   :toctree: generated/
   :template: class.rst
 
-   PairwiseAlignment
+  PairwiseAlignment
 
-.. _group_alignment_ref:
 
 :mod:`fmralign.alignment.group_alignment`: Group Alignment
 ----------------------------------------------------------
