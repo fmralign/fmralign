@@ -20,7 +20,7 @@ def get_connectivity_features(data, labels):
 
     # Standardize the data
     standardized_data = signal.standardize_signal(
-        data, detrend=True, standardize=True
+        data, detrend=True, standardize="zscore_sample"
     )
 
     # Average the signals within each parcel
@@ -32,7 +32,7 @@ def get_connectivity_features(data, labels):
         axis=1,
     )
     averaged_signals_standardized = signal.standardize_signal(
-        averaged_signals, detrend=True, standardize=True
+        averaged_signals, detrend=True, standardize="zscore_sample"
     )
 
     # Compute the correlation features (n_labels x n_voxels)
