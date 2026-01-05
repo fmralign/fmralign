@@ -2,8 +2,8 @@ import warnings
 
 import nibabel as nib
 import numpy as np
-from nilearn._utils.niimg_conversions import check_same_fov
 from nilearn.image import smooth_img
+from nilearn.image.image import check_same_fov
 from nilearn.masking import apply_mask_fmri
 from nilearn.regions import Parcellations
 from nilearn.surface import SurfaceImage
