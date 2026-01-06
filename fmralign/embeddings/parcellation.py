@@ -1,13 +1,52 @@
+import copy
 import warnings
 
 import nibabel as nib
 import numpy as np
 from nilearn.image import smooth_img
 from nilearn.image.image import check_same_fov
+from nilearn.maskers import (
+    MultiNiftiMasker,
+    MultiSurfaceMasker,
+    NiftiMasker,
+    SurfaceMasker,
+)
 from nilearn.masking import apply_mask_fmri
 from nilearn.regions import Parcellations
 from nilearn.surface import SurfaceImage
 from scipy.sparse import csc_matrix
+
+
+def _convert_to_multi_masker(masker):
+    """Convert a NiftiMasker to a MultiNiftiMasker or a SurfaceMasker to a
+    MultiSurfaceMasker.
+
+    Note: A deep copy of the masker is created to avoid modifying the original
+    masker. The n_jobs attribute is set to 1 to ensure compatibility with
+    multi-maskers.
+
+    Parameters
+    ----------
+    masker: NiftiMasker or SurfaceMasker
+        The masker to convert.
+
+    Returns
+    -------
+    multi_masker: MultiNiftiMasker or MultiSurfaceMasker
+        The converted masker.
+    """
+
+    multi_masker = copy.deepcopy(masker)
+    if isinstance(masker, NiftiMasker):
+        multi_masker.__class__ = MultiNiftiMasker
+        multi_masker.n_jobs = 1
+        return multi_masker
+    elif isinstance(masker, SurfaceMasker):
+        multi_masker.__class__ = MultiSurfaceMasker
+        multi_masker.n_jobs = 1
+        return multi_masker
+    else:
+        raise ValueError("Masker must be a NiftiMasker or SurfaceMasker.")
 
 
 def get_labels(
@@ -70,23 +109,29 @@ def get_labels(
             images_to_parcel = smooth_img(imgs, smoothing_fwhm)
         else:
             images_to_parcel = imgs
+
+        if isinstance(masker, (NiftiMasker, SurfaceMasker)):
+            warnings.warn(
+                (
+                    "Converting masker to multi-masker for compatibility"
+                    " with Nilearn Parcellations class. This conversion does"
+                    " not affect the original masker. "
+                    "See https://github.com/nilearn/nilearn/issues/5926"
+                    " for more details."
+                )
+            )
+            masker_ = _convert_to_multi_masker(masker)
+        else:
+            masker_ = masker
         parcellation = Parcellations(
             method=clustering,
             n_parcels=n_pieces,
-            mask=masker,
+            mask=masker_,
             scaling=False,
             n_iter=20,
             verbose=verbose,
         )
-        try:
-            parcellation.fit(images_to_parcel)
-        except ValueError as err:
-            errmsg = (
-                f"Clustering method {clustering} should be supported by "
-                "nilearn.regions.Parcellation or be supplied as a 3D Niimg."
-            )
-            err.args += (errmsg,)
-            raise err
+        parcellation.fit(images_to_parcel)
         labels = masker.transform(parcellation.labels_img_).astype(int)
 
     if verbose > 0:
