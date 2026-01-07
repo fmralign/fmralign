@@ -109,7 +109,7 @@ Extract a mask for the visual cortex from Yeo Atlas
 >>> from nilearn import datasets, plotting
 >>> from nilearn.image import resample_to_img, load_img, new_img_like
 >>> atlas_yeo_2011 = datasets.fetch_atlas_yeo_2011()
->>> atlas = load_img(atlas_yeo_2011.thick_7)
+>>> atlas = load_img(atlas_yeo_2011.maps)
 
 Select visual cortex, create a mask and resample it to the right resolution
 

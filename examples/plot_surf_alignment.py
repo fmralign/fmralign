@@ -33,7 +33,7 @@ files, df, _ = fetch_ibc_subjects_contrasts(["sub-01", "sub-04"])
 # surface template.
 
 from nilearn.datasets import load_fsaverage, load_fsaverage_data
-from nilearn.maskers import SurfaceMasker
+from nilearn.maskers import MultiSurfaceMasker
 from nilearn.surface import SurfaceImage
 
 fsaverage_meshes = load_fsaverage()
@@ -60,7 +60,7 @@ target_train = concat_imgs(
 surf_source_train = project_to_surface(source_train)
 surf_target_train = project_to_surface(target_train)
 
-masker = SurfaceMasker().fit([surf_source_train, surf_target_train])
+masker = MultiSurfaceMasker().fit([surf_source_train, surf_target_train])
 
 
 ###############################################################################
@@ -170,7 +170,6 @@ plotting_params = {
     "vmax": 3,
     "vmin": -3,
     "cmap": "coolwarm",
-    "darkness": None,
 }
 
 

@@ -1,3 +1,4 @@
+# %%
 # -*- coding: utf-8 -*-
 
 """
@@ -52,7 +53,7 @@ from nilearn import datasets, plotting
 from nilearn.image import concat_imgs, load_img, new_img_like, resample_to_img
 
 atlas_yeo_2011 = datasets.fetch_atlas_yeo_2011()
-atlas = load_img(atlas_yeo_2011.thick_7)
+atlas = load_img(atlas_yeo_2011.maps)
 
 # Select visual cortex, create a mask and resample it to the right resolution
 
