@@ -17,7 +17,7 @@ dependencies = [
     "joblib",
     "scipy",
     "nibabel",
-    "nilearn<=0.12.1",
+    "nilearn>=0.13.0",
     "POT",
     "fugw>=0.1.1",
     "torch"
