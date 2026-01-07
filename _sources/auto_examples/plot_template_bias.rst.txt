@@ -111,7 +111,9 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:82: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:114: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
+      warnings.warn(
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:134: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
     Parameter mask_strategy :
         Masker parameter background - overriding estimator parameter epi
     Parameter smoothing_fwhm :
@@ -1792,7 +1794,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 44.378 seconds)
+   **Total running time of the script:** (1 minutes 41.246 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_template_bias.py:

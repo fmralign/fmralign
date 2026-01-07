@@ -404,7 +404,7 @@ with metadata about each of them.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">nilearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">plotting</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">resample_to_img</span><span class="p">,</span> <span class="n">load_img</span><span class="p">,</span> <span class="n">new_img_like</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">atlas_yeo_2011</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_yeo_2011</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">atlas</span> <span class="o">=</span> <span class="n">load_img</span><span class="p">(</span><span class="n">atlas_yeo_2011</span><span class="o">.</span><span class="n">thick_7</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">atlas</span> <span class="o">=</span> <span class="n">load_img</span><span class="p">(</span><span class="n">atlas_yeo_2011</span><span class="o">.</span><span class="n">maps</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Select visual cortex, create a mask and resample it to the right resolution</p>

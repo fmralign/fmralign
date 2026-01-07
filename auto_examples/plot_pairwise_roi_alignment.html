@@ -352,9 +352,8 @@ mask is an appropriate nifti image to select the data.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.image</span><span class="w"> </span><span class="kn">import</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.image.concat_imgs.html#nilearn.image.concat_imgs" title="nilearn.image.concat_imgs" class="sphx-glr-backref-module-nilearn-image sphx-glr-backref-type-py-function"><span class="n">concat_imgs</span></a><span class="p">,</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.image.load_img.html#nilearn.image.load_img" title="nilearn.image.load_img" class="sphx-glr-backref-module-nilearn-image sphx-glr-backref-type-py-function"><span class="n">load_img</span></a><span class="p">,</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.image.new_img_like.html#nilearn.image.new_img_like" title="nilearn.image.new_img_like" class="sphx-glr-backref-module-nilearn-image sphx-glr-backref-type-py-function"><span class="n">new_img_like</span></a><span class="p">,</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.image.resample_to_img.html#nilearn.image.resample_to_img" title="nilearn.image.resample_to_img" class="sphx-glr-backref-module-nilearn-image sphx-glr-backref-type-py-function"><span class="n">resample_to_img</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.plotting</span><span class="w"> </span><span class="kn">import</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.plotting.plot_roi.html#nilearn.plotting.plot_roi" title="nilearn.plotting.plot_roi" class="sphx-glr-backref-module-nilearn-plotting sphx-glr-backref-type-py-function"><span class="n">plot_roi</span></a>
 
-<a href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.Bunch.html#sklearn.utils.Bunch" title="sklearn.utils.Bunch" class="sphx-glr-backref-module-sklearn-utils sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">atlas_yeo_2011</span></a> <span class="o">=</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_atlas_yeo_2011.html#nilearn.datasets.fetch_atlas_yeo_2011" title="nilearn.datasets.fetch_atlas_yeo_2011" class="sphx-glr-backref-module-nilearn-datasets sphx-glr-backref-type-py-function"><span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_yeo_2011</span></a><span class="p">()</span>
-<a href="https://docs.python.org/3.10/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">atlas_yeo</span></a> <span class="o">=</span> <a href="https://docs.python.org/3.10/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">atlas_yeo_2011</span><span class="o">.</span><span class="n">thick_7</span></a>
-<a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">atlas</span></a> <span class="o">=</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.image.load_img.html#nilearn.image.load_img" title="nilearn.image.load_img" class="sphx-glr-backref-module-nilearn-image sphx-glr-backref-type-py-function"><span class="n">load_img</span></a><span class="p">(</span><a href="https://docs.python.org/3.10/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">atlas_yeo</span></a><span class="p">)</span>
+<span class="n">atlas_yeo_2011</span> <span class="o">=</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.datasets.fetch_atlas_yeo_2011.html#nilearn.datasets.fetch_atlas_yeo_2011" title="nilearn.datasets.fetch_atlas_yeo_2011" class="sphx-glr-backref-module-nilearn-datasets sphx-glr-backref-type-py-function"><span class="n">datasets</span><span class="o">.</span><span class="n">fetch_atlas_yeo_2011</span></a><span class="p">()</span>
+<a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">atlas</span></a> <span class="o">=</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.image.load_img.html#nilearn.image.load_img" title="nilearn.image.load_img" class="sphx-glr-backref-module-nilearn-image sphx-glr-backref-type-py-function"><span class="n">load_img</span></a><span class="p">(</span><a href="https://docs.python.org/3.10/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">atlas_yeo_2011</span><span class="o">.</span><span class="n">maps</span></a><span class="p">)</span>
 
 <span class="c1"># Select visual cortex, create a mask and resample it to the right resolution</span>
 
@@ -373,25 +372,18 @@ mask is an appropriate nifti image to select the data.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<img src="../_images/sphx_glr_plot_pairwise_roi_alignment_001.png" srcset="../_images/sphx_glr_plot_pairwise_roi_alignment_001.png" alt="plot pairwise roi alignment" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:45: DeprecationWarning: From release &gt;=0.13.0, instead of returning several atlas image accessible via different keys, this fetcher will return the atlas as a dictionary with a single atlas image, accessible through a &#39;maps&#39; key. To suppress this warning, Please use the parameters &#39;n_networks&#39; and &#39;thickness&#39; to specify the exact atlas image you want.
-  atlas_yeo_2011 = datasets.fetch_atlas_yeo_2011()
-[fetch_atlas_yeo_2011] Dataset created in /home/runner/nilearn_data/yeo_2011
+<img src="../_images/sphx_glr_plot_pairwise_roi_alignment_001.png" srcset="../_images/sphx_glr_plot_pairwise_roi_alignment_001.png" alt="plot pairwise roi alignment" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[fetch_atlas_yeo_2011] Dataset created in /home/runner/nilearn_data/yeo_2011
 [fetch_atlas_yeo_2011] Downloading data from
 ftp://surfer.nmr.mgh.harvard.edu/pub/data/Yeo_JNeurophysiol11_MNI152.zip ...
-[fetch_atlas_yeo_2011]  ...done. (1 seconds, 0 min)
+[fetch_atlas_yeo_2011]  ...done. (2 seconds, 0 min)
 
 [fetch_atlas_yeo_2011] Extracting data from
 /home/runner/nilearn_data/yeo_2011/622858b56913b19ae0865d9fa8ad47cc/Yeo_JNeuroph
 ysiol11_MNI152.zip...
 [fetch_atlas_yeo_2011] .. done.
 
-/home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:52: FutureWarning: &#39;force_resample&#39; will be set to &#39;True&#39; by default in Nilearn 0.13.0.
-Use &#39;force_resample=True&#39; to suppress this warning.
-  resampled_mask_visual = resample_to_img(
-/home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:52: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
-  resampled_mask_visual = resample_to_img(
 
-&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f2b9017a150&gt;
+&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f2528184050&gt;
 </pre></div>
 </div>
 </section>
@@ -469,7 +461,10 @@ predict target test data.</p>
 <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_pred_data</span></a> <span class="o">=</span> <a href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment" title="fmralign.alignment.pairwise_alignment.PairwiseAlignment" class="sphx-glr-backref-module-fmralign-alignment-pairwise_alignment sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">alignment_estimator</span></a><span class="o">.</span><span class="n">transform</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_test_data</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:184: UserWarning: No labels provided, using a single label for all features.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:129: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
+  ) = roi_masker.transform(
+/home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:184: UserWarning: No labels provided, using a single label for all features.
   warnings.warn(
 </pre></div>
 </div>
@@ -520,15 +515,15 @@ alike the ground truth.</p>
 <li><img src="../_images/sphx_glr_plot_pairwise_roi_alignment_002.png" srcset="../_images/sphx_glr_plot_pairwise_roi_alignment_002.png" alt="plot pairwise roi alignment" class = "sphx-glr-multi-img"/></li>
 <li><img src="../_images/sphx_glr_plot_pairwise_roi_alignment_003.png" srcset="../_images/sphx_glr_plot_pairwise_roi_alignment_003.png" alt="plot pairwise roi alignment" class = "sphx-glr-multi-img"/></li>
 </ul>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:175: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:174: UserWarning: Non-finite values detected. These values will be replaced with zeros.
   baseline_display = plotting.plot_stat_map(
-/home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:179: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+/home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:178: UserWarning: Non-finite values detected. These values will be replaced with zeros.
   display = plotting.plot_stat_map(
 </pre></div>
 </div>
 <p>We can see on the plot that after alignment, the prediction made for one
 subject data, informed by another subject are greatly improved.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 13.912 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 14.533 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-pairwise-roi-alignment-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/d5f9258ebaaa3446b17d5c0324441f8c/plot_pairwise_roi_alignment.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_pairwise_roi_alignment.ipynb</span></code></a></p>

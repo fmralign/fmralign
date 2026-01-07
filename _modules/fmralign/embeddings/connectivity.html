@@ -310,7 +310,7 @@
 
     <span class="c1"># Standardize the data</span>
     <span class="n">standardized_data</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">standardize_signal</span><span class="p">(</span>
-        <span class="n">data</span><span class="p">,</span> <span class="n">detrend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">standardize</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">detrend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">standardize</span><span class="o">=</span><span class="s2">&quot;zscore_sample&quot;</span>
     <span class="p">)</span>
 
     <span class="c1"># Average the signals within each parcel</span>
@@ -322,7 +322,7 @@
         <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">averaged_signals_standardized</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">standardize_signal</span><span class="p">(</span>
-        <span class="n">averaged_signals</span><span class="p">,</span> <span class="n">detrend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">standardize</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">averaged_signals</span><span class="p">,</span> <span class="n">detrend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">standardize</span><span class="o">=</span><span class="s2">&quot;zscore_sample&quot;</span>
     <span class="p">)</span>
 
     <span class="c1"># Compute the correlation features (n_labels x n_voxels)</span>

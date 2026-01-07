@@ -31,7 +31,7 @@ data in a clean fashion.
 To run this example, you must launch IPython via ``ipython --matplotlib`` in
 a terminal, or use ``jupyter-notebook``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 19-35
+.. GENERATED FROM PYTHON SOURCE LINES 20-36
 
 Retrieve the data
 ------------------
@@ -50,7 +50,7 @@ to probe a range of cognitive functions, including:
 * Working memory: maintaining sequences of faces and objects
 * Object categorization: matching and comparing visual stimuli
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-46
+.. GENERATED FROM PYTHON SOURCE LINES 36-47
 
 .. code-block:: Python
 
@@ -78,13 +78,13 @@ to probe a range of cognitive functions, including:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-50
+.. GENERATED FROM PYTHON SOURCE LINES 48-51
 
 Extract a mask for the visual cortex from Yeo Atlas
 ---------------------------------------------------
 First, we fetch and plot the complete atlas
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-73
+.. GENERATED FROM PYTHON SOURCE LINES 51-74
 
 .. code-block:: Python
 
@@ -93,7 +93,7 @@ First, we fetch and plot the complete atlas
     from nilearn.image import concat_imgs, load_img, new_img_like, resample_to_img
 
     atlas_yeo_2011 = datasets.fetch_atlas_yeo_2011()
-    atlas = load_img(atlas_yeo_2011.thick_7)
+    atlas = load_img(atlas_yeo_2011.maps)
 
     # Select visual cortex, create a mask and resample it to the right resolution
 
@@ -124,20 +124,13 @@ First, we fetch and plot the complete atlas
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:54: DeprecationWarning: From release >=0.13.0, instead of returning several atlas image accessible via different keys, this fetcher will return the atlas as a dictionary with a single atlas image, accessible through a 'maps' key. To suppress this warning, Please use the parameters 'n_networks' and 'thickness' to specify the exact atlas image you want.
-      atlas_yeo_2011 = datasets.fetch_atlas_yeo_2011()
     [fetch_atlas_yeo_2011] Dataset found in /home/runner/nilearn_data/yeo_2011
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:60: FutureWarning: 'force_resample' will be set to 'True' by default in Nilearn 0.13.0.
-    Use 'force_resample=True' to suppress this warning.
-      resampled_mask_visual = resample_to_img(
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:60: FutureWarning: From release 0.13.0 onwards, this function will, by default, copy the header of the input image to the output. Currently, the header is reset to the default Nifti1Header. To suppress this warning and use the new behavior, set `copy_header=True`.
-      resampled_mask_visual = resample_to_img(
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f2b98ec5bb0>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f250cbf1250>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-80
+.. GENERATED FROM PYTHON SOURCE LINES 75-81
 
 Define a masker
 ---------------
@@ -146,7 +139,7 @@ For more information, consult Nilearn's documentation on
 :external+nilearn:ref:`masker objects <masker_objects>`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-85
+.. GENERATED FROM PYTHON SOURCE LINES 81-86
 
 .. code-block:: Python
 
@@ -162,7 +155,7 @@ For more information, consult Nilearn's documentation on
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-94
+.. GENERATED FROM PYTHON SOURCE LINES 87-95
 
 Prepare the data
 ----------------
@@ -173,7 +166,7 @@ Postero-Anterior (PA). Although this induces small differences
 in the final data, we will take  advantage of these pseudo-duplicates
 to define training and test samples.
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-122
+.. GENERATED FROM PYTHON SOURCE LINES 95-123
 
 .. code-block:: Python
 
@@ -212,7 +205,7 @@ to define training and test samples.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 123-129
+.. GENERATED FROM PYTHON SOURCE LINES 124-130
 
 Choose the number of regions for local alignment
 ------------------------------------------------
@@ -221,7 +214,7 @@ regions so that each of them is approximately 100 voxels wide. Then our
 estimator will first make a functional clustering of voxels based on train
 data to divide them into meaningful regions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-137
+.. GENERATED FROM PYTHON SOURCE LINES 130-138
 
 .. code-block:: Python
 
@@ -247,7 +240,7 @@ data to divide them into meaningful regions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 138-144
+.. GENERATED FROM PYTHON SOURCE LINES 139-145
 
 Extract the parcels labels
 --------------------------
@@ -256,7 +249,7 @@ to extract the labels of associated to each voxel:
 :func:`~fmralign.embeddings.parcellation.get_labels`.
 We then organize the data in dictionaries of pairs of subjects names and data.
 
-.. GENERATED FROM PYTHON SOURCE LINES 144-163
+.. GENERATED FROM PYTHON SOURCE LINES 145-164
 
 .. code-block:: Python
 
@@ -287,7 +280,9 @@ We then organize the data in dictionaries of pairs of subjects names and data.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:82: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:114: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
+      warnings.warn(
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:134: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
     Parameter mask_strategy :
         Masker parameter background - overriding estimator parameter epi
     Parameter smoothing_fwhm :
@@ -300,7 +295,7 @@ We then organize the data in dictionaries of pairs of subjects names and data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 164-180
+.. GENERATED FROM PYTHON SOURCE LINES 165-181
 
 Define the estimators, fit them and do a prediction
 ---------------------------------------------------
@@ -319,7 +314,7 @@ Then for each method we define the estimator, fit it, predict the new image and 
 its correlation with the real signal. We use the identity (euclidean averaging)
 as the baseline.
 
-.. GENERATED FROM PYTHON SOURCE LINES 180-208
+.. GENERATED FROM PYTHON SOURCE LINES 181-209
 
 .. code-block:: Python
 
@@ -367,12 +362,12 @@ as the baseline.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 209-211
+.. GENERATED FROM PYTHON SOURCE LINES 210-212
 
 Plot the results
 ----------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 211-228
+.. GENERATED FROM PYTHON SOURCE LINES 212-229
 
 .. code-block:: Python
 
@@ -406,13 +401,13 @@ Plot the results
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:216: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:217: UserWarning: Non-finite values detected. These values will be replaced with zeros.
       plotting.plot_stat_map(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 229-237
+.. GENERATED FROM PYTHON SOURCE LINES 230-238
 
 Summary:
 --------
@@ -426,7 +421,7 @@ smoothness in the transformation, resulting in slightly higher correlation value
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 48.467 seconds)
+   **Total running time of the script:** (0 minutes 49.249 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_methods_benchmark.py:
