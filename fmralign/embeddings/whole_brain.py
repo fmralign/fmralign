@@ -80,7 +80,7 @@ def get_laplacian_embedding(mask_img, k, sigma=1e-8):
                 for part in mask_img.parts.values()
             ]
         )
-        L, M = L, M = rl.mesh_laplacian(V, F)
+        L, M = rl.mesh_laplacian(V, F)
     else:
         V = np.asarray(mask_img.coordinates, dtype="<f4")
         F = np.asarray(mask_img.faces, dtype="<f4")
