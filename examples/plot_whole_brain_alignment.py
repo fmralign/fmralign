@@ -22,7 +22,7 @@ perform parcellation-free whole-brain alignment.
 
 from nilearn.datasets import load_fsaverage
 from nilearn.image import concat_imgs
-from nilearn.maskers import SurfaceMasker
+from nilearn.maskers import MultiSurfaceMasker
 from nilearn.surface import SurfaceImage
 
 from fmralign.fetch_example_data import fetch_ibc_subjects_contrasts
@@ -50,7 +50,7 @@ target_train = concat_imgs(
 surf_source_train = project_to_surface(source_train)
 surf_target_train = project_to_surface(target_train)
 
-masker = SurfaceMasker().fit([surf_source_train, surf_target_train])
+masker = MultiSurfaceMasker().fit([surf_source_train, surf_target_train])
 
 
 ###############################################################################
