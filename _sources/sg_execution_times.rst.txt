@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**08:55.834** total execution time for 7 files **from all galleries**:
+**08:55.085** total execution time for 7 files **from all galleries**:
 
 .. container::
 
@@ -33,23 +33,23 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_plot_group_alignment.py` (``../examples/plot_group_alignment.py``)
-     - 04:18.655
+     - 04:14.772
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_template_bias.py` (``../examples/plot_template_bias.py``)
-     - 01:41.246
+     - 01:45.738
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_surf_alignment.py` (``../examples/plot_surf_alignment.py``)
-     - 01:11.286
+     - 01:10.679
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_alignment_methods_benchmark.py` (``../examples/plot_alignment_methods_benchmark.py``)
-     - 00:49.249
+     - 00:50.741
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_pairwise_alignment.py` (``../examples/plot_pairwise_alignment.py``)
-     - 00:40.197
+     - 00:39.359
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_pairwise_roi_alignment.py` (``../examples/plot_pairwise_roi_alignment.py``)
-     - 00:14.533
+     - 00:13.253
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_alignment_simulated_2D_data.py` (``../examples/plot_alignment_simulated_2D_data.py``)
-     - 00:00.667
+     - 00:00.543
      - 0.0

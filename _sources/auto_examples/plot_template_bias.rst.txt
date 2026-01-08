@@ -1746,14 +1746,14 @@ between in-sample and out-of-sample template generation strategies. That is good
 as it indicates that in-sample template generation does not lead to a large bias
 in this case.
 To better visualize the differences, we can use nilearn's
-:func:`~nilearn.plotting.img_comparison.plot_img_comparison`
+:func:`~nilearn.plotting.plot_img_comparison`
 
 .. GENERATED FROM PYTHON SOURCE LINES 152-163
 
 .. code-block:: Python
 
 
-    plotting.img_comparison.plot_img_comparison(
+    plotting.plot_img_comparison(
         score_in_sample_img,
         score_out_of_sample_img,
         masker=masker,
@@ -1794,7 +1794,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 41.246 seconds)
+   **Total running time of the script:** (1 minutes 45.738 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_template_bias.py:

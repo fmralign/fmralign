@@ -12,11 +12,9 @@ fmralign.methods.DetSRM
 .. currentmodule:: fmralign.methods
 
 .. autoclass:: DetSRM
-   :no-inherited-members:
-
-   
-   .. automethod:: __init__
-   
+   :inherited-members:
+   :special-members: __init__
+   :member-order: alphabetical
 
 .. include:: fmralign.methods.DetSRM.examples
 

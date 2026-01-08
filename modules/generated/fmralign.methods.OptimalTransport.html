@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="3.3.5. fmralign.methods.OptimalTransport" />
+<meta property="og:title" content="fmralign.methods.OptimalTransport" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://nilearn.github.io/modules/generated/fmralign.methods.OptimalTransport.html" />
 <meta property="og:site_name" content="Nilearn" />
@@ -11,10 +11,10 @@
 <meta property="og:image" content="https://nilearn.github.io/_images/sphx_glr_plot_alignment_methods_benchmark_thumb.png" />
 <meta property="og:image:alt" content="" />
 <meta name="description" content="Examples using fmralign.methods.OptimalTransport: Alignment methods benchmark (template-based ROI case) Alignment on simulated 2D data." />
-<link rel="search" title="Search" href="../../search.html"><link rel="next" title="3.4.1. fmralign.embeddings.connectivity.get_connectivity_features" href="fmralign.embeddings.connectivity.get_connectivity_features.html"><link rel="prev" title="3.3.4. fmralign.methods.RidgeAlignment" href="fmralign.methods.RidgeAlignment.html">
+<link rel="search" title="Search" href="../../search.html"><link rel="next" title="fmralign.embeddings: Embedding Utilities" href="../embedding.html"><link rel="prev" title="fmralign.methods.RidgeAlignment" href="fmralign.methods.RidgeAlignment.html">
 
     <link rel="shortcut icon" href="../../_static/favicon.ico"><!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
-        <title>3.3.5. fmralign.methods.OptimalTransport - fmralign</title>
+        <title>fmralign.methods.OptimalTransport - fmralign</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=2da93098" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -231,24 +231,34 @@
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_alignment_simulated_2D_data.html">Alignment on simulated 2D data.</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../../user_guide.html">User guide</a><input aria-label="Toggle navigation of User guide" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../user_guide.html">User guide</a><input aria-label="Toggle navigation of User guide" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../overview.html">1. Introduction: fmralign in a nutshell</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../functional_alignment/index.html">2. Functional alignment: handling functional variability</a><input aria-label="Toggle navigation of 2. Functional alignment: handling functional variability" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../functional_alignment/introduction.html">2.1. An introduction to functional alignment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../functional_alignment/fmralign_pipeline.html">2.2. Functional alignment pipeline</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current has-children"><a class="reference internal" href="../reference.html">3. Reference documentation</a><input aria-label="Toggle navigation of 3. Reference documentation" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="fmralign.alignment.pairwise_alignment.PairwiseAlignment.html">3.1.1. fmralign.alignment.pairwise_alignment.PairwiseAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fmralign.alignment.group_alignment.GroupAlignment.html">3.2.1. fmralign.alignment.group_alignment.GroupAlignment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fmralign.methods.Identity.html">3.3.1. fmralign.methods.Identity</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fmralign.methods.DetSRM.html">3.3.2. fmralign.methods.DetSRM</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fmralign.methods.Procrustes.html">3.3.3. fmralign.methods.Procrustes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fmralign.methods.RidgeAlignment.html">3.3.4. fmralign.methods.RidgeAlignment</a></li>
-<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">3.3.5. fmralign.methods.OptimalTransport</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fmralign.embeddings.connectivity.get_connectivity_features.html">3.4.1. fmralign.embeddings.connectivity.get_connectivity_features</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fmralign.embeddings.parcellation.get_labels.html">3.4.2. fmralign.embeddings.parcellation.get_labels</a></li>
-<li class="toctree-l3"><a class="reference internal" href="fmralign.embeddings.whole_brain.get_adjacency_from_mask.html">3.4.3. fmralign.embeddings.whole_brain.get_adjacency_from_mask</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API References</a><input aria-label="Toggle navigation of API References" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../alignment.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.alignment</span></code>: Alignment Strategies</a><input aria-label="Toggle navigation of fmralign.alignment: Alignment Strategies" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="fmralign.alignment.pairwise_alignment.PairwiseAlignment.html">fmralign.alignment.pairwise_alignment.PairwiseAlignment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fmralign.alignment.group_alignment.GroupAlignment.html">fmralign.alignment.group_alignment.GroupAlignment</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="../methods.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.methods</span></code>: Alignment Methods</a><input aria-label="Toggle navigation of fmralign.methods: Alignment Methods" checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="fmralign.methods.Identity.html">fmralign.methods.Identity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fmralign.methods.DetSRM.html">fmralign.methods.DetSRM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fmralign.methods.Procrustes.html">fmralign.methods.Procrustes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fmralign.methods.RidgeAlignment.html">fmralign.methods.RidgeAlignment</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">fmralign.methods.OptimalTransport</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../embedding.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.embeddings</span></code>: Embedding Utilities</a><input aria-label="Toggle navigation of fmralign.embeddings: Embedding Utilities" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="fmralign.embeddings.connectivity.get_connectivity_features.html">fmralign.embeddings.connectivity.get_connectivity_features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fmralign.embeddings.parcellation.get_adjacency_from_labels.html">fmralign.embeddings.parcellation.get_adjacency_from_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fmralign.embeddings.parcellation.get_labels.html">fmralign.embeddings.parcellation.get_labels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fmralign.embeddings.whole_brain.get_adjacency_from_mask.html">fmralign.embeddings.whole_brain.get_adjacency_from_mask</a></li>
 </ul>
 </li>
 </ul>
@@ -319,7 +329,7 @@ signature, and not how to use it. Please refer to the
 <a class="reference internal" href="../../user_guide.html#user-guide"><span class="std std-ref">user guide</span></a> for the big picture.</p>
 </div>
 <section id="fmralign-methods-optimaltransport">
-<h1><span class="section-number">3.3.5. </span>fmralign.methods.OptimalTransport<a class="headerlink" href="#fmralign-methods-optimaltransport" title="Link to this heading">¶</a></h1>
+<h1>fmralign.methods.OptimalTransport<a class="headerlink" href="#fmralign-methods-optimaltransport" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="fmralign.methods.OptimalTransport">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">fmralign.methods.</span></span><span class="sig-name descname"><span class="pre">OptimalTransport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sinkhorn_epsilon_scaling'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/fmralign/methods/optimal_transport.html#OptimalTransport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.methods.OptimalTransport" title="Link to this definition">¶</a></dt>
@@ -351,10 +361,151 @@ see full list in scipy.spatial.distance.cdist doc</p>
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sinkhorn_epsilon_scaling'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/fmralign/methods/optimal_transport.html#OptimalTransport.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.methods.OptimalTransport.__init__" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="fmralign.methods.OptimalTransport.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/fmralign/methods/optimal_transport.html#OptimalTransport.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.methods.OptimalTransport.fit" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X: (n_samples, n_features) nd array</strong></dt><dd><p>source data</p>
+</dd>
+<dt><strong>Y: (n_samples, n_features) nd array</strong></dt><dd><p>target data</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fmralign.methods.OptimalTransport.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fit_params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fmralign.methods.OptimalTransport.fit_transform" title="Link to this definition">¶</a></dt>
+<dd><p>Fit to data, then transform it.</p>
+<p>Fits transformer to <cite>X</cite> and <cite>y</cite> with optional parameters <cite>fit_params</cite>
+and returns a transformed version of <cite>X</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>X</strong><span class="classifier">array-like of shape (n_samples, n_features)</span></dt><dd><p>Input samples.</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None</span></dt><dd><p>Target values (None for unsupervised transformations).</p>
+</dd>
+<dt><strong>**fit_params</strong><span class="classifier">dict</span></dt><dd><p>Additional fit parameters.
+Pass only if the estimator accepts additional params in its <cite>fit</cite> method.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>X_new</strong><span class="classifier">ndarray array of shape (n_samples, n_features_new)</span></dt><dd><p>Transformed array.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fmralign.methods.OptimalTransport.get_metadata_routing">
+<span class="sig-name descname"><span class="pre">get_metadata_routing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fmralign.methods.OptimalTransport.get_metadata_routing" title="Link to this definition">¶</a></dt>
+<dd><p>Get metadata routing of this object.</p>
+<p>Please check <a class="reference external" href="https://scikit-learn.org/stable/metadata_routing.html#metadata-routing" title="(in scikit-learn v1.8)"><span class="xref std std-ref">User Guide</span></a> on how the routing
+mechanism works.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>routing</strong><span class="classifier">MetadataRequest</span></dt><dd><p>A <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.metadata_routing.MetadataRequest.html#sklearn.utils.metadata_routing.MetadataRequest" title="(in scikit-learn v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetadataRequest</span></code></a> encapsulating
+routing information.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fmralign.methods.OptimalTransport.get_params">
+<span class="sig-name descname"><span class="pre">get_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">deep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fmralign.methods.OptimalTransport.get_params" title="Link to this definition">¶</a></dt>
+<dd><p>Get parameters for this estimator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>deep</strong><span class="classifier">bool, default=True</span></dt><dd><p>If True, will return the parameters for this estimator and
+contained subobjects that are estimators.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>params</strong><span class="classifier">dict</span></dt><dd><p>Parameter names mapped to their values.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fmralign.methods.OptimalTransport.set_output">
+<span class="sig-name descname"><span class="pre">set_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fmralign.methods.OptimalTransport.set_output" title="Link to this definition">¶</a></dt>
+<dd><p>Set output container.</p>
+<p>See <a class="reference external" href="https://scikit-learn.org/stable/auto_examples/miscellaneous/plot_set_output.html#sphx-glr-auto-examples-miscellaneous-plot-set-output-py" title="(in scikit-learn v1.8)"><span>Introducing the set_output API</span></a>
+for an example on how to use the API.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><strong>transform</strong><span class="classifier">{“default”, “pandas”, “polars”}, default=None</span></dt><dd><p>Configure output of <cite>transform</cite> and <cite>fit_transform</cite>.</p>
+<ul class="simple">
+<li><p><cite>“default”</cite>: Default output format of a transformer</p></li>
+<li><p><cite>“pandas”</cite>: DataFrame output</p></li>
+<li><p><cite>“polars”</cite>: Polars output</p></li>
+<li><p><cite>None</cite>: Transform configuration is unchanged</p></li>
+</ul>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.4: </span><cite>“polars”</cite> option was added.</p>
+</div>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>self</strong><span class="classifier">estimator instance</span></dt><dd><p>Estimator instance.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fmralign.methods.OptimalTransport.set_params">
+<span class="sig-name descname"><span class="pre">set_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#fmralign.methods.OptimalTransport.set_params" title="Link to this definition">¶</a></dt>
+<dd><p>Set the parameters of this estimator.</p>
+<p>The method works on simple estimators as well as on nested objects
+(such as <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="(in scikit-learn v1.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pipeline</span></code></a>). The latter have
+parameters of the form <code class="docutils literal notranslate"><span class="pre">&lt;component&gt;__&lt;parameter&gt;</span></code> so that it’s
+possible to update each component of a nested object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>**params</strong><span class="classifier">dict</span></dt><dd><p>Estimator parameters.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>self</strong><span class="classifier">estimator instance</span></dt><dd><p>Estimator instance.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="fmralign.methods.OptimalTransport.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/fmralign/methods/optimal_transport.html#OptimalTransport.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.methods.OptimalTransport.transform" title="Link to this definition">¶</a></dt>
+<dd><p>Transform X using optimal coupling computed during fit.</p>
+</dd></dl>
+
 </dd></dl>
 
 <section id="examples-using-fmralign-methods-optimaltransport">
-<h2><span class="section-number">3.3.5.1. </span>Examples using <code class="docutils literal notranslate"><span class="pre">fmralign.methods.OptimalTransport</span></code><a class="headerlink" href="#examples-using-fmralign-methods-optimaltransport" title="Link to this heading">¶</a></h2>
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">fmralign.methods.OptimalTransport</span></code><a class="headerlink" href="#examples-using-fmralign-methods-optimaltransport" title="Link to this heading">¶</a></h2>
 <div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="We mostly rely on python common packages and on nilearn to handle functional data in a clean fashion."><img alt="" src="../../_images/sphx_glr_plot_alignment_methods_benchmark_thumb.png" />
 <p><a class="reference internal" href="../../auto_examples/plot_alignment_methods_benchmark.html"><span class="doc">Alignment methods benchmark (template-based ROI case)</span></a></p>
   <div class="sphx-glr-thumbnail-title">Alignment methods benchmark (template-based ROI case)</div>
@@ -369,12 +520,12 @@ see full list in scipy.spatial.distance.cdist doc</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="fmralign.embeddings.connectivity.get_connectivity_features.html">
+          <a class="next-page" href="../embedding.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><span class="section-number">3.4.1. </span>fmralign.embeddings.connectivity.get_connectivity_features</div>
+                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.embeddings</span></code>: Embedding Utilities</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -385,7 +536,7 @@ see full list in scipy.spatial.distance.cdist doc</p>
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><span class="section-number">3.3.4. </span>fmralign.methods.RidgeAlignment</div>
+                <div class="title">fmralign.methods.RidgeAlignment</div>
                 
               </div>
             </a>
@@ -419,12 +570,19 @@ see full list in scipy.spatial.distance.cdist doc</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">3.3.5. fmralign.methods.OptimalTransport</a><ul>
+<li><a class="reference internal" href="#">fmralign.methods.OptimalTransport</a><ul>
 <li><a class="reference internal" href="#fmralign.methods.OptimalTransport"><code class="docutils literal notranslate"><span class="pre">OptimalTransport</span></code></a><ul>
 <li><a class="reference internal" href="#fmralign.methods.OptimalTransport.__init__"><code class="docutils literal notranslate"><span class="pre">OptimalTransport.__init__</span></code></a></li>
+<li><a class="reference internal" href="#fmralign.methods.OptimalTransport.fit"><code class="docutils literal notranslate"><span class="pre">OptimalTransport.fit</span></code></a></li>
+<li><a class="reference internal" href="#fmralign.methods.OptimalTransport.fit_transform"><code class="docutils literal notranslate"><span class="pre">OptimalTransport.fit_transform</span></code></a></li>
+<li><a class="reference internal" href="#fmralign.methods.OptimalTransport.get_metadata_routing"><code class="docutils literal notranslate"><span class="pre">OptimalTransport.get_metadata_routing</span></code></a></li>
+<li><a class="reference internal" href="#fmralign.methods.OptimalTransport.get_params"><code class="docutils literal notranslate"><span class="pre">OptimalTransport.get_params</span></code></a></li>
+<li><a class="reference internal" href="#fmralign.methods.OptimalTransport.set_output"><code class="docutils literal notranslate"><span class="pre">OptimalTransport.set_output</span></code></a></li>
+<li><a class="reference internal" href="#fmralign.methods.OptimalTransport.set_params"><code class="docutils literal notranslate"><span class="pre">OptimalTransport.set_params</span></code></a></li>
+<li><a class="reference internal" href="#fmralign.methods.OptimalTransport.transform"><code class="docutils literal notranslate"><span class="pre">OptimalTransport.transform</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#examples-using-fmralign-methods-optimaltransport">3.3.5.1. Examples using <code class="docutils literal notranslate"><span class="pre">fmralign.methods.OptimalTransport</span></code></a></li>
+<li><a class="reference internal" href="#examples-using-fmralign-methods-optimaltransport">Examples using <code class="docutils literal notranslate"><span class="pre">fmralign.methods.OptimalTransport</span></code></a></li>
 </ul>
 </li>
 </ul>

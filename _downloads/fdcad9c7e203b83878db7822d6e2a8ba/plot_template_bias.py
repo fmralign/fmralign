@@ -148,9 +148,9 @@ plt.show()
 # as it indicates that in-sample template generation does not lead to a large bias
 # in this case.
 # To better visualize the differences, we can use nilearn's
-# :func:`~nilearn.plotting.img_comparison.plot_img_comparison`
+# :func:`~nilearn.plotting.plot_img_comparison`
 
-plotting.img_comparison.plot_img_comparison(
+plotting.plot_img_comparison(
     score_in_sample_img,
     score_out_of_sample_img,
     masker=masker,

@@ -12,11 +12,9 @@ fmralign.alignment.group_alignment.GroupAlignment
 .. currentmodule:: fmralign.alignment.group_alignment
 
 .. autoclass:: GroupAlignment
-   :no-inherited-members:
-
-   
-   .. automethod:: __init__
-   
+   :inherited-members:
+   :special-members: __init__
+   :member-order: alphabetical
 
 .. include:: fmralign.alignment.group_alignment.GroupAlignment.examples
 

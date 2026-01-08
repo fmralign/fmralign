@@ -12,11 +12,9 @@ fmralign.methods.Identity
 .. currentmodule:: fmralign.methods
 
 .. autoclass:: Identity
-   :no-inherited-members:
-
-   
-   .. automethod:: __init__
-   
+   :inherited-members:
+   :special-members: __init__
+   :member-order: alphabetical
 
 .. include:: fmralign.methods.Identity.examples
 
