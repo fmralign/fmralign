@@ -27,12 +27,17 @@ class OptimalTransport(BaseAlignment):
         Scaling parameter for GeomLoss solver when n_features > 1000.
         Defaults to 0.95.
     alpha : float
-        Weighting parameter between functional data and geometric embedding `evecs`.
+        Trade-off parameter controlling the balance between functional data and the
+        geometric embedding `evecs`. Values should lie in the interval [0, 1], where
+        smaller values put more weight on the geometry.
         Defaults to 0.1.
     evecs : (k, n_features) nd array or None
         Geometric embedding of the data to be used as additional features
         during alignment. If None, only functional data is used.
         Defaults to None.
+    backend : str
+        Backend to use for OT computation. Either "pot" or "geomloss".
+        Defaults to "pot".
     kwargs : dict
         Additional arguments to be passed to the OT solver.
 
@@ -50,6 +55,7 @@ class OptimalTransport(BaseAlignment):
         scaling=0.95,
         alpha=0.1,
         evecs=None,
+        backend="pot",
         verbose=False,
         **kwargs,
     ):
@@ -59,6 +65,7 @@ class OptimalTransport(BaseAlignment):
         self.scaling = scaling
         self.alpha = alpha
         self.evecs = evecs
+        self.backend = backend
         self.verbose = verbose
         self.kwargs = kwargs
 
@@ -87,8 +94,7 @@ class OptimalTransport(BaseAlignment):
                 ]
             )
 
-        n = len(X.T)
-        if n < 1000:
+        if self.backend == "pot":
             res = ot.solve_sample(
                 X.T,
                 Y.T,
@@ -102,7 +108,7 @@ class OptimalTransport(BaseAlignment):
 
             self.R = res.plan
 
-        else:
+        elif self.backend == "geomloss":
             X_torch = torch.tensor(np.ascontiguousarray(X.T), device=DEVICE)
             Y_torch = torch.tensor(np.ascontiguousarray(Y.T), device=DEVICE)
             res = ot.solve_sample(
@@ -130,7 +136,7 @@ class OptimalTransport(BaseAlignment):
     def transform(self, X):
         """Transform X using optimal coupling computed during fit."""
         n_voxels = X.shape[1]
-        if isinstance(self.R, LazyTensor):
+        if self.backend == "geomloss":
             X_torch = torch.tensor(np.ascontiguousarray(X.T), device=DEVICE)
             X_i = LazyTensor(X_torch[:, None, :])
             X_aligned = (X_i * self.R).sum(axis=0) * n_voxels

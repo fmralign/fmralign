@@ -36,10 +36,10 @@ def test_regularization_effect():
 
 def test_geomloss_backend():
     """Test the geomloss backend for large number of voxels."""
-    n_samples, n_features = 5, 1001
+    n_samples, n_features = 10, 5
     X = np.random.randn(n_samples, n_features)
 
-    algo = OptimalTransport(reg=1e-12)
+    algo = OptimalTransport(reg=1e-12, backend="geomloss")
     algo.fit(X, X)
     X_transformed = algo.transform(X)
 

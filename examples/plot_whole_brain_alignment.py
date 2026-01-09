@@ -223,7 +223,9 @@ plotting.plot_surf_stat_map(
 
 from fmralign.methods.optimal_transport import OptimalTransport
 
-alignment_estimator = PairwiseAlignment(method=OptimalTransport(scaling=0.5))
+alignment_estimator = PairwiseAlignment(
+    method=OptimalTransport(scaling=0.5, backend="geomloss")
+)
 
 alpha = 0.1
 
@@ -279,7 +281,9 @@ plotting.plot_surf_contours(
 from sklearn.model_selection import GridSearchCV
 
 estimator = PairwiseAlignment(
-    method=OptimalTransport(scaling=0.5, evecs=geom_embedding)
+    method=OptimalTransport(
+        scaling=0.5, evecs=geom_embedding, backend="geomloss"
+    )
 )
 
 grid = GridSearchCV(
