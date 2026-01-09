@@ -19,7 +19,9 @@ dependencies = [
     "nibabel",
     "nilearn>=0.13.0",
     "POT",
-    "fugw>=0.1.1",
+    "robust_laplacian",
+    "pykeops",
+    "geomloss",
     "torch"
 ]
 description = "Functional alignment for fMRI"

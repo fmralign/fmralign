@@ -24,7 +24,7 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
     method : str or a `BaseAlignment` instance, default="identity"
         The alignment method to use. It can be a string representing the method name
         or an instance of a class derived from `BaseAlignment`. Available methods include:
-        ["identity", "procrustes", "ot", "sparseuot", "ridge"].
+        ["identity", "procrustes", "ot", "ridge", "srm"].
     labels : array-like or None, default=None
         Describes each voxel label's in the case of non-overlapping parcels.
         If provided, local alignments can be performed in parallel.
