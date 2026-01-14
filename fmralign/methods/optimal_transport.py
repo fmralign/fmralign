@@ -123,13 +123,13 @@ class OptimalTransport(BaseAlignment):
             )
 
             f, g = res.potentials
-            blur = res.lazy_plan.blur
+            blur = float(res.lazy_plan.blur)
             X_i = LazyTensor(X_torch[:, None, :])
             Y_j = LazyTensor(Y_torch[None, :, :])
-            F = LazyTensor(f[:, None, None] * blur**2)
-            G = LazyTensor(g[None, :, None] * blur**2)
+            F = LazyTensor(f[:, None, None])
+            G = LazyTensor(g[None, :, None])
             C = ((X_i - Y_j) ** 2).sum(-1) / 2
-            self.R = ((F + G - C) / (self.reg / 2)).exp() / (
+            self.R = (F + G - C / (blur**2)).exp() / (
                 X_torch.shape[0] * Y_torch.shape[0]
             )
 
