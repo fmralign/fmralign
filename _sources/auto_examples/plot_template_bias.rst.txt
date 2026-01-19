@@ -1767,7 +1767,7 @@ To better visualize the differences, we can use nilearn's
 
 
 .. image-sg:: /auto_examples/images/sphx_glr_plot_template_bias_002.png
-   :alt: Pearson's R: 0.56, Histogram of imgs values
+   :alt: Pearson's R: 0.58, Histogram of imgs values
    :srcset: /auto_examples/images/sphx_glr_plot_template_bias_002.png
    :class: sphx-glr-single-img
 
@@ -1794,7 +1794,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 45.738 seconds)
+   **Total running time of the script:** (2 minutes 7.207 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_template_bias.py:

@@ -126,7 +126,7 @@ First, we fetch and plot the complete atlas
 
     [fetch_atlas_yeo_2011] Dataset found in /home/runner/nilearn_data/yeo_2011
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f5586896de0>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f3752e5da30>
 
 
 
@@ -421,7 +421,7 @@ smoothness in the transformation, resulting in slightly higher correlation value
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 50.741 seconds)
+   **Total running time of the script:** (0 minutes 49.461 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_methods_benchmark.py:
