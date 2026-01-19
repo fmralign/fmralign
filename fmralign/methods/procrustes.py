@@ -93,7 +93,7 @@ class Procrustes(BaseAlignment):
         """
         R, sc = scaled_procrustes(X, Y, scaling=self.scaling)
         self.scale = sc
-        self.R = sc * R
+        self.R = R
         return self
 
     def transform(self, X):
