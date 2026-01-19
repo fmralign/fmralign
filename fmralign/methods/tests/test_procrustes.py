@@ -107,3 +107,26 @@ def test_scaled_procrustes_on_simple_exact_cases():
     ortho_al = Procrustes(scaling=False)
     ortho_al.fit(X.T, Y.T)
     assert_array_almost_equal(ortho_al.transform(X.T), Y.T)
+
+
+def test_procrustes_scaling():
+    """Test recovery of the scaling factor"""
+    X = np.array([[1, 3], [1, 2], [1, 1], [2, 1]], "d")
+    angle, scaling = np.pi / 3, 2.0
+    rot = np.array(
+        [
+            [np.cos(angle), -np.sin(angle)],
+            [np.sin(angle), np.cos(angle)],
+        ]
+    )
+    Y = scaling * (rot @ X.T).T
+
+    # with scaling
+    R, s = scaled_procrustes(X, Y, scaling=True)
+    assert_array_almost_equal(s, scaling)
+    assert_array_almost_equal(R.T, rot)
+
+    # without scaling
+    R_ns, s_ns = scaled_procrustes(X, Y, scaling=False)
+    assert_array_almost_equal(s_ns, 1.0)
+    assert_array_almost_equal(R_ns.T, rot)
