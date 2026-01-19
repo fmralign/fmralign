@@ -122,11 +122,19 @@ def test_procrustes_scaling():
     Y = scaling * (rot @ X.T).T
 
     # with scaling
-    R, s = scaled_procrustes(X, Y, scaling=True)
+    algo = Procrustes(scaling=True).fit(X, Y)
+    R, s = algo.fit(X, Y).R, algo.scale
     assert_array_almost_equal(s, scaling)
-    assert_array_almost_equal(R.T, rot)
+    assert_array_almost_equal(R, rot.T)
+
+    transformed_X = algo.transform(X)
+    assert_array_almost_equal(transformed_X, Y)
 
     # without scaling
-    R_ns, s_ns = scaled_procrustes(X, Y, scaling=False)
-    assert_array_almost_equal(s_ns, 1.0)
-    assert_array_almost_equal(R_ns.T, rot)
+    algo = Procrustes(scaling=False).fit(X, Y)
+    R, s = algo.fit(X, Y).R, algo.scale
+    assert_array_almost_equal(R, rot.T)
+    assert_array_almost_equal(s, 1.0)
+
+    transformed_X = algo.transform(X)
+    assert_array_almost_equal(transformed_X * scaling, Y)
