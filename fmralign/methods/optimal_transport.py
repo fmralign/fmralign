@@ -85,13 +85,13 @@ class OptimalTransport(BaseAlignment):
                 [
                     self.alpha * X,
                     (1 - self.alpha) * self.evecs,
-                ]
+                ],
             )
             Y = np.vstack(
                 [
                     self.alpha * Y,
                     (1 - self.alpha) * self.evecs,
-                ]
+                ],
             )
 
         if self.backend == "pot":
@@ -133,6 +133,8 @@ class OptimalTransport(BaseAlignment):
                 X_torch.shape[0] * Y_torch.shape[0]
             )
 
+        return self
+
     def transform(self, X):
         """Transform X using optimal coupling computed during fit."""
         n_voxels = X.shape[1]
@@ -141,5 +143,4 @@ class OptimalTransport(BaseAlignment):
             X_i = LazyTensor(X_torch[:, None, :])
             X_aligned = (X_i * self.R).sum(axis=0) * n_voxels
             return X_aligned.cpu().numpy().T
-        else:
-            return X @ self.R * n_voxels
+        return X @ self.R * n_voxels
