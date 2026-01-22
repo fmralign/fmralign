@@ -264,10 +264,11 @@ def _map_to_target(
             estimator.fit(subject_data, target_data)
             fitted_estimators.append(estimator)
     else:
-        estimator = clone(method)
-        fitted_estimators = Parallel(n_jobs=n_jobs, verbose=verbose)(
-            delayed(estimator.fit)(x, target_data) for x in X
-        )
+        fitted_estimators = Parallel(
+            n_jobs=n_jobs,
+            backend="threading",
+            verbose=verbose,
+        )(delayed(clone(method).fit)(x, target_data) for x in X)
 
     return fitted_estimators
 
