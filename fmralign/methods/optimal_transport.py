@@ -140,9 +140,9 @@ class OptimalTransport(BaseAlignment):
     def transform(self, X):
         """Transform X using optimal coupling computed during fit."""
         n_voxels = X.shape[1]
+        X_torch = torch.from_numpy(X).to(DEVICE)
         if self.backend == "geomloss":
-            X_torch = torch.tensor(np.ascontiguousarray(X.T), device=DEVICE)
-            X_i = LazyTensor(X_torch[:, None, :])
+            X_i = LazyTensor(X_torch.T[:, None, :])
             X_aligned = (X_i * self.R).sum(axis=0) * n_voxels
             return X_aligned.cpu().numpy().T
         return X @ self.R * n_voxels
