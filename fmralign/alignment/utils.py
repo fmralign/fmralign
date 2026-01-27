@@ -1,7 +1,6 @@
 import warnings
 
 import numpy as np
-from joblib import Parallel, delayed
 from sklearn.base import clone
 
 from fmralign.methods import (
@@ -253,22 +252,17 @@ def _map_to_target(
     """
     n_labels = len(np.unique(labels))
     fitted_estimators = []
-    if n_labels > 1:
-        for subject_data in X:
+    for subject_data in X:
+        if n_labels > 1:
             estimator = PiecewiseAlignment(
-                method=method,
-                labels=labels,
-                n_jobs=n_jobs,
-                verbose=verbose,
+                method=method, labels=labels, n_jobs=n_jobs, verbose=verbose
             )
             estimator.fit(subject_data, target_data)
             fitted_estimators.append(estimator)
-    else:
-        fitted_estimators = Parallel(
-            n_jobs=n_jobs,
-            backend="threading",
-            verbose=verbose,
-        )(delayed(clone(method).fit)(x, target_data) for x in X)
+        else:
+            estimator = clone(method)
+            estimator.fit(subject_data, target_data)
+            fitted_estimators.append(estimator)
 
     return fitted_estimators
 
