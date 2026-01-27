@@ -257,12 +257,10 @@ def _map_to_target(
             estimator = PiecewiseAlignment(
                 method=method, labels=labels, n_jobs=n_jobs, verbose=verbose
             )
-            estimator.fit(subject_data, target_data)
-            fitted_estimators.append(estimator)
         else:
             estimator = clone(method)
-            estimator.fit(subject_data, target_data)
-            fitted_estimators.append(estimator)
+        estimator.fit(subject_data, target_data)
+        fitted_estimators.append(estimator)
 
     return fitted_estimators
 
