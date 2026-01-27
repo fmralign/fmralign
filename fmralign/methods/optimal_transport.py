@@ -9,17 +9,6 @@ from fmralign.methods.base import BaseAlignment
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-def pca_approx(X, Y, k=64):
-    Z = torch.cat([X, Y], dim=0)
-    Z = Z - Z.mean(dim=0, keepdim=True)
-    C = Z.T @ Z / Z.shape[0]
-
-    eigvals, eigvecs = torch.linalg.eigh(C)
-    idx = torch.argsort(eigvals, descending=True)
-    Vk = eigvecs[:, idx[:k]]
-    return X @ Vk, Y @ Vk
-
-
 class OptimalTransport(BaseAlignment):
     """
     Compute the optimal coupling between X and Y with entropic regularization,
@@ -67,7 +56,6 @@ class OptimalTransport(BaseAlignment):
         scaling=0.95,
         alpha=0.1,
         evecs=None,
-        rank=64,
         backend="pot",
         verbose=False,
         **kwargs,
@@ -78,7 +66,6 @@ class OptimalTransport(BaseAlignment):
         self.scaling = scaling
         self.alpha = alpha
         self.evecs = evecs
-        self.rank = rank
         self.backend = backend
         self.verbose = verbose
         self.kwargs = kwargs
@@ -108,10 +95,13 @@ class OptimalTransport(BaseAlignment):
                 ],
             )
 
+        X_torch = torch.tensor(np.ascontiguousarray(X.T), device=DEVICE)
+        Y_torch = torch.tensor(np.ascontiguousarray(Y.T), device=DEVICE)
+
         if self.backend == "pot":
             res = ot.solve_sample(
-                X.T,
-                Y.T,
+                X_torch.T,
+                Y_torch.T,
                 reg=self.reg,
                 tol=self.tol,
                 max_iter=self.max_iter,
@@ -123,9 +113,6 @@ class OptimalTransport(BaseAlignment):
             self.R = res.plan
 
         elif self.backend == "geomloss":
-            X_torch = torch.tensor(np.ascontiguousarray(X.T), device=DEVICE)
-            Y_torch = torch.tensor(np.ascontiguousarray(Y.T), device=DEVICE)
-            Xk, Yk = pca_approx(X_torch, Y_torch, k=self.rank)
             loss = geomloss.SamplesLoss(
                 "sinkhorn",
                 blur=np.sqrt(self.reg),
@@ -136,15 +123,17 @@ class OptimalTransport(BaseAlignment):
                 backend="online",
             )
 
-            f, g = loss(Xk, Yk)
+            f, g = loss(X_torch, Y_torch)
             f /= self.reg
             g /= self.reg
-            X_i = LazyTensor(Xk[:, None, :])
-            Y_j = LazyTensor(Yk[None, :, :])
+            X_i = LazyTensor(X_torch[:, None, :])
+            Y_j = LazyTensor(Y_torch[None, :, :])
             F = LazyTensor(f.flatten()[:, None, None])
             G = LazyTensor(g.flatten()[None, :, None])
             C = -(X_i * Y_j).sum(-1)
-            self.R = (F + G - C / self.reg).exp() / (Xk.shape[0] * Yk.shape[0])
+            self.R = (F + G - C / self.reg).exp() / (
+                X_torch.shape[0] * Y_torch.shape[0]
+            )
 
         return self
 
