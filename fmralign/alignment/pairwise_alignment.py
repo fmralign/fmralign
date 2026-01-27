@@ -19,7 +19,7 @@ class PairwiseAlignment(BaseEstimator, TransformerMixin):
     method : str or a `BaseAlignment` instance, default="identity"
         The alignment method to use. It can be a string representing the method name
         or an instance of a class derived from `BaseAlignment`. Available methods include:
-        ["identity", "procrustes", "ot", "sparseuot", "ridge"].
+        ["identity", "procrustes", "ot", "ridge"].
     labels : array-like or None, default=None
         Describes each voxel label's in the case of non-overlapping parcels.
         If provided, local alignments can be performed in parallel.
@@ -121,3 +121,9 @@ class PairwiseAlignment(BaseEstimator, TransformerMixin):
         raise AttributeError(
             "type object 'PairwiseAlignment' has no 'fit_transform' attribute"
         )
+
+    def predict(self, X):
+        """Alias for the transform method. Used for compatibility with
+        sklearn cross-validation utilities. This method should not be called
+        directly."""
+        return self.transform(X)

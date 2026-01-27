@@ -9,7 +9,6 @@ from fmralign.methods import (
     OptimalTransport,
     Procrustes,
     RidgeAlignment,
-    SparseUOT,
 )
 from fmralign.methods.piecewise import PiecewiseAlignment
 
@@ -68,7 +67,7 @@ def _check_input_arrays(X):
         raise ValueError("Input data cannot be empty.")
     if not all(isinstance(x, np.ndarray) for x in subjects_values):
         raise ValueError(
-            "All elements in the input dict must be numpy arrays."
+            "All elements in the input dict must be numpy arrays.",
         )
     if not all(x.ndim == 2 for x in subjects_values):
         raise ValueError("All arrays in the input dict must be 2D arrays.")
@@ -76,13 +75,13 @@ def _check_input_arrays(X):
         x.shape[0] == subjects_values[0].shape[0] for x in subjects_values
     ):
         raise ValueError(
-            "All arrays in the input dict must have the same number of samples."
+            "All arrays in the input dict must have the same number of samples.",
         )
     if not all(
         x.shape[1] == subjects_values[0].shape[1] for x in subjects_values
     ):
         raise ValueError(
-            "All arrays in the input dict must have the same number of features."
+            "All arrays in the input dict must have the same number of features.",
         )
     return subjects_keys, subjects_values
 
@@ -105,16 +104,16 @@ def _check_target(X, y):
     """
     if isinstance(y, str) and y == "template":
         return "template"
-    elif isinstance(y, str) and y == "leave_one_subject_out":
+    if isinstance(y, str) and y == "leave_one_subject_out":
         return "leave_one_subject_out"
     if isinstance(y, np.ndarray):
         if y.shape[0] != X.shape[0]:
             raise ValueError(
-                "Target must have the same number of samples as the input data."
+                "Target must have the same number of samples as the input data.",
             )
         return y
     raise ValueError(
-        "Target must be an array-like, 'template' or 'leave_one_subject_out'."
+        "Target must be an array-like, 'template' or 'leave_one_subject_out'.",
     )
 
 
@@ -141,7 +140,6 @@ def _check_method(method):
     valid_methods = {
         "identity": Identity(),
         "ot": OptimalTransport(),
-        "sparse_uot": SparseUOT(),
         "procrustes": Procrustes(),
         "ridge": RidgeAlignment(),
         "srm": DetSRM(),
@@ -152,7 +150,7 @@ def _check_method(method):
         if method is None:
             raise ValueError(
                 f"Method '{method}' is not recognized. "
-                f"Valid methods are: {list(valid_methods.keys())}"
+                f"Valid methods are: {list(valid_methods.keys())}",
             )
 
     return method
@@ -182,12 +180,12 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
         # If no labels are provided, create a single label for the whole brain
         labels = np.ones(X.shape[1], dtype=int)
         warnings.warn(
-            "No labels provided, using a single label for all features."
+            "No labels provided, using a single label for all features.",
         )
     else:
         if len(labels) != X.shape[1]:
             raise ValueError(
-                "The length of labels must match the number of features in the data."
+                "The length of labels must match the number of features in the data.",
             )
         if labels.ndim != 1:
             raise ValueError("Labels must be a 1D array.")
@@ -196,7 +194,7 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
 
         if verbose > 0:
             print(
-                f"The alignment will be applied on parcels of sizes {counts}"
+                f"The alignment will be applied on parcels of sizes {counts}",
             )
 
         if (counts > threshold).any():
@@ -259,12 +257,10 @@ def _map_to_target(
             estimator = PiecewiseAlignment(
                 method=method, labels=labels, n_jobs=n_jobs, verbose=verbose
             )
-            estimator.fit(subject_data, target_data)
-            fitted_estimators.append(estimator)
         else:
             estimator = clone(method)
-            estimator.fit(subject_data, target_data)
-            fitted_estimators.append(estimator)
+        estimator.fit(subject_data, target_data)
+        fitted_estimators.append(estimator)
 
     return fitted_estimators
 
@@ -348,7 +344,7 @@ def _init_template(X, method, scale_template=False, labels=None):
                 [
                     np.random.randn(n_samples, n_components)
                     for _ in range(n_labels)
-                ]
+                ],
             )
     else:
         template = _rescaled_euclidean_mean(X, scale_template)
