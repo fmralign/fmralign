@@ -19,7 +19,6 @@ dependencies = [
     "nibabel",
     "nilearn>=0.13.0",
     "POT",
-    "fugw>=0.1.1",
     "torch"
 ]
 description = "Functional alignment for fMRI"
