@@ -82,8 +82,8 @@ class OptimalTransport(BaseAlignment):
             **self.kwargs,
         )
 
-        # Store the transport plan on CPU
-        self.R = res.plan.cpu()
+        # Store the transport plan on CPU as a numpy array
+        self.R = res.plan.cpu().numpy()
 
         return self
 
