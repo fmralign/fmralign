@@ -8,7 +8,6 @@ from fmralign.methods import (
     OptimalTransport,
     Procrustes,
     RidgeAlignment,
-    SparseUOT,
 )
 from fmralign.methods.piecewise import (
     PiecewiseAlignment,
@@ -22,7 +21,6 @@ from fmralign.tests.utils import sample_labels, sample_one_subject
 methods = [
     Identity(),
     Procrustes(),
-    SparseUOT(),
     RidgeAlignment(),
     OptimalTransport(),
     DetSRM(),
