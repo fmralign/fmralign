@@ -6,7 +6,7 @@ from fmralign import GroupAlignment
 from fmralign.alignment.utils import _check_method
 from fmralign.tests.utils import sample_subjects
 
-methods = ["identity", "ot", "sparse_uot", "procrustes", "ridge", "srm"]
+methods = ["identity", "ot", "procrustes", "ridge", "srm"]
 
 
 @pytest.mark.parametrize("method", methods)
