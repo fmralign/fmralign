@@ -90,5 +90,6 @@ class OptimalTransport(BaseAlignment):
     def transform(self, X):
         """Transform X using optimal coupling computed during fit."""
         n_voxels = self.R.shape[1]
+        R_torch = torch.tensor(self.R, device=self.device, dtype=torch.float32)
         X_torch = torch.from_numpy(X).to(torch.float32).to(self.device)
-        return (X_torch @ self.R.to(self.device) * n_voxels).cpu().numpy()
+        return (X_torch @ R_torch * n_voxels).cpu().numpy()
