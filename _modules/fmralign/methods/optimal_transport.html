@@ -296,18 +296,9 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for fmralign.methods.optimal_transport</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">ot</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">fugw.solvers.utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">batch_elementwise_prod_and_sum</span><span class="p">,</span>
-    <span class="n">crow_indices_to_row_indices</span><span class="p">,</span>
-    <span class="n">solver_sinkhorn_sparse</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">fugw.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">_low_rank_squared_l2</span><span class="p">,</span> <span class="n">_make_csr_matrix</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">cdist</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.methods.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseAlignment</span>
 
@@ -321,37 +312,47 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    solver : str (optional)</span>
-<span class="sd">        solver from POT called to find optimal coupling &#39;sinkhorn&#39;,</span>
-<span class="sd">        &#39;greenkhorn&#39;, &#39;sinkhorn_stabilized&#39;,&#39;sinkhorn_epsilon_scaling&#39;, &#39;exact&#39;</span>
-<span class="sd">        see POT/ot/bregman on Github for source code of solvers</span>
-<span class="sd">    metric : str (optional)</span>
-<span class="sd">        metric used to create transport cost matrix,</span>
-<span class="sd">        see full list in scipy.spatial.distance.cdist doc</span>
-<span class="sd">    reg : int (optional)</span>
-<span class="sd">        level of entropic regularization</span>
+<span class="sd">    reg : float (optional)</span>
+<span class="sd">        Strength of the entropic regularization. Defaults to 0.01.</span>
+<span class="sd">    max_iter : int (optional)</span>
+<span class="sd">        Maximum number of iterations. Defaults to 1000.</span>
+<span class="sd">    tol : float (optional)</span>
+<span class="sd">        Tolerance for stopping criterion. Defaults to 1e-7.</span>
+<span class="sd">    verbose : bool (optional)</span>
+<span class="sd">        Allow verbose output. Defaults to False.</span>
+<span class="sd">    scaling : float</span>
+<span class="sd">        Scaling parameter for GeomLoss solver when n_features &gt; 1000.</span>
+<span class="sd">        Defaults to 0.95.</span>
+<span class="sd">    device : str</span>
+<span class="sd">        Torch compatible device. Defaults to &quot;cpu&quot;.</span>
+<span class="sd">    kwargs : dict</span>
+<span class="sd">        Additional arguments to be passed to the OT solver.</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    R : scipy.sparse.csr_matrix</span>
-<span class="sd">        Mixing matrix containing the optimal permutation</span>
+<span class="sd">    R : (n_features, n_features) nd array or LazyTensor</span>
+<span class="sd">        Transport plan computed during fitting.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="OptimalTransport.__init__">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.OptimalTransport.html#fmralign.methods.OptimalTransport.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">solver</span><span class="o">=</span><span class="s2">&quot;sinkhorn_epsilon_scaling&quot;</span><span class="p">,</span>
-        <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
         <span class="n">reg</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span>
         <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-        <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+        <span class="n">tol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span>
+        <span class="n">scaling</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">solver</span> <span class="o">=</span> <span class="n">solver</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scaling</span> <span class="o">=</span> <span class="n">scaling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span></div>
 
 
 <div class="viewcode-block" id="OptimalTransport.fit">
@@ -366,216 +367,42 @@
 <span class="sd">        Y: (n_samples, n_features) nd array</span>
 <span class="sd">            target data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span>
+        <span class="p">)</span>
+        <span class="n">Y_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span>
+        <span class="p">)</span>
 
-        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">5000</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;One parcel is </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> voxels. As optimal transport on this region &quot;</span>
-                <span class="s2">&quot;would take too much time, no alignment was performed on it. &quot;</span>
-                <span class="s2">&quot;Decrease parcel size to have intended behavior of alignment.&quot;</span>
-            <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-            <span class="k">return</span> <span class="bp">self</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n</span>
-            <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">X_torch</span><span class="p">,</span> <span class="n">Y_torch</span><span class="p">)</span>
+        <span class="n">M_normalized</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cost_normalization</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span>
 
-            <span class="n">M</span> <span class="o">=</span> <span class="n">cdist</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+            <span class="n">M</span><span class="o">=</span><span class="n">M_normalized</span><span class="p">,</span>
+            <span class="n">reg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reg</span><span class="p">,</span>
+            <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
+            <span class="n">max_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="n">grad</span><span class="o">=</span><span class="s2">&quot;detach&quot;</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
 
-            <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">ot</span><span class="o">.</span><span class="n">sinkhorn</span><span class="p">(</span>
-                    <span class="n">a</span><span class="p">,</span>
-                    <span class="n">b</span><span class="p">,</span>
-                    <span class="n">M</span><span class="p">,</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">reg</span><span class="p">,</span>
-                    <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">solver</span><span class="p">,</span>
-                    <span class="n">numItermax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span>
-                    <span class="n">stopThr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
-                <span class="p">)</span>
-                <span class="o">*</span> <span class="n">n</span>
-            <span class="p">)</span>
-            <span class="k">return</span> <span class="bp">self</span></div>
+        <span class="c1"># Store the transport plan on CPU as a numpy array</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">plan</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
 
 
 <div class="viewcode-block" id="OptimalTransport.transform">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.OptimalTransport.html#fmralign.methods.OptimalTransport.transform">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform X using optimal coupling computed during fit.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">)</span></div>
+        <span class="n">n_voxels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">R_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">X_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">X_torch</span> <span class="o">@</span> <span class="n">R_torch</span> <span class="o">*</span> <span class="n">n_voxels</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span></div>
 </div>
 
-
-
-<span class="k">class</span><span class="w"> </span><span class="nc">SparseUOT</span><span class="p">(</span><span class="n">BaseAlignment</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Compute the unbalanced regularized optimal coupling between X and Y,</span>
-<span class="sd">    with sparsity constraints inspired by the FUGW package sparse</span>
-<span class="sd">    sinkhorn solver.</span>
-<span class="sd">    (https://github.com/alexisthual/fugw/blob/main/src/fugw/solvers/sparse.py)</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    sparsity_mask : sparse torch.Tensor of shape (n_features, n_features)</span>
-<span class="sd">        Sparse mask that defines the sparsity pattern of the coupling matrix.</span>
-<span class="sd">    rho : float (optional)</span>
-<span class="sd">        Strength of the unbalancing constraint. Lower values will favor lower</span>
-<span class="sd">        mass transport. Defaults to infinity.</span>
-<span class="sd">    reg : float (optional)</span>
-<span class="sd">        Strength of the entropic regularization. Defaults to 0.1.</span>
-<span class="sd">    max_iter : int (optional)</span>
-<span class="sd">        Maximum number of iterations. Defaults to 1000.</span>
-<span class="sd">    tol : float (optional)</span>
-<span class="sd">        Tolerance for stopping criterion. Defaults to 1e-7.</span>
-<span class="sd">    eval_freq : int (optional)</span>
-<span class="sd">        Frequency of evaluation of the stopping criterion. Defaults to 10.</span>
-<span class="sd">    device : str (optional)</span>
-<span class="sd">        Device on which to perform computations. Defaults to &#39;cpu&#39;.</span>
-<span class="sd">    verbose : bool (optional)</span>
-<span class="sd">        Whether to print progress information. Defaults to False.</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    pi : sparse torch.Tensor of shape (n_features, n_features)</span>
-<span class="sd">        Sparse coupling matrix</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">sparsity_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">rho</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">),</span>
-        <span class="n">reg</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span>
-        <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-        <span class="n">tol</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
-        <span class="n">eval_freq</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-        <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
-        <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rho</span> <span class="o">=</span> <span class="n">rho</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sparsity_mask</span> <span class="o">=</span> <span class="n">sparsity_mask</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">eval_freq</span> <span class="o">=</span> <span class="n">eval_freq</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_initialize_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">cost</span><span class="p">):</span>
-        <span class="n">crow_indices</span><span class="p">,</span> <span class="n">col_indices</span> <span class="o">=</span> <span class="n">cost</span><span class="o">.</span><span class="n">crow_indices</span><span class="p">(),</span> <span class="n">cost</span><span class="o">.</span><span class="n">col_indices</span><span class="p">()</span>
-        <span class="n">row_indices</span> <span class="o">=</span> <span class="n">crow_indices_to_row_indices</span><span class="p">(</span><span class="n">crow_indices</span><span class="p">)</span>
-        <span class="n">weights</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
-        <span class="n">ws_dot_wt_values</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="n">row_indices</span><span class="p">]</span> <span class="o">*</span> <span class="n">weights</span><span class="p">[</span><span class="n">col_indices</span><span class="p">]</span>
-        <span class="n">ws_dot_wt</span> <span class="o">=</span> <span class="n">_make_csr_matrix</span><span class="p">(</span>
-            <span class="n">crow_indices</span><span class="p">,</span>
-            <span class="n">col_indices</span><span class="p">,</span>
-            <span class="n">ws_dot_wt_values</span><span class="p">,</span>
-            <span class="n">cost</span><span class="o">.</span><span class="n">size</span><span class="p">(),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">weights</span><span class="p">,</span> <span class="n">ws_dot_wt</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_initialize_plan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">torch</span><span class="o">.</span><span class="n">sparse_coo_tensor</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">sparsity_mask</span><span class="o">.</span><span class="n">indices</span><span class="p">(),</span>
-                <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sparsity_mask</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-                <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparsity_mask</span><span class="o">.</span><span class="n">values</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
-            <span class="p">)</span>
-            <span class="o">.</span><span class="n">coalesce</span><span class="p">()</span>
-            <span class="o">.</span><span class="n">to_sparse_csr</span><span class="p">()</span>
-            <span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_uot_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_plan</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="n">crow_indices</span><span class="p">,</span> <span class="n">col_indices</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">init_plan</span><span class="o">.</span><span class="n">crow_indices</span><span class="p">(),</span>
-            <span class="n">init_plan</span><span class="o">.</span><span class="n">col_indices</span><span class="p">(),</span>
-        <span class="p">)</span>
-        <span class="n">row_indices</span> <span class="o">=</span> <span class="n">crow_indices_to_row_indices</span><span class="p">(</span><span class="n">crow_indices</span><span class="p">)</span>
-        <span class="n">cost_values</span> <span class="o">=</span> <span class="n">batch_elementwise_prod_and_sum</span><span class="p">(</span>
-            <span class="n">F</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">F</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">row_indices</span><span class="p">,</span> <span class="n">col_indices</span><span class="p">,</span> <span class="mi">1</span>
-        <span class="p">)</span>
-        <span class="c1"># Clamp negative values to avoid numerical errors</span>
-        <span class="n">cost_values</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">cost_values</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
-        <span class="n">cost_values</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">cost_values</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">_make_csr_matrix</span><span class="p">(</span>
-            <span class="n">crow_indices</span><span class="p">,</span>
-            <span class="n">col_indices</span><span class="p">,</span>
-            <span class="n">cost_values</span><span class="p">,</span>
-            <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        X: (n_samples, n_features) torch.Tensor</span>
-<span class="sd">            source data</span>
-<span class="sd">        Y: (n_samples, n_features) torch.Tensor</span>
-<span class="sd">            target data</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparsity_mask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># If no sparsity mask is provided, use a dense mask</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sparsity_mask</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
-                <span class="p">(</span><span class="n">n_features</span><span class="p">,</span> <span class="n">n_features</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span>
-            <span class="p">)</span><span class="o">.</span><span class="n">to_sparse_coo</span><span class="p">()</span>
-        <span class="n">F</span> <span class="o">=</span> <span class="n">_low_rank_squared_l2</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-
-        <span class="n">init_plan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_plan</span><span class="p">(</span><span class="n">n_features</span><span class="p">)</span>
-        <span class="n">cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uot_cost</span><span class="p">(</span><span class="n">init_plan</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>
-
-        <span class="n">weights</span><span class="p">,</span> <span class="n">ws_dot_wt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_weights</span><span class="p">(</span><span class="n">n_features</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span>
-
-        <span class="n">uot_params</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
-            <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">rho</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
-            <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">reg</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="n">init_duals</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_features</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
-            <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_features</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="n">tuple_weights</span> <span class="o">=</span> <span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">ws_dot_wt</span><span class="p">)</span>
-        <span class="n">train_params</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_freq</span><span class="p">)</span>
-
-        <span class="n">_</span><span class="p">,</span> <span class="n">pi</span> <span class="o">=</span> <span class="n">solver_sinkhorn_sparse</span><span class="p">(</span>
-            <span class="n">cost</span><span class="o">=</span><span class="n">cost</span><span class="p">,</span>
-            <span class="n">init_duals</span><span class="o">=</span><span class="n">init_duals</span><span class="p">,</span>
-            <span class="n">uot_params</span><span class="o">=</span><span class="n">uot_params</span><span class="p">,</span>
-            <span class="n">tuple_weights</span><span class="o">=</span><span class="n">tuple_weights</span><span class="p">,</span>
-            <span class="n">train_params</span><span class="o">=</span><span class="n">train_params</span><span class="p">,</span>
-            <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="c1"># Convert pi to coo format</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">pi</span><span class="o">.</span><span class="n">to_sparse_coo</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span> <span class="o">*</span> <span class="n">n_features</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">values</span><span class="p">()</span><span class="o">.</span><span class="n">isnan</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Coupling matrix contains NaN values,&quot;</span>
-                <span class="s2">&quot;try increasing the regularization parameter.&quot;</span>
-            <span class="p">)</span>
-
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform X using optimal coupling computed during fit.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        X : torch.Tensor of shape (n_samples, n_features)</span>
-<span class="sd">            Input data to be transformed</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        torch.Tensor of shape (n_samples, n_features)</span>
-<span class="sd">            Transformed data</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">X_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">X_</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">)</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
 </pre></div>
         </article>
       </div>

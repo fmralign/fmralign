@@ -122,7 +122,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       parcellation.fit(images_to_parcel)
     /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
-    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:212: UserWarning: 
+    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:210: UserWarning: 
      Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
      parcel 1 : 1011 voxels
      parcel 7 : 1315 voxels
@@ -1794,7 +1794,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (2 minutes 8.426 seconds)
+   **Total running time of the script:** (1 minutes 45.913 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_template_bias.py:

@@ -332,33 +332,39 @@ signature, and not how to use it. Please refer to the
 <h1>fmralign.methods.OptimalTransport<a class="headerlink" href="#fmralign-methods-optimaltransport" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="fmralign.methods.OptimalTransport">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fmralign.methods.</span></span><span class="sig-name descname"><span class="pre">OptimalTransport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sinkhorn_epsilon_scaling'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/fmralign/methods/optimal_transport.html#OptimalTransport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.methods.OptimalTransport" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fmralign.methods.</span></span><span class="sig-name descname"><span class="pre">OptimalTransport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/fmralign/methods/optimal_transport.html#OptimalTransport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.methods.OptimalTransport" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the optimal coupling between X and Y with entropic regularization,
 using the pure Python POT (<a class="reference external" href="https://pythonot.github.io/">https://pythonot.github.io/</a>) package.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>solver</strong><span class="classifier">str (optional)</span></dt><dd><p>solver from POT called to find optimal coupling ‘sinkhorn’,
-‘greenkhorn’, ‘sinkhorn_stabilized’,’sinkhorn_epsilon_scaling’, ‘exact’
-see POT/ot/bregman on Github for source code of solvers</p>
+<dt><strong>reg</strong><span class="classifier">float (optional)</span></dt><dd><p>Strength of the entropic regularization. Defaults to 0.01.</p>
 </dd>
-<dt><strong>metric</strong><span class="classifier">str (optional)</span></dt><dd><p>metric used to create transport cost matrix,
-see full list in scipy.spatial.distance.cdist doc</p>
+<dt><strong>max_iter</strong><span class="classifier">int (optional)</span></dt><dd><p>Maximum number of iterations. Defaults to 1000.</p>
 </dd>
-<dt><strong>reg</strong><span class="classifier">int (optional)</span></dt><dd><p>level of entropic regularization</p>
+<dt><strong>tol</strong><span class="classifier">float (optional)</span></dt><dd><p>Tolerance for stopping criterion. Defaults to 1e-7.</p>
+</dd>
+<dt><strong>verbose</strong><span class="classifier">bool (optional)</span></dt><dd><p>Allow verbose output. Defaults to False.</p>
+</dd>
+<dt><strong>scaling</strong><span class="classifier">float</span></dt><dd><p>Scaling parameter for GeomLoss solver when n_features &gt; 1000.
+Defaults to 0.95.</p>
+</dd>
+<dt><strong>device</strong><span class="classifier">str</span></dt><dd><p>Torch compatible device. Defaults to “cpu”.</p>
+</dd>
+<dt><strong>kwargs</strong><span class="classifier">dict</span></dt><dd><p>Additional arguments to be passed to the OT solver.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>R</strong><span class="classifier">scipy.sparse.csr_matrix</span></dt><dd><p>Mixing matrix containing the optimal permutation</p>
+<dt><strong>R</strong><span class="classifier">(n_features, n_features) nd array or LazyTensor</span></dt><dd><p>Transport plan computed during fitting.</p>
 </dd>
 </dl>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="fmralign.methods.OptimalTransport.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sinkhorn_epsilon_scaling'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/fmralign/methods/optimal_transport.html#OptimalTransport.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.methods.OptimalTransport.__init__" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/fmralign/methods/optimal_transport.html#OptimalTransport.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.methods.OptimalTransport.__init__" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

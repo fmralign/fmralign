@@ -117,17 +117,14 @@ First, we fetch and plot the complete atlas
  .. code-block:: none
 
     [fetch_atlas_yeo_2011] Dataset created in /home/runner/nilearn_data/yeo_2011
-    [fetch_atlas_yeo_2011] Downloading data from 
-    ftp://surfer.nmr.mgh.harvard.edu/pub/data/Yeo_JNeurophysiol11_MNI152.zip ...
-    [fetch_atlas_yeo_2011]  ...done. (1 seconds, 0 min)
+    [fetch_atlas_yeo_2011] Downloading data from ftp://surfer.nmr.mgh.harvard.edu/pub/data/Yeo_JNeurophysiol11_MNI152.zip ...
+    [fetch_atlas_yeo_2011]  ...done. (0 seconds, 0 min)
 
-    [fetch_atlas_yeo_2011] Extracting data from 
-    /home/runner/nilearn_data/yeo_2011/622858b56913b19ae0865d9fa8ad47cc/Yeo_JNeuroph
-    ysiol11_MNI152.zip...
+    [fetch_atlas_yeo_2011] Extracting data from /home/runner/nilearn_data/yeo_2011/622858b56913b19ae0865d9fa8ad47cc/Yeo_JNeurophysiol11_MNI152.zip...
     [fetch_atlas_yeo_2011] .. done.
 
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f7d3c0c0110>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f7c79fb99a0>
 
 
 
@@ -252,7 +249,7 @@ predict target test data.
     /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:129: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       ) = roi_masker.transform(
-    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:184: UserWarning: No labels provided, using a single label for all features.
+    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:182: UserWarning: No labels provided, using a single label for all features.
       warnings.warn(
 
 
@@ -366,7 +363,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 14.127 seconds)
+   **Total running time of the script:** (0 minutes 12.992 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_roi_alignment.py:
