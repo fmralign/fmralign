@@ -22,3 +22,4 @@ Functions
    parcellation.get_adjacency_from_labels
    parcellation.get_labels
    whole_brain.get_adjacency_from_mask
+   whole_brain.get_laplacian_embedding
