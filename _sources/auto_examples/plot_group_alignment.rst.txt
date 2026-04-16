@@ -70,55 +70,55 @@ mask is a binary image used to extract grey matter regions.
     [get_dataset_dir] Added README.md to /home/runner/nilearn_data
     [get_dataset_dir] Dataset created in /home/runner/nilearn_data/ibc
     [fetch_files] Downloading data from https://osf.io/pcvje/download ...
-    [fetch_files]  ...done. (2 seconds, 0 min)
+    [fetch_files]  ...done. (1 seconds, 0 min)
 
     [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/8e275a34345802c5c273312d85957d6c/download...
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/yvju3/download ...
-    [fetch_files]  ...done. (3 seconds, 0 min)
+    [fetch_files]  ...done. (2 seconds, 0 min)
 
     [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/fe06df963fcb3fd454f63a33f0864e8d/download...
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/8z23h/download ...
-    [fetch_files]     Downloaded 5603328 of 21185337 bytes (26.4%%,    2.8s remaining)
-    [fetch_files]  ...done. (3 seconds, 0 min)
+    [fetch_files]     Downloaded 7929856 of 21185337 bytes (37.4%%,    1.7s remaining)
+    [fetch_files]  ...done. (4 seconds, 0 min)
 
     [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/100352739b7501f0ed04920933b4be36/download...
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/e9kbm/download ...
-    [fetch_files]     Downloaded 15810560 of 21196887 bytes (74.6%%,    0.3s remaining)
-    [fetch_files]  ...done. (3 seconds, 0 min)
+    [fetch_files]     Downloaded 15998976 of 21196887 bytes (75.5%%,    0.3s remaining)
+    [fetch_files]  ...done. (2 seconds, 0 min)
 
     [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/331a0a579c6e46c0911502a96215b358/download...
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/qn5b6/download ...
-    [fetch_files]     Downloaded 16547840 of 21197218 bytes (78.1%%,    0.3s remaining)
-    [fetch_files]  ...done. (3 seconds, 0 min)
+    [fetch_files]     Downloaded 14688256 of 21197218 bytes (69.3%%,    0.4s remaining)
+    [fetch_files]  ...done. (2 seconds, 0 min)
 
     [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/cd396fed594eb866baecd48b70ddf7e7/download...
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/u74a3/download ...
-    [fetch_files]     Downloaded 12820480 of 21185350 bytes (60.5%%,    0.7s remaining)
+    [fetch_files]     Downloaded 8413184 of 21185350 bytes (39.7%%,    1.5s remaining)
     [fetch_files]  ...done. (4 seconds, 0 min)
 
     [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/fc5556cc3678df4f4ab566414382180a/download...
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/83bje/download ...
-    [fetch_files]     Downloaded 16269312 of 21188335 bytes (76.8%%,    0.3s remaining)
-    [fetch_files]  ...done. (3 seconds, 0 min)
+    [fetch_files]     Downloaded 16203776 of 21188335 bytes (76.5%%,    0.3s remaining)
+    [fetch_files]  ...done. (2 seconds, 0 min)
 
     [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/1beaa1b5a1734a1afbf1c844e1f7a60e/download...
     [fetch_files] .. done.
 
     [fetch_files] Downloading data from https://osf.io/43j69/download ...
-    [fetch_files]     Downloaded 8413184 of 21187400 bytes (39.7%%,    1.5s remaining)
-    [fetch_files]  ...done. (4 seconds, 0 min)
+    [fetch_files]     Downloaded 15810560 of 21187400 bytes (74.6%%,    0.3s remaining)
+    [fetch_files]  ...done. (3 seconds, 0 min)
 
     [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/75e62c44985852e000c2b2865badf72d/download...
     [fetch_files] .. done.
@@ -398,7 +398,7 @@ better inter-subject similarity than regular euclidean averaging.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (3 minutes 12.102 seconds)
+   **Total running time of the script:** (2 minutes 58.414 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_group_alignment.py:

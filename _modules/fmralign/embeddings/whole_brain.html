@@ -250,6 +250,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../modules/generated/fmralign.embeddings.parcellation.get_adjacency_from_labels.html">fmralign.embeddings.parcellation.get_adjacency_from_labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../modules/generated/fmralign.embeddings.parcellation.get_labels.html">fmralign.embeddings.parcellation.get_labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../modules/generated/fmralign.embeddings.whole_brain.get_adjacency_from_mask.html">fmralign.embeddings.whole_brain.get_adjacency_from_mask</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../modules/generated/fmralign.embeddings.whole_brain.get_laplacian_embedding.html">fmralign.embeddings.whole_brain.get_laplacian_embedding</a></li>
 </ul>
 </li>
 </ul>
@@ -297,8 +298,12 @@
         <article role="main" id="furo-main-content">
           <h1>Source code for fmralign.embeddings.whole_brain</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">robust_laplacian</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">rl</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse.linalg</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sla</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nibabel</span><span class="w"> </span><span class="kn">import</span> <span class="n">Nifti1Image</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">resampling</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.masking</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_mask_img</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.surface</span><span class="w"> </span><span class="kn">import</span> <span class="n">InMemoryMesh</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">neighbors</span>
 
 
@@ -334,6 +339,50 @@
     <span class="n">A</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mask_coords</span><span class="p">)</span><span class="o">.</span><span class="n">radius_neighbors_graph</span><span class="p">(</span><span class="n">mask_coords</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">A</span><span class="o">.</span><span class="n">tocoo</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_laplacian_embedding">
+<a class="viewcode-back" href="../../../modules/generated/fmralign.embeddings.whole_brain.get_laplacian_embedding.html#fmralign.embeddings.whole_brain.get_laplacian_embedding">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_laplacian_embedding</span><span class="p">(</span><span class="n">mask_img</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the Laplacian embedding of a given mask image or surface mesh.</span>
+
+<span class="sd">    Given a mask image (Nifti1Image) or a surface mesh (InMemoryMesh),</span>
+<span class="sd">    this function computes the Laplace-Beltrami eigenmodes on the vertices</span>
+<span class="sd">    defined by the mask or mesh. It solves a generalized eigenvalue problem to return</span>
+<span class="sd">    the first `k` eigenmodes.</span>
+
+<span class="sd">    Note: The zero-order eigenmode is skipped.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mask_img : Nifti1Image or InMemoryMesh</span>
+<span class="sd">        Input mask image or surface mesh.</span>
+<span class="sd">    k : int</span>
+<span class="sd">        Number of eigenmodes to compute.</span>
+<span class="sd">    sigma : float, optional</span>
+<span class="sd">        Stability parameter passed to the sparse solver, by default 1e-8.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    evecs : ndarray of shape (k, n_vertices)</span>
+<span class="sd">        The computed Laplacian eigenmodes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mask_img</span><span class="p">,</span> <span class="n">Nifti1Image</span><span class="p">):</span>
+        <span class="n">mask_data</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_mask_img</span><span class="p">(</span><span class="n">mask_img</span><span class="p">)</span>
+        <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">mask_data</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">L</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="n">rl</span><span class="o">.</span><span class="n">point_cloud_laplacian</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mask_img</span><span class="p">,</span> <span class="n">InMemoryMesh</span><span class="p">):</span>
+        <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">mask_img</span><span class="o">.</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;&lt;f4&quot;</span><span class="p">)</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">mask_img</span><span class="o">.</span><span class="n">faces</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;&lt;f4&quot;</span><span class="p">)</span>
+        <span class="n">L</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="n">rl</span><span class="o">.</span><span class="n">mesh_laplacian</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">F</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;mask_img must be a Nifti1Image or an InMemoryMesh.&quot;</span><span class="p">)</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">evecs</span> <span class="o">=</span> <span class="n">sla</span><span class="o">.</span><span class="n">eigsh</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">evecs</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># skip first eigenvector</span></div>
 
 </pre></div>
         </article>
