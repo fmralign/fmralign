@@ -23,3 +23,4 @@ Classes
    Procrustes
    RidgeAlignment
    OptimalTransport
+   SpectralOT
