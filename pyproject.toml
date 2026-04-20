@@ -4,9 +4,9 @@ requires = ["hatchling", "hatch-vcs"]
 
 [project]
 authors = [
-    {name = "Elizabeth DuPre", email = "emd222@cornell.edu"},
-    {name = "Thomas Bazeille"},
-    {name = "Bertrand Thirion"}
+    { name = "Elizabeth DuPre", email = "emd222@cornell.edu" },
+    { name = "Thomas Bazeille" },
+    { name = "Bertrand Thirion" },
 ]
 classifiers = ["Programming Language :: Python :: 3"]
 dependencies = [
@@ -20,11 +20,11 @@ dependencies = [
     "nilearn>=0.13.0",
     "POT",
     "robust_laplacian",
-    "torch"
+    "torch",
 ]
 description = "Functional alignment for fMRI"
 dynamic = ["version"]
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 name = "fmralign"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -44,7 +44,7 @@ doc = [
     "sphinx-gallery",
     "sphinxcontrib-bibtex",
     "sphinxext-opengraph",
-    "furo"
+    "furo",
 ]
 # For running unit and docstring tests
 test = ["coverage", "pytest>=6.0.0", "pytest-cov"]
@@ -72,7 +72,7 @@ include = [
     "pyproject.toml",
     "fmralign/**/*.py",
     "examples/**/*.py",
-    "doc/**/*.py"
+    "doc/**/*.py",
 ]
 indent-width = 4
 line-length = 79
@@ -90,12 +90,12 @@ skip-magic-trailing-comma = false
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 fixable = ["ALL"]
 ignore = [
-    "E501"  # Line too long
+    "E501", # Line too long
 ]
 select = [
-    "E",  # pycodestyle
-    "F",  # pyflakes
-    "I"  # isort
+    "E", # pycodestyle
+    "F", # pyflakes
+    "I", # isort
 ]
 unfixable = []
 
