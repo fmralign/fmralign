@@ -11,7 +11,7 @@
 <meta property="og:image" content="https://nilearn.github.io/_images/sphx_glr_plot_alignment_methods_benchmark_thumb.png" />
 <meta property="og:image:alt" content="" />
 <meta name="description" content="Examples using fmralign.methods.OptimalTransport: Alignment methods benchmark (template-based ROI case) Alignment on simulated 2D data." />
-<link rel="search" title="Search" href="../../search.html"><link rel="next" title="fmralign.embeddings: Embedding Utilities" href="../embedding.html"><link rel="prev" title="fmralign.methods.RidgeAlignment" href="fmralign.methods.RidgeAlignment.html">
+<link rel="search" title="Search" href="../../search.html"><link rel="next" title="fmralign.methods.SpectralOT" href="fmralign.methods.SpectralOT.html"><link rel="prev" title="fmralign.methods.RidgeAlignment" href="fmralign.methods.RidgeAlignment.html">
 
     <link rel="shortcut icon" href="../../_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>fmralign.methods.OptimalTransport - fmralign</title>
@@ -252,6 +252,7 @@
 <li class="toctree-l3"><a class="reference internal" href="fmralign.methods.Procrustes.html">fmralign.methods.Procrustes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fmralign.methods.RidgeAlignment.html">fmralign.methods.RidgeAlignment</a></li>
 <li class="toctree-l3 current current-page"><a class="current reference internal" href="#">fmralign.methods.OptimalTransport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fmralign.methods.SpectralOT.html">fmralign.methods.SpectralOT</a></li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../embedding.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.embeddings</span></code>: Embedding Utilities</a><input aria-label="Toggle navigation of fmralign.embeddings: Embedding Utilities" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -333,7 +334,7 @@ signature, and not how to use it. Please refer to the
 <h1>fmralign.methods.OptimalTransport<a class="headerlink" href="#fmralign-methods-optimaltransport" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="fmralign.methods.OptimalTransport">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fmralign.methods.</span></span><span class="sig-name descname"><span class="pre">OptimalTransport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/fmralign/methods/optimal_transport.html#OptimalTransport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.methods.OptimalTransport" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">fmralign.methods.</span></span><span class="sig-name descname"><span class="pre">OptimalTransport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/fmralign/methods/optimal_transport.html#OptimalTransport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.methods.OptimalTransport" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the optimal coupling between X and Y with entropic regularization,
 using the pure Python POT (<a class="reference external" href="https://pythonot.github.io/">https://pythonot.github.io/</a>) package.</p>
 <dl class="field-list simple">
@@ -346,9 +347,6 @@ using the pure Python POT (<a class="reference external" href="https://pythonot.
 <dt><strong>tol</strong><span class="classifier">float (optional)</span></dt><dd><p>Tolerance for stopping criterion. Defaults to 1e-7.</p>
 </dd>
 <dt><strong>verbose</strong><span class="classifier">bool (optional)</span></dt><dd><p>Allow verbose output. Defaults to False.</p>
-</dd>
-<dt><strong>scaling</strong><span class="classifier">float</span></dt><dd><p>Scaling parameter for GeomLoss solver when n_features &gt; 1000.
-Defaults to 0.95.</p>
 </dd>
 <dt><strong>device</strong><span class="classifier">str</span></dt><dd><p>Torch compatible device. Defaults to “cpu”.</p>
 </dd>
@@ -365,7 +363,7 @@ Defaults to 0.95.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="fmralign.methods.OptimalTransport.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scaling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/fmralign/methods/optimal_transport.html#OptimalTransport.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.methods.OptimalTransport.__init__" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/fmralign/methods/optimal_transport.html#OptimalTransport.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#fmralign.methods.OptimalTransport.__init__" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -527,12 +525,12 @@ possible to update each component of a nested object.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../embedding.html">
+          <a class="next-page" href="fmralign.methods.SpectralOT.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.embeddings</span></code>: Embedding Utilities</div>
+                <div class="title">fmralign.methods.SpectralOT</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

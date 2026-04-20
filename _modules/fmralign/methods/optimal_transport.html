@@ -243,6 +243,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../modules/generated/fmralign.methods.Procrustes.html">fmralign.methods.Procrustes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../modules/generated/fmralign.methods.RidgeAlignment.html">fmralign.methods.RidgeAlignment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../modules/generated/fmralign.methods.OptimalTransport.html">fmralign.methods.OptimalTransport</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../modules/generated/fmralign.methods.SpectralOT.html">fmralign.methods.SpectralOT</a></li>
 </ul>
 </li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../modules/embedding.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.embeddings</span></code>: Embedding Utilities</a><input aria-label="Toggle navigation of fmralign.embeddings: Embedding Utilities" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -321,9 +322,6 @@
 <span class="sd">        Tolerance for stopping criterion. Defaults to 1e-7.</span>
 <span class="sd">    verbose : bool (optional)</span>
 <span class="sd">        Allow verbose output. Defaults to False.</span>
-<span class="sd">    scaling : float</span>
-<span class="sd">        Scaling parameter for GeomLoss solver when n_features &gt; 1000.</span>
-<span class="sd">        Defaults to 0.95.</span>
 <span class="sd">    device : str</span>
 <span class="sd">        Torch compatible device. Defaults to &quot;cpu&quot;.</span>
 <span class="sd">    kwargs : dict</span>
@@ -342,7 +340,6 @@
         <span class="n">reg</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span>
         <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
         <span class="n">tol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span>
-        <span class="n">scaling</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
         <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
@@ -350,7 +347,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scaling</span> <span class="o">=</span> <span class="n">scaling</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span></div>
@@ -402,6 +398,124 @@
         <span class="n">R_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="n">X_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">X_torch</span> <span class="o">@</span> <span class="n">R_torch</span> <span class="o">*</span> <span class="n">n_voxels</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SpectralOT">
+<a class="viewcode-back" href="../../../modules/generated/fmralign.methods.SpectralOT.html#fmralign.methods.SpectralOT">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SpectralOT</span><span class="p">(</span><span class="n">OptimalTransport</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the optimal coupling between X and Y using an anatomy-aware</span>
+<span class="sd">    cost matrix that combines functional and harmonic distances.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    evecs : (k, n_features) nd array</span>
+<span class="sd">        Harmonic embedding of the geometry, first k eigenmodes of</span>
+<span class="sd">        the Laplace-Beltrami operator.</span>
+<span class="sd">    alpha : float</span>
+<span class="sd">        Trade-off parameter controlling the balance between functional</span>
+<span class="sd">        data and the harmonic embedding `evecs`. Values should lie in the</span>
+<span class="sd">        interval [0, 1], where higher values put more weight on the anatomy.</span>
+<span class="sd">        Defaults to 0.5.</span>
+<span class="sd">    reg : float (optional)</span>
+<span class="sd">        Strength of the entropic regularization. Defaults to 0.01.</span>
+<span class="sd">    max_iter : int (optional)</span>
+<span class="sd">        Maximum number of iterations. Defaults to 1000.</span>
+<span class="sd">    tol : float (optional)</span>
+<span class="sd">        Tolerance for stopping criterion. Defaults to 1e-7.</span>
+<span class="sd">    verbose : bool (optional)</span>
+<span class="sd">        Allow verbose output. Defaults to False.</span>
+<span class="sd">    device : str</span>
+<span class="sd">        Torch compatible device. Defaults to &quot;cpu&quot;.</span>
+<span class="sd">    kwargs : dict</span>
+<span class="sd">        Additional arguments to be passed to the OT solver.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    R : (n_features, n_features) nd array or LazyTensor</span>
+<span class="sd">        Transport plan computed during fitting.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SpectralOT.__init__">
+<a class="viewcode-back" href="../../../modules/generated/fmralign.methods.SpectralOT.html#fmralign.methods.SpectralOT.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">evecs</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">reg</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">tol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">reg</span><span class="o">=</span><span class="n">reg</span><span class="p">,</span>
+            <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+            <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">evecs</span> <span class="o">=</span> <span class="n">evecs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span></div>
+
+
+<div class="viewcode-block" id="SpectralOT.fit">
+<a class="viewcode-back" href="../../../modules/generated/fmralign.methods.SpectralOT.html#fmralign.methods.SpectralOT.fit">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X: (n_samples, n_features) nd array</span>
+<span class="sd">            source data</span>
+<span class="sd">        Y: (n_samples, n_features) nd array</span>
+<span class="sd">            target data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">),</span>
+            <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">Y_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">T</span><span class="p">),</span>
+            <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">evecs_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evecs</span><span class="o">.</span><span class="n">T</span><span class="p">),</span>
+            <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">M_func</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">X_torch</span><span class="p">,</span> <span class="n">Y_torch</span><span class="p">)</span>
+        <span class="n">M_geom</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">evecs_torch</span><span class="p">)</span>
+
+        <span class="c1"># Normalize both cost matrices to have the same scale</span>
+        <span class="n">M_func_normalized</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cost_normalization</span><span class="p">(</span><span class="n">M_func</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span>
+        <span class="n">M_geom_normalized</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cost_normalization</span><span class="p">(</span><span class="n">M_geom</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span>
+        <span class="n">M_normalized</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span>
+        <span class="p">)</span> <span class="o">*</span> <span class="n">M_func_normalized</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">M_geom_normalized</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+            <span class="n">M</span><span class="o">=</span><span class="n">M_normalized</span><span class="p">,</span>
+            <span class="n">reg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reg</span><span class="p">,</span>
+            <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
+            <span class="n">max_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="n">grad</span><span class="o">=</span><span class="s2">&quot;detach&quot;</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Store the transport plan on CPU as a numpy array</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">plan</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
 </div>
 
 </pre></div>
