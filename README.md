@@ -30,7 +30,7 @@ pip install -e .
 
 ### Documentation
 
-You can found an introduction to functional alignment, a user guide and some examples
+You can find an introduction to functional alignment, a user guide and some examples
 on how to use the package at https://fmralign.github.io/fmralign
 
 ## License
