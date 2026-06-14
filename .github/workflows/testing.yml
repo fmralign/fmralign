@@ -46,6 +46,6 @@ jobs:
         if: success()
         uses: codecov/codecov-action@v6
         with:
-          flags: ${{ matrix.os }}_${{ matrix.py }}_${{ matrix.env }}
+          flags: py${{ matrix.python-version }}
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
