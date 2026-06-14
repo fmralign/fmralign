@@ -126,7 +126,7 @@ First, we fetch and plot the complete atlas
 
     [fetch_atlas_yeo_2011] Dataset found in /home/runner/nilearn_data/yeo_2011
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fe52d3bc320>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fddf1dc1760>
 
 
 
@@ -289,7 +289,7 @@ We then organize the data in dictionaries of pairs of subjects names and data.
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:324: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
 
 
@@ -421,7 +421,7 @@ smoothness in the transformation, resulting in slightly higher correlation value
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 47.842 seconds)
+   **Total running time of the script:** (0 minutes 48.640 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_methods_benchmark.py:
