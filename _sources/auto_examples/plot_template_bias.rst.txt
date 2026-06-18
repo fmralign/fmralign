@@ -832,7 +832,8 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       justify-content: center;
       margin-top: 0.5em;
     }
-    </style><body><div id="sk-container-id-1" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>GroupAlignment(labels=array([96, 96, 86, ..., 21, 43, 43]), method=&#x27;procrustes&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GroupAlignment</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+    </style><body><div id="sk-container-id-1" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>GroupAlignment(labels=array([96, 96, 86, ..., 21, 43, 43], shape=(46448,)),
+                   method=&#x27;procrustes&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GroupAlignment</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
             <div class="estimator-table">
                 <details>
                     <summary>Parameters</summary>
@@ -855,7 +856,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
                               this.parentElement.nextElementSibling)"
                 ></i></td>
                 <td class="param">labels</td>
-                <td class="value">array([96, 96..., 21, 43, 43])</td>
+                <td class="value">array([96, 96...hape=(46448,))</td>
             </tr>
     
 
@@ -1855,7 +1856,8 @@ are decoupled.
       justify-content: center;
       margin-top: 0.5em;
     }
-    </style><body><div id="sk-container-id-2" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>GroupAlignment(labels=array([96, 96, 86, ..., 21, 43, 43]), method=&#x27;procrustes&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GroupAlignment</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+    </style><body><div id="sk-container-id-2" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>GroupAlignment(labels=array([96, 96, 86, ..., 21, 43, 43], shape=(46448,)),
+                   method=&#x27;procrustes&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GroupAlignment</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
             <div class="estimator-table">
                 <details>
                     <summary>Parameters</summary>
@@ -1878,7 +1880,7 @@ are decoupled.
                               this.parentElement.nextElementSibling)"
                 ></i></td>
                 <td class="param">labels</td>
-                <td class="value">array([96, 96..., 21, 43, 43])</td>
+                <td class="value">array([96, 96...hape=(46448,))</td>
             </tr>
     
 
@@ -2296,7 +2298,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (2 minutes 7.749 seconds)
+   **Total running time of the script:** (1 minutes 46.630 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_template_bias.py:
