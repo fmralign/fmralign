@@ -5,6 +5,7 @@ requires = ["hatchling", "hatch-vcs"]
 [project]
 authors = [
     {name = "Elizabeth DuPre", email = "emd222@cornell.edu"},
+    {name = "Pierre-Louis Barbarant", email = "pierre-louis.barbarant@inria.fr"},
     {name = "Thomas Bazeille"},
     {name = "Bertrand Thirion"}
 ]
