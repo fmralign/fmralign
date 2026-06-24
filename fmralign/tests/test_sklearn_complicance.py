@@ -49,14 +49,7 @@ def return_expected_failed_checks(
         "check_n_features_in_after_fitting": "TODO",
         "check_n_features_in": "TODO",
         "check_estimator_sparse_tag": "TODO",
-        "check_estimator_sparse_matrix": "TODO",
-        "check_pipeline_consistency": "TODO",
-        "check_complex_data": "TODO",
-        "check_estimators_pickle": "TODO",
-        "check_estimators_nan_inf": "TODO",
         "check_f_contiguous_array_estimator": "TODO",
-        "check_no_attributes_set_in_init": "TODO",
-        "check_estimator_sparse_array": "TODO",
         "check_readonly_memmap_input": "TODO",
         "check_estimators_empty_data_messages": "TODO",
     }
@@ -90,6 +83,13 @@ def return_expected_failed_checks(
             "check_methods_subset_invariance": "TODO",
             "check_dont_overwrite_parameters": "TODO",
             "check_estimators_overwrite_params": "TODO",
+            "check_pipeline_consistency": "TODO",
+            "check_estimator_sparse_matrix": "TODO",
+            "check_estimator_sparse_array": "TODO",
+            "check_complex_data": "TODO",
+            "check_estimators_pickle": "TODO",
+            "check_no_attributes_set_in_init": "TODO",
+            "check_estimators_nan_inf": "TODO",
         }
 
     if isinstance(estimator, (Identity,)):
@@ -101,6 +101,8 @@ def return_expected_failed_checks(
             "check_transformers_unfitted": "TODO",
             "check_fit_check_is_fitted": "TODO",
             "check_dtype_object": "TODO",
+            "check_complex_data": "TODO",
+            "check_estimators_nan_inf": "TODO",
         }
 
     if isinstance(estimator, (Procrustes)):
@@ -124,6 +126,13 @@ def return_expected_failed_checks(
             "check_methods_subset_invariance": "TODO",
             "check_dont_overwrite_parameters": "TODO",
             "check_estimators_overwrite_params": "TODO",
+            "check_pipeline_consistency": "TODO",
+            "check_estimator_sparse_matrix": "TODO",
+            "check_estimator_sparse_array": "TODO",
+            "check_complex_data": "TODO",
+            "check_estimators_pickle": "TODO",
+            "check_no_attributes_set_in_init": "TODO",
+            "check_estimators_nan_inf": "TODO",
         }
 
     if isinstance(estimator, (DetSRM)):
@@ -146,6 +155,12 @@ def return_expected_failed_checks(
             "check_methods_subset_invariance": "TODO",
             "check_dont_overwrite_parameters": "TODO",
             "check_estimators_overwrite_params": "TODO",
+            "check_pipeline_consistency": "TODO",
+            "check_estimator_sparse_matrix": "TODO",
+            "check_estimator_sparse_array": "TODO",
+            "check_complex_data": "TODO",
+            "check_estimators_pickle": "TODO",
+            "check_estimators_nan_inf": "TODO",
         }
 
     if isinstance(estimator, (PairwiseAlignment)):
@@ -158,6 +173,9 @@ def return_expected_failed_checks(
             "check_fit_score_takes_y": "TODO",
             "check_dtype_object": "TODO",
             "check_dont_overwrite_parameters": "TODO",
+            "check_pipeline_consistency": "TODO",
+            "check_complex_data": "TODO",
+            "check_estimators_nan_inf": "TODO",
         }
 
     if isinstance(estimator, (GroupAlignment)):
@@ -181,6 +199,13 @@ def return_expected_failed_checks(
             "check_methods_subset_invariance": "TODO",
             "check_dont_overwrite_parameters": "TODO",
             "check_estimators_overwrite_params": "TODO",
+            "check_pipeline_consistency": "TODO",
+            "check_estimator_sparse_matrix": "TODO",
+            "check_estimator_sparse_array": "TODO",
+            "check_complex_data": "TODO",
+            "check_estimators_pickle": "TODO",
+            "check_no_attributes_set_in_init": "TODO",
+            "check_estimators_nan_inf": "TODO",
         }
 
     return expected_failed_checks
