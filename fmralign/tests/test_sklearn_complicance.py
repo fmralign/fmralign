@@ -57,9 +57,7 @@ def return_expected_failed_checks(
         "check_estimators_pickle": "TODO",
         "check_estimators_nan_inf": "TODO",
         "check_f_contiguous_array_estimator": "TODO",
-        "check_dtype_object": "TODO",
         "check_methods_sample_order_invariance": "TODO",
-        "check_estimators_dtypes": "TODO",
         "check_no_attributes_set_in_init": "TODO",
         "check_estimator_sparse_array": "TODO",
         "check_readonly_memmap_input": "TODO",
@@ -89,6 +87,8 @@ def return_expected_failed_checks(
             "check_fit_check_is_fitted": "TODO",
             "check_fit_score_takes_y": "TODO",
             "check_positive_only_tag_during_fit": "TODO",
+            "check_estimators_dtypes": "TODO",
+            "check_dtype_object": "TODO",
         }
 
     if isinstance(estimator, (Identity,)):
@@ -99,6 +99,7 @@ def return_expected_failed_checks(
             "check_transformer_data_not_an_array": "TODO",
             "check_transformers_unfitted": "TODO",
             "check_fit_check_is_fitted": "TODO",
+            "check_dtype_object": "TODO",
         }
 
     if isinstance(estimator, (Procrustes)):
@@ -116,6 +117,8 @@ def return_expected_failed_checks(
             "check_fit_check_is_fitted": "TODO",
             "check_fit_score_takes_y": "TODO",
             "check_positive_only_tag_during_fit": "TODO",
+            "check_estimators_dtypes": "TODO",
+            "check_dtype_object": "TODO",
         }
 
     if isinstance(estimator, (DetSRM)):
@@ -132,6 +135,8 @@ def return_expected_failed_checks(
             "check_fit_check_is_fitted": "TODO",
             "check_fit_score_takes_y": "TODO",
             "check_positive_only_tag_during_fit": "TODO",
+            "check_estimators_dtypes": "TODO",
+            "check_dtype_object": "TODO",
         }
 
     if isinstance(estimator, (PairwiseAlignment)):
@@ -142,6 +147,7 @@ def return_expected_failed_checks(
             "check_transformer_data_not_an_array": "TODO",
             "check_transformer_preserve_dtypes": "TODO",
             "check_fit_score_takes_y": "TODO",
+            "check_dtype_object": "TODO",
         }
 
     if isinstance(estimator, (GroupAlignment)):
@@ -159,6 +165,8 @@ def return_expected_failed_checks(
             "check_fit_check_is_fitted": "TODO",
             "check_fit_score_takes_y": "TODO",
             "check_positive_only_tag_during_fit": "TODO",
+            "check_estimators_dtypes": "TODO",
+            "check_dtype_object": "TODO",
         }
 
     return expected_failed_checks
