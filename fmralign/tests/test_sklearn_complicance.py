@@ -9,7 +9,6 @@ from fmralign.methods import (
     RidgeAlignment,
     # SpectralOT
 )
-from fmralign.methods.base import BaseAlignment
 
 ESTIMATORS_TO_CHECK = [
     PairwiseAlignment(),
@@ -49,33 +48,29 @@ def return_expected_failed_checks(
     expected_failed_checks = {
         "check_n_features_in_after_fitting": "TODO",
         "check_n_features_in": "TODO",
-        "check_dict_unchanged": "TODO",
         "check_dont_overwrite_parameters": "TODO",
         "check_methods_subset_invariance": "TODO",
         "check_estimator_sparse_tag": "TODO",
-        "check_fit_check_is_fitted": "TODO",
         "check_estimator_sparse_matrix": "TODO",
         "check_pipeline_consistency": "TODO",
         "check_complex_data": "TODO",
-        "check_fit_score_takes_y": "TODO",
         "check_estimators_pickle": "TODO",
         "check_estimators_nan_inf": "TODO",
-        "check_fit_idempotent": "TODO",
         "check_f_contiguous_array_estimator": "TODO",
         "check_dtype_object": "TODO",
         "check_methods_sample_order_invariance": "TODO",
         "check_estimators_dtypes": "TODO",
-        "check_positive_only_tag_during_fit": "TODO",
         "check_no_attributes_set_in_init": "TODO",
         "check_estimator_sparse_array": "TODO",
         "check_readonly_memmap_input": "TODO",
-        "check_estimators_fit_returns_self": "TODO",
         "check_estimators_overwrite_params": "TODO",
         "check_estimators_empty_data_messages": "TODO",
     }
 
     if isinstance(estimator, RidgeAlignment):
-        expected_failed_checks |= {}
+        expected_failed_checks |= {
+            "check_fit_check_is_fitted": "TODO",
+        }
 
     if isinstance(estimator, OptimalTransport):
         expected_failed_checks |= {
@@ -88,6 +83,12 @@ def return_expected_failed_checks(
             "check_transformer_general": "TODO",
             "check_transformer_data_not_an_array": "TODO",
             "check_transformer_preserve_dtypes": "TODO",
+            "check_dict_unchanged": "TODO",
+            "check_estimators_fit_returns_self": "TODO",
+            "check_fit_idempotent": "TODO",
+            "check_fit_check_is_fitted": "TODO",
+            "check_fit_score_takes_y": "TODO",
+            "check_positive_only_tag_during_fit": "TODO",
         }
 
     if isinstance(estimator, (Identity,)):
@@ -97,6 +98,7 @@ def return_expected_failed_checks(
             "check_transformer_general": "TODO",
             "check_transformer_data_not_an_array": "TODO",
             "check_transformers_unfitted": "TODO",
+            "check_fit_check_is_fitted": "TODO",
         }
 
     if isinstance(estimator, (Procrustes)):
@@ -108,17 +110,28 @@ def return_expected_failed_checks(
             "check_transformer_general": "TODO",
             "check_transformer_data_not_an_array": "TODO",
             "check_transformer_preserve_dtypes": "TODO",
+            "check_dict_unchanged": "TODO",
+            "check_estimators_fit_returns_self": "TODO",
+            "check_fit_idempotent": "TODO",
+            "check_fit_check_is_fitted": "TODO",
+            "check_fit_score_takes_y": "TODO",
+            "check_positive_only_tag_during_fit": "TODO",
         }
 
     if isinstance(estimator, (DetSRM)):
         expected_failed_checks |= {
-            "check_fit1d": "TODO",
             "check_fit2d_1sample": "TODO",
             "check_fit2d_1feature": "TODO",
             "check_fit2d_predict1d": "TODO",
             "check_transformer_general": "TODO",
             "check_transformer_preserve_dtypes": "TODO",
             "check_transformer_data_not_an_array": "TODO",
+            "check_dict_unchanged": "TODO",
+            "check_estimators_fit_returns_self": "TODO",
+            "check_fit_idempotent": "TODO",
+            "check_fit_check_is_fitted": "TODO",
+            "check_fit_score_takes_y": "TODO",
+            "check_positive_only_tag_during_fit": "TODO",
         }
 
     if isinstance(estimator, (PairwiseAlignment)):
@@ -128,6 +141,7 @@ def return_expected_failed_checks(
             "check_transformer_general": "TODO",
             "check_transformer_data_not_an_array": "TODO",
             "check_transformer_preserve_dtypes": "TODO",
+            "check_fit_score_takes_y": "TODO",
         }
 
     if isinstance(estimator, (GroupAlignment)):
@@ -139,6 +153,12 @@ def return_expected_failed_checks(
             "check_transformer_general": "TODO",
             "check_transformer_data_not_an_array": "TODO",
             "check_transformer_preserve_dtypes": "TODO",
+            "check_dict_unchanged": "TODO",
+            "check_estimators_fit_returns_self": "TODO",
+            "check_fit_idempotent": "TODO",
+            "check_fit_check_is_fitted": "TODO",
+            "check_fit_score_takes_y": "TODO",
+            "check_positive_only_tag_during_fit": "TODO",
         }
 
     return expected_failed_checks
