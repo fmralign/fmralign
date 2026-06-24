@@ -12,7 +12,7 @@ from fmralign.alignment.utils import (
 from fmralign.methods import DetSRM
 
 
-class GroupAlignment(BaseEstimator, TransformerMixin):
+class GroupAlignment(TransformerMixin, BaseEstimator):
     """Performs group-level alignment of various subject data.
 
     This class aligns multiple subjects' data either to a computed template

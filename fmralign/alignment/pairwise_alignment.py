@@ -8,7 +8,7 @@ from fmralign.alignment.utils import (
 )
 
 
-class PairwiseAlignment(BaseEstimator, TransformerMixin):
+class PairwiseAlignment(TransformerMixin, BaseEstimator):
     """Performs pairwise alignment between two subjects.
 
     This class performs source-to-target alignment of two subjects' data.
