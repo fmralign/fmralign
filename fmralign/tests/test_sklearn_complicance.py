@@ -80,7 +80,6 @@ def return_expected_failed_checks(
     if isinstance(estimator, OptimalTransport):
         expected_failed_checks |= {
             "check_transformer_n_iter": "TODO",
-            "check_transformers_unfitted": "TODO",
             "check_do_not_raise_errors_in_init_or_set_params": "TODO",
             "check_fit1d": "TODO",
             "check_fit2d_1feature": "TODO",
@@ -88,6 +87,7 @@ def return_expected_failed_checks(
             "check_fit2d_1sample": "TODO",
             "check_transformer_general": "TODO",
             "check_transformer_data_not_an_array": "TODO",
+            "check_transformer_preserve_dtypes": "TODO",
         }
 
     if isinstance(estimator, (Identity,)):
@@ -96,6 +96,7 @@ def return_expected_failed_checks(
             "check_fit2d_predict1d": "TODO",
             "check_transformer_general": "TODO",
             "check_transformer_data_not_an_array": "TODO",
+            "check_transformers_unfitted": "TODO",
         }
 
     if isinstance(estimator, (Procrustes)):
@@ -106,6 +107,7 @@ def return_expected_failed_checks(
             "check_fit2d_predict1d": "TODO",
             "check_transformer_general": "TODO",
             "check_transformer_data_not_an_array": "TODO",
+            "check_transformer_preserve_dtypes": "TODO",
         }
 
     if isinstance(estimator, (DetSRM)):
@@ -115,6 +117,8 @@ def return_expected_failed_checks(
             "check_fit2d_1feature": "TODO",
             "check_fit2d_predict1d": "TODO",
             "check_transformer_general": "TODO",
+            "check_transformer_preserve_dtypes": "TODO",
+            "check_transformer_data_not_an_array": "TODO",
         }
 
     if isinstance(estimator, (PairwiseAlignment)):
@@ -123,6 +127,7 @@ def return_expected_failed_checks(
             "check_fit2d_predict1d": "TODO",
             "check_transformer_general": "TODO",
             "check_transformer_data_not_an_array": "TODO",
+            "check_transformer_preserve_dtypes": "TODO",
         }
 
     if isinstance(estimator, (GroupAlignment)):
@@ -133,6 +138,7 @@ def return_expected_failed_checks(
             "check_fit2d_predict1d": "TODO",
             "check_transformer_general": "TODO",
             "check_transformer_data_not_an_array": "TODO",
+            "check_transformer_preserve_dtypes": "TODO",
         }
 
     return expected_failed_checks
