@@ -20,6 +20,8 @@ from fmralign.methods import (
     # SpectralOT
 )
 
+# from fmralign.methods.piecewise import PiecewiseAlignment # not in public API
+
 ESTIMATORS_TO_CHECK = [
     PairwiseAlignment(),
     GroupAlignment(),
@@ -28,6 +30,7 @@ ESTIMATORS_TO_CHECK = [
     OptimalTransport(),
     Procrustes(),
     RidgeAlignment(),
+    # PiecewiseAlignment()
     # SpectralOT(evecs=np.ones((5,5))),
 ]
 
