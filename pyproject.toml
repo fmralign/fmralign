@@ -12,7 +12,7 @@ authors = [
 classifiers = ["Programming Language :: Python :: 3"]
 dependencies = [
     "nilearn>=0.13.0",
-    "POT",
+    "pot>=0.9.6",
     "robust-laplacian>=1.1.0",
     "torch>=2.12.1"
 ]
