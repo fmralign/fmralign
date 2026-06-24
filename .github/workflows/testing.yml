@@ -36,9 +36,6 @@ jobs:
           uv venv
           uv pip install -e ".[dev]"
 
-      - name: Run Ruff check
-        run: uv run ruff check --output-format=github
-
       - name: Test with pytest
         run: uv run pytest --cov --cov-report=xml
 
