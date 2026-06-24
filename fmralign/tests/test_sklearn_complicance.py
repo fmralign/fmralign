@@ -1,3 +1,13 @@
+from fmralign._versions import SKLEARN_LT_1_6
+
+
+def pytest_ignore_collect(collection_path, config):  # noqa: ARG001
+    """Only run those tests with SKLEARN>=1.7."""
+    if SKLEARN_LT_1_6:
+        return True
+    return None
+
+
 from sklearn.utils.estimator_checks import parametrize_with_checks
 
 from fmralign import GroupAlignment, PairwiseAlignment
@@ -49,9 +59,6 @@ def return_expected_failed_checks(
         "check_n_features_in_after_fitting": "TODO",
         "check_n_features_in": "TODO",
         "check_estimator_sparse_tag": "TODO",
-        "check_f_contiguous_array_estimator": "TODO",
-        "check_readonly_memmap_input": "TODO",
-        "check_estimators_empty_data_messages": "TODO",
     }
 
     if isinstance(estimator, RidgeAlignment):
@@ -90,6 +97,9 @@ def return_expected_failed_checks(
             "check_estimators_pickle": "TODO",
             "check_no_attributes_set_in_init": "TODO",
             "check_estimators_nan_inf": "TODO",
+            "check_f_contiguous_array_estimator": "TODO",
+            "check_readonly_memmap_input": "TODO",
+            "check_estimators_empty_data_messages": "TODO",
         }
 
     if isinstance(estimator, (Identity,)):
@@ -103,6 +113,7 @@ def return_expected_failed_checks(
             "check_dtype_object": "TODO",
             "check_complex_data": "TODO",
             "check_estimators_nan_inf": "TODO",
+            "check_estimators_empty_data_messages": "TODO",
         }
 
     if isinstance(estimator, (Procrustes)):
@@ -133,6 +144,9 @@ def return_expected_failed_checks(
             "check_estimators_pickle": "TODO",
             "check_no_attributes_set_in_init": "TODO",
             "check_estimators_nan_inf": "TODO",
+            "check_f_contiguous_array_estimator": "TODO",
+            "check_readonly_memmap_input": "TODO",
+            "check_estimators_empty_data_messages": "TODO",
         }
 
     if isinstance(estimator, (DetSRM)):
@@ -161,6 +175,9 @@ def return_expected_failed_checks(
             "check_complex_data": "TODO",
             "check_estimators_pickle": "TODO",
             "check_estimators_nan_inf": "TODO",
+            "check_f_contiguous_array_estimator": "TODO",
+            "check_readonly_memmap_input": "TODO",
+            "check_estimators_empty_data_messages": "TODO",
         }
 
     if isinstance(estimator, (PairwiseAlignment)):
@@ -176,6 +193,7 @@ def return_expected_failed_checks(
             "check_pipeline_consistency": "TODO",
             "check_complex_data": "TODO",
             "check_estimators_nan_inf": "TODO",
+            "check_estimators_empty_data_messages": "TODO",
         }
 
     if isinstance(estimator, (GroupAlignment)):
@@ -206,6 +224,9 @@ def return_expected_failed_checks(
             "check_estimators_pickle": "TODO",
             "check_no_attributes_set_in_init": "TODO",
             "check_estimators_nan_inf": "TODO",
+            "check_f_contiguous_array_estimator": "TODO",
+            "check_readonly_memmap_input": "TODO",
+            "check_estimators_empty_data_messages": "TODO",
         }
 
     return expected_failed_checks
