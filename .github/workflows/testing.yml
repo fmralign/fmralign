@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: |
           uv venv
-          uv pip install -e ".[dev]"
+          uv pip install -e ".[test]"
 
       - name: Run Ruff check
         run: uv run ruff check --output-format=github
@@ -70,7 +70,7 @@ jobs:
       - name: Install dependencies
         run: |
           uv venv
-          uv pip install --resolution lowest-direct -e ".[dev]"
+          uv pip install --resolution lowest-direct -e ".[test]"
 
       - name: Test with pytest
         run: uv run pytest --cov --cov-report=xml
