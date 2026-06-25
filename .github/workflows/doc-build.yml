@@ -37,7 +37,7 @@ jobs:
 
       # Step 5: Upload Sphinx docs as an artifact
       - name: Upload Sphinx docs artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: sphinx-docs
           path: doc/_build/html
