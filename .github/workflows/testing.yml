@@ -51,7 +51,7 @@ jobs:
           fail_ci_if_error: false
 
 
-  tes_min:
+  test_min:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
