@@ -38,6 +38,14 @@ repos:
     # Run the formatter.
       - id: ruff-format
 
+  # Run Black on Python code blocks in documentation files.
+  - repo: https://github.com/adamchainz/blacken-docs
+    rev: 1.20.0
+    hooks:
+      - id: blacken-docs
+        additional_dependencies:
+          - black==26.3.1
+
   - repo: https://github.com/codespell-project/codespell
     # Configuration for codespell is in .pre-commit-config.yaml
     rev: v2.4.2
