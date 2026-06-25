@@ -1,4 +1,13 @@
+from fmralign import GroupAlignment, PairwiseAlignment
 from fmralign._versions import SKLEARN_LT_1_6
+from fmralign.methods import (
+    DetSRM,
+    Identity,
+    OptimalTransport,
+    Procrustes,
+    RidgeAlignment,
+    # SpectralOT
+)
 
 
 def pytest_ignore_collect(collection_path, config):  # noqa: ARG001
@@ -8,17 +17,8 @@ def pytest_ignore_collect(collection_path, config):  # noqa: ARG001
     return None
 
 
-from sklearn.utils.estimator_checks import parametrize_with_checks
+from sklearn.utils.estimator_checks import parametrize_with_checks  # noqa
 
-from fmralign import GroupAlignment, PairwiseAlignment
-from fmralign.methods import (
-    DetSRM,
-    Identity,
-    OptimalTransport,
-    Procrustes,
-    RidgeAlignment,
-    # SpectralOT
-)
 
 # from fmralign.methods.piecewise import PiecewiseAlignment # not in public API
 
