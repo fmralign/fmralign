@@ -2,7 +2,7 @@
 #
 
 # You can set these variables from the command line.
-SPHINXOPTS    = -v
+SPHINXOPTS    = --verbose --color
 SPHINXBUILD   = sphinx-build
 BUILDDIR      = _build
 
@@ -42,7 +42,7 @@ html:
 
 html-noplot:
 	# Build html without running the examples
-	$(SPHINXBUILD) -D plot_gallery=0 -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	$(SPHINXBUILD) -D plot_gallery=0 --builder html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	touch $(BUILDDIR)/html/.nojekyll
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
@@ -51,22 +51,28 @@ html-strict:
 	# Build html documentation using a strict mode: Warnings are
 	# considered as errors.
 	rm -rf $(BUILDDIR)/html/_images
-	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) -W $(BUILDDIR)/html
+	$(SPHINXBUILD) --builder html $(ALLSPHINXOPTS) $(BUILDDIR)/html --fail-on-warning --keep-going -T -n
 	touch $(BUILDDIR)/html/.nojekyll
 	@echo
 	@echo "Strict build finished. The HTML pages are in $(BUILDDIR)/html."
 
 dirhtml:
-	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
+	$(SPHINXBUILD) --builder dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
 	touch $(BUILDDIR)/dirhtml .nojekyll
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/dirhtml."
 
 htmlhelp:
-	$(SPHINXBUILD) -b htmlhelp $(ALLSPHINXOPTS) $(BUILDDIR)/htmlhelp
+	$(SPHINXBUILD) --builder htmlhelp $(ALLSPHINXOPTS) $(BUILDDIR)/htmlhelp
 	@echo
 	@echo "Build finished; now you can run HTML Help Workshop with the" \
 	      ".hhp project file in $(BUILDDIR)/htmlhelp."
+
+linkcheck:
+	$(SPHINXBUILD) --define plot_gallery=0 --builder linkcheck $(ALLSPHINXOPTS) $(BUILDDIR)/linkcheck
+	@echo
+	@echo "Link check complete; look for any errors in the above output " \
+	      "or in $(BUILDDIR)/linkcheck/output.txt."
 
 install:
 	git clone --no-checkout --depth 1 https://github.com/fmralign/fmralign.github.io.git build/fmralign.github.io
