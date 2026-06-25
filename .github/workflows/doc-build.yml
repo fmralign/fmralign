@@ -16,7 +16,7 @@ jobs:
     steps:
       # Step 1: Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # Step 2: Set up Python with uv
       - name: Install uv and set the python version
