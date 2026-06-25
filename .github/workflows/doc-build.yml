@@ -51,7 +51,7 @@ jobs:
     steps:
       # Step 6: Download Sphinx docs artifact
       - name: Download Sphinx docs artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: sphinx-docs
           path: doc/_build/html/
