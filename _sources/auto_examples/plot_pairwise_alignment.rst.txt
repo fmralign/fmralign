@@ -239,11 +239,11 @@ transformation that is applied to the whole brain.
       masker.transform(
     /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:210: UserWarning: 
      Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
-     parcel 8 : 1062 voxels
      parcel 9 : 1393 voxels
-     parcel 12 : 1313 voxels
-     parcel 23 : 1210 voxels
+     parcel 19 : 1062 voxels
      parcel 31 : 1712 voxels
+     parcel 42 : 1210 voxels
+     parcel 49 : 1313 voxels
      parcel 50 : 1223 voxels
       warnings.warn(warning)
 
@@ -342,7 +342,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 38.234 seconds)
+   **Total running time of the script:** (0 minutes 33.650 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_alignment.py:
