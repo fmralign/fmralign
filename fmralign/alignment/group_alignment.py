@@ -67,12 +67,14 @@ class GroupAlignment(TransformerMixin, BaseEstimator):
     ... }
     >>> aligner = GroupAlignment(method="procrustes", n_iter=3)
     >>> aligner.fit(alignment_dict, y="template")
+    GroupAlignment(method='procrustes', n_iter=3)
     >>> aligned_data = aligner.transform(testing_dict)
 
     >>> # Pairwise alignment to target
     >>> target_data = np.random.rand(10, n_voxels)
     >>> aligner = GroupAlignment(method="procrustes")
     >>> aligner.fit(alignment_dict, y=target_data)
+    GroupAlignment(method='procrustes')
     >>> aligned_data = aligner.transform(testing_dict)
     """
 
