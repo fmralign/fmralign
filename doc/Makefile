@@ -51,7 +51,7 @@ html-strict:
 	# Build html documentation using a strict mode: Warnings are
 	# considered as errors.
 	rm -rf $(BUILDDIR)/html/_images
-	$(SPHINXBUILD) --builder html $(ALLSPHINXOPTS) $(BUILDDIR)/html --fail-on-warning --keep-going -T -n
+	$(SPHINXBUILD) --builder html $(ALLSPHINXOPTS) $(BUILDDIR)/html --fail-on-warning --keep-going --show-traceback -n
 	touch $(BUILDDIR)/html/.nojekyll
 	@echo
 	@echo "Strict build finished. The HTML pages are in $(BUILDDIR)/html."
