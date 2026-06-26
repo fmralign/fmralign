@@ -27,7 +27,7 @@ class OptimalTransport(BaseAlignment):
 
     Attributes
     ----------
-    R : (n_features, n_features) nd array or LazyTensor
+    R : (n_features, n_features) nd array
         Transport plan computed during fitting.
     """
 
@@ -120,7 +120,7 @@ class SpectralOT(OptimalTransport):
 
     Attributes
     ----------
-    R : (n_features, n_features) nd array or LazyTensor
+    R : (n_features, n_features) nd array
         Transport plan computed during fitting.
     """
 
