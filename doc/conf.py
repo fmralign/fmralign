@@ -166,7 +166,7 @@ html_theme_options = {
         "color-admonition-title--note": "#448aff",
         "color-admonition-title-background--note": "#448aff10",
     },
-    "source_repository": "https://github.com/nilearn/nilearn/",
+    "source_repository": "https://github.com/fmralign/fmralign",
     "source_branch": "main",
     "source_directory": "doc/",
 }
