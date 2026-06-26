@@ -8,6 +8,13 @@ on:
     branches:
       - '*'
 
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+env:
+    # Force to use color
+    FORCE_COLOR: true
 
 jobs:
   build:
