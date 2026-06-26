@@ -28,7 +28,7 @@ jobs:
         run: |
             sudo -E apt-get -yq update
             sudo -E apt-get -yq --no-install-suggests --no-install-recommends install \
-                dvipng texlive-latex-base texlive-latex-extra
+                dvipng texlive-latex-base texlive-latex-extra dvisvgm
 
       - name: Install uv and set the python version
         uses: astral-sh/setup-uv@v6
