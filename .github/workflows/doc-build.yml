@@ -42,7 +42,7 @@ jobs:
 
       - name: Build Sphinx documentation
         working-directory: doc
-        run: uv run python -m sphinx-build --builder html . _build/html --verbose --color --fail-on-warning --keep-going --show-traceback --nitpicky
+        run: uv run python -m sphinx --builder html . _build/html --verbose --color --fail-on-warning --keep-going --show-traceback --nitpicky
 
       - name: Upload Sphinx docs artifact
         uses: actions/upload-artifact@v7
