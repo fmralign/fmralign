@@ -74,7 +74,7 @@ junit_family = "xunit2"
 log_cli_level = "INFO"
 log_level = "INFO"
 minversion = "6.0"
-testpaths = ["hidimstat"]
+testpaths = ["fmralign"]
 xfail_strict = true
 
 [tool.ruff]
