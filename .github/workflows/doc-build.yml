@@ -8,34 +8,42 @@ on:
     branches:
       - '*'
 
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+env:
+    # Force to use color
+    FORCE_COLOR: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      # Step 2: Set up Python with uv
+      - name: Install apt packages
+        run: |
+            sudo -E apt-get -yq update
+            sudo -E apt-get -yq --no-install-suggests --no-install-recommends install \
+                dvipng texlive-latex-base texlive-latex-extra dvisvgm
+
       - name: Install uv and set the python version
-        uses: astral-sh/setup-uv@v7
-      - name: Set up Python 3.12
-        run: uv python install 3.12
+        uses: astral-sh/setup-uv@v6
+      - name: Set up Python
+        run: uv python install 3.10
       - name: Install Venv
         run: uv venv
 
-      # Step 3: Install dependencies
       - name: Install Dependencies
-        run: uv pip install -e ".[dev]"
+        run: uv pip install --resolution lowest-direct -e ".[doc]"
 
-      # Step 4: Build Sphinx documentation
       - name: Build Sphinx documentation
         working-directory: doc
-        run: uv run python -m sphinx -b html . _build/html
+        run: uv run python -m sphinx --builder html . _build/html --verbose --color --fail-on-warning --keep-going --show-traceback --nitpicky
 
-      # Step 5: Upload Sphinx docs as an artifact
       - name: Upload Sphinx docs artifact
         uses: actions/upload-artifact@v7
         with:
@@ -49,13 +57,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 6: Download Sphinx docs artifact
       - name: Download Sphinx docs artifact
         uses: actions/download-artifact@v8
         with:
           name: sphinx-docs
           path: doc/_build/html/
-      # Step 7: Deploy to GitHub Pages
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

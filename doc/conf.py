@@ -81,7 +81,8 @@ templates_path = ["templates"]
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
-source_suffix = [".rst", ".md"]
+source_suffix = {".rst": "restructuredtext", ".md": "markdown"}
+
 
 # The encoding of source files.
 # source_encoding = 'utf-8'
@@ -165,7 +166,7 @@ html_theme_options = {
         "color-admonition-title--note": "#448aff",
         "color-admonition-title-background--note": "#448aff10",
     },
-    "source_repository": "https://github.com/nilearn/nilearn/",
+    "source_repository": "https://github.com/fmralign/fmralign",
     "source_branch": "main",
     "source_directory": "doc/",
 }
@@ -235,7 +236,10 @@ html_show_sourcelink = False
 htmlhelp_basename = "PythonScientific"
 
 # Sphinx copybutton config
-copybutton_prompt_text = ">>> "
+copybutton_prompt_text = (
+    r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
+)
+copybutton_prompt_is_regexp = True
 
 # -- Extension configuration -------------------------------------------------
 numpydoc_show_class_members = False
@@ -283,6 +287,7 @@ sphinx_gallery_conf = {
     "remove_config_comments": True,
     "matplotlib_animations": True,
     "nested_sections": True,
+    "default_thumb_file": "logos/empty_nistats.png",
 }
 
 
@@ -308,7 +313,6 @@ def setup(app):
 
 
 # -- sphinxext.opengraph configuration -------------------------------------
-ogp_site_url = "https://nilearn.github.io/"
-ogp_image = "https://nilearn.github.io/_static/nilearn-logo.png"
+ogp_site_url = "https://fmralign.github.io/fmralign"
 ogp_use_first_image = True
-ogp_site_name = "Nilearn"
+ogp_site_name = "fmralign"
