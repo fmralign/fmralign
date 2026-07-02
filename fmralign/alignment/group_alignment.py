@@ -12,7 +12,7 @@ from fmralign.alignment.utils import (
 from fmralign.methods import DetSRM
 
 
-class GroupAlignment(BaseEstimator, TransformerMixin):
+class GroupAlignment(TransformerMixin, BaseEstimator):
     """Performs group-level alignment of various subject data.
 
     This class aligns multiple subjects' data either to a computed template
@@ -67,12 +67,14 @@ class GroupAlignment(BaseEstimator, TransformerMixin):
     ... }
     >>> aligner = GroupAlignment(method="procrustes", n_iter=3)
     >>> aligner.fit(alignment_dict, y="template")
+    GroupAlignment(method='procrustes', n_iter=3)
     >>> aligned_data = aligner.transform(testing_dict)
 
     >>> # Pairwise alignment to target
     >>> target_data = np.random.rand(10, n_voxels)
     >>> aligner = GroupAlignment(method="procrustes")
     >>> aligner.fit(alignment_dict, y=target_data)
+    GroupAlignment(method='procrustes')
     >>> aligned_data = aligner.transform(testing_dict)
     """
 

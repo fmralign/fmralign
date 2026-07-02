@@ -37,7 +37,7 @@ jobs:
           uv pip install -e ".[dev]"
 
       - name: Test with pytest
-        run: uv run pytest --cov --cov-report=xml
+        run: uv run pytest --cov --cov-report=xml fmralign
 
       - name: Upload coverage to Codecov
         if: success()

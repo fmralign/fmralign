@@ -67,6 +67,16 @@ allow-direct-references = true
 [tool.hatch.version]
 source = "vcs"
 
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers --doctest-modules --showlocals --capture=no -v"
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
+junit_family = "xunit2"
+log_cli_level = "INFO"
+log_level = "INFO"
+minversion = "6.0"
+testpaths = ["fmralign"]
+xfail_strict = true
+
 [tool.ruff]
 extend-exclude = ["doc/auto_examples/*"]
 include = [
