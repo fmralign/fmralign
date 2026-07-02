@@ -65,7 +65,8 @@ def get_labels(
         data to cluster
     n_pieces: int
         number of different labels
-    masker: a fitted instance of NiftiMasker or MultiNiftiMasker
+    masker: a fitted instance of NiftiMasker, SurfaceMasker, \
+        MultiNiftiMasker or MultiSurfaceMasker
         Masker to be used on the data. For more information see:
         http://nilearn.github.io/manipulating_images/masker_objects.html
     clustering: string or 3D Niimg
