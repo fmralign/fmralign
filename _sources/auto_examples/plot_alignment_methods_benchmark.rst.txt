@@ -73,7 +73,7 @@ to probe a range of cognitive functions, including:
 
  .. code-block:: none
 
-    [get_dataset_dir] Dataset found in /home/runner/nilearn_data/ibc
+    [get_dataset_dir] Dataset directory found: /home/runner/nilearn_data/ibc
 
 
 
@@ -124,9 +124,9 @@ First, we fetch and plot the complete atlas
 
  .. code-block:: none
 
-    [fetch_atlas_yeo_2011] Dataset found in /home/runner/nilearn_data/yeo_2011
+    [fetch_atlas_yeo_2011] Dataset directory found: /home/runner/nilearn_data/yeo_2011
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f978225b6e0>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fecda133020>
 
 
 
@@ -289,8 +289,23 @@ We then organize the data in dictionaries of pairs of subjects names and data.
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:324: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      labels = masker.transform(parcellation.labels_img_).astype(int)
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:152: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      [roi_masker.transform(img) for img in source_train_imgs],
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:158: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      [roi_masker.transform(img) for img in source_test_imgs],
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:161: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      target_train = roi_masker.transform(target_train_img)
+    /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:162: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      target_test = roi_masker.transform(target_test_img)
 
 
 
@@ -421,7 +436,7 @@ smoothness in the transformation, resulting in slightly higher correlation value
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 50.621 seconds)
+   **Total running time of the script:** (0 minutes 31.955 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_methods_benchmark.py:

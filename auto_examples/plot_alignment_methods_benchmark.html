@@ -366,7 +366,7 @@ to probe a range of cognitive functions, including:</p>
 <a href="https://docs.python.org/3.10/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">files</span></a><span class="p">,</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">,</span> <a href="https://docs.python.org/3.10/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mask</span></a> <span class="o">=</span> <span class="n">fetch_ibc_subjects_contrasts</span><span class="p">(</span><a href="https://docs.python.org/3.10/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sub_ids</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[get_dataset_dir] Dataset found in /home/runner/nilearn_data/ibc
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[get_dataset_dir] Dataset directory found: /home/runner/nilearn_data/ibc
 </pre></div>
 </div>
 </section>
@@ -396,9 +396,9 @@ to probe a range of cognitive functions, including:</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<img src="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png" srcset="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png" alt="plot alignment methods benchmark" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[fetch_atlas_yeo_2011] Dataset found in /home/runner/nilearn_data/yeo_2011
+<img src="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png" srcset="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png" alt="plot alignment methods benchmark" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[fetch_atlas_yeo_2011] Dataset directory found: /home/runner/nilearn_data/yeo_2011
 
-&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f978225b6e0&gt;
+&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fecda133020&gt;
 </pre></div>
 </div>
 </section>
@@ -503,8 +503,23 @@ Parameter smoothing_fwhm :
     Masker parameter None - overriding estimator parameter 4.0
 
   parcellation.fit(images_to_parcel)
-/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:324: UserWarning: the number of connected components of the connectivity matrix is 11 &gt; 1. Completing it to avoid stopping the tree early.
+/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 11 &gt; 1. Completing it to avoid stopping the tree early.
   connectivity, n_connected_components = _fix_connectivity(
+/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
+  labels = masker.transform(parcellation.labels_img_).astype(int)
+/home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:152: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
+  [roi_masker.transform(img) for img in source_train_imgs],
+/home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:158: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
+  [roi_masker.transform(img) for img in source_test_imgs],
+/home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:161: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
+  target_train = roi_masker.transform(target_train_img)
+/home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:162: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
+  target_test = roi_masker.transform(target_test_img)
 </pre></div>
 </div>
 </section>
@@ -594,7 +609,7 @@ as the baseline.</p>
 with <a class="reference internal" href="../modules/generated/fmralign.methods.DetSRM.html#fmralign.methods.DetSRM" title="fmralign.methods.DetSRM"><code class="xref py py-class docutils literal notranslate"><span class="pre">DetSRM</span></code></a> alignment on visual cortex activity.
 You can see that <a class="reference internal" href="../modules/generated/fmralign.methods.DetSRM.html#fmralign.methods.DetSRM" title="fmralign.methods.DetSRM"><code class="xref py py-class docutils literal notranslate"><span class="pre">DetSRM</span></code></a> introduces more
 smoothness in the transformation, resulting in slightly higher correlation values.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 50.621 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 31.955 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-alignment-methods-benchmark-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/b885fb894b22be261ce320523a208b83/plot_alignment_methods_benchmark.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_alignment_methods_benchmark.ipynb</span></code></a></p>

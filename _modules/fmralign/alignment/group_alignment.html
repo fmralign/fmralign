@@ -314,7 +314,7 @@
 
 <div class="viewcode-block" id="GroupAlignment">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html#fmralign.alignment.group_alignment.GroupAlignment">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">GroupAlignment</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GroupAlignment</span><span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs group-level alignment of various subject data.</span>
 
 <span class="sd">    This class aligns multiple subjects&#39; data either to a computed template</span>
@@ -369,12 +369,14 @@
 <span class="sd">    ... }</span>
 <span class="sd">    &gt;&gt;&gt; aligner = GroupAlignment(method=&quot;procrustes&quot;, n_iter=3)</span>
 <span class="sd">    &gt;&gt;&gt; aligner.fit(alignment_dict, y=&quot;template&quot;)</span>
+<span class="sd">    GroupAlignment(method=&#39;procrustes&#39;, n_iter=3)</span>
 <span class="sd">    &gt;&gt;&gt; aligned_data = aligner.transform(testing_dict)</span>
 
 <span class="sd">    &gt;&gt;&gt; # Pairwise alignment to target</span>
 <span class="sd">    &gt;&gt;&gt; target_data = np.random.rand(10, n_voxels)</span>
 <span class="sd">    &gt;&gt;&gt; aligner = GroupAlignment(method=&quot;procrustes&quot;)</span>
 <span class="sd">    &gt;&gt;&gt; aligner.fit(alignment_dict, y=target_data)</span>
+<span class="sd">    GroupAlignment(method=&#39;procrustes&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; aligned_data = aligner.transform(testing_dict)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 

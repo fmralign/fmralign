@@ -59,7 +59,7 @@ mask is an appropriate nifti image to select the data.
 
  .. code-block:: none
 
-    [get_dataset_dir] Dataset found in /home/runner/nilearn_data/ibc
+    [get_dataset_dir] Dataset directory found: /home/runner/nilearn_data/ibc
 
 
 
@@ -181,8 +181,11 @@ utility, which will generate a parcellation of the data in 150 pieces.
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:324: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      labels = masker.transform(parcellation.labels_img_).astype(int)
 
 
 
@@ -342,7 +345,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 45.079 seconds)
+   **Total running time of the script:** (0 minutes 31.781 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_alignment.py:

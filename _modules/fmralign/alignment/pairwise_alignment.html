@@ -310,7 +310,7 @@
 
 <div class="viewcode-block" id="PairwiseAlignment">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">PairwiseAlignment</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PairwiseAlignment</span><span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs pairwise alignment between two subjects.</span>
 
 <span class="sd">    This class performs source-to-target alignment of two subjects&#39; data.</span>
@@ -342,12 +342,14 @@
 
 <span class="sd">    Examples</span>
 <span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">    &gt;&gt;&gt; from fmralign import PairwiseAlignment</span>
 <span class="sd">    &gt;&gt;&gt; X = np.random.rand(10, 5)</span>
 <span class="sd">    &gt;&gt;&gt; Y = np.random.rand(10, 5)</span>
 <span class="sd">    &gt;&gt;&gt; test_data = np.random.rand(8, 5)</span>
 <span class="sd">    &gt;&gt;&gt; aligner = PairwiseAlignment(method=&quot;procrustes&quot;)</span>
 <span class="sd">    &gt;&gt;&gt; aligner.fit(X, Y)</span>
+<span class="sd">    PairwiseAlignment(method=&#39;procrustes&#39;)</span>
 <span class="sd">    &gt;&gt;&gt; aligned_data = aligner.transform(test_data)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 

@@ -58,7 +58,7 @@ subjects sub-01, sub-02 and sub-04 (or retrieve them if they were already downlo
 
  .. code-block:: none
 
-    [get_dataset_dir] Dataset found in /home/runner/nilearn_data/ibc
+    [get_dataset_dir] Dataset directory found: /home/runner/nilearn_data/ibc
 
 
 
@@ -111,6 +111,24 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
 
  .. code-block:: none
 
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:43: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      sub: masker.transform(
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:43: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      sub: masker.transform(
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:43: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      sub: masker.transform(
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:49: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      sub: masker.transform(
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:49: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      sub: masker.transform(
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:49: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      sub: masker.transform(
     /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:114: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
       warnings.warn(
     /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:134: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
@@ -120,8 +138,11 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:324: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      labels = masker.transform(parcellation.labels_img_).astype(int)
     /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:210: UserWarning: 
      Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
      parcel 1 : 1011 voxels
@@ -134,7 +155,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
 .. raw:: html
 
     <div class="output_subarea output_html rendered_html output_result">
-    <style>.sk-global {
+    <style>#sk-container-id-1 {
       /* Definition of color scheme common for light and dark mode */
       --sklearn-color-text: #000;
       --sklearn-color-text-muted: #666;
@@ -151,7 +172,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       --sklearn-color-fitted-level-3: cornflowerblue;
     }
 
-    .sk-global.light {
+    #sk-container-id-1.light {
       /* Specific color for light theme */
       --sklearn-color-text-on-default-background: black;
       --sklearn-color-background: white;
@@ -159,24 +180,25 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       --sklearn-color-icon: #696969;
     }
 
-    .sk-global.dark {
+    #sk-container-id-1.dark {
       --sklearn-color-text-on-default-background: white;
       --sklearn-color-background: #111;
       --sklearn-color-border-box: white;
       --sklearn-color-icon: #878787;
     }
 
-    .sk-global {
+    #sk-container-id-1 {
       color: var(--sklearn-color-text);
     }
 
-    .sk-global pre {
+    #sk-container-id-1 pre {
       padding: 0;
     }
 
-    .sk-global input.sk-hidden--visually {
+    #sk-container-id-1 input.sk-hidden--visually {
       border: 0;
-      clip-path: inset(100%);
+      clip: rect(1px 1px 1px 1px);
+      clip: rect(1px, 1px, 1px, 1px);
       height: 1px;
       margin: -1px;
       overflow: hidden;
@@ -185,7 +207,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       width: 1px;
     }
 
-    .sk-global div.sk-dashed-wrapped {
+    #sk-container-id-1 div.sk-dashed-wrapped {
       border: 1px dashed var(--sklearn-color-line);
       margin: 0 0.4em 0.5em 0.4em;
       box-sizing: border-box;
@@ -193,7 +215,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       background-color: var(--sklearn-color-background);
     }
 
-    .sk-global div.sk-container {
+    #sk-container-id-1 div.sk-container {
       /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
          but bootstrap.min.css set `[hidden] { display: none !important; }`
          so we also need the `!important` here to be able to override the
@@ -203,7 +225,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       position: relative;
     }
 
-    .sk-global div.sk-text-repr-fallback {
+    #sk-container-id-1 div.sk-text-repr-fallback {
       display: none;
     }
 
@@ -219,14 +241,14 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
 
     /* Parallel-specific style estimator block */
 
-    .sk-global div.sk-parallel-item::after {
+    #sk-container-id-1 div.sk-parallel-item::after {
       content: "";
       width: 100%;
       border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
       flex-grow: 1;
     }
 
-    .sk-global div.sk-parallel {
+    #sk-container-id-1 div.sk-parallel {
       display: flex;
       align-items: stretch;
       justify-content: center;
@@ -234,28 +256,28 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       position: relative;
     }
 
-    .sk-global div.sk-parallel-item {
+    #sk-container-id-1 div.sk-parallel-item {
       display: flex;
       flex-direction: column;
     }
 
-    .sk-global div.sk-parallel-item:first-child::after {
+    #sk-container-id-1 div.sk-parallel-item:first-child::after {
       align-self: flex-end;
       width: 50%;
     }
 
-    .sk-global div.sk-parallel-item:last-child::after {
+    #sk-container-id-1 div.sk-parallel-item:last-child::after {
       align-self: flex-start;
       width: 50%;
     }
 
-    .sk-global div.sk-parallel-item:only-child::after {
+    #sk-container-id-1 div.sk-parallel-item:only-child::after {
       width: 0;
     }
 
     /* Serial-specific style estimator block */
 
-    .sk-global div.sk-serial {
+    #sk-container-id-1 div.sk-serial {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -273,14 +295,14 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
 
     /* Pipeline and ColumnTransformer style (default) */
 
-    .sk-global div.sk-toggleable {
+    #sk-container-id-1 div.sk-toggleable {
       /* Default theme specific background. It is overwritten whether we have a
       specific estimator or a Pipeline/ColumnTransformer */
       background-color: var(--sklearn-color-background);
     }
 
     /* Toggleable label */
-    .sk-global label.sk-toggleable__label {
+    #sk-container-id-1 label.sk-toggleable__label {
       cursor: pointer;
       display: flex;
       width: 100%;
@@ -293,13 +315,13 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       gap: 0.5em;
     }
 
-    .sk-global label.sk-toggleable__label .caption {
+    #sk-container-id-1 label.sk-toggleable__label .caption {
       font-size: 0.6rem;
       font-weight: lighter;
       color: var(--sklearn-color-text-muted);
     }
 
-    .sk-global label.sk-toggleable__label-arrow:before {
+    #sk-container-id-1 label.sk-toggleable__label-arrow:before {
       /* Arrow on the left of the label */
       content: "▸";
       float: left;
@@ -307,25 +329,25 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       color: var(--sklearn-color-icon);
     }
 
-    .sk-global label.sk-toggleable__label-arrow:hover:before {
+    #sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
       color: var(--sklearn-color-text);
     }
 
     /* Toggleable content - dropdown */
 
-    .sk-global div.sk-toggleable__content {
+    #sk-container-id-1 div.sk-toggleable__content {
       display: none;
       text-align: left;
       /* unfitted */
       background-color: var(--sklearn-color-unfitted-level-0);
     }
 
-    .sk-global div.sk-toggleable__content.fitted {
+    #sk-container-id-1 div.sk-toggleable__content.fitted {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-0);
     }
 
-    .sk-global div.sk-toggleable__content pre {
+    #sk-container-id-1 div.sk-toggleable__content pre {
       margin: 0.2em;
       border-radius: 0.25em;
       color: var(--sklearn-color-text);
@@ -333,78 +355,78 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       background-color: var(--sklearn-color-unfitted-level-0);
     }
 
-    .sk-global div.sk-toggleable__content.fitted pre {
+    #sk-container-id-1 div.sk-toggleable__content.fitted pre {
       /* unfitted */
       background-color: var(--sklearn-color-fitted-level-0);
     }
 
-    .sk-global input.sk-toggleable__control:checked~div.sk-toggleable__content {
+    #sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
       /* Expand drop-down */
       display: block;
       width: 100%;
       overflow: visible;
     }
 
-    .sk-global input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+    #sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
       content: "▾";
     }
 
     /* Pipeline/ColumnTransformer-specific style */
 
-    .sk-global div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+    #sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
       color: var(--sklearn-color-text);
       background-color: var(--sklearn-color-unfitted-level-2);
     }
 
-    .sk-global div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+    #sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
       background-color: var(--sklearn-color-fitted-level-2);
     }
 
     /* Estimator-specific style */
 
     /* Colorize estimator box */
-    .sk-global div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+    #sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
       /* unfitted */
       background-color: var(--sklearn-color-unfitted-level-2);
     }
 
-    .sk-global div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+    #sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-2);
     }
 
-    .sk-global div.sk-label label.sk-toggleable__label,
-    .sk-global div.sk-label label {
+    #sk-container-id-1 div.sk-label label.sk-toggleable__label,
+    #sk-container-id-1 div.sk-label label {
       /* The background is the default theme color */
       color: var(--sklearn-color-text-on-default-background);
     }
 
     /* On hover, darken the color of the background */
-    .sk-global div.sk-label:hover label.sk-toggleable__label {
+    #sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
       color: var(--sklearn-color-text);
       background-color: var(--sklearn-color-unfitted-level-2);
     }
 
     /* Label box, darken color on hover, fitted */
-    .sk-global div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+    #sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
       color: var(--sklearn-color-text);
       background-color: var(--sklearn-color-fitted-level-2);
     }
 
     /* Estimator label */
 
-    .sk-global div.sk-label label {
+    #sk-container-id-1 div.sk-label label {
       font-family: monospace;
       font-weight: bold;
       line-height: 1.2em;
     }
 
-    .sk-global div.sk-label-container {
+    #sk-container-id-1 div.sk-label-container {
       text-align: center;
     }
 
     /* Estimator-specific */
-    .sk-global div.sk-estimator {
+    #sk-container-id-1 div.sk-estimator {
       font-family: monospace;
       border: 1px dotted var(--sklearn-color-border-box);
       border-radius: 0.25em;
@@ -414,18 +436,18 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       background-color: var(--sklearn-color-unfitted-level-0);
     }
 
-    .sk-global div.sk-estimator.fitted {
+    #sk-container-id-1 div.sk-estimator.fitted {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-0);
     }
 
     /* on hover */
-    .sk-global div.sk-estimator:hover {
+    #sk-container-id-1 div.sk-estimator:hover {
       /* unfitted */
       background-color: var(--sklearn-color-unfitted-level-2);
     }
 
-    .sk-global div.sk-estimator.fitted:hover {
+    #sk-container-id-1 div.sk-estimator.fitted:hover {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-2);
     }
@@ -516,7 +538,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
 
     /* "?"-specific style due to the `<a>` HTML tag */
 
-    .sk-global a.estimator_doc_link {
+    #sk-container-id-1 a.estimator_doc_link {
       float: right;
       font-size: 1rem;
       line-height: 1em;
@@ -531,7 +553,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       border: var(--sklearn-color-unfitted-level-1) 1pt solid;
     }
 
-    .sk-global a.estimator_doc_link.fitted {
+    #sk-container-id-1 a.estimator_doc_link.fitted {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-0);
       border: var(--sklearn-color-fitted-level-1) 1pt solid;
@@ -539,24 +561,16 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
     }
 
     /* On hover */
-    .sk-global a.estimator_doc_link:hover {
+    #sk-container-id-1 a.estimator_doc_link:hover {
       /* unfitted */
       background-color: var(--sklearn-color-unfitted-level-3);
       color: var(--sklearn-color-background);
       text-decoration: none;
     }
 
-    .sk-global a.estimator_doc_link.fitted:hover {
+    #sk-container-id-1 a.estimator_doc_link.fitted:hover {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-3);
-    }
-
-    .sk-top-container.sk-global {
-      /* pydata-sphinx-theme hides overflow, so scrolling is disabled.
-       We need to set it to !important and add tabindex="0" in the HTML
-       to allow keyboard-only users to navigate the display. */
-      overflow-x: scroll !important;
-      max-width: 100%;
     }
 
     .estimator-table {
@@ -592,11 +606,11 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
         background-color: #f6f6f6;
     }
 
-    .estimator-table .parameters-table tr:hover td {
+    .estimator-table .parameters-table tr:hover {
         background-color: #e0e0e0;
     }
 
-    .estimator-table table :is(td, th) {
+    .estimator-table table td {
         border: 1px solid rgba(106, 105, 104, 0.232);
     }
 
@@ -620,7 +634,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
         background-color: transparent;
     }
 
-    .default td, .estimator-table th {
+    .default td {
         color: black;
         text-align: left !important;
     }
@@ -628,10 +642,6 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
     .user-set td i,
     .default td i {
         color: black;
-    }
-
-    td.fitted-att-type {
-        white-space: preserve nowrap;
     }
 
     /*
@@ -646,14 +656,6 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
         color: inherit;
         display: block;
         padding: .5em;
-    }
-
-    @supports(anchor-name: --doc-link) {
-        a.param-doc-link,
-        a.param-doc-link:link,
-        a.param-doc-link:visited {
-        anchor-name: --doc-link;
-        }
     }
 
     /* "hack" to make the entire area of the cell containing the link clickable */
@@ -682,14 +684,6 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
         border: thin solid var(--sklearn-color-unfitted-level-3);
     }
 
-    @supports(position-area: center right) {
-        .param-doc-description {
-        position-area: center right;
-        position: fixed;
-        margin-left: 0;
-        }
-    }
-
     /* Fitted state for parameter tooltips */
     .fitted .param-doc-description {
         /* fitted */
@@ -711,129 +705,8 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
         height: 14px;
         cursor: pointer;
     }
-
-    .features {
-      font-family: monospace;
-      cursor: pointer;
-      background-color: var(--sklearn-color-unfitted-level-0);
-      border: 1px dotted var(--sklearn-color-border-box);
-      border-radius: .20em;
-      margin-bottom: 0.5em;
-      font-size: inherit; /* Needed for jupyter */
-    }
-
-    .features.fitted {
-      background-color: var(--sklearn-color-fitted-level-0);
-    }
-
-    .features summary {
-      cursor: pointer;
-      display: flex;
-      margin-bottom: 0;
-      text-align: center;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5em;
-      padding: .25em;
-    }
-
-    .features details[open] > summary {
-      color: var(--sklearn-color-text);
-      background-color: var(--sklearn-color-unfitted-level-2);
-      border-radius: .20em 0 0 0;
-    }
-
-    .features.fitted details[open] > summary {
-      background-color: var(--sklearn-color-fitted-level-2);
-      border-radius: .20em 0 0 0;
-    }
-
-    .features details > summary .arrow::before {
-      content: "▸";
-      color: grey;
-    }
-
-    .features details[open] > summary .arrow::before {
-      content: "▾";
-    }
-
-    .features details:hover > summary {
-      margin: 0;
-      background-color: var(--sklearn-color-unfitted-level-2);
-    }
-
-    .features.fitted details:hover > summary {
-      margin: 0;
-      background-color: var(--sklearn-color-fitted-level-2);
-    }
-
-    .features .features-container {
-      max-width: 15em;
-      max-height: 10em;
-      overflow: auto;
-      scrollbar-width: thin;
-      padding: .25em 0.1rem;
-      background-color: var(--sklearn-color-unfitted-level-0);
-      border-radius: 0 0 .5em .5em;
-    }
-
-    .features.fitted .features-container {
-      background-color: var(--sklearn-color-fitted-level-0);
-    }
-
-    .features .image-container {
-      block-size: 1em;
-      inline-size: 1em;
-      padding: 0;
-      margin: 0%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .features .copy-paste-icon {
-      background-size: 1em 1em;
-      width: 1em;
-      height: 1em;
-      filter: grayscale(100%) opacity(60%);
-    }
-
-    .features .features-container table {
-      width: 100%;
-      margin: 0.01em;
-    }
-
-    .features .features-container table tr:nth-child(odd) {
-      background-color: #fff;
-    }
-
-    .features .features-container table tr:nth-child(even) {
-      background-color: #f6f6f6;
-    }
-
-    .features .features-container table tr:hover {
-      background-color: #e0e0e0;
-    }
-
-    .features .features-container table {
-      table-layout: inherit;
-    }
-
-    .features .features-container table td {
-      text-align: left;
-      padding: 0 0.5em;
-      border: 1px solid rgba(106, 105, 104, 0.232);
-      white-space: nowrap;
-      color: var(--sklearn-color-text);
-    }
-
-    .total_features {
-      display: flex;
-      justify-content: center;
-      margin-top: 0.5em;
-    }
-    </style><body><div id="sk-container-id-1" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>GroupAlignment(labels=array([96, 96, 86, ..., 21, 43, 43], shape=(46448,)),
-                   method=&#x27;procrustes&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GroupAlignment</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+    </style><body><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GroupAlignment(labels=array([96, 96, 86, ..., 21, 43, 43], shape=(46448,)),
+                   method=&#x27;procrustes&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GroupAlignment</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
             <div class="estimator-table">
                 <details>
                     <summary>Parameters</summary>
@@ -903,53 +776,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
                     </table>
                 </details>
             </div>
-    
-            <div class="estimator-table">
-                <details>
-                    <summary>Fitted attributes</summary>
-                    <table class="parameters-table">
-                        <tbody>
-                            <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Value</th>
-                            </tr>
-                        
-           <tr class="default">
-               <td class="param"><a class="param-doc-link" style="text-decoration:none;">labels_</a></td>
-               <td class="fitted-att-type">ndarray[int64](46448,)</td>
-               <td>[96,96,86,...,21,43,43]</td>
-
-
-           </tr>
-    
-
-           <tr class="default">
-               <td class="param"><a class="param-doc-link" style="text-decoration:none;">method_</a></td>
-               <td class="fitted-att-type">Procrustes</td>
-               <td>Procrustes()</td>
-
-
-           </tr>
-    
-
-           <tr class="default">
-               <td class="param"><a class="param-doc-link" style="text-decoration:none;">subject_keys_</a></td>
-               <td class="fitted-att-type">list</td>
-               <td>[&#x27;sub-01&#x27;, &#x27;sub-02&#x27;, &#x27;sub-04&#x27;]</td>
-
-
-           </tr>
-    
-                        </tbody>
-                    </table>
-                </details>
-            </div>
-        </div></div></div></div></div><script>/*  Authors: The scikit-learn developers
-     SPDX-License-Identifier: BSD-3-Clause
-    */
-
-    function copyToClipboard(text, element) {
+        </div></div></div></div></div><script>function copyToClipboard(text, element) {
         // Get the parameter prefix from the closest toggleable content
         const toggleableContent = element.closest('.sk-toggleable__content');
         const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
@@ -986,13 +813,6 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
     document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
         const toggleableContent = element.closest('.sk-toggleable__content');
         const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-
-        const parent = element.parentElement;
-        if (!parent || !parent.nextElementSibling) {
-            console.warn('Expected copy-paste icon is missing from the DOM structure');
-            return;
-        }
-
         const paramName = element.parentElement.nextElementSibling
             .textContent.trim().split(' ')[0];
         const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
@@ -1000,51 +820,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
         element.setAttribute('title', fullParamName);
     });
 
-    /**
-     * Copy the list of feature names formatted as a Python list.
-     *
-     * @param {HTMLElement} element - The copy button inside a `.features` block; its siblings
-     *   contain a `details` element and a table containing feature named.
-     * @returns {boolean} Always returns `false` so callers can prevent the default click behavior.
-     */
-    function copyFeatureNamesToClipboard(element) {
-        var detailsElem = element.closest('.features').querySelector('details');
-        var wasOpen = detailsElem.open;
-        detailsElem.open = true;
-        var content = element.closest('.features').querySelector('tbody')
-                      .innerText.trim();
-        if (!wasOpen) detailsElem.open = false;
-        const rows = content.split('\n').map(row => `    "${row}"`);
-        const formattedText = `[\n${rows.join(',\n')},\n]`;
-        const originalHTML = element.innerHTML.replace('✔', '');
-        const originalStyle = element.style;
-        const copyMark = document.createElement('span');
-        copyMark.innerHTML = '✔';
-        copyMark.style.color = 'blue';
-        copyMark.style.fontSize = '1em';
 
-        navigator.clipboard.writeText(formattedText)
-            .then(() => {
-                element.style.display = 'none';
-                element.parentElement.appendChild(copyMark);
-
-                setTimeout(() => {
-                    copyMark.remove();
-                    element.innerHTML = originalHTML;
-                    element.style = originalStyle;
-                }, 1000);
-            })
-            .catch(err => {
-                console.error('Failed to copy:', err);
-                element.style.color = 'orange';
-                element.innerHTML = "Failed!";
-                setTimeout(() => {
-                    element.innerHTML = originalHTML;
-                    element.style = originalStyle;
-                }, 1000);
-            });
-        return false;
-    }
     /**
      * Adapted from Skrub
      * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
@@ -1142,23 +918,11 @@ are decoupled.
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:210: UserWarning: 
-     Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
-     parcel 1 : 1011 voxels
-     parcel 7 : 1315 voxels
-     parcel 30 : 1696 voxels
-     parcel 43 : 1846 voxels
-      warnings.warn(warning)
-
 
 .. raw:: html
 
     <div class="output_subarea output_html rendered_html output_result">
-    <style>.sk-global {
+    <style>#sk-container-id-2 {
       /* Definition of color scheme common for light and dark mode */
       --sklearn-color-text: #000;
       --sklearn-color-text-muted: #666;
@@ -1175,7 +939,7 @@ are decoupled.
       --sklearn-color-fitted-level-3: cornflowerblue;
     }
 
-    .sk-global.light {
+    #sk-container-id-2.light {
       /* Specific color for light theme */
       --sklearn-color-text-on-default-background: black;
       --sklearn-color-background: white;
@@ -1183,24 +947,25 @@ are decoupled.
       --sklearn-color-icon: #696969;
     }
 
-    .sk-global.dark {
+    #sk-container-id-2.dark {
       --sklearn-color-text-on-default-background: white;
       --sklearn-color-background: #111;
       --sklearn-color-border-box: white;
       --sklearn-color-icon: #878787;
     }
 
-    .sk-global {
+    #sk-container-id-2 {
       color: var(--sklearn-color-text);
     }
 
-    .sk-global pre {
+    #sk-container-id-2 pre {
       padding: 0;
     }
 
-    .sk-global input.sk-hidden--visually {
+    #sk-container-id-2 input.sk-hidden--visually {
       border: 0;
-      clip-path: inset(100%);
+      clip: rect(1px 1px 1px 1px);
+      clip: rect(1px, 1px, 1px, 1px);
       height: 1px;
       margin: -1px;
       overflow: hidden;
@@ -1209,7 +974,7 @@ are decoupled.
       width: 1px;
     }
 
-    .sk-global div.sk-dashed-wrapped {
+    #sk-container-id-2 div.sk-dashed-wrapped {
       border: 1px dashed var(--sklearn-color-line);
       margin: 0 0.4em 0.5em 0.4em;
       box-sizing: border-box;
@@ -1217,7 +982,7 @@ are decoupled.
       background-color: var(--sklearn-color-background);
     }
 
-    .sk-global div.sk-container {
+    #sk-container-id-2 div.sk-container {
       /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
          but bootstrap.min.css set `[hidden] { display: none !important; }`
          so we also need the `!important` here to be able to override the
@@ -1227,7 +992,7 @@ are decoupled.
       position: relative;
     }
 
-    .sk-global div.sk-text-repr-fallback {
+    #sk-container-id-2 div.sk-text-repr-fallback {
       display: none;
     }
 
@@ -1243,14 +1008,14 @@ are decoupled.
 
     /* Parallel-specific style estimator block */
 
-    .sk-global div.sk-parallel-item::after {
+    #sk-container-id-2 div.sk-parallel-item::after {
       content: "";
       width: 100%;
       border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
       flex-grow: 1;
     }
 
-    .sk-global div.sk-parallel {
+    #sk-container-id-2 div.sk-parallel {
       display: flex;
       align-items: stretch;
       justify-content: center;
@@ -1258,28 +1023,28 @@ are decoupled.
       position: relative;
     }
 
-    .sk-global div.sk-parallel-item {
+    #sk-container-id-2 div.sk-parallel-item {
       display: flex;
       flex-direction: column;
     }
 
-    .sk-global div.sk-parallel-item:first-child::after {
+    #sk-container-id-2 div.sk-parallel-item:first-child::after {
       align-self: flex-end;
       width: 50%;
     }
 
-    .sk-global div.sk-parallel-item:last-child::after {
+    #sk-container-id-2 div.sk-parallel-item:last-child::after {
       align-self: flex-start;
       width: 50%;
     }
 
-    .sk-global div.sk-parallel-item:only-child::after {
+    #sk-container-id-2 div.sk-parallel-item:only-child::after {
       width: 0;
     }
 
     /* Serial-specific style estimator block */
 
-    .sk-global div.sk-serial {
+    #sk-container-id-2 div.sk-serial {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1297,14 +1062,14 @@ are decoupled.
 
     /* Pipeline and ColumnTransformer style (default) */
 
-    .sk-global div.sk-toggleable {
+    #sk-container-id-2 div.sk-toggleable {
       /* Default theme specific background. It is overwritten whether we have a
       specific estimator or a Pipeline/ColumnTransformer */
       background-color: var(--sklearn-color-background);
     }
 
     /* Toggleable label */
-    .sk-global label.sk-toggleable__label {
+    #sk-container-id-2 label.sk-toggleable__label {
       cursor: pointer;
       display: flex;
       width: 100%;
@@ -1317,13 +1082,13 @@ are decoupled.
       gap: 0.5em;
     }
 
-    .sk-global label.sk-toggleable__label .caption {
+    #sk-container-id-2 label.sk-toggleable__label .caption {
       font-size: 0.6rem;
       font-weight: lighter;
       color: var(--sklearn-color-text-muted);
     }
 
-    .sk-global label.sk-toggleable__label-arrow:before {
+    #sk-container-id-2 label.sk-toggleable__label-arrow:before {
       /* Arrow on the left of the label */
       content: "▸";
       float: left;
@@ -1331,25 +1096,25 @@ are decoupled.
       color: var(--sklearn-color-icon);
     }
 
-    .sk-global label.sk-toggleable__label-arrow:hover:before {
+    #sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
       color: var(--sklearn-color-text);
     }
 
     /* Toggleable content - dropdown */
 
-    .sk-global div.sk-toggleable__content {
+    #sk-container-id-2 div.sk-toggleable__content {
       display: none;
       text-align: left;
       /* unfitted */
       background-color: var(--sklearn-color-unfitted-level-0);
     }
 
-    .sk-global div.sk-toggleable__content.fitted {
+    #sk-container-id-2 div.sk-toggleable__content.fitted {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-0);
     }
 
-    .sk-global div.sk-toggleable__content pre {
+    #sk-container-id-2 div.sk-toggleable__content pre {
       margin: 0.2em;
       border-radius: 0.25em;
       color: var(--sklearn-color-text);
@@ -1357,78 +1122,78 @@ are decoupled.
       background-color: var(--sklearn-color-unfitted-level-0);
     }
 
-    .sk-global div.sk-toggleable__content.fitted pre {
+    #sk-container-id-2 div.sk-toggleable__content.fitted pre {
       /* unfitted */
       background-color: var(--sklearn-color-fitted-level-0);
     }
 
-    .sk-global input.sk-toggleable__control:checked~div.sk-toggleable__content {
+    #sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
       /* Expand drop-down */
       display: block;
       width: 100%;
       overflow: visible;
     }
 
-    .sk-global input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+    #sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
       content: "▾";
     }
 
     /* Pipeline/ColumnTransformer-specific style */
 
-    .sk-global div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+    #sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
       color: var(--sklearn-color-text);
       background-color: var(--sklearn-color-unfitted-level-2);
     }
 
-    .sk-global div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+    #sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
       background-color: var(--sklearn-color-fitted-level-2);
     }
 
     /* Estimator-specific style */
 
     /* Colorize estimator box */
-    .sk-global div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+    #sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
       /* unfitted */
       background-color: var(--sklearn-color-unfitted-level-2);
     }
 
-    .sk-global div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+    #sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-2);
     }
 
-    .sk-global div.sk-label label.sk-toggleable__label,
-    .sk-global div.sk-label label {
+    #sk-container-id-2 div.sk-label label.sk-toggleable__label,
+    #sk-container-id-2 div.sk-label label {
       /* The background is the default theme color */
       color: var(--sklearn-color-text-on-default-background);
     }
 
     /* On hover, darken the color of the background */
-    .sk-global div.sk-label:hover label.sk-toggleable__label {
+    #sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
       color: var(--sklearn-color-text);
       background-color: var(--sklearn-color-unfitted-level-2);
     }
 
     /* Label box, darken color on hover, fitted */
-    .sk-global div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+    #sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
       color: var(--sklearn-color-text);
       background-color: var(--sklearn-color-fitted-level-2);
     }
 
     /* Estimator label */
 
-    .sk-global div.sk-label label {
+    #sk-container-id-2 div.sk-label label {
       font-family: monospace;
       font-weight: bold;
       line-height: 1.2em;
     }
 
-    .sk-global div.sk-label-container {
+    #sk-container-id-2 div.sk-label-container {
       text-align: center;
     }
 
     /* Estimator-specific */
-    .sk-global div.sk-estimator {
+    #sk-container-id-2 div.sk-estimator {
       font-family: monospace;
       border: 1px dotted var(--sklearn-color-border-box);
       border-radius: 0.25em;
@@ -1438,18 +1203,18 @@ are decoupled.
       background-color: var(--sklearn-color-unfitted-level-0);
     }
 
-    .sk-global div.sk-estimator.fitted {
+    #sk-container-id-2 div.sk-estimator.fitted {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-0);
     }
 
     /* on hover */
-    .sk-global div.sk-estimator:hover {
+    #sk-container-id-2 div.sk-estimator:hover {
       /* unfitted */
       background-color: var(--sklearn-color-unfitted-level-2);
     }
 
-    .sk-global div.sk-estimator.fitted:hover {
+    #sk-container-id-2 div.sk-estimator.fitted:hover {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-2);
     }
@@ -1540,7 +1305,7 @@ are decoupled.
 
     /* "?"-specific style due to the `<a>` HTML tag */
 
-    .sk-global a.estimator_doc_link {
+    #sk-container-id-2 a.estimator_doc_link {
       float: right;
       font-size: 1rem;
       line-height: 1em;
@@ -1555,7 +1320,7 @@ are decoupled.
       border: var(--sklearn-color-unfitted-level-1) 1pt solid;
     }
 
-    .sk-global a.estimator_doc_link.fitted {
+    #sk-container-id-2 a.estimator_doc_link.fitted {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-0);
       border: var(--sklearn-color-fitted-level-1) 1pt solid;
@@ -1563,24 +1328,16 @@ are decoupled.
     }
 
     /* On hover */
-    .sk-global a.estimator_doc_link:hover {
+    #sk-container-id-2 a.estimator_doc_link:hover {
       /* unfitted */
       background-color: var(--sklearn-color-unfitted-level-3);
       color: var(--sklearn-color-background);
       text-decoration: none;
     }
 
-    .sk-global a.estimator_doc_link.fitted:hover {
+    #sk-container-id-2 a.estimator_doc_link.fitted:hover {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-3);
-    }
-
-    .sk-top-container.sk-global {
-      /* pydata-sphinx-theme hides overflow, so scrolling is disabled.
-       We need to set it to !important and add tabindex="0" in the HTML
-       to allow keyboard-only users to navigate the display. */
-      overflow-x: scroll !important;
-      max-width: 100%;
     }
 
     .estimator-table {
@@ -1616,11 +1373,11 @@ are decoupled.
         background-color: #f6f6f6;
     }
 
-    .estimator-table .parameters-table tr:hover td {
+    .estimator-table .parameters-table tr:hover {
         background-color: #e0e0e0;
     }
 
-    .estimator-table table :is(td, th) {
+    .estimator-table table td {
         border: 1px solid rgba(106, 105, 104, 0.232);
     }
 
@@ -1644,7 +1401,7 @@ are decoupled.
         background-color: transparent;
     }
 
-    .default td, .estimator-table th {
+    .default td {
         color: black;
         text-align: left !important;
     }
@@ -1652,10 +1409,6 @@ are decoupled.
     .user-set td i,
     .default td i {
         color: black;
-    }
-
-    td.fitted-att-type {
-        white-space: preserve nowrap;
     }
 
     /*
@@ -1670,14 +1423,6 @@ are decoupled.
         color: inherit;
         display: block;
         padding: .5em;
-    }
-
-    @supports(anchor-name: --doc-link) {
-        a.param-doc-link,
-        a.param-doc-link:link,
-        a.param-doc-link:visited {
-        anchor-name: --doc-link;
-        }
     }
 
     /* "hack" to make the entire area of the cell containing the link clickable */
@@ -1706,14 +1451,6 @@ are decoupled.
         border: thin solid var(--sklearn-color-unfitted-level-3);
     }
 
-    @supports(position-area: center right) {
-        .param-doc-description {
-        position-area: center right;
-        position: fixed;
-        margin-left: 0;
-        }
-    }
-
     /* Fitted state for parameter tooltips */
     .fitted .param-doc-description {
         /* fitted */
@@ -1735,129 +1472,8 @@ are decoupled.
         height: 14px;
         cursor: pointer;
     }
-
-    .features {
-      font-family: monospace;
-      cursor: pointer;
-      background-color: var(--sklearn-color-unfitted-level-0);
-      border: 1px dotted var(--sklearn-color-border-box);
-      border-radius: .20em;
-      margin-bottom: 0.5em;
-      font-size: inherit; /* Needed for jupyter */
-    }
-
-    .features.fitted {
-      background-color: var(--sklearn-color-fitted-level-0);
-    }
-
-    .features summary {
-      cursor: pointer;
-      display: flex;
-      margin-bottom: 0;
-      text-align: center;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5em;
-      padding: .25em;
-    }
-
-    .features details[open] > summary {
-      color: var(--sklearn-color-text);
-      background-color: var(--sklearn-color-unfitted-level-2);
-      border-radius: .20em 0 0 0;
-    }
-
-    .features.fitted details[open] > summary {
-      background-color: var(--sklearn-color-fitted-level-2);
-      border-radius: .20em 0 0 0;
-    }
-
-    .features details > summary .arrow::before {
-      content: "▸";
-      color: grey;
-    }
-
-    .features details[open] > summary .arrow::before {
-      content: "▾";
-    }
-
-    .features details:hover > summary {
-      margin: 0;
-      background-color: var(--sklearn-color-unfitted-level-2);
-    }
-
-    .features.fitted details:hover > summary {
-      margin: 0;
-      background-color: var(--sklearn-color-fitted-level-2);
-    }
-
-    .features .features-container {
-      max-width: 15em;
-      max-height: 10em;
-      overflow: auto;
-      scrollbar-width: thin;
-      padding: .25em 0.1rem;
-      background-color: var(--sklearn-color-unfitted-level-0);
-      border-radius: 0 0 .5em .5em;
-    }
-
-    .features.fitted .features-container {
-      background-color: var(--sklearn-color-fitted-level-0);
-    }
-
-    .features .image-container {
-      block-size: 1em;
-      inline-size: 1em;
-      padding: 0;
-      margin: 0%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .features .copy-paste-icon {
-      background-size: 1em 1em;
-      width: 1em;
-      height: 1em;
-      filter: grayscale(100%) opacity(60%);
-    }
-
-    .features .features-container table {
-      width: 100%;
-      margin: 0.01em;
-    }
-
-    .features .features-container table tr:nth-child(odd) {
-      background-color: #fff;
-    }
-
-    .features .features-container table tr:nth-child(even) {
-      background-color: #f6f6f6;
-    }
-
-    .features .features-container table tr:hover {
-      background-color: #e0e0e0;
-    }
-
-    .features .features-container table {
-      table-layout: inherit;
-    }
-
-    .features .features-container table td {
-      text-align: left;
-      padding: 0 0.5em;
-      border: 1px solid rgba(106, 105, 104, 0.232);
-      white-space: nowrap;
-      color: var(--sklearn-color-text);
-    }
-
-    .total_features {
-      display: flex;
-      justify-content: center;
-      margin-top: 0.5em;
-    }
-    </style><body><div id="sk-container-id-2" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>GroupAlignment(labels=array([96, 96, 86, ..., 21, 43, 43], shape=(46448,)),
-                   method=&#x27;procrustes&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GroupAlignment</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+    </style><body><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GroupAlignment(labels=array([96, 96, 86, ..., 21, 43, 43], shape=(46448,)),
+                   method=&#x27;procrustes&#x27;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GroupAlignment</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
             <div class="estimator-table">
                 <details>
                     <summary>Parameters</summary>
@@ -1927,53 +1543,7 @@ are decoupled.
                     </table>
                 </details>
             </div>
-    
-            <div class="estimator-table">
-                <details>
-                    <summary>Fitted attributes</summary>
-                    <table class="parameters-table">
-                        <tbody>
-                            <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Value</th>
-                            </tr>
-                        
-           <tr class="default">
-               <td class="param"><a class="param-doc-link" style="text-decoration:none;">labels_</a></td>
-               <td class="fitted-att-type">ndarray[int64](46448,)</td>
-               <td>[96,96,86,...,21,43,43]</td>
-
-
-           </tr>
-    
-
-           <tr class="default">
-               <td class="param"><a class="param-doc-link" style="text-decoration:none;">method_</a></td>
-               <td class="fitted-att-type">Procrustes</td>
-               <td>Procrustes()</td>
-
-
-           </tr>
-    
-
-           <tr class="default">
-               <td class="param"><a class="param-doc-link" style="text-decoration:none;">subject_keys_</a></td>
-               <td class="fitted-att-type">list</td>
-               <td>[&#x27;sub-01&#x27;, &#x27;sub-02&#x27;, &#x27;sub-04&#x27;]</td>
-
-
-           </tr>
-    
-                        </tbody>
-                    </table>
-                </details>
-            </div>
-        </div></div></div></div></div><script>/*  Authors: The scikit-learn developers
-     SPDX-License-Identifier: BSD-3-Clause
-    */
-
-    function copyToClipboard(text, element) {
+        </div></div></div></div></div><script>function copyToClipboard(text, element) {
         // Get the parameter prefix from the closest toggleable content
         const toggleableContent = element.closest('.sk-toggleable__content');
         const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
@@ -2010,13 +1580,6 @@ are decoupled.
     document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
         const toggleableContent = element.closest('.sk-toggleable__content');
         const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-
-        const parent = element.parentElement;
-        if (!parent || !parent.nextElementSibling) {
-            console.warn('Expected copy-paste icon is missing from the DOM structure');
-            return;
-        }
-
         const paramName = element.parentElement.nextElementSibling
             .textContent.trim().split(' ')[0];
         const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
@@ -2024,51 +1587,7 @@ are decoupled.
         element.setAttribute('title', fullParamName);
     });
 
-    /**
-     * Copy the list of feature names formatted as a Python list.
-     *
-     * @param {HTMLElement} element - The copy button inside a `.features` block; its siblings
-     *   contain a `details` element and a table containing feature named.
-     * @returns {boolean} Always returns `false` so callers can prevent the default click behavior.
-     */
-    function copyFeatureNamesToClipboard(element) {
-        var detailsElem = element.closest('.features').querySelector('details');
-        var wasOpen = detailsElem.open;
-        detailsElem.open = true;
-        var content = element.closest('.features').querySelector('tbody')
-                      .innerText.trim();
-        if (!wasOpen) detailsElem.open = false;
-        const rows = content.split('\n').map(row => `    "${row}"`);
-        const formattedText = `[\n${rows.join(',\n')},\n]`;
-        const originalHTML = element.innerHTML.replace('✔', '');
-        const originalStyle = element.style;
-        const copyMark = document.createElement('span');
-        copyMark.innerHTML = '✔';
-        copyMark.style.color = 'blue';
-        copyMark.style.fontSize = '1em';
 
-        navigator.clipboard.writeText(formattedText)
-            .then(() => {
-                element.style.display = 'none';
-                element.parentElement.appendChild(copyMark);
-
-                setTimeout(() => {
-                    copyMark.remove();
-                    element.innerHTML = originalHTML;
-                    element.style = originalStyle;
-                }, 1000);
-            })
-            .catch(err => {
-                console.error('Failed to copy:', err);
-                element.style.color = 'orange';
-                element.innerHTML = "Failed!";
-                setTimeout(() => {
-                    element.innerHTML = originalHTML;
-                    element.style = originalStyle;
-                }, 1000);
-            });
-        return false;
-    }
     /**
      * Adapted from Skrub
      * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
@@ -2276,6 +1795,14 @@ To better visualize the differences, we can use nilearn's
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:153: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
+      plotting.plot_img_comparison(
+
 
 
 
@@ -2298,7 +1825,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 46.102 seconds)
+   **Total running time of the script:** (1 minutes 13.735 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_template_bias.py:

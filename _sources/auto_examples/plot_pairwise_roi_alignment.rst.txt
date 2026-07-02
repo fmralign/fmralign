@@ -63,7 +63,7 @@ mask is an appropriate nifti image to select the data.
 
  .. code-block:: none
 
-    [get_dataset_dir] Dataset found in /home/runner/nilearn_data/ibc
+    [get_dataset_dir] Dataset directory found: /home/runner/nilearn_data/ibc
 
 
 
@@ -124,7 +124,7 @@ First, we fetch and plot the complete atlas
     [fetch_atlas_yeo_2011] .. done.
 
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f9780593260>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fecd89b1e80>
 
 
 
@@ -363,7 +363,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 13.243 seconds)
+   **Total running time of the script:** (0 minutes 5.610 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_roi_alignment.py:

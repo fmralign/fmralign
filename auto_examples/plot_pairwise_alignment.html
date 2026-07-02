@@ -350,7 +350,7 @@ mask is an appropriate nifti image to select the data.</p>
 <a href="https://docs.python.org/3.10/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">files</span></a><span class="p">,</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">,</span> <a href="https://docs.python.org/3.10/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">mask</span></a> <span class="o">=</span> <span class="n">fetch_ibc_subjects_contrasts</span><span class="p">([</span><span class="s2">&quot;sub-01&quot;</span><span class="p">,</span> <span class="s2">&quot;sub-02&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[get_dataset_dir] Dataset found in /home/runner/nilearn_data/ibc
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[get_dataset_dir] Dataset directory found: /home/runner/nilearn_data/ibc
 </pre></div>
 </div>
 </section>
@@ -425,8 +425,11 @@ Parameter smoothing_fwhm :
     Masker parameter None - overriding estimator parameter 4.0
 
   parcellation.fit(images_to_parcel)
-/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:324: UserWarning: the number of connected components of the connectivity matrix is 35 &gt; 1. Completing it to avoid stopping the tree early.
+/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 35 &gt; 1. Completing it to avoid stopping the tree early.
   connectivity, n_connected_components = _fix_connectivity(
+/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
+  labels = masker.transform(parcellation.labels_img_).astype(int)
 </pre></div>
 </div>
 </section>
@@ -519,7 +522,7 @@ to see if alignment was able to predict a signal more alike the ground truth.</p
 </ul>
 <p>We can see on the plot that after alignment the prediction made for one
 subject data, informed by another subject are greatly improved.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 45.079 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 31.781 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-pairwise-alignment-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/0b52291c5d4529d22a4b2d1ae507b098/plot_pairwise_alignment.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_pairwise_alignment.ipynb</span></code></a></p>
