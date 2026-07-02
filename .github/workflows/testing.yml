@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: |
           uv venv
-          uv pip install -e ".[dev]"
+          uv pip install -e ".[test]"
 
       - name: Test with pytest
         run: uv run pytest --cov --cov-report=xml fmralign
@@ -46,3 +46,28 @@ jobs:
           flags: py${{ matrix.python-version }}
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
+
+
+  test_min:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install uv and set the python version
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+
+      - name: Install dependencies
+        run: |
+          uv venv
+          uv pip install --resolution lowest-direct -e ".[test]"
+
+      - name: Test with pytest
+        run: uv run pytest --cov --cov-report=xml
