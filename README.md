@@ -16,13 +16,19 @@ Alternative implementations of these ideas can be found in the [pymvpa](http://w
 
 You can access the latest stable version of fmralign directly with the PyPi package installer:
 
-```
+```bash
 pip install fmralign
+```
+
+Optimal Transport methods can be installed with the optional dependency `[ot]`:
+
+```bash
+pip install fmralign[ot]
 ```
 
 For development or bleeding-edge features, fmralign can also be installed directly from source:
 
-```
+```bash
 git clone https://github.com/fmralign/fmralign
 cd fmralign
 pip install -e .
