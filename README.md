@@ -20,10 +20,17 @@ You can access the latest stable version of fmralign directly with the PyPi pack
 pip install fmralign
 ```
 
-Optimal Transport methods can be installed with the optional dependency `[ot]`:
+Optimal Transport methods can be installed with the optional dependency `[ot]`, which installs both supported backends (`geomloss` and `POT`):
 
 ```bash
 pip install fmralign[ot]
+```
+
+If you only need one backend, you can install it individually:
+
+```bash
+pip install fmralign[ot_geomloss]  # geomloss backend only
+pip install fmralign[ot_pot]       # POT backend only
 ```
 
 For development or bleeding-edge features, fmralign can also be installed directly from source:
