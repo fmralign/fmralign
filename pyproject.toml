@@ -19,9 +19,7 @@ dependencies = [
     "scipy",
     "nibabel",
     "nilearn>=0.13.0",
-    "POT",
-    "robust_laplacian",
-    "torch"
+    "robust_laplacian"
 ]
 description = "Functional alignment for fMRI"
 dynamic = ["version"]
@@ -32,7 +30,7 @@ requires-python = ">=3.10"
 
 [project.optional-dependencies]
 # Useful for development
-dev = ["fmralign[doc,test]", "ruff"]
+dev = ["fmralign[doc,test,ot]", "ruff"]
 # For building the documentation
 doc = [
     "coverage",
@@ -47,6 +45,8 @@ doc = [
     "sphinxext-opengraph",
     "furo"
 ]
+# For the ot solvers
+geomloss = ["geomloss>=0.2.0", "POT", "torch"]
 # For running unit and docstring tests
 test = ["coverage", "pytest>=6.0.0", "pytest-cov"]
 
