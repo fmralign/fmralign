@@ -46,7 +46,7 @@ doc = [
     "furo"
 ]
 # For the ot solvers
-ot = ["geomloss>=0.2.0", "POT", "torch"]
+ot = ["geomloss[full]>=0.2.0", "POT", "torch"]
 # For running unit and docstring tests
 test = ["coverage", "pytest>=6.0.0", "pytest-cov"]
 
