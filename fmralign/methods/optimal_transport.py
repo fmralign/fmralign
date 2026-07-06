@@ -1,6 +1,15 @@
 import numpy as np
 import ot
 import torch
+from geomloss import _backends as bk
+from geomloss._arguments import ArrayProperties
+from geomloss._typing import CostMatrices
+from geomloss.ot._abstract_solvers import annealing_parameters, sinkhorn_loop
+from geomloss.ot._implementations.sample import (
+    OTResultSample,
+    cost_matrix,
+    softmin_sample,
+)
 
 from fmralign.methods.base import BaseAlignment
 
@@ -71,6 +80,7 @@ class OptimalTransport(BaseAlignment):
             M=M_normalized,
             reg=self.reg,
             tol=self.tol,
+            method="sinkhorn_log",
             max_iter=self.max_iter,
             verbose=self.verbose,
             grad="detach",
@@ -113,6 +123,10 @@ class SpectralOT(OptimalTransport):
         Tolerance for stopping criterion. Defaults to 1e-7.
     verbose : bool (optional)
         Allow verbose output. Defaults to False.
+    backend : str
+        Backend to use for the OT solver. Can be either "pot"
+        (Python Optimal Transport) or "geomloss" (GeomLoss library).
+        Defaults to "pot".
     device : str
         Torch compatible device. Defaults to "cpu".
     kwargs : dict
@@ -120,7 +134,7 @@ class SpectralOT(OptimalTransport):
 
     Attributes
     ----------
-    R : (n_features, n_features) nd array
+    R : (n_features, n_features) nd array (pot) or LinearOperator (geomloss)
         Transport plan computed during fitting.
     """
 
@@ -132,6 +146,7 @@ class SpectralOT(OptimalTransport):
         max_iter=1000,
         tol=1e-7,
         verbose=False,
+        backend="pot",
         device="cpu",
         **kwargs,
     ):
@@ -146,6 +161,7 @@ class SpectralOT(OptimalTransport):
         self.alpha = alpha
         self.evecs = evecs
         self.kwargs = kwargs
+        self.backend = backend
 
     def fit(self, X, Y):
         """
@@ -173,27 +189,134 @@ class SpectralOT(OptimalTransport):
             dtype=torch.float32,
         )
 
-        M_func = ot.dist(X_torch, Y_torch)
-        M_geom = ot.dist(evecs_torch)
+        if self.backend == "pot":
+            self.R = _pot_solver(
+                X_torch,
+                Y_torch,
+                evecs_torch,
+                self.reg,
+                self.alpha,
+                self.max_iter,
+            )
 
-        # Normalize both cost matrices to have the same scale
-        M_func_normalized = ot.utils.cost_normalization(M_func, "max")
-        M_geom_normalized = ot.utils.cost_normalization(M_geom, "max")
-        M_normalized = (
-            1 - self.alpha
-        ) * M_func_normalized + self.alpha * M_geom_normalized
-
-        res = ot.solve(
-            M=M_normalized,
-            reg=self.reg,
-            tol=self.tol,
-            max_iter=self.max_iter,
-            verbose=self.verbose,
-            grad="detach",
-            **self.kwargs,
-        )
-
-        # Store the transport plan on CPU as a numpy array
-        self.R = res.plan.cpu().numpy()
+        elif self.backend == "geomloss":
+            self.R = _geomloss_solver(
+                X_torch,
+                Y_torch,
+                evecs_torch,
+                self.reg,
+                self.alpha,
+                self.max_iter,
+            )
+        else:
+            raise ValueError(
+                f"Unknown backend {self.backend}. Valid backends are 'geomloss', 'pot'."
+            )
 
         return self
+
+    def transform(self, X):
+        if self.backend == "pot":
+            return super().transform(X)
+        elif self.backend == "geomloss":
+            n_voxels = X.shape[1]
+            X_torch_t = torch.tensor(
+                np.ascontiguousarray(X.T),
+                device=self.device,
+                dtype=torch.float32,
+            )
+            return (self.R.T @ X_torch_t * n_voxels).T.cpu().numpy()
+
+
+def _pot_solver(X_torch, Y_torch, evecs_torch, reg, alpha, max_iter):
+    """Solve the OT problem using the POT library."""
+    M_func = ot.dist(X_torch, Y_torch)
+    M_geom = ot.dist(evecs_torch)
+
+    # Normalize both cost matrices to have the same scale
+    M_func_normalized = ot.utils.cost_normalization(M_func, "max")
+    M_geom_normalized = ot.utils.cost_normalization(M_geom, "max")
+    M_normalized = (1 - alpha) * M_func_normalized + alpha * M_geom_normalized
+
+    res = ot.solve(
+        M=M_normalized,
+        reg=reg,
+        tol=1e-7,
+        method="sinkhorn_log",
+        max_iter=max_iter,
+        verbose=False,
+        grad="detach",
+    )
+
+    return res.plan.cpu().numpy()
+
+
+def _geomloss_solver(X_torch, Y_torch, evecs_torch, reg, alpha, max_iter):
+    """Solve the OT problem using the GeomLoss library."""
+    device = X_torch.device
+    M_func = cost_matrix(X_torch, Y_torch, matrix_type="lazy")
+    M_func_t = cost_matrix(Y_torch, X_torch, matrix_type="lazy")
+    M_geom = cost_matrix(evecs_torch, evecs_torch, matrix_type="lazy")
+
+    # Normalize both cost matrices to have the same scale
+    M_func_normalized = M_func / M_func.max(axis=1).max()
+    M_func_normalized_t = M_func_t / M_func.max(axis=1).max()
+    M_geom_normalized = M_geom / M_geom.max(axis=1).max()
+    M_normalized = (1 - alpha) * M_func_normalized + alpha * M_geom_normalized
+    M_normalized_t = (
+        1 - alpha
+    ) * M_func_normalized_t + alpha * M_geom_normalized
+
+    # Uniform weights for the source and target distributions
+    N, M = M_normalized.shape
+    a = torch.ones(N, dtype=torch.float32).to(device) / N
+    b = torch.ones(M, dtype=torch.float32).to(device) / M
+
+    array_properties = ArrayProperties(
+        B=0,
+        N=N,
+        M=M,
+        dtype=torch.float32,
+        device=device,
+        library="torch",
+    )
+
+    max_cost = M_normalized.max(axis=1).max()
+    min_cost = M_normalized.min(axis=1).min()
+    descent = annealing_parameters(
+        maxmin_cost=max_cost - min_cost,
+        eps=reg,
+        rho=None,
+        n_iter=max_iter,
+    )
+    costs_matrices = CostMatrices(
+        xy=M_normalized, yx=M_normalized_t, xx=None, yy=None
+    )
+
+    potentials = sinkhorn_loop(
+        softmin=softmin_sample,
+        log_a_list=[bk.stable_log(a)],
+        log_b_list=[bk.stable_log(b)],
+        C_list=[costs_matrices],
+        descent=descent,
+        debias=False,
+        last_extrapolation=True,
+    )
+
+    res = OTResultSample(
+        X_a=None,
+        X_b=None,
+        a=a,
+        b=b,
+        C=costs_matrices,
+        cost=None,
+        reg=reg,
+        reg_type="KL",
+        debias=False,
+        unbalanced=None,
+        unbalanced_type="KL",
+        potentials=potentials,
+        array_properties=array_properties,
+    )
+
+    return res.plan_operator
