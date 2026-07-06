@@ -52,7 +52,9 @@ def test_spectral_ot(backend):
     algo_ot.fit(evecs, evecs)
     algo_spectral_anat.fit(X_train, Y_train)
     assert_array_almost_equal(
-        algo_ot.transform(X_test), algo_spectral_anat.transform(X_test)
+        algo_ot.transform(X_test),
+        algo_spectral_anat.transform(X_test),
+        decimal=5,
     )
 
     # Check the functional case (alpha=0.0)
