@@ -1,17 +1,30 @@
+import importlib.util
+
 import numpy as np
-import ot
-import torch
-from geomloss import _backends as bk
-from geomloss._arguments import ArrayProperties
-from geomloss._typing import CostMatrices
-from geomloss.ot._abstract_solvers import annealing_parameters, sinkhorn_loop
-from geomloss.ot._implementations.sample import (
-    OTResultSample,
-    cost_matrix,
-    softmin_sample,
-)
 
 from fmralign.methods.base import BaseAlignment
+
+_HAS_TORCH = importlib.util.find_spec("torch") is not None
+_HAS_POT = importlib.util.find_spec("ot") is not None
+_HAS_GEOMLOSS = importlib.util.find_spec("geomloss") is not None
+
+
+def _require(checks, extra):
+    """Raise a clear error listing any missing packages for a given extra.
+
+    Parameters
+    ----------
+    checks : list of (bool, str) tuples
+        Each tuple is (is_available, package_name).
+    extra : str
+        The pip extra that installs the missing package(s).
+    """
+    missing = [name for available, name in checks if not available]
+    if missing:
+        raise ImportError(
+            f"{', '.join(missing)} required but not installed. "
+            f"Install with `pip install fmralign[{extra}]`."
+        )
 
 
 class OptimalTransport(BaseAlignment):
@@ -49,6 +62,7 @@ class OptimalTransport(BaseAlignment):
         device="cpu",
         **kwargs,
     ):
+        _require([(_HAS_TORCH, "torch"), (_HAS_POT, "POT")], extra="ot_pot")
         self.reg = reg
         self.max_iter = max_iter
         self.tol = tol
@@ -66,6 +80,9 @@ class OptimalTransport(BaseAlignment):
         Y: (n_samples, n_features) nd array
             target data
         """
+        import ot
+        import torch
+
         X_torch = torch.tensor(
             np.ascontiguousarray(X.T), device=self.device, dtype=torch.float32
         )
@@ -94,13 +111,15 @@ class OptimalTransport(BaseAlignment):
 
     def transform(self, X):
         """Transform X using optimal coupling computed during fit."""
+        import torch
+
         n_voxels = self.R.shape[1]
         R_torch = torch.tensor(self.R, device=self.device, dtype=torch.float32)
         X_torch = torch.from_numpy(X).to(torch.float32).to(self.device)
         return (X_torch @ R_torch * n_voxels).cpu().numpy()
 
 
-class SpectralOT(OptimalTransport):
+class SpectralOT(BaseAlignment):
     """
     Compute the optimal coupling between X and Y using an anatomy-aware
     cost matrix that combines functional and harmonic distances.
@@ -150,14 +169,26 @@ class SpectralOT(OptimalTransport):
         device="cpu",
         **kwargs,
     ):
-        super().__init__(
-            reg=reg,
-            max_iter=max_iter,
-            tol=tol,
-            verbose=verbose,
-            device=device,
-        )
+        if backend not in ("pot", "geomloss"):
+            raise ValueError(
+                f"Unknown backend {backend!r}. Valid backends are 'pot', 'geomloss'."
+            )
 
+        if backend == "pot":
+            _require(
+                [(_HAS_TORCH, "torch"), (_HAS_POT, "POT")], extra="ot_pot"
+            )
+        else:
+            _require(
+                [(_HAS_TORCH, "torch"), (_HAS_GEOMLOSS, "geomloss")],
+                extra="ot_geomloss",
+            )
+
+        self.reg = reg
+        self.max_iter = max_iter
+        self.tol = tol
+        self.verbose = verbose
+        self.device = device
         self.alpha = alpha
         self.evecs = evecs
         self.kwargs = kwargs
@@ -173,6 +204,8 @@ class SpectralOT(OptimalTransport):
         Y: (n_samples, n_features) nd array
             target data
         """
+        import torch
+
         X_torch = torch.tensor(
             np.ascontiguousarray(X.T),
             device=self.device,
@@ -216,8 +249,15 @@ class SpectralOT(OptimalTransport):
         return self
 
     def transform(self, X):
+        import torch
+
         if self.backend == "pot":
-            return super().transform(X)
+            n_voxels = self.R.shape[1]
+            R_torch = torch.tensor(
+                self.R, device=self.device, dtype=torch.float32
+            )
+            X_torch = torch.from_numpy(X).to(torch.float32).to(self.device)
+            return (X_torch @ R_torch * n_voxels).cpu().numpy()
         elif self.backend == "geomloss":
             n_voxels = X.shape[1]
             X_torch_t = torch.tensor(
@@ -230,6 +270,8 @@ class SpectralOT(OptimalTransport):
 
 def _pot_solver(X_torch, Y_torch, evecs_torch, reg, alpha, max_iter):
     """Solve the OT problem using the POT library."""
+    import ot
+
     M_func = ot.dist(X_torch, Y_torch)
     M_geom = ot.dist(evecs_torch)
 
@@ -253,6 +295,20 @@ def _pot_solver(X_torch, Y_torch, evecs_torch, reg, alpha, max_iter):
 
 def _geomloss_solver(X_torch, Y_torch, evecs_torch, reg, alpha, max_iter):
     """Solve the OT problem using the GeomLoss library."""
+    import torch
+    from geomloss import _backends as bk
+    from geomloss._arguments import ArrayProperties
+    from geomloss._typing import CostMatrices
+    from geomloss.ot._abstract_solvers import (
+        annealing_parameters,
+        sinkhorn_loop,
+    )
+    from geomloss.ot._implementations.sample import (
+        OTResultSample,
+        cost_matrix,
+        softmin_sample,
+    )
+
     device = X_torch.device
     M_func = cost_matrix(X_torch, Y_torch, matrix_type="lazy")
     M_func_t = cost_matrix(Y_torch, X_torch, matrix_type="lazy")

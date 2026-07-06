@@ -1,7 +1,11 @@
+import itertools
+import re
+
 import numpy as np
 import pytest
 from numpy.testing import assert_array_almost_equal
 
+from fmralign.methods import optimal_transport
 from fmralign.methods.optimal_transport import OptimalTransport, SpectralOT
 
 
@@ -68,3 +72,48 @@ def test_spectral_ot(backend):
         algo_spectral_func.transform(X_test),
         decimal=5,
     )
+
+
+@pytest.mark.parametrize(
+    "has_torch,has_pot,has_geomloss",
+    list(itertools.product([True, False], repeat=3)),
+)
+def test_dependency_guards_all_combinations(
+    monkeypatch, has_torch, has_pot, has_geomloss
+):
+    """Test that OptimalTransport and SpectralOT raise\n
+    ImportError when dependencies are missing."""
+    monkeypatch.setattr(optimal_transport, "_HAS_TORCH", has_torch)
+    monkeypatch.setattr(optimal_transport, "_HAS_POT", has_pot)
+    monkeypatch.setattr(optimal_transport, "_HAS_GEOMLOSS", has_geomloss)
+
+    evecs = np.random.randn(3, 5)
+    pot_ok = has_torch and has_pot
+    geomloss_ok = has_torch and has_geomloss
+
+    # OptimalTransport needs torch + POT
+    if pot_ok:
+        OptimalTransport(max_iter=1)
+    else:
+        with pytest.raises(
+            ImportError, match=re.escape("pip install fmralign[ot_pot]")
+        ):
+            OptimalTransport(max_iter=1)
+
+    # SpectralOT(backend="pot") needs torch + POT
+    if pot_ok:
+        SpectralOT(evecs, backend="pot", max_iter=1)
+    else:
+        with pytest.raises(
+            ImportError, match=re.escape("pip install fmralign[ot_pot]")
+        ):
+            SpectralOT(evecs, backend="pot", max_iter=1)
+
+    # SpectralOT(backend="geomloss") needs torch + GeomLoss
+    if geomloss_ok:
+        SpectralOT(evecs, backend="geomloss", max_iter=1)
+    else:
+        with pytest.raises(
+            ImportError, match=re.escape("pip install fmralign[ot_geomloss]")
+        ):
+            SpectralOT(evecs, backend="geomloss", max_iter=1)
