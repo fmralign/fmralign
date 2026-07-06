@@ -46,7 +46,11 @@ doc = [
     "furo"
 ]
 # For the ot solvers
-ot = ["geomloss[full]>=0.2.0", "POT", "torch"]
+ot = ["fmralign[ot_geomloss,ot_pot]"]
+# geomloss backend
+ot_geomloss = ["geomloss[full]>=0.2.0", "torch"]
+# POT backend
+ot_pot = ["POT", "torch"]
 # For running unit and docstring tests
 test = ["coverage", "pytest>=6.0.0", "pytest-cov"]
 
