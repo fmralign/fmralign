@@ -298,11 +298,33 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for fmralign.methods.optimal_transport</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">ot</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">importlib.util</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.methods.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseAlignment</span>
+
+<span class="n">_HAS_TORCH</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;torch&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="n">_HAS_POT</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;ot&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="n">_HAS_GEOMLOSS</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;geomloss&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_require</span><span class="p">(</span><span class="n">checks</span><span class="p">,</span> <span class="n">extra</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raise a clear error listing any missing packages for a given extra.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    checks : list of (bool, str) tuples</span>
+<span class="sd">        Each tuple is (is_available, package_name).</span>
+<span class="sd">    extra : str</span>
+<span class="sd">        The pip extra that installs the missing package(s).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">missing</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">available</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">checks</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">available</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span><span class="si">}</span><span class="s2"> required but not installed. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Install with `pip install fmralign[</span><span class="si">{</span><span class="n">extra</span><span class="si">}</span><span class="s2">]`.&quot;</span>
+        <span class="p">)</span>
 
 
 <div class="viewcode-block" id="OptimalTransport">
@@ -344,6 +366,7 @@
         <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
+        <span class="n">_require</span><span class="p">([(</span><span class="n">_HAS_TORCH</span><span class="p">,</span> <span class="s2">&quot;torch&quot;</span><span class="p">),</span> <span class="p">(</span><span class="n">_HAS_POT</span><span class="p">,</span> <span class="s2">&quot;POT&quot;</span><span class="p">)],</span> <span class="n">extra</span><span class="o">=</span><span class="s2">&quot;ot_pot&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
@@ -364,6 +387,9 @@
 <span class="sd">        Y: (n_samples, n_features) nd array</span>
 <span class="sd">            target data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">ot</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
         <span class="n">X_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span>
         <span class="p">)</span>
@@ -378,6 +404,7 @@
             <span class="n">M</span><span class="o">=</span><span class="n">M_normalized</span><span class="p">,</span>
             <span class="n">reg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reg</span><span class="p">,</span>
             <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;sinkhorn_log&quot;</span><span class="p">,</span>
             <span class="n">max_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span>
             <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
             <span class="n">grad</span><span class="o">=</span><span class="s2">&quot;detach&quot;</span><span class="p">,</span>
@@ -394,6 +421,8 @@
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.OptimalTransport.html#fmralign.methods.OptimalTransport.transform">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform X using optimal coupling computed during fit.&quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
         <span class="n">n_voxels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">R_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="n">X_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
@@ -404,7 +433,7 @@
 
 <div class="viewcode-block" id="SpectralOT">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.SpectralOT.html#fmralign.methods.SpectralOT">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">SpectralOT</span><span class="p">(</span><span class="n">OptimalTransport</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SpectralOT</span><span class="p">(</span><span class="n">BaseAlignment</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute the optimal coupling between X and Y using an anatomy-aware</span>
 <span class="sd">    cost matrix that combines functional and harmonic distances.</span>
@@ -427,6 +456,10 @@
 <span class="sd">        Tolerance for stopping criterion. Defaults to 1e-7.</span>
 <span class="sd">    verbose : bool (optional)</span>
 <span class="sd">        Allow verbose output. Defaults to False.</span>
+<span class="sd">    backend : str</span>
+<span class="sd">        Backend to use for the OT solver. Can be either &quot;pot&quot;</span>
+<span class="sd">        (Python Optimal Transport) or &quot;geomloss&quot; (GeomLoss library).</span>
+<span class="sd">        Defaults to &quot;pot&quot;.</span>
 <span class="sd">    device : str</span>
 <span class="sd">        Torch compatible device. Defaults to &quot;cpu&quot;.</span>
 <span class="sd">    kwargs : dict</span>
@@ -434,7 +467,7 @@
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    R : (n_features, n_features) nd array</span>
+<span class="sd">    R : (n_features, n_features) nd array (pot) or LinearOperator (geomloss)</span>
 <span class="sd">        Transport plan computed during fitting.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -448,20 +481,34 @@
         <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
         <span class="n">tol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span>
         <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;pot&quot;</span><span class="p">,</span>
         <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">reg</span><span class="o">=</span><span class="n">reg</span><span class="p">,</span>
-            <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
-            <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span>
-            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
-            <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">backend</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;pot&quot;</span><span class="p">,</span> <span class="s2">&quot;geomloss&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unknown backend </span><span class="si">{</span><span class="n">backend</span><span class="si">!r}</span><span class="s2">. Valid backends are &#39;pot&#39;, &#39;geomloss&#39;.&quot;</span>
+            <span class="p">)</span>
 
+        <span class="k">if</span> <span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;pot&quot;</span><span class="p">:</span>
+            <span class="n">_require</span><span class="p">(</span>
+                <span class="p">[(</span><span class="n">_HAS_TORCH</span><span class="p">,</span> <span class="s2">&quot;torch&quot;</span><span class="p">),</span> <span class="p">(</span><span class="n">_HAS_POT</span><span class="p">,</span> <span class="s2">&quot;POT&quot;</span><span class="p">)],</span> <span class="n">extra</span><span class="o">=</span><span class="s2">&quot;ot_pot&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_require</span><span class="p">(</span>
+                <span class="p">[(</span><span class="n">_HAS_TORCH</span><span class="p">,</span> <span class="s2">&quot;torch&quot;</span><span class="p">),</span> <span class="p">(</span><span class="n">_HAS_GEOMLOSS</span><span class="p">,</span> <span class="s2">&quot;geomloss&quot;</span><span class="p">)],</span>
+                <span class="n">extra</span><span class="o">=</span><span class="s2">&quot;ot_geomloss&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">reg</span> <span class="o">=</span> <span class="n">reg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">evecs</span> <span class="o">=</span> <span class="n">evecs</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="n">backend</span></div>
 
 
 <div class="viewcode-block" id="SpectralOT.fit">
@@ -476,6 +523,8 @@
 <span class="sd">        Y: (n_samples, n_features) nd array</span>
 <span class="sd">            target data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
         <span class="n">X_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
             <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">),</span>
             <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
@@ -492,32 +541,165 @@
             <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="n">M_func</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">X_torch</span><span class="p">,</span> <span class="n">Y_torch</span><span class="p">)</span>
-        <span class="n">M_geom</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">evecs_torch</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;pot&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">_pot_solver</span><span class="p">(</span>
+                <span class="n">X_torch</span><span class="p">,</span>
+                <span class="n">Y_torch</span><span class="p">,</span>
+                <span class="n">evecs_torch</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reg</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span>
+            <span class="p">)</span>
 
-        <span class="c1"># Normalize both cost matrices to have the same scale</span>
-        <span class="n">M_func_normalized</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cost_normalization</span><span class="p">(</span><span class="n">M_func</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span>
-        <span class="n">M_geom_normalized</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cost_normalization</span><span class="p">(</span><span class="n">M_geom</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span>
-        <span class="n">M_normalized</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span>
-        <span class="p">)</span> <span class="o">*</span> <span class="n">M_func_normalized</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">M_geom_normalized</span>
-
-        <span class="n">res</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
-            <span class="n">M</span><span class="o">=</span><span class="n">M_normalized</span><span class="p">,</span>
-            <span class="n">reg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reg</span><span class="p">,</span>
-            <span class="n">tol</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span>
-            <span class="n">max_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span>
-            <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
-            <span class="n">grad</span><span class="o">=</span><span class="s2">&quot;detach&quot;</span><span class="p">,</span>
-            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="c1"># Store the transport plan on CPU as a numpy array</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">plan</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;geomloss&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">_geomloss_solver</span><span class="p">(</span>
+                <span class="n">X_torch</span><span class="p">,</span>
+                <span class="n">Y_torch</span><span class="p">,</span>
+                <span class="n">evecs_torch</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reg</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unknown backend </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="si">}</span><span class="s2">. Valid backends are &#39;geomloss&#39;, &#39;pot&#39;.&quot;</span>
+            <span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="SpectralOT.transform">
+<a class="viewcode-back" href="../../../modules/generated/fmralign.methods.SpectralOT.html#fmralign.methods.SpectralOT.transform">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;pot&quot;</span><span class="p">:</span>
+            <span class="n">n_voxels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">R_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span>
+            <span class="p">)</span>
+            <span class="n">X_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">X_torch</span> <span class="o">@</span> <span class="n">R_torch</span> <span class="o">*</span> <span class="n">n_voxels</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;geomloss&quot;</span><span class="p">:</span>
+            <span class="n">n_voxels</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">X_torch_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">),</span>
+                <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X_torch_t</span> <span class="o">*</span> <span class="n">n_voxels</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span></div>
 </div>
 
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_pot_solver</span><span class="p">(</span><span class="n">X_torch</span><span class="p">,</span> <span class="n">Y_torch</span><span class="p">,</span> <span class="n">evecs_torch</span><span class="p">,</span> <span class="n">reg</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Solve the OT problem using the POT library.&quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">ot</span>
+
+    <span class="n">M_func</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">X_torch</span><span class="p">,</span> <span class="n">Y_torch</span><span class="p">)</span>
+    <span class="n">M_geom</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">evecs_torch</span><span class="p">)</span>
+
+    <span class="c1"># Normalize both cost matrices to have the same scale</span>
+    <span class="n">M_func_normalized</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cost_normalization</span><span class="p">(</span><span class="n">M_func</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span>
+    <span class="n">M_geom_normalized</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cost_normalization</span><span class="p">(</span><span class="n">M_geom</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">)</span>
+    <span class="n">M_normalized</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">M_func_normalized</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">M_geom_normalized</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="n">ot</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span>
+        <span class="n">M</span><span class="o">=</span><span class="n">M_normalized</span><span class="p">,</span>
+        <span class="n">reg</span><span class="o">=</span><span class="n">reg</span><span class="p">,</span>
+        <span class="n">tol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;sinkhorn_log&quot;</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">grad</span><span class="o">=</span><span class="s2">&quot;detach&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">plan</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_geomloss_solver</span><span class="p">(</span><span class="n">X_torch</span><span class="p">,</span> <span class="n">Y_torch</span><span class="p">,</span> <span class="n">evecs_torch</span><span class="p">,</span> <span class="n">reg</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Solve the OT problem using the GeomLoss library.&quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss</span><span class="w"> </span><span class="kn">import</span> <span class="n">_backends</span> <span class="k">as</span> <span class="n">bk</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss._arguments</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArrayProperties</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss._typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">CostMatrices</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss.ot._abstract_solvers</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+        <span class="n">annealing_parameters</span><span class="p">,</span>
+        <span class="n">sinkhorn_loop</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss.ot._implementations.sample</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+        <span class="n">OTResultSample</span><span class="p">,</span>
+        <span class="n">cost_matrix</span><span class="p">,</span>
+        <span class="n">softmin_sample</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">device</span> <span class="o">=</span> <span class="n">X_torch</span><span class="o">.</span><span class="n">device</span>
+    <span class="n">M_func</span> <span class="o">=</span> <span class="n">cost_matrix</span><span class="p">(</span><span class="n">X_torch</span><span class="p">,</span> <span class="n">Y_torch</span><span class="p">,</span> <span class="n">matrix_type</span><span class="o">=</span><span class="s2">&quot;lazy&quot;</span><span class="p">)</span>
+    <span class="n">M_func_t</span> <span class="o">=</span> <span class="n">cost_matrix</span><span class="p">(</span><span class="n">Y_torch</span><span class="p">,</span> <span class="n">X_torch</span><span class="p">,</span> <span class="n">matrix_type</span><span class="o">=</span><span class="s2">&quot;lazy&quot;</span><span class="p">)</span>
+    <span class="n">M_geom</span> <span class="o">=</span> <span class="n">cost_matrix</span><span class="p">(</span><span class="n">evecs_torch</span><span class="p">,</span> <span class="n">evecs_torch</span><span class="p">,</span> <span class="n">matrix_type</span><span class="o">=</span><span class="s2">&quot;lazy&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Normalize both cost matrices to have the same scale</span>
+    <span class="n">M_func_normalized</span> <span class="o">=</span> <span class="n">M_func</span> <span class="o">/</span> <span class="n">M_func</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">M_func_normalized_t</span> <span class="o">=</span> <span class="n">M_func_t</span> <span class="o">/</span> <span class="n">M_func</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">M_geom_normalized</span> <span class="o">=</span> <span class="n">M_geom</span> <span class="o">/</span> <span class="n">M_geom</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">M_normalized</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">M_func_normalized</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">M_geom_normalized</span>
+    <span class="n">M_normalized_t</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span>
+    <span class="p">)</span> <span class="o">*</span> <span class="n">M_func_normalized_t</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">M_geom_normalized</span>
+
+    <span class="c1"># Uniform weights for the source and target distributions</span>
+    <span class="n">N</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="n">M_normalized</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="o">/</span> <span class="n">M</span>
+
+    <span class="n">array_properties</span> <span class="o">=</span> <span class="n">ArrayProperties</span><span class="p">(</span>
+        <span class="n">B</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">,</span>
+        <span class="n">M</span><span class="o">=</span><span class="n">M</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+        <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
+        <span class="n">library</span><span class="o">=</span><span class="s2">&quot;torch&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">max_cost</span> <span class="o">=</span> <span class="n">M_normalized</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">min_cost</span> <span class="o">=</span> <span class="n">M_normalized</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">descent</span> <span class="o">=</span> <span class="n">annealing_parameters</span><span class="p">(</span>
+        <span class="n">maxmin_cost</span><span class="o">=</span><span class="n">max_cost</span> <span class="o">-</span> <span class="n">min_cost</span><span class="p">,</span>
+        <span class="n">eps</span><span class="o">=</span><span class="n">reg</span><span class="p">,</span>
+        <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">costs_matrices</span> <span class="o">=</span> <span class="n">CostMatrices</span><span class="p">(</span>
+        <span class="n">xy</span><span class="o">=</span><span class="n">M_normalized</span><span class="p">,</span> <span class="n">yx</span><span class="o">=</span><span class="n">M_normalized_t</span><span class="p">,</span> <span class="n">xx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">yy</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span>
+
+    <span class="n">potentials</span> <span class="o">=</span> <span class="n">sinkhorn_loop</span><span class="p">(</span>
+        <span class="n">softmin</span><span class="o">=</span><span class="n">softmin_sample</span><span class="p">,</span>
+        <span class="n">log_a_list</span><span class="o">=</span><span class="p">[</span><span class="n">bk</span><span class="o">.</span><span class="n">stable_log</span><span class="p">(</span><span class="n">a</span><span class="p">)],</span>
+        <span class="n">log_b_list</span><span class="o">=</span><span class="p">[</span><span class="n">bk</span><span class="o">.</span><span class="n">stable_log</span><span class="p">(</span><span class="n">b</span><span class="p">)],</span>
+        <span class="n">C_list</span><span class="o">=</span><span class="p">[</span><span class="n">costs_matrices</span><span class="p">],</span>
+        <span class="n">descent</span><span class="o">=</span><span class="n">descent</span><span class="p">,</span>
+        <span class="n">debias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">last_extrapolation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="n">OTResultSample</span><span class="p">(</span>
+        <span class="n">X_a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">X_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span>
+        <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span>
+        <span class="n">C</span><span class="o">=</span><span class="n">costs_matrices</span><span class="p">,</span>
+        <span class="n">cost</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">reg</span><span class="o">=</span><span class="n">reg</span><span class="p">,</span>
+        <span class="n">reg_type</span><span class="o">=</span><span class="s2">&quot;KL&quot;</span><span class="p">,</span>
+        <span class="n">debias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">unbalanced</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">unbalanced_type</span><span class="o">=</span><span class="s2">&quot;KL&quot;</span><span class="p">,</span>
+        <span class="n">potentials</span><span class="o">=</span><span class="n">potentials</span><span class="p">,</span>
+        <span class="n">array_properties</span><span class="o">=</span><span class="n">array_properties</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">plan_operator</span>
 </pre></div>
         </article>
       </div>

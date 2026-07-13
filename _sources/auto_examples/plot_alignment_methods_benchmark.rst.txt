@@ -126,7 +126,7 @@ First, we fetch and plot the complete atlas
 
     [fetch_atlas_yeo_2011] Dataset directory found: /home/runner/nilearn_data/yeo_2011
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fecda133020>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f3be10daae0>
 
 
 
@@ -371,8 +371,13 @@ as the baseline.
 
     /home/runner/work/fmralign/fmralign/fmralign/metrics.py:55: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
       pearsonr(X_gt[:, vox], X_pred[:, vox])[
+    [KeOps] Warning : CUDA libraries not found or could not be loaded; Switching to CPU only.
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/ot/datasets.py:204: SyntaxWarning: invalid escape sequence '\d'
+      positive floating numbers corresponding to the isotropic variances in the principal subspace, for the source and target distributions, respectively. The same as \delta in :ref:`[1] <references-make_gauss-hd>`, Proposition 2.2
     /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/ot/bregman/_sinkhorn.py:902: UserWarning: Sinkhorn did not converge. You might want to increase the number of iterations `numItermax` or the regularization parameter `reg`.
       warnings.warn(
+    /home/runner/work/fmralign/fmralign/fmralign/metrics.py:55: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+      pearsonr(X_gt[:, vox], X_pred[:, vox])[
 
 
 
@@ -436,7 +441,7 @@ smoothness in the transformation, resulting in slightly higher correlation value
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 31.955 seconds)
+   **Total running time of the script:** (0 minutes 42.121 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_methods_benchmark.py:
