@@ -48,7 +48,14 @@ ot_geomloss = ["geomloss[full]>=0.2.0", "torch>=2.12.1"]
 # POT backend
 ot_pot = ["POT>=0.9.6", "torch>=2.12.1"]
 # For running unit and docstring tests
-test = ["coverage>=7.0.0", "pytest>=6.0.0", "pytest-cov>=7.0.0", "numpydoc>=1.10.0", "fmralign[ot]"]
+test = [
+    "coverage>=7.0.0",
+    "pytest>=6.0.0",
+    "pytest-cov>=7.0.0",
+    "numpydoc>=1.10.0",
+    "pykeops>=2.1",
+    "fmralign[ot]"
+]
 
 [tool.codespell]
 check-hidden = true
