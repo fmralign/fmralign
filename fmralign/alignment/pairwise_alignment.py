@@ -8,7 +8,7 @@ from fmralign.alignment.utils import (
 )
 
 
-class PairwiseAlignment(BaseEstimator, TransformerMixin):
+class PairwiseAlignment(TransformerMixin, BaseEstimator):
     """Performs pairwise alignment between two subjects.
 
     This class performs source-to-target alignment of two subjects' data.
@@ -40,12 +40,14 @@ class PairwiseAlignment(BaseEstimator, TransformerMixin):
 
     Examples
     --------
+    >>> import numpy as np
     >>> from fmralign import PairwiseAlignment
     >>> X = np.random.rand(10, 5)
     >>> Y = np.random.rand(10, 5)
     >>> test_data = np.random.rand(8, 5)
     >>> aligner = PairwiseAlignment(method="procrustes")
     >>> aligner.fit(X, Y)
+    PairwiseAlignment(method='procrustes')
     >>> aligned_data = aligner.transform(test_data)
     """
 

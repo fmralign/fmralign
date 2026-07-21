@@ -25,7 +25,7 @@ requires-python = ">=3.10"
 
 [project.optional-dependencies]
 # Useful for development
-dev = ["fmralign[doc,test]"]
+dev = ["fmralign[doc,test,ot]"]
 # For building the documentation
 doc = [
     "coverage>=7.0.0",
@@ -41,6 +41,12 @@ doc = [
     "sphinxext-opengraph>=0.9.1",
     "furo>=2024.8.6"
 ]
+# For the ot solvers
+ot = ["fmralign[ot_geomloss,ot_pot]"]
+# geomloss backend
+ot_geomloss = ["geomloss[full]>=0.2.0", "torch"]
+# POT backend
+ot_pot = ["POT", "torch"]
 # For running unit and docstring tests
 test = ["coverage>=7.0.0", "pytest>=6.0.0", "pytest-cov>=7.0.0", "numpydoc>=1.10.0"]
 
@@ -60,6 +66,16 @@ allow-direct-references = true
 
 [tool.hatch.version]
 source = "vcs"
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers --doctest-modules --showlocals --capture=no -v"
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
+junit_family = "xunit2"
+log_cli_level = "INFO"
+log_level = "INFO"
+minversion = "6.0"
+testpaths = ["fmralign"]
+xfail_strict = true
 
 [tool.ruff]
 extend-exclude = ["doc/auto_examples/*"]
