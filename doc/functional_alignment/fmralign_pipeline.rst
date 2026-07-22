@@ -56,7 +56,7 @@ in a multidimensional functional space (each dimension is a sample).
 We show below a 2D example, with 2 distributions: `X` in green, `Y` in red. Both have 20 voxels (points) characterized by 2 samples (images). And the alignment we search for is the matching of both distributions, optimally in some sense.
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_001.png
-   :align: left
+
 
 Orthogonal alignment (Procrustes)
 ---------------------------------
@@ -64,10 +64,9 @@ The first idea proposed in :footcite:t:`Haxby2001` was to compute an orthogonal 
 matrix `R` and a scaling `sc` such that Frobenius norm :math:`||sc RX - Y||^2` is minimized.
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_003.png
-   :align: left
+
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_004.png
-   :align: left
 
 
 Optimal Transport alignment
@@ -75,11 +74,11 @@ Optimal Transport alignment
 Finally this package comes with a new method that build on the Wasserstein distance which is well-suited for this problem. This is the framework of Optimal Transport that search to transport all signal from `X` to `Y`
 while minimizign the overall cost of this transport. `R` is here the optimal coupling between `X` and `Y` with entropic regularization.
 
+
 .. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_005.png
-   :align: left
+
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_alignment_simulated_2D_data_006.png
-  :align: left
 
 
 Comparing those methods on a region of interest
@@ -124,7 +123,6 @@ Plot the mask we  use
 
 .. figure:: ../auto_examples/images/sphx_glr_plot_alignment_methods_benchmark_001.png
    :scale: 30
-   :align: left
 
 Define a masker
 ---------------

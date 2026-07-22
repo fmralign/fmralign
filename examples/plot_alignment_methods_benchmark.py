@@ -130,7 +130,7 @@ target_test_img = concat_imgs(
 
 import numpy as np
 
-n_voxels = roi_masker.mask_img_.get_fdata().sum()
+n_voxels = roi_masker.n_elements_
 print(f"The chosen region of interest contains {n_voxels} voxels")
 n_pieces = int(np.round(n_voxels / 100))
 print(f"We will cluster them in {n_pieces} regions")
