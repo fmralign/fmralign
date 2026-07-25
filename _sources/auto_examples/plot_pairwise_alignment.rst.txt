@@ -30,7 +30,7 @@ data in a clean fashion.
 To run this example, you must launch IPython via ``ipython
 --matplotlib`` in a terminal, or use ``jupyter-notebook``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 17-26
+.. GENERATED FROM PYTHON SOURCE LINES 15-24
 
 Retrieve the data
 -----------------
@@ -42,7 +42,7 @@ df is a dataframe with metadata about each of them.
 mask is an appropriate nifti image to select the data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-31
+.. GENERATED FROM PYTHON SOURCE LINES 24-29
 
 .. code-block:: Python
 
@@ -64,7 +64,7 @@ mask is an appropriate nifti image to select the data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-38
+.. GENERATED FROM PYTHON SOURCE LINES 30-36
 
 Define a masker
 ---------------
@@ -73,7 +73,7 @@ For more information, consult Nilearn's documentation on
 :external+nilearn:ref:`masker objects <masker_objects>`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-44
+.. GENERATED FROM PYTHON SOURCE LINES 36-42
 
 .. code-block:: Python
 
@@ -90,7 +90,7 @@ For more information, consult Nilearn's documentation on
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-55
+.. GENERATED FROM PYTHON SOURCE LINES 43-53
 
 Prepare the data
 ----------------
@@ -103,7 +103,7 @@ advantage of these "duplicates to create a training and a testing set that
 contains roughly the same signals but acquired totally independently.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-80
+.. GENERATED FROM PYTHON SOURCE LINES 53-78
 
 .. code-block:: Python
 
@@ -139,7 +139,7 @@ contains roughly the same signals but acquired totally independently.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 81-89
+.. GENERATED FROM PYTHON SOURCE LINES 79-87
 
 Generate a parcellation from the images
 ---------------------------------------
@@ -150,7 +150,7 @@ functional data. We use the :func:`~fmralign.embeddings.parcellation.get_labels`
 utility, which will generate a parcellation of the data in 150 pieces.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-99
+.. GENERATED FROM PYTHON SOURCE LINES 87-97
 
 .. code-block:: Python
 
@@ -172,9 +172,9 @@ utility, which will generate a parcellation of the data in 150 pieces.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:114: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
-      warnings.warn(
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:134: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_alignment.py:90: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
+      labels = get_labels(
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
     Parameter mask_strategy :
         Masker parameter background - overriding estimator parameter epi
     Parameter smoothing_fwhm :
@@ -183,14 +183,14 @@ utility, which will generate a parcellation of the data in 150 pieces.
       parcellation.fit(images_to_parcel)
     /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:136: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       labels = masker.transform(parcellation.labels_img_).astype(int)
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-112
+.. GENERATED FROM PYTHON SOURCE LINES 98-110
 
 Define the estimator, fit it and predict
 ----------------------------------------
@@ -205,7 +205,7 @@ and then to aggregate the local transformations into a global
 transformation that is applied to the whole brain.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 112-132
+.. GENERATED FROM PYTHON SOURCE LINES 110-130
 
 .. code-block:: Python
 
@@ -237,10 +237,10 @@ transformation that is applied to the whole brain.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_alignment.py:116: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_alignment.py:114: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       masker.transform(
-    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:210: UserWarning: 
+    /home/runner/work/fmralign/fmralign/fmralign/alignment/pairwise_alignment.py:79: UserWarning: 
      Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
      parcel 8 : 1062 voxels
      parcel 9 : 1393 voxels
@@ -248,12 +248,12 @@ transformation that is applied to the whole brain.
      parcel 23 : 1210 voxels
      parcel 31 : 1712 voxels
      parcel 50 : 1223 voxels
-      warnings.warn(warning)
+      self.labels_ = _check_labels(X, self.labels)
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-140
+.. GENERATED FROM PYTHON SOURCE LINES 131-138
 
 Score the baseline and the prediction
 -------------------------------------
@@ -263,7 +263,7 @@ correlation between its profile of activation without and with alignment,
 to see if alignment was able to predict a signal more alike the ground truth.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 140-153
+.. GENERATED FROM PYTHON SOURCE LINES 138-151
 
 .. code-block:: Python
 
@@ -287,14 +287,14 @@ to see if alignment was able to predict a signal more alike the ground truth.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 154-158
+.. GENERATED FROM PYTHON SOURCE LINES 152-156
 
 Plotting the measures
 ---------------------
 Finally we plot both scores
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 158-172
+.. GENERATED FROM PYTHON SOURCE LINES 156-170
 
 .. code-block:: Python
 
@@ -336,7 +336,7 @@ Finally we plot both scores
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 173-176
+.. GENERATED FROM PYTHON SOURCE LINES 171-174
 
 We can see on the plot that after alignment the prediction made for one
 subject data, informed by another subject are greatly improved.
@@ -345,7 +345,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 35.135 seconds)
+   **Total running time of the script:** (0 minutes 35.785 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_alignment.py:

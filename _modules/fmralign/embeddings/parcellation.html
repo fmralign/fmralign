@@ -365,7 +365,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    imgs: Niimgs</span>
 <span class="sd">        data to cluster</span>
-<span class="sd">    n_pieces: int</span>
+<span class="sd">    n_pieces: int &gt;= 1</span>
 <span class="sd">        number of different labels</span>
 <span class="sd">    masker: a fitted instance of NiftiMasker or MultiNiftiMasker</span>
 <span class="sd">        Masker to be used on the data. For more information see:</span>
@@ -390,7 +390,9 @@
     <span class="c1"># check if clustering is provided</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">clustering</span><span class="p">,</span> <span class="n">nib</span><span class="o">.</span><span class="n">nifti1</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">n_pieces</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Clustering image provided, n_pieces ignored.&quot;</span><span class="p">)</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;Clustering image provided, n_pieces ignored.&quot;</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span>
+            <span class="p">)</span>
         <span class="n">check_same_fov</span><span class="p">(</span><span class="n">masker</span><span class="o">.</span><span class="n">mask_img_</span><span class="p">,</span> <span class="n">clustering</span><span class="p">)</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="n">apply_mask_fmri</span><span class="p">(</span><span class="n">clustering</span><span class="p">,</span> <span class="n">masker</span><span class="o">.</span><span class="n">mask_img_</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
@@ -412,15 +414,14 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">images_to_parcel</span> <span class="o">=</span> <span class="n">imgs</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">masker</span><span class="p">,</span> <span class="p">(</span><span class="n">NiftiMasker</span><span class="p">,</span> <span class="n">SurfaceMasker</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">masker</span><span class="p">,</span> <span class="n">NiftiMasker</span> <span class="o">|</span> <span class="n">SurfaceMasker</span><span class="p">):</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="p">(</span>
-                    <span class="s2">&quot;Converting masker to multi-masker for compatibility&quot;</span>
-                    <span class="s2">&quot; with Nilearn Parcellations class. This conversion does&quot;</span>
-                    <span class="s2">&quot; not affect the original masker. &quot;</span>
-                    <span class="s2">&quot;See https://github.com/nilearn/nilearn/issues/5926&quot;</span>
-                    <span class="s2">&quot; for more details.&quot;</span>
-                <span class="p">)</span>
+                <span class="s2">&quot;Converting masker to multi-masker for compatibility&quot;</span>
+                <span class="s2">&quot; with Nilearn Parcellations class. This conversion does&quot;</span>
+                <span class="s2">&quot; not affect the original masker. &quot;</span>
+                <span class="s2">&quot;See https://github.com/nilearn/nilearn/issues/5926&quot;</span>
+                <span class="s2">&quot; for more details.&quot;</span><span class="p">,</span>
+                <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">masker_</span> <span class="o">=</span> <span class="n">_convert_to_multi_masker</span><span class="p">(</span><span class="n">masker</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -435,6 +436,13 @@
         <span class="p">)</span>
         <span class="n">parcellation</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">images_to_parcel</span><span class="p">)</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">parcellation</span><span class="o">.</span><span class="n">labels_img_</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;&#39;clustering&#39; should be a string or a 3D Niimg&quot;</span>
+            <span class="s2">&quot;and n_pieces should be an int &gt;= 1&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;found </span><span class="si">{</span><span class="n">clustering</span><span class="si">=}</span><span class="s2"> and </span><span class="si">{</span><span class="n">n_pieces</span><span class="si">=}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">verbose</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>

@@ -29,7 +29,7 @@ and learn a piecewise mapping from one subject to the other using ward clusterin
 We mostly rely on python common packages and on nilearn to handle functional
 data in a clean fashion.
 
-.. GENERATED FROM PYTHON SOURCE LINES 16-23
+.. GENERATED FROM PYTHON SOURCE LINES 15-22
 
 Retrieve the data
 -----------------
@@ -39,7 +39,7 @@ subjects sub-01 and sub-04 (or retrieve them if they were already downloaded)
 Files is the list of paths for each subjects.
 df is a dataframe with metadata about each of them.
 
-.. GENERATED FROM PYTHON SOURCE LINES 23-29
+.. GENERATED FROM PYTHON SOURCE LINES 22-28
 
 .. code-block:: Python
 
@@ -62,14 +62,14 @@ df is a dataframe with metadata about each of them.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-34
+.. GENERATED FROM PYTHON SOURCE LINES 29-33
 
 Project the data on the fsaverage5 surface
 ------------------------------------------
 We project the data on the fsaverage5 surface, using the fsaverage5
 surface template.
 
-.. GENERATED FROM PYTHON SOURCE LINES 34-66
+.. GENERATED FROM PYTHON SOURCE LINES 33-65
 
 .. code-block:: Python
 
@@ -112,7 +112,7 @@ surface template.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-72
+.. GENERATED FROM PYTHON SOURCE LINES 66-71
 
 Compute and plot a parcellation
 -------------------------------
@@ -120,7 +120,7 @@ We compute a parcellation for local alignments with
 :func:`~fmralign.embeddings.parcellation.get_labels`
 and plot it on the surface using nilearn.
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-97
+.. GENERATED FROM PYTHON SOURCE LINES 71-96
 
 .. code-block:: Python
 
@@ -162,9 +162,9 @@ and plot it on the surface using nilearn.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:114: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
-      warnings.warn(
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:134: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+    /home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:77: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
+      labels = get_labels(
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
     Parameter smoothing_fwhm :
         Masker parameter None - overriding estimator parameter 4.0
 
@@ -173,10 +173,10 @@ and plot it on the surface using nilearn.
       self._set_arrayXarray(i, j, x)
     /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 2 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:136: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       labels = masker.transform(parcellation.labels_img_).astype(int)
-    /home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:94: UserWarning: You are using the 'agg' matplotlib backend that is non-interactive.
+    /home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:93: UserWarning: You are using the 'agg' matplotlib backend that is non-interactive.
     No figure will be plotted when calling matplotlib.pyplot.show() or nilearn.plotting.show().
     You can fix this by installing a different backend: for example via
             pip install PyQt6
@@ -185,7 +185,7 @@ and plot it on the surface using nilearn.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 98-105
+.. GENERATED FROM PYTHON SOURCE LINES 97-104
 
 Fitting the alignment operator
 ------------------------------
@@ -195,7 +195,7 @@ We select the :class:`~fmralign.methods.Procrustes` method to compute
 a rigid piecewise alignment mapping and the `ward` clustering method to
 parcellate the cortical surface.
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-119
+.. GENERATED FROM PYTHON SOURCE LINES 104-118
 
 .. code-block:: Python
 
@@ -221,16 +221,16 @@ parcellate the cortical surface.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:107: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:106: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       data_source_train = masker.transform(surf_source_train)
-    /home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:108: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:107: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       data_target_train = masker.transform(surf_target_train)
-    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:210: UserWarning: 
+    /home/runner/work/fmralign/fmralign/fmralign/alignment/pairwise_alignment.py:79: UserWarning: 
      Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
      parcel 17 : 1909 voxels
-      warnings.warn(warning)
+      self.labels_ = _check_labels(X, self.labels)
 
 
 .. raw:: html
@@ -957,14 +957,14 @@ parcellate the cortical surface.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 120-124
+.. GENERATED FROM PYTHON SOURCE LINES 119-123
 
 Projecting the left-out data
 ----------------------------
 Let's now align a left-out audio contrast from sub-01 to sub-04. We project
 the data on the surface and apply the learned alignment operator.
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-145
+.. GENERATED FROM PYTHON SOURCE LINES 123-144
 
 .. code-block:: Python
 
@@ -997,14 +997,14 @@ the data on the surface and apply the learned alignment operator.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:141: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:140: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       audio_source_data = masker.transform(surf_audio_source)
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 146-151
+.. GENERATED FROM PYTHON SOURCE LINES 145-150
 
 Visualizing the alignment in action
 -----------------------------------
@@ -1012,7 +1012,7 @@ We interpolate between the source and aligned images to visualize the
 alignment process. Notice how the individual idiocyncracies of the source
 subject are progressively removed.
 
-.. GENERATED FROM PYTHON SOURCE LINES 151-227
+.. GENERATED FROM PYTHON SOURCE LINES 150-226
 
 .. code-block:: Python
 
@@ -1284,42 +1284,42 @@ subject are progressively removed.
      </style>
 
      <div class="animation">
-       <img id="_anim_imgab786f8ffc2642e6bdfb9349527709d3">
+       <img id="_anim_imgf37e3efb89c943fdba4e1ea483db4775">
        <div class="anim-controls">
-         <input id="_anim_sliderab786f8ffc2642e6bdfb9349527709d3" type="range" class="anim-slider"
+         <input id="_anim_sliderf37e3efb89c943fdba4e1ea483db4775" type="range" class="anim-slider"
                 name="points" min="0" max="1" step="1" value="0"
-                oninput="animab786f8ffc2642e6bdfb9349527709d3.set_frame(parseInt(this.value));">
+                oninput="animf37e3efb89c943fdba4e1ea483db4775.set_frame(parseInt(this.value));">
          <div class="anim-buttons">
-           <button title="Decrease speed" aria-label="Decrease speed" onclick="animab786f8ffc2642e6bdfb9349527709d3.slower()">
+           <button title="Decrease speed" aria-label="Decrease speed" onclick="animf37e3efb89c943fdba4e1ea483db4775.slower()">
                <i class="fa fa-minus"></i></button>
-           <button title="First frame" aria-label="First frame" onclick="animab786f8ffc2642e6bdfb9349527709d3.first_frame()">
+           <button title="First frame" aria-label="First frame" onclick="animf37e3efb89c943fdba4e1ea483db4775.first_frame()">
              <i class="fa fa-fast-backward"></i></button>
-           <button title="Previous frame" aria-label="Previous frame" onclick="animab786f8ffc2642e6bdfb9349527709d3.previous_frame()">
+           <button title="Previous frame" aria-label="Previous frame" onclick="animf37e3efb89c943fdba4e1ea483db4775.previous_frame()">
                <i class="fa fa-step-backward"></i></button>
-           <button title="Play backwards" aria-label="Play backwards" onclick="animab786f8ffc2642e6bdfb9349527709d3.reverse_animation()">
+           <button title="Play backwards" aria-label="Play backwards" onclick="animf37e3efb89c943fdba4e1ea483db4775.reverse_animation()">
                <i class="fa fa-play fa-flip-horizontal"></i></button>
-           <button title="Pause" aria-label="Pause" onclick="animab786f8ffc2642e6bdfb9349527709d3.pause_animation()">
+           <button title="Pause" aria-label="Pause" onclick="animf37e3efb89c943fdba4e1ea483db4775.pause_animation()">
                <i class="fa fa-pause"></i></button>
-           <button title="Play" aria-label="Play" onclick="animab786f8ffc2642e6bdfb9349527709d3.play_animation()">
+           <button title="Play" aria-label="Play" onclick="animf37e3efb89c943fdba4e1ea483db4775.play_animation()">
                <i class="fa fa-play"></i></button>
-           <button title="Next frame" aria-label="Next frame" onclick="animab786f8ffc2642e6bdfb9349527709d3.next_frame()">
+           <button title="Next frame" aria-label="Next frame" onclick="animf37e3efb89c943fdba4e1ea483db4775.next_frame()">
                <i class="fa fa-step-forward"></i></button>
-           <button title="Last frame" aria-label="Last frame" onclick="animab786f8ffc2642e6bdfb9349527709d3.last_frame()">
+           <button title="Last frame" aria-label="Last frame" onclick="animf37e3efb89c943fdba4e1ea483db4775.last_frame()">
                <i class="fa fa-fast-forward"></i></button>
-           <button title="Increase speed" aria-label="Increase speed" onclick="animab786f8ffc2642e6bdfb9349527709d3.faster()">
+           <button title="Increase speed" aria-label="Increase speed" onclick="animf37e3efb89c943fdba4e1ea483db4775.faster()">
                <i class="fa fa-plus"></i></button>
          </div>
-         <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectab786f8ffc2642e6bdfb9349527709d3"
+         <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectf37e3efb89c943fdba4e1ea483db4775"
                class="anim-state">
-           <input type="radio" name="state" value="once" id="_anim_radio1_ab786f8ffc2642e6bdfb9349527709d3"
+           <input type="radio" name="state" value="once" id="_anim_radio1_f37e3efb89c943fdba4e1ea483db4775"
                   >
-           <label for="_anim_radio1_ab786f8ffc2642e6bdfb9349527709d3">Once</label>
-           <input type="radio" name="state" value="loop" id="_anim_radio2_ab786f8ffc2642e6bdfb9349527709d3"
+           <label for="_anim_radio1_f37e3efb89c943fdba4e1ea483db4775">Once</label>
+           <input type="radio" name="state" value="loop" id="_anim_radio2_f37e3efb89c943fdba4e1ea483db4775"
                   checked>
-           <label for="_anim_radio2_ab786f8ffc2642e6bdfb9349527709d3">Loop</label>
-           <input type="radio" name="state" value="reflect" id="_anim_radio3_ab786f8ffc2642e6bdfb9349527709d3"
+           <label for="_anim_radio2_f37e3efb89c943fdba4e1ea483db4775">Loop</label>
+           <input type="radio" name="state" value="reflect" id="_anim_radio3_f37e3efb89c943fdba4e1ea483db4775"
                   >
-           <label for="_anim_radio3_ab786f8ffc2642e6bdfb9349527709d3">Reflect</label>
+           <label for="_anim_radio3_f37e3efb89c943fdba4e1ea483db4775">Reflect</label>
          </form>
        </div>
      </div>
@@ -1329,9 +1329,9 @@ subject are progressively removed.
        /* Instantiate the Animation class. */
        /* The IDs given should match those used in the template above. */
        (function() {
-         var img_id = "_anim_imgab786f8ffc2642e6bdfb9349527709d3";
-         var slider_id = "_anim_sliderab786f8ffc2642e6bdfb9349527709d3";
-         var loop_select_id = "_anim_loop_selectab786f8ffc2642e6bdfb9349527709d3";
+         var img_id = "_anim_imgf37e3efb89c943fdba4e1ea483db4775";
+         var slider_id = "_anim_sliderf37e3efb89c943fdba4e1ea483db4775";
+         var loop_select_id = "_anim_loop_selectf37e3efb89c943fdba4e1ea483db4775";
          var frames = new Array(12);
     
        frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAMgCAYAAACwGEg9AAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -64094,7 +64094,7 @@ subject are progressively removed.
          /* set a timeout to make sure all the above elements are created before
             the object is initialized. */
          setTimeout(function() {
-             animab786f8ffc2642e6bdfb9349527709d3 = new Animation(frames, img_id, slider_id, 299.0,
+             animf37e3efb89c943fdba4e1ea483db4775 = new Animation(frames, img_id, slider_id, 299.0,
                                       loop_select_id);
          }, 0);
        })()
@@ -64106,7 +64106,7 @@ subject are progressively removed.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:203: RuntimeWarning: Meshes are not identical but have compatible number of vertices.
+    /home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:202: RuntimeWarning: Meshes are not identical but have compatible number of vertices.
       plotting.plot_surf_stat_map(
 
 
@@ -64115,7 +64115,7 @@ subject are progressively removed.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 21.577 seconds)
+   **Total running time of the script:** (0 minutes 25.079 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_surf_alignment.py:

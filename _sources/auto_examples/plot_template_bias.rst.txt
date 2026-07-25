@@ -29,7 +29,7 @@ performed seamlessly using fmralign.
 To run this example, you must launch IPython via ``ipython --matplotlib`` in
 a terminal, or use ``jupyter-notebook``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 17-22
+.. GENERATED FROM PYTHON SOURCE LINES 15-20
 
 Retrieve the data
 -----------------
@@ -37,7 +37,7 @@ In this example we use the IBC dataset, which include a large number of
 different contrasts maps for 12 subjects. We download the images for
 subjects sub-01, sub-02 and sub-04 (or retrieve them if they were already downloaded).
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-31
+.. GENERATED FROM PYTHON SOURCE LINES 20-29
 
 .. code-block:: Python
 
@@ -63,7 +63,7 @@ subjects sub-01, sub-02 and sub-04 (or retrieve them if they were already downlo
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-38
+.. GENERATED FROM PYTHON SOURCE LINES 30-36
 
 Generating an in-sample template
 --------------------------------
@@ -72,7 +72,7 @@ approach, and the fastest in terms of number of alignments to perform
 since only one template is generated for the whole group. We split the data
 into alignment data (task "archi_standard") and test data (task "archi_spatial").
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-65
+.. GENERATED FROM PYTHON SOURCE LINES 36-63
 
 .. code-block:: Python
 
@@ -111,27 +111,27 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:43: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:41: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       sub: masker.transform(
-    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:43: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:41: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       sub: masker.transform(
-    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:43: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:41: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       sub: masker.transform(
-    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:49: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:47: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       sub: masker.transform(
-    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:49: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:47: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       sub: masker.transform(
-    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:49: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:47: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       sub: masker.transform(
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:114: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
-      warnings.warn(
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:134: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:54: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
+      labels = get_labels(
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
     Parameter mask_strategy :
         Masker parameter background - overriding estimator parameter epi
     Parameter smoothing_fwhm :
@@ -140,16 +140,16 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       parcellation.fit(images_to_parcel)
     /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:136: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       labels = masker.transform(parcellation.labels_img_).astype(int)
-    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:210: UserWarning: 
+    /home/runner/work/fmralign/fmralign/fmralign/alignment/group_alignment.py:120: UserWarning: 
      Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
      parcel 1 : 1011 voxels
      parcel 7 : 1315 voxels
      parcel 30 : 1696 voxels
      parcel 43 : 1846 voxels
-      warnings.warn(warning)
+      self.labels_ = _check_labels(X_[0], self.labels)
 
 
 .. raw:: html
@@ -896,7 +896,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-73
+.. GENERATED FROM PYTHON SOURCE LINES 64-71
 
 Generating an out-of-sample template
 ------------------------------------
@@ -906,7 +906,7 @@ and align the left-out subject to this template. This ensures that
 template generation and alignments between the template and subjects
 are decoupled.
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-77
+.. GENERATED FROM PYTHON SOURCE LINES 71-75
 
 .. code-block:: Python
 
@@ -1663,14 +1663,14 @@ are decoupled.
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-82
+.. GENERATED FROM PYTHON SOURCE LINES 76-80
 
 Aligning test data
 ------------------
 Finally, we align the test data for each subject to both templates and compute
 the average aligned test data across subjects.
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-95
+.. GENERATED FROM PYTHON SOURCE LINES 80-93
 
 .. code-block:: Python
 
@@ -1694,14 +1694,14 @@ the average aligned test data across subjects.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 96-100
+.. GENERATED FROM PYTHON SOURCE LINES 94-98
 
 Comparing the correlations
 --------------------------
 We compare the average correlation of the transformed data across subjects
 for both in-sample and out-of-sample template generation strategies.
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-145
+.. GENERATED FROM PYTHON SOURCE LINES 98-143
 
 .. code-block:: Python
 
@@ -1762,7 +1762,7 @@ for both in-sample and out-of-sample template generation strategies.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 146-152
+.. GENERATED FROM PYTHON SOURCE LINES 144-150
 
 The direct comparisons of voxelwise inter-subject correlations show little difference
 between in-sample and out-of-sample template generation strategies. That is good news,
@@ -1771,7 +1771,7 @@ in this case.
 To better visualize the differences, we can use nilearn's
 :func:`~nilearn.plotting.plot_img_comparison`
 
-.. GENERATED FROM PYTHON SOURCE LINES 152-163
+.. GENERATED FROM PYTHON SOURCE LINES 150-161
 
 .. code-block:: Python
 
@@ -1799,14 +1799,14 @@ To better visualize the differences, we can use nilearn's
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:153: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:151: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       plotting.plot_img_comparison(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 164-171
+.. GENERATED FROM PYTHON SOURCE LINES 162-169
 
 We are now able to see that in-sample template generation leads to slightly
 higher inter-subject correlations after alignment, indicating a small bias.
@@ -1816,7 +1816,7 @@ the difference between both strategies narrows. However, when dealing with
 small datasets, out-of-sample template generation is recommended to avoid
 overly optimistic results.
 
-.. GENERATED FROM PYTHON SOURCE LINES 173-176
+.. GENERATED FROM PYTHON SOURCE LINES 171-174
 
 References
 ----------
@@ -1825,7 +1825,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 27.307 seconds)
+   **Total running time of the script:** (1 minutes 35.042 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_template_bias.py:

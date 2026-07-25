@@ -417,9 +417,9 @@ and plot it on the surface using nilearn.</p>
 <a href="https://nilearn.github.io/stable/modules/generated/nilearn.plotting.show.html#nilearn.plotting.show" title="nilearn.plotting.show" class="sphx-glr-backref-module-nilearn-plotting sphx-glr-backref-type-py-function"><span class="n">plotting</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../_images/sphx_glr_plot_surf_alignment_001.png" srcset="../_images/sphx_glr_plot_surf_alignment_001.png" alt="Ward parcellation on the left hemisphere" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:114: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
-  warnings.warn(
-/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:134: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+<img src="../_images/sphx_glr_plot_surf_alignment_001.png" srcset="../_images/sphx_glr_plot_surf_alignment_001.png" alt="Ward parcellation on the left hemisphere" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:77: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
+  labels = get_labels(
+/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
 Parameter smoothing_fwhm :
     Masker parameter None - overriding estimator parameter 4.0
 
@@ -428,10 +428,10 @@ Parameter smoothing_fwhm :
   self._set_arrayXarray(i, j, x)
 /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 2 &gt; 1. Completing it to avoid stopping the tree early.
   connectivity, n_connected_components = _fix_connectivity(
-/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:136: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
 Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
   labels = masker.transform(parcellation.labels_img_).astype(int)
-/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:94: UserWarning: You are using the &#39;agg&#39; matplotlib backend that is non-interactive.
+/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:93: UserWarning: You are using the &#39;agg&#39; matplotlib backend that is non-interactive.
 No figure will be plotted when calling matplotlib.pyplot.show() or nilearn.plotting.show().
 You can fix this by installing a different backend: for example via
         pip install PyQt6
@@ -458,16 +458,16 @@ parcellate the cortical surface.</p>
 <a href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment.fit" title="fmralign.alignment.pairwise_alignment.PairwiseAlignment.fit" class="sphx-glr-backref-module-fmralign-alignment-pairwise_alignment sphx-glr-backref-type-py-method"><span class="n">alignment_estimator</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_source_train</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_target_train</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:107: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:106: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
 Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
   data_source_train = masker.transform(surf_source_train)
-/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:108: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:107: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
 Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
   data_target_train = masker.transform(surf_target_train)
-/home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:210: UserWarning:
+/home/runner/work/fmralign/fmralign/fmralign/alignment/pairwise_alignment.py:79: UserWarning:
  Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
  parcel 17 : 1909 voxels
-  warnings.warn(warning)
+  self.labels_ = _check_labels(X, self.labels)
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -1216,7 +1216,7 @@ the data on the surface and apply the learned alignment operator.</p>
 <a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">surf_aligned</span></a> <span class="o">=</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.maskers.MultiSurfaceMasker.html#nilearn.maskers.MultiSurfaceMasker.inverse_transform" title="nilearn.maskers.MultiSurfaceMasker.inverse_transform" class="sphx-glr-backref-module-nilearn-maskers sphx-glr-backref-type-py-method"><span class="n">masker</span><span class="o">.</span><span class="n">inverse_transform</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aligned_target_data</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:141: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:140: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
 Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
   audio_source_data = masker.transform(surf_audio_source)
 </pre></div>
@@ -1489,42 +1489,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_imgab786f8ffc2642e6bdfb9349527709d3">
+  <img id="_anim_imgf37e3efb89c943fdba4e1ea483db4775">
   <div class="anim-controls">
-    <input id="_anim_sliderab786f8ffc2642e6bdfb9349527709d3" type="range" class="anim-slider"
+    <input id="_anim_sliderf37e3efb89c943fdba4e1ea483db4775" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="animab786f8ffc2642e6bdfb9349527709d3.set_frame(parseInt(this.value));">
+           oninput="animf37e3efb89c943fdba4e1ea483db4775.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="animab786f8ffc2642e6bdfb9349527709d3.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="animf37e3efb89c943fdba4e1ea483db4775.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="animab786f8ffc2642e6bdfb9349527709d3.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="animf37e3efb89c943fdba4e1ea483db4775.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="animab786f8ffc2642e6bdfb9349527709d3.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="animf37e3efb89c943fdba4e1ea483db4775.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="animab786f8ffc2642e6bdfb9349527709d3.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="animf37e3efb89c943fdba4e1ea483db4775.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="animab786f8ffc2642e6bdfb9349527709d3.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="animf37e3efb89c943fdba4e1ea483db4775.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="animab786f8ffc2642e6bdfb9349527709d3.play_animation()">
+      <button title="Play" aria-label="Play" onclick="animf37e3efb89c943fdba4e1ea483db4775.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="animab786f8ffc2642e6bdfb9349527709d3.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="animf37e3efb89c943fdba4e1ea483db4775.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="animab786f8ffc2642e6bdfb9349527709d3.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="animf37e3efb89c943fdba4e1ea483db4775.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="animab786f8ffc2642e6bdfb9349527709d3.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="animf37e3efb89c943fdba4e1ea483db4775.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectab786f8ffc2642e6bdfb9349527709d3"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectf37e3efb89c943fdba4e1ea483db4775"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_ab786f8ffc2642e6bdfb9349527709d3"
+      <input type="radio" name="state" value="once" id="_anim_radio1_f37e3efb89c943fdba4e1ea483db4775"
              >
-      <label for="_anim_radio1_ab786f8ffc2642e6bdfb9349527709d3">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_ab786f8ffc2642e6bdfb9349527709d3"
+      <label for="_anim_radio1_f37e3efb89c943fdba4e1ea483db4775">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_f37e3efb89c943fdba4e1ea483db4775"
              checked>
-      <label for="_anim_radio2_ab786f8ffc2642e6bdfb9349527709d3">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_ab786f8ffc2642e6bdfb9349527709d3"
+      <label for="_anim_radio2_f37e3efb89c943fdba4e1ea483db4775">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_f37e3efb89c943fdba4e1ea483db4775"
              >
-      <label for="_anim_radio3_ab786f8ffc2642e6bdfb9349527709d3">Reflect</label>
+      <label for="_anim_radio3_f37e3efb89c943fdba4e1ea483db4775">Reflect</label>
     </form>
   </div>
 </div>
@@ -1534,9 +1534,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_imgab786f8ffc2642e6bdfb9349527709d3";
-    var slider_id = "_anim_sliderab786f8ffc2642e6bdfb9349527709d3";
-    var loop_select_id = "_anim_loop_selectab786f8ffc2642e6bdfb9349527709d3";
+    var img_id = "_anim_imgf37e3efb89c943fdba4e1ea483db4775";
+    var slider_id = "_anim_sliderf37e3efb89c943fdba4e1ea483db4775";
+    var loop_select_id = "_anim_loop_selectf37e3efb89c943fdba4e1ea483db4775";
     var frames = new Array(12);
 
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAMgCAYAAACwGEg9AAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -64299,16 +64299,16 @@ AANAQAcAAAAAYAAI6AAAAAAADMD/D313a/R4vRYFAAAAAElFTkSuQmCC\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        animab786f8ffc2642e6bdfb9349527709d3 = new Animation(frames, img_id, slider_id, 299.0,
+        animf37e3efb89c943fdba4e1ea483db4775 = new Animation(frames, img_id, slider_id, 299.0,
                                  loop_select_id);
     }, 0);
   })()
 </script></div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:203: RuntimeWarning: Meshes are not identical but have compatible number of vertices.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:202: RuntimeWarning: Meshes are not identical but have compatible number of vertices.
   plotting.plot_surf_stat_map(
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 21.577 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 25.079 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-surf-alignment-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/7f3e9d12ad06b317d586125843d70ff5/plot_surf_alignment.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_surf_alignment.ipynb</span></code></a></p>

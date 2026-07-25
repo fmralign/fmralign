@@ -33,7 +33,7 @@ data in a clean fashion.
 To run this example, you must launch IPython via ``ipython
 --matplotlib`` in a terminal, or use ``jupyter-notebook``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 20-30
+.. GENERATED FROM PYTHON SOURCE LINES 18-28
 
 Retrieve the data
 ------------------
@@ -46,7 +46,7 @@ df is a dataframe with metadata about each of them.
 mask is an appropriate nifti image to select the data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-35
+.. GENERATED FROM PYTHON SOURCE LINES 28-33
 
 .. code-block:: Python
 
@@ -68,14 +68,14 @@ mask is an appropriate nifti image to select the data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-40
+.. GENERATED FROM PYTHON SOURCE LINES 34-38
 
 Extract a mask for the visual cortex from Yeo Atlas
 ---------------------------------------------------
 First, we fetch and plot the complete atlas
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 40-64
+.. GENERATED FROM PYTHON SOURCE LINES 38-62
 
 .. code-block:: Python
 
@@ -118,17 +118,17 @@ First, we fetch and plot the complete atlas
 
     [fetch_atlas_yeo_2011] Dataset created in /home/runner/nilearn_data/yeo_2011
     [fetch_atlas_yeo_2011] Downloading data from ftp://surfer.nmr.mgh.harvard.edu/pub/data/Yeo_JNeurophysiol11_MNI152.zip ...
-    [fetch_atlas_yeo_2011]  ...done. (2 seconds, 0 min)
+    [fetch_atlas_yeo_2011]  ...done. (0 seconds, 0 min)
 
     [fetch_atlas_yeo_2011] Extracting data from /home/runner/nilearn_data/yeo_2011/622858b56913b19ae0865d9fa8ad47cc/Yeo_JNeurophysiol11_MNI152.zip...
     [fetch_atlas_yeo_2011] .. done.
 
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f7ebcb867e0>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7fd45d52d070>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-70
+.. GENERATED FROM PYTHON SOURCE LINES 63-68
 
 Define a masker
 -----------------
@@ -136,7 +136,7 @@ We define a nilearn masker that will be used to handle relevant data.
 For more information, consult Nilearn's documentation on
 :external+nilearn:ref:`masker objects <masker_objects>`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-75
+.. GENERATED FROM PYTHON SOURCE LINES 68-73
 
 .. code-block:: Python
 
@@ -152,7 +152,7 @@ For more information, consult Nilearn's documentation on
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-82
+.. GENERATED FROM PYTHON SOURCE LINES 74-80
 
 Prepare the data
 ----------------
@@ -161,7 +161,7 @@ two independent sessions with a different phase encoding:
 Antero-posterior(AP) or Postero-anterior(PA).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 82-108
+.. GENERATED FROM PYTHON SOURCE LINES 80-106
 
 .. code-block:: Python
 
@@ -198,7 +198,7 @@ Antero-posterior(AP) or Postero-anterior(PA).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 109-121
+.. GENERATED FROM PYTHON SOURCE LINES 107-119
 
 Define the estimator, fit it and predict
 ----------------------------------------
@@ -213,7 +213,7 @@ n_pieces to 1. We learn alignment estimator on train data and use it to
 predict target test data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 121-142
+.. GENERATED FROM PYTHON SOURCE LINES 119-140
 
 .. code-block:: Python
 
@@ -246,16 +246,16 @@ predict target test data.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:129: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:127: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       ) = roi_masker.transform(
-    /home/runner/work/fmralign/fmralign/fmralign/alignment/utils.py:182: UserWarning: No labels provided, using a single label for all features.
-      warnings.warn(
+    /home/runner/work/fmralign/fmralign/fmralign/alignment/pairwise_alignment.py:79: UserWarning: No labels provided, using a single label for all features.
+      self.labels_ = _check_labels(X, self.labels)
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 143-151
+.. GENERATED FROM PYTHON SOURCE LINES 141-149
 
 Score the baseline and the prediction
 -------------------------------------
@@ -266,7 +266,7 @@ and with alignment, to see if alignment was able to predict a signal more
 alike the ground truth.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 151-164
+.. GENERATED FROM PYTHON SOURCE LINES 149-162
 
 .. code-block:: Python
 
@@ -291,20 +291,20 @@ alike the ground truth.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/fmralign/metrics.py:55: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
+    /home/runner/work/fmralign/fmralign/fmralign/metrics.py:54: ConstantInputWarning: An input array is constant; the correlation coefficient is not defined.
       pearsonr(X_gt[:, vox], X_pred[:, vox])[
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 165-169
+.. GENERATED FROM PYTHON SOURCE LINES 163-167
 
 Plotting the measures
 ---------------------
 Finally we plot both scores.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 169-183
+.. GENERATED FROM PYTHON SOURCE LINES 167-181
 
 .. code-block:: Python
 
@@ -347,15 +347,15 @@ Finally we plot both scores.
 
  .. code-block:: none
 
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:174: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:172: UserWarning: Non-finite values detected. These values will be replaced with zeros.
       baseline_display = plotting.plot_stat_map(
-    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:178: UserWarning: Non-finite values detected. These values will be replaced with zeros.
+    /home/runner/work/fmralign/fmralign/examples/plot_pairwise_roi_alignment.py:176: UserWarning: Non-finite values detected. These values will be replaced with zeros.
       display = plotting.plot_stat_map(
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 184-186
+.. GENERATED FROM PYTHON SOURCE LINES 182-184
 
 We can see on the plot that after alignment, the prediction made for one
 subject data, informed by another subject are greatly improved.
@@ -363,7 +363,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.104 seconds)
+   **Total running time of the script:** (0 minutes 6.074 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_roi_alignment.py:

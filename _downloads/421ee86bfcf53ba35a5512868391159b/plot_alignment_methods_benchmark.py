@@ -1,5 +1,4 @@
 # %%
-# -*- coding: utf-8 -*-
 
 """
 Alignment methods benchmark (template-based ROI case)
@@ -150,12 +149,14 @@ dict_source_train = dict(
     zip(
         source_subjects,
         [roi_masker.transform(img) for img in source_train_imgs],
+        strict=False,
     )
 )
 dict_source_test = dict(
     zip(
         source_subjects,
         [roi_masker.transform(img) for img in source_test_imgs],
+        strict=False,
     )
 )
 target_train = roi_masker.transform(target_train_img)
@@ -187,7 +188,7 @@ methods = ["identity", "procrustes", "ot", "SRM"]
 # Prepare to store the results
 titles, aligned_scores = [], []
 
-for i, method in enumerate(methods):
+for method in methods:
     # Fit the group estimator on the training data
     group_estimator = GroupAlignment(method=method, labels=labels).fit(
         dict_source_train
@@ -213,7 +214,7 @@ import matplotlib.pyplot as plt
 
 fig, axes = plt.subplots(4, 1, figsize=(8, 12))
 
-for i, (score, title) in enumerate(zip(aligned_scores, titles)):
+for i, (score, title) in enumerate(zip(aligned_scores, titles, strict=False)):
     plotting.plot_stat_map(
         score,
         display_mode="z",

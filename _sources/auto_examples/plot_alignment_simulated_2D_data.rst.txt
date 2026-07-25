@@ -35,7 +35,7 @@ some sense.
 To run this example, you must launch IPython via ``ipython --matplotlib``
 in a terminal, or use ``jupyter-notebook``.
 
-.. GENERATED FROM PYTHON SOURCE LINES 24-34
+.. GENERATED FROM PYTHON SOURCE LINES 22-32
 
 Defining utility functions
 --------------------------
@@ -48,7 +48,7 @@ In this example we will do a lot of plotting so we first define :
 
 Note that you can skip this part.
 
-.. GENERATED FROM PYTHON SOURCE LINES 34-124
+.. GENERATED FROM PYTHON SOURCE LINES 32-122
 
 .. code-block:: Python
 
@@ -149,7 +149,7 @@ Note that you can skip this part.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 125-131
+.. GENERATED FROM PYTHON SOURCE LINES 123-129
 
 Create a sample distribution
 ----------------------------
@@ -158,7 +158,7 @@ a S shape. Here the dimension of our distributions will `(n_points, 2)`
 since we want to be able to plot each voxel in a point. In real cases
 however we have tens or hundreds of observations that characterize each point.
 
-.. GENERATED FROM PYTHON SOURCE LINES 131-167
+.. GENERATED FROM PYTHON SOURCE LINES 129-165
 
 .. code-block:: Python
 
@@ -172,7 +172,7 @@ however we have tens or hundreds of observations that characterize each point.
     X = np.asarray(
         [
             _rotate((x[origin_index], y[origin_index]), (x_, y_), math.radians(10))
-            for x_, y_ in zip(x, y)
+            for x_, y_ in zip(x, y, strict=False)
         ]
     )
     X[:, 0] -= 4
@@ -183,7 +183,7 @@ however we have tens or hundreds of observations that characterize each point.
             _rotate(
                 (x[origin_index], y[origin_index]), (x_, y_), math.radians(-10)
             )
-            for x_, y_ in zip(x, y)
+            for x_, y_ in zip(x, y, strict=False)
         ]
     )
     # Our to distributions : X in green and Y in red
@@ -222,7 +222,7 @@ however we have tens or hundreds of observations that characterize each point.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 168-174
+.. GENERATED FROM PYTHON SOURCE LINES 166-172
 
 Alignment : finding the right transform
 ---------------------------------------
@@ -231,7 +231,7 @@ idea of alignment is to find a transform, let's call it `R`, between the
 source `X` and the target `Y` that will handle that. Now we will showcase
 on our simple 2D example different kind of transformation we can look for.
 
-.. GENERATED FROM PYTHON SOURCE LINES 174-180
+.. GENERATED FROM PYTHON SOURCE LINES 172-178
 
 .. code-block:: Python
 
@@ -248,7 +248,7 @@ on our simple 2D example different kind of transformation we can look for.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 181-186
+.. GENERATED FROM PYTHON SOURCE LINES 179-184
 
 Procrustes alignment
 --------------------
@@ -256,7 +256,7 @@ The first idea proposed in :footcite:t:`Haxby2011` was to compute an orthogonal 
 matrix `R` and a scaling `sc` such that Frobenius norm:
 :math:`\| sc R X - Y \|^2` is minimized.
 
-.. GENERATED FROM PYTHON SOURCE LINES 186-200
+.. GENERATED FROM PYTHON SOURCE LINES 184-198
 
 .. code-block:: Python
 
@@ -298,7 +298,7 @@ matrix `R` and a scaling `sc` such that Frobenius norm:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 201-209
+.. GENERATED FROM PYTHON SOURCE LINES 199-207
 
 Optimal Transport alignment
 ---------------------------
@@ -309,7 +309,7 @@ optimal coupling between `X` and `Y` with entropic regularization.
 This way of finding a transform uses more geometrical information from the
 distributions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 209-217
+.. GENERATED FROM PYTHON SOURCE LINES 207-215
 
 .. code-block:: Python
 
@@ -345,7 +345,7 @@ distributions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 218-222
+.. GENERATED FROM PYTHON SOURCE LINES 216-220
 
 References
 ----------
@@ -355,7 +355,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.622 seconds)
+   **Total running time of the script:** (0 minutes 0.652 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_simulated_2D_data.py:
