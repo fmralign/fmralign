@@ -105,7 +105,7 @@ def return_expected_failed_checks(
             "check_estimators_empty_data_messages": "TODO",
         }
 
-    if isinstance(estimator, (Identity,)):
+    if isinstance(estimator, Identity):
         expected_failed_checks |= {
             "check_fit1d": "TODO",
             "check_fit2d_predict1d": "TODO",

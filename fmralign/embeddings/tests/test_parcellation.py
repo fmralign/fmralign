@@ -30,9 +30,9 @@ def test_get_labels():
         labels = get_labels(img, masker, 2, clustering_method)
         assert len(np.unique(labels)) == 2
 
-        # check that not inputing n_pieces yields problems
-        with pytest.raises(Exception):
-            assert get_labels(img, masker, 0, clustering_method)
+        # check that inputing 0 pieces yields problems
+        with pytest.raises(ValueError):
+            get_labels(img, masker, 0, clustering_method)
 
     clustering = nib.Nifti1Image(
         np.hstack([np.ones((7, 3, 8)), 2 * np.ones((7, 3, 8))]), np.eye(4)

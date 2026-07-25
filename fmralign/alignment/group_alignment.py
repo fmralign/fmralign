@@ -168,7 +168,9 @@ class GroupAlignment(TransformerMixin, BaseEstimator):
                 self.verbose,
             )
 
-        self.fitted_estimators = dict(zip(self.subject_keys_, fit_))
+        self.fitted_estimators = dict(
+            zip(self.subject_keys_, fit_, strict=False)
+        )
         return self
 
     def _transform_one_array(self, X, estimator):

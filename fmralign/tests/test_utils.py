@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import pytest
 from numpy.testing import assert_array_equal
 from sklearn.exceptions import NotFittedError
