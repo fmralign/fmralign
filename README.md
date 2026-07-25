@@ -1,5 +1,6 @@
 # fmralign
 
+[![Code style: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 ![build](https://img.shields.io/github/actions/workflow/status/fmralign/fmralign/testing.yml?event=push&style=for-the-badge)
 ![python version](https://img.shields.io/badge/python-3.10_|_3.11_|_3.12_|_3.13_|_3.14-blue?style=for-the-badge)
 ![license](https://img.shields.io/github/license/fmralign/fmralign?style=for-the-badge)
