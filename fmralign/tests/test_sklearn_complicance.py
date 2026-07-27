@@ -4,9 +4,10 @@ from fmralign.methods import (
     DetSRM,
     Identity,
     OptimalTransport,
+    PiecewiseAlignment,
+    # SpectralOT
     Procrustes,
     RidgeAlignment,
-    # SpectralOT
 )
 
 
@@ -19,9 +20,6 @@ def pytest_ignore_collect(collection_path, config):  # noqa: ARG001
 
 from sklearn.utils.estimator_checks import parametrize_with_checks  # noqa
 
-
-# from fmralign.methods.piecewise import PiecewiseAlignment # not in public API
-
 ESTIMATORS_TO_CHECK = [
     PairwiseAlignment(),
     GroupAlignment(),
@@ -30,7 +28,7 @@ ESTIMATORS_TO_CHECK = [
     OptimalTransport(),
     Procrustes(),
     RidgeAlignment(),
-    # PiecewiseAlignment()
+    PiecewiseAlignment(method=Identity()),
     # SpectralOT(evecs=np.ones((5,5))),
 ]
 

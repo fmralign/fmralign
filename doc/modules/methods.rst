@@ -20,6 +20,7 @@ Classes
 
    Identity
    DetSRM
+   PiecewiseAlignment
    Procrustes
    RidgeAlignment
    OptimalTransport
