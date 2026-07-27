@@ -418,7 +418,7 @@ utility, which will generate a parcellation of the data in 150 pieces.</p>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_pairwise_alignment.py:90: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
   labels = get_labels(
-/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:136: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
 Parameter mask_strategy :
     Masker parameter background - overriding estimator parameter epi
 Parameter smoothing_fwhm :
@@ -427,7 +427,7 @@ Parameter smoothing_fwhm :
   parcellation.fit(images_to_parcel)
 /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 35 &gt; 1. Completing it to avoid stopping the tree early.
   connectivity, n_connected_components = _fix_connectivity(
-/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:136: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:137: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
 Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
   labels = masker.transform(parcellation.labels_img_).astype(int)
 </pre></div>
@@ -469,11 +469,11 @@ Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; inst
   masker.transform(
 /home/runner/work/fmralign/fmralign/fmralign/alignment/pairwise_alignment.py:79: UserWarning:
  Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
+ parcel 8 : 1062 voxels
  parcel 9 : 1393 voxels
- parcel 19 : 1062 voxels
+ parcel 12 : 1313 voxels
+ parcel 23 : 1210 voxels
  parcel 31 : 1712 voxels
- parcel 42 : 1210 voxels
- parcel 49 : 1313 voxels
  parcel 50 : 1223 voxels
   self.labels_ = _check_labels(X, self.labels)
 </pre></div>
@@ -522,7 +522,7 @@ to see if alignment was able to predict a signal more alike the ground truth.</p
 </ul>
 <p>We can see on the plot that after alignment the prediction made for one
 subject data, informed by another subject are greatly improved.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 27.796 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 32.438 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-pairwise-alignment-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/0b52291c5d4529d22a4b2d1ae507b098/plot_pairwise_alignment.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_pairwise_alignment.ipynb</span></code></a></p>

@@ -126,7 +126,7 @@ First, we fetch and plot the complete atlas
 
     [fetch_atlas_yeo_2011] Dataset directory found: /home/runner/nilearn_data/yeo_2011
 
-    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f0388938710>
+    <nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f1401cd3b90>
 
 
 
@@ -221,7 +221,7 @@ data to divide them into meaningful regions.
 
     import numpy as np
 
-    n_voxels = roi_masker.mask_img_.get_fdata().sum()
+    n_voxels = roi_masker.n_elements_
     print(f"The chosen region of interest contains {n_voxels} voxels")
     n_pieces = int(np.round(n_voxels / 100))
     print(f"We will cluster them in {n_pieces} regions")
@@ -234,7 +234,7 @@ data to divide them into meaningful regions.
 
  .. code-block:: none
 
-    The chosen region of interest contains 6631.0 voxels
+    The chosen region of interest contains 6631 voxels
     We will cluster them in 66 regions
 
 
@@ -284,7 +284,7 @@ We then organize the data in dictionaries of pairs of subjects names and data.
 
     /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:147: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
       labels = get_labels(source_train_imgs, roi_masker, n_pieces)
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:136: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
     Parameter mask_strategy :
         Masker parameter background - overriding estimator parameter epi
     Parameter smoothing_fwhm :
@@ -293,7 +293,7 @@ We then organize the data in dictionaries of pairs of subjects names and data.
       parcellation.fit(images_to_parcel)
     /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 11 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
-    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:136: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+    /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:137: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       labels = masker.transform(parcellation.labels_img_).astype(int)
     /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:151: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
@@ -443,7 +443,7 @@ smoothness in the transformation, resulting in slightly higher correlation value
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 29.406 seconds)
+   **Total running time of the script:** (0 minutes 35.645 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_alignment_methods_benchmark.py:

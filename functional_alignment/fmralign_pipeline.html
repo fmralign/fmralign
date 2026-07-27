@@ -366,17 +366,17 @@ dimensions <cite>(n_voxels, n_samples)</cite> where each image is a sample.
 So we can see each signal as a distribution where each voxel as a point
 in a multidimensional functional space (each dimension is a sample).</p>
 <p>We show below a 2D example, with 2 distributions: <cite>X</cite> in green, <cite>Y</cite> in red. Both have 20 voxels (points) characterized by 2 samples (images). And the alignment we search for is the matching of both distributions, optimally in some sense.</p>
-<figure class="align-left">
+<figure class="align-default">
 <img alt="../_images/sphx_glr_plot_alignment_simulated_2D_data_001.png" src="../_images/sphx_glr_plot_alignment_simulated_2D_data_001.png" />
 </figure>
 <section id="orthogonal-alignment-procrustes">
 <h3><span class="section-number">2.2.2.1. </span>Orthogonal alignment (Procrustes)<a class="headerlink" href="#orthogonal-alignment-procrustes" title="Link to this heading">¶</a></h3>
 <p>The first idea proposed in Haxby <em>et al.</em><a class="footnote-reference brackets" href="#footcite-haxby2001" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> was to compute an orthogonal mixing
 matrix <cite>R</cite> and a scaling <cite>sc</cite> such that Frobenius norm <span class="math">||sc RX - Y||^2</span> is minimized.</p>
-<figure class="align-left">
+<figure class="align-default">
 <img alt="../_images/sphx_glr_plot_alignment_simulated_2D_data_003.png" src="../_images/sphx_glr_plot_alignment_simulated_2D_data_003.png" />
 </figure>
-<figure class="align-left">
+<figure class="align-default">
 <img alt="../_images/sphx_glr_plot_alignment_simulated_2D_data_004.png" src="../_images/sphx_glr_plot_alignment_simulated_2D_data_004.png" />
 </figure>
 </section>
@@ -384,10 +384,10 @@ matrix <cite>R</cite> and a scaling <cite>sc</cite> such that Frobenius norm <sp
 <h3><span class="section-number">2.2.2.2. </span>Optimal Transport alignment<a class="headerlink" href="#optimal-transport-alignment" title="Link to this heading">¶</a></h3>
 <p>Finally this package comes with a new method that build on the Wasserstein distance which is well-suited for this problem. This is the framework of Optimal Transport that search to transport all signal from <cite>X</cite> to <cite>Y</cite>
 while minimizign the overall cost of this transport. <cite>R</cite> is here the optimal coupling between <cite>X</cite> and <cite>Y</cite> with entropic regularization.</p>
-<figure class="align-left">
+<figure class="align-default">
 <img alt="../_images/sphx_glr_plot_alignment_simulated_2D_data_005.png" src="../_images/sphx_glr_plot_alignment_simulated_2D_data_005.png" />
 </figure>
-<figure class="align-left">
+<figure class="align-default">
 <img alt="../_images/sphx_glr_plot_alignment_simulated_2D_data_006.png" src="../_images/sphx_glr_plot_alignment_simulated_2D_data_006.png" />
 </figure>
 </section>
@@ -430,7 +430,7 @@ with metadata about each of them.</p>
 <span class="go">         cut_coords=(8, -80, 9), colorbar=True, cmap=&#39;Paired&#39;)</span>
 </pre></div>
 </div>
-<figure class="align-left">
+<figure class="align-default">
 <a class="reference internal image-reference" href="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png"><img alt="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png" height="105" src="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png" width="198" />
 </a>
 </figure>

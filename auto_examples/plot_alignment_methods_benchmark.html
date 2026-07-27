@@ -398,7 +398,7 @@ to probe a range of cognitive functions, including:</p>
 </div>
 <img src="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png" srcset="../_images/sphx_glr_plot_alignment_methods_benchmark_001.png" alt="plot alignment methods benchmark" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[fetch_atlas_yeo_2011] Dataset directory found: /home/runner/nilearn_data/yeo_2011
 
-&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f0388938710&gt;
+&lt;nilearn.plotting.displays._slicers.OrthoSlicer object at 0x7f1401cd3b90&gt;
 </pre></div>
 </div>
 </section>
@@ -458,13 +458,13 @@ estimator will first make a functional clustering of voxels based on train
 data to divide them into meaningful regions.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">n_voxels</span></a> <span class="o">=</span> <a href="https://nipy.org/nibabel/reference/nibabel.dataobj_images.html#nibabel.dataobj_images.DataobjImage.get_fdata" title="nibabel.dataobj_images.DataobjImage.get_fdata" class="sphx-glr-backref-module-nibabel-dataobj_images sphx-glr-backref-type-py-method"><span class="n">roi_masker</span><span class="o">.</span><span class="n">mask_img_</span><span class="o">.</span><span class="n">get_fdata</span></a><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The chosen region of interest contains </span><span class="si">{</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">n_voxels</span></a><span class="si">}</span><span class="s2"> voxels&quot;</span><span class="p">)</span>
-<a href="https://docs.python.org/3.10/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_pieces</span></a> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.round.html#numpy.round" title="numpy.round" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">round</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">n_voxels</span></a> <span class="o">/</span> <span class="mi">100</span><span class="p">))</span>
+<a href="https://docs.python.org/3.10/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_voxels</span></a> <span class="o">=</span> <a href="https://docs.python.org/3.10/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">roi_masker</span><span class="o">.</span><span class="n">n_elements_</span></a>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The chosen region of interest contains </span><span class="si">{</span><a href="https://docs.python.org/3.10/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_voxels</span></a><span class="si">}</span><span class="s2"> voxels&quot;</span><span class="p">)</span>
+<a href="https://docs.python.org/3.10/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_pieces</span></a> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.round.html#numpy.round" title="numpy.round" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">round</span></a><span class="p">(</span><a href="https://docs.python.org/3.10/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_voxels</span></a> <span class="o">/</span> <span class="mi">100</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;We will cluster them in </span><span class="si">{</span><a href="https://docs.python.org/3.10/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_pieces</span></a><span class="si">}</span><span class="s2"> regions&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>The chosen region of interest contains 6631.0 voxels
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>The chosen region of interest contains 6631 voxels
 We will cluster them in 66 regions
 </pre></div>
 </div>
@@ -498,7 +498,7 @@ We then organize the data in dictionaries of pairs of subjects names and data.</
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:147: UserWarning: Converting masker to multi-masker for compatibility with Nilearn Parcellations class. This conversion does not affect the original masker. See https://github.com/nilearn/nilearn/issues/5926 for more details.
   labels = get_labels(source_train_imgs, roi_masker, n_pieces)
-/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:135: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
+/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:136: UserWarning: Overriding provided-default estimator parameters with provided masker parameters :
 Parameter mask_strategy :
     Masker parameter background - overriding estimator parameter epi
 Parameter smoothing_fwhm :
@@ -507,7 +507,7 @@ Parameter smoothing_fwhm :
   parcellation.fit(images_to_parcel)
 /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 11 &gt; 1. Completing it to avoid stopping the tree early.
   connectivity, n_connected_components = _fix_connectivity(
-/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:136: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
+/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:137: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
 Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
   labels = masker.transform(parcellation.labels_img_).astype(int)
 /home/runner/work/fmralign/fmralign/examples/plot_alignment_methods_benchmark.py:151: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
@@ -616,7 +616,7 @@ as the baseline.</p>
 with <a class="reference internal" href="../modules/generated/fmralign.methods.DetSRM.html#fmralign.methods.DetSRM" title="fmralign.methods.DetSRM"><code class="xref py py-class docutils literal notranslate"><span class="pre">DetSRM</span></code></a> alignment on visual cortex activity.
 You can see that <a class="reference internal" href="../modules/generated/fmralign.methods.DetSRM.html#fmralign.methods.DetSRM" title="fmralign.methods.DetSRM"><code class="xref py py-class docutils literal notranslate"><span class="pre">DetSRM</span></code></a> introduces more
 smoothness in the transformation, resulting in slightly higher correlation values.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 29.406 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 35.645 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-alignment-methods-benchmark-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/b885fb894b22be261ce320523a208b83/plot_alignment_methods_benchmark.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_alignment_methods_benchmark.ipynb</span></code></a></p>
