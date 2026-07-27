@@ -2,7 +2,6 @@ import numpy as np
 from joblib import Parallel, delayed
 from sklearn.base import clone
 
-from fmralign.methods import DetSRM
 from fmralign.methods.base import BaseAlignment
 
 
@@ -166,6 +165,9 @@ class PiecewiseAlignment(BaseAlignment):
             data is returned with the shape
             (n_labels, n_samples, n_components).
         """
+        # avoid circular import
+        from fmralign.methods import DetSRM
+
         X_ = _array_to_list(X, self.labels)
         piecewise_transforms = Parallel(
             n_jobs=self.n_jobs, verbose=self.verbose
