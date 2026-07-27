@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Template-based prediction.
 ==========================
@@ -101,7 +100,7 @@ from fmralign.embeddings.parcellation import get_labels
 labels = get_labels(imgs[0], n_pieces=150, masker=masker)
 
 # We create a dictionary with the subject names as keys and the subjects data as values
-dict_alignment = dict(zip(subjects, masked_imgs))
+dict_alignment = dict(zip(subjects, masked_imgs, strict=False))
 
 # We use Procrustes/scaled orthogonal alignment method
 template_estim = GroupAlignment(method="procrustes", labels=labels)

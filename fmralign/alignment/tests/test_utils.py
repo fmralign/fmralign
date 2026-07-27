@@ -41,7 +41,7 @@ def test_check_input_arrays():
     # Valid input
     subjects_keys = ["sub-01", "sub-02", "sub-03"]
     subjects_values = [np.random.rand(10, 5) for _ in range(3)]
-    subjects_dict = dict(zip(subjects_keys, subjects_values))
+    subjects_dict = dict(zip(subjects_keys, subjects_values, strict=False))
     checked_keys, checked_values = _check_input_arrays(subjects_dict)
     assert isinstance(checked_values, list)
     assert all(isinstance(x, np.ndarray) for x in checked_values)

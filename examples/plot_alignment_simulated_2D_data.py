@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 """
 Alignment on simulated 2D data.
 ===============================
@@ -138,7 +136,7 @@ y = x + 3 * np.sin(x / 3)
 X = np.asarray(
     [
         _rotate((x[origin_index], y[origin_index]), (x_, y_), math.radians(10))
-        for x_, y_ in zip(x, y)
+        for x_, y_ in zip(x, y, strict=False)
     ]
 )
 X[:, 0] -= 4
@@ -149,7 +147,7 @@ Y = np.asarray(
         _rotate(
             (x[origin_index], y[origin_index]), (x_, y_), math.radians(-10)
         )
-        for x_, y_ in zip(x, y)
+        for x_, y_ in zip(x, y, strict=False)
     ]
 )
 # Our to distributions : X in green and Y in red

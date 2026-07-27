@@ -1,6 +1,7 @@
 name: Test
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -37,7 +38,7 @@ jobs:
           uv pip install -e ".[test]"
 
       - name: Test with pytest
-        run: uv run pytest --cov --cov-report=xml
+        run: uv run pytest --cov --cov-report=xml fmralign
 
       - name: Upload coverage to Codecov
         if: success()
@@ -56,7 +57,7 @@ jobs:
         python-version: ["3.10"]
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install uv and set the python version
         uses: astral-sh/setup-uv@v7

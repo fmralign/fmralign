@@ -63,7 +63,7 @@ def get_labels(
     ----------
     imgs: Niimgs
         data to cluster
-    n_pieces: int
+    n_pieces: int >= 1
         number of different labels
     masker: a fitted instance of NiftiMasker or MultiNiftiMasker
         Masker to be used on the data. For more information see:
@@ -88,7 +88,9 @@ def get_labels(
     # check if clustering is provided
     if isinstance(clustering, nib.nifti1.Nifti1Image):
         if n_pieces != 1:
-            warnings.warn("Clustering image provided, n_pieces ignored.")
+            warnings.warn(
+                "Clustering image provided, n_pieces ignored.", stacklevel=2
+            )
         check_same_fov(masker.mask_img_, clustering)
         labels = apply_mask_fmri(clustering, masker.mask_img_).astype(int)
 
@@ -110,15 +112,14 @@ def get_labels(
         else:
             images_to_parcel = imgs
 
-        if isinstance(masker, (NiftiMasker, SurfaceMasker)):
+        if isinstance(masker, NiftiMasker | SurfaceMasker):
             warnings.warn(
-                (
-                    "Converting masker to multi-masker for compatibility"
-                    " with Nilearn Parcellations class. This conversion does"
-                    " not affect the original masker. "
-                    "See https://github.com/nilearn/nilearn/issues/5926"
-                    " for more details."
-                )
+                "Converting masker to multi-masker for compatibility"
+                " with Nilearn Parcellations class. This conversion does"
+                " not affect the original masker. "
+                "See https://github.com/nilearn/nilearn/issues/5926"
+                " for more details.",
+                stacklevel=2,
             )
             masker_ = _convert_to_multi_masker(masker)
         else:
@@ -133,6 +134,13 @@ def get_labels(
         )
         parcellation.fit(images_to_parcel)
         labels = masker.transform(parcellation.labels_img_).astype(int)
+
+    else:
+        raise ValueError(
+            "'clustering' should be a string or a 3D Niimg"
+            "and n_pieces should be an int >= 1"
+            f"found {clustering=} and {n_pieces=}."
+        )
 
     if verbose > 0:
         _, counts = np.unique(labels, return_counts=True)

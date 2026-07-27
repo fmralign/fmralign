@@ -1,5 +1,6 @@
 # fmralign
 
+[![Code style: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 ![build](https://img.shields.io/github/actions/workflow/status/fmralign/fmralign/testing.yml?event=push&style=for-the-badge)
 ![python version](https://img.shields.io/badge/python-3.10_|_3.11_|_3.12_|_3.13_|_3.14-blue?style=for-the-badge)
 ![license](https://img.shields.io/github/license/fmralign/fmralign?style=for-the-badge)
@@ -16,13 +17,26 @@ Alternative implementations of these ideas can be found in the [pymvpa](http://w
 
 You can access the latest stable version of fmralign directly with the PyPi package installer:
 
-```
+```bash
 pip install fmralign
+```
+
+Optimal Transport methods can be installed with the optional dependency `[ot]`, which installs both supported backends (`geomloss` and `POT`):
+
+```bash
+pip install fmralign[ot]
+```
+
+If you only need one backend, you can install it individually:
+
+```bash
+pip install fmralign[ot_geomloss]  # geomloss backend only
+pip install fmralign[ot_pot]       # POT backend only
 ```
 
 For development or bleeding-edge features, fmralign can also be installed directly from source:
 
-```
+```bash
 git clone https://github.com/fmralign/fmralign
 cd fmralign
 pip install -e .

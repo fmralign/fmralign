@@ -180,7 +180,8 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
         # If no labels are provided, create a single label for the whole brain
         labels = np.ones(X.shape[1], dtype=int)
         warnings.warn(
-            "No labels provided, using a single label for all features."
+            "No labels provided, using a single label for all features.",
+            stacklevel=2,
         )
     else:
         if len(labels) != X.shape[1]:
@@ -207,12 +208,14 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
                     warning += (
                         f"\n parcel {unique_labels[i]} : {counts[i]} voxels"
                     )
-            warnings.warn(warning)
+            warnings.warn(warning, stacklevel=2)
 
         # If labels are not integer type, convert them to int
         if not np.issubdtype(labels.dtype, np.integer):
             labels = labels.astype(int)
-            warnings.warn("Labels were not integer type, converted to int.")
+            warnings.warn(
+                "Labels were not integer type, converted to int.", stacklevel=2
+            )
 
     return labels
 

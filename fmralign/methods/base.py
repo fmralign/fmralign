@@ -1,7 +1,7 @@
 from sklearn.base import BaseEstimator, TransformerMixin
 
 
-class BaseAlignment(BaseEstimator, TransformerMixin):
+class BaseAlignment(TransformerMixin, BaseEstimator):
     """Base class for all alignment methods."""
 
     def __init__(self):
