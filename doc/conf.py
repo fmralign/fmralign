@@ -235,6 +235,9 @@ html_show_sourcelink = False
 htmlhelp_basename = "PythonScientific"
 
 # Sphinx copybutton config
+# allows multiline codeblocks to be preserved
+# when using sphinx-copybutton ;
+# otherwise, lines not starting with a prompt character (>) are stripped
 copybutton_prompt_text = (
     r">>> |\.\.\. |\$ |In \[\d*\]: | {2,5}\.\.\.: | {5,8}: "
 )
