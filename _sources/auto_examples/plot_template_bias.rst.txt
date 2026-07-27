@@ -114,18 +114,6 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
     /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:41: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       sub: masker.transform(
-    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:41: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
-    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
-      sub: masker.transform(
-    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:41: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
-    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
-      sub: masker.transform(
-    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:47: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
-    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
-      sub: masker.transform(
-    /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:47: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
-    Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
-      sub: masker.transform(
     /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:47: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
       sub: masker.transform(
@@ -138,7 +126,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.10/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
     /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:137: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
@@ -170,21 +158,20 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       --sklearn-color-fitted-level-1: #d4ebff;
       --sklearn-color-fitted-level-2: #b3dbfd;
       --sklearn-color-fitted-level-3: cornflowerblue;
-    }
 
-    #sk-container-id-1.light {
       /* Specific color for light theme */
-      --sklearn-color-text-on-default-background: black;
-      --sklearn-color-background: white;
-      --sklearn-color-border-box: black;
+      --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+      --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+      --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
       --sklearn-color-icon: #696969;
-    }
 
-    #sk-container-id-1.dark {
-      --sklearn-color-text-on-default-background: white;
-      --sklearn-color-background: #111;
-      --sklearn-color-border-box: white;
-      --sklearn-color-icon: #878787;
+      @media (prefers-color-scheme: dark) {
+        /* Redefinition of color scheme for dark theme */
+        --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+        --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+        --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+        --sklearn-color-icon: #878787;
+      }
     }
 
     #sk-container-id-1 {
@@ -310,8 +297,8 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       padding: 0.5em;
       box-sizing: border-box;
       text-align: center;
-      align-items: center;
-      justify-content: center;
+      align-items: start;
+      justify-content: space-between;
       gap: 0.5em;
     }
 
@@ -418,6 +405,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
     #sk-container-id-1 div.sk-label label {
       font-family: monospace;
       font-weight: bold;
+      display: inline-block;
       line-height: 1.2em;
     }
 
@@ -463,7 +451,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       font-size: smaller;
       line-height: 1em;
       font-family: monospace;
-      background-color: var(--sklearn-color-unfitted-level-0);
+      background-color: var(--sklearn-color-background);
       border-radius: 1em;
       height: 1em;
       width: 1em;
@@ -471,17 +459,16 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       margin-left: 0.5em;
       text-align: center;
       /* unfitted */
-      border: var(--sklearn-color-unfitted-level-3) 1pt solid;
-      color: var(--sklearn-color-unfitted-level-3);
+      border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+      color: var(--sklearn-color-unfitted-level-1);
     }
 
     .sk-estimator-doc-link.fitted,
     a:link.sk-estimator-doc-link.fitted,
     a:visited.sk-estimator-doc-link.fitted {
       /* fitted */
-      background-color: var(--sklearn-color-fitted-level-0);
-      border: var(--sklearn-color-fitted-level-3) 1pt solid;
-      color: var(--sklearn-color-fitted-level-3);
+      border: var(--sklearn-color-fitted-level-1) 1pt solid;
+      color: var(--sklearn-color-fitted-level-1);
     }
 
     /* On hover */
@@ -491,8 +478,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
     .sk-estimator-doc-link:hover {
       /* unfitted */
       background-color: var(--sklearn-color-unfitted-level-3);
-      border: var(--sklearn-color-fitted-level-0) 1pt solid;
-      color: var(--sklearn-color-unfitted-level-0);
+      color: var(--sklearn-color-background);
       text-decoration: none;
     }
 
@@ -502,8 +488,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
     .sk-estimator-doc-link.fitted:hover {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-3);
-      border: var(--sklearn-color-fitted-level-0) 1pt solid;
-      color: var(--sklearn-color-fitted-level-0);
+      color: var(--sklearn-color-background);
       text-decoration: none;
     }
 
@@ -543,7 +528,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       font-size: 1rem;
       line-height: 1em;
       font-family: monospace;
-      background-color: var(--sklearn-color-unfitted-level-0);
+      background-color: var(--sklearn-color-background);
       border-radius: 1rem;
       height: 1rem;
       width: 1rem;
@@ -555,7 +540,6 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
 
     #sk-container-id-1 a.estimator_doc_link.fitted {
       /* fitted */
-      background-color: var(--sklearn-color-fitted-level-0);
       border: var(--sklearn-color-fitted-level-1) 1pt solid;
       color: var(--sklearn-color-fitted-level-1);
     }
@@ -573,17 +557,10 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
       background-color: var(--sklearn-color-fitted-level-3);
     }
 
-    .estimator-table {
-        font-family: monospace;
-    }
-
     .estimator-table summary {
         padding: .5rem;
+        font-family: monospace;
         cursor: pointer;
-    }
-
-    .estimator-table summary::marker {
-        font-size: 0.7rem;
     }
 
     .estimator-table details[open] {
@@ -595,7 +572,6 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
     .estimator-table .parameters-table {
         margin-left: auto !important;
         margin-right: auto !important;
-        margin-top: 0;
     }
 
     .estimator-table .parameters-table tr:nth-child(odd) {
@@ -614,85 +590,24 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
         border: 1px solid rgba(106, 105, 104, 0.232);
     }
 
-    /*
-        `table td`is set in notebook with right text-align.
-        We need to overwrite it.
-    */
-    .estimator-table table td.param {
-        text-align: left;
-        position: relative;
-        padding: 0;
-    }
-
     .user-set td {
         color:rgb(255, 94, 0);
-        text-align: left !important;
+        text-align: left;
     }
 
-    .user-set td.value {
-        color:rgb(255, 94, 0);
-        background-color: transparent;
+    .user-set td.value pre {
+        color:rgb(255, 94, 0) !important;
+        background-color: transparent !important;
     }
 
     .default td {
         color: black;
-        text-align: left !important;
+        text-align: left;
     }
 
     .user-set td i,
     .default td i {
         color: black;
-    }
-
-    /*
-        Styles for parameter documentation links
-        We need styling for visited so jupyter doesn't overwrite it
-    */
-    a.param-doc-link,
-    a.param-doc-link:link,
-    a.param-doc-link:visited {
-        text-decoration: underline dashed;
-        text-underline-offset: .3em;
-        color: inherit;
-        display: block;
-        padding: .5em;
-    }
-
-    /* "hack" to make the entire area of the cell containing the link clickable */
-    a.param-doc-link::before {
-        position: absolute;
-        content: "";
-        inset: 0;
-    }
-
-    .param-doc-description {
-        display: none;
-        position: absolute;
-        z-index: 9999;
-        left: 0;
-        padding: .5ex;
-        margin-left: 1.5em;
-        color: var(--sklearn-color-text);
-        box-shadow: .3em .3em .4em #999;
-        width: max-content;
-        text-align: left;
-        max-height: 10em;
-        overflow-y: auto;
-
-        /* unfitted */
-        background: var(--sklearn-color-unfitted-level-0);
-        border: thin solid var(--sklearn-color-unfitted-level-3);
-    }
-
-    /* Fitted state for parameter tooltips */
-    .fitted .param-doc-description {
-        /* fitted */
-        background: var(--sklearn-color-fitted-level-0);
-        border: thin solid var(--sklearn-color-fitted-level-3);
-    }
-
-    .param-doc-link:hover .param-doc-description {
-        display: block;
     }
 
     .copy-paste-icon {
@@ -718,7 +633,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
                      onclick="copyToClipboard('method',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
-                <td class="param">method</td>
+                <td class="param">method&nbsp;</td>
                 <td class="value">&#x27;procrustes&#x27;</td>
             </tr>
     
@@ -728,7 +643,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
                      onclick="copyToClipboard('labels',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
-                <td class="param">labels</td>
+                <td class="param">labels&nbsp;</td>
                 <td class="value">array([96, 96...hape=(46448,))</td>
             </tr>
     
@@ -738,7 +653,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
                      onclick="copyToClipboard('n_jobs',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
-                <td class="param">n_jobs</td>
+                <td class="param">n_jobs&nbsp;</td>
                 <td class="value">1</td>
             </tr>
     
@@ -748,7 +663,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
                      onclick="copyToClipboard('verbose',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
-                <td class="param">verbose</td>
+                <td class="param">verbose&nbsp;</td>
                 <td class="value">0</td>
             </tr>
     
@@ -758,7 +673,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
                      onclick="copyToClipboard('n_iter',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
-                <td class="param">n_iter</td>
+                <td class="param">n_iter&nbsp;</td>
                 <td class="value">2</td>
             </tr>
     
@@ -768,7 +683,7 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
                      onclick="copyToClipboard('scale_template',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
-                <td class="param">scale_template</td>
+                <td class="param">scale_template&nbsp;</td>
                 <td class="value">False</td>
             </tr>
     
@@ -810,88 +725,15 @@ into alignment data (task "archi_standard") and test data (task "archi_spatial")
         return false;
     }
 
-    document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
+    document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
         const toggleableContent = element.closest('.sk-toggleable__content');
         const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-        const paramName = element.parentElement.nextElementSibling
-            .textContent.trim().split(' ')[0];
+        const paramName = element.parentElement.nextElementSibling.textContent.trim();
         const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
 
         element.setAttribute('title', fullParamName);
     });
-
-
-    /**
-     * Adapted from Skrub
-     * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
-     * @returns "light" or "dark"
-     */
-    function detectTheme(element) {
-        const body = document.querySelector('body');
-
-        // Check VSCode theme
-        const themeKindAttr = body.getAttribute('data-vscode-theme-kind');
-        const themeNameAttr = body.getAttribute('data-vscode-theme-name');
-
-        if (themeKindAttr && themeNameAttr) {
-            const themeKind = themeKindAttr.toLowerCase();
-            const themeName = themeNameAttr.toLowerCase();
-
-            if (themeKind.includes("dark") || themeName.includes("dark")) {
-                return "dark";
-            }
-            if (themeKind.includes("light") || themeName.includes("light")) {
-                return "light";
-            }
-        }
-
-        // Check Jupyter theme
-        if (body.getAttribute('data-jp-theme-light') === 'false') {
-            return 'dark';
-        } else if (body.getAttribute('data-jp-theme-light') === 'true') {
-            return 'light';
-        }
-
-        // Guess based on a parent element's color
-        const color = window.getComputedStyle(element.parentNode, null).getPropertyValue('color');
-        const match = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
-        if (match) {
-            const [r, g, b] = [
-                parseFloat(match[1]),
-                parseFloat(match[2]),
-                parseFloat(match[3])
-            ];
-
-            // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
-            const luma = 0.299 * r + 0.587 * g + 0.114 * b;
-
-            if (luma > 180) {
-                // If the text is very bright we have a dark theme
-                return 'dark';
-            }
-            if (luma < 75) {
-                // If the text is very dark we have a light theme
-                return 'light';
-            }
-            // Otherwise fall back to the next heuristic.
-        }
-
-        // Fallback to system preference
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-
-
-    function forceTheme(elementId) {
-        const estimatorElement = document.querySelector(`#${elementId}`);
-        if (estimatorElement === null) {
-            console.error(`Element with id ${elementId} not found.`);
-        } else {
-            const theme = detectTheme(estimatorElement);
-            estimatorElement.classList.add(theme);
-        }
-    }
-
-    forceTheme('sk-container-id-1');</script></body>
+    </script></body>
     </div>
     <br />
     <br />
@@ -937,21 +779,20 @@ are decoupled.
       --sklearn-color-fitted-level-1: #d4ebff;
       --sklearn-color-fitted-level-2: #b3dbfd;
       --sklearn-color-fitted-level-3: cornflowerblue;
-    }
 
-    #sk-container-id-2.light {
       /* Specific color for light theme */
-      --sklearn-color-text-on-default-background: black;
-      --sklearn-color-background: white;
-      --sklearn-color-border-box: black;
+      --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+      --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+      --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
       --sklearn-color-icon: #696969;
-    }
 
-    #sk-container-id-2.dark {
-      --sklearn-color-text-on-default-background: white;
-      --sklearn-color-background: #111;
-      --sklearn-color-border-box: white;
-      --sklearn-color-icon: #878787;
+      @media (prefers-color-scheme: dark) {
+        /* Redefinition of color scheme for dark theme */
+        --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+        --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+        --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+        --sklearn-color-icon: #878787;
+      }
     }
 
     #sk-container-id-2 {
@@ -1077,8 +918,8 @@ are decoupled.
       padding: 0.5em;
       box-sizing: border-box;
       text-align: center;
-      align-items: center;
-      justify-content: center;
+      align-items: start;
+      justify-content: space-between;
       gap: 0.5em;
     }
 
@@ -1185,6 +1026,7 @@ are decoupled.
     #sk-container-id-2 div.sk-label label {
       font-family: monospace;
       font-weight: bold;
+      display: inline-block;
       line-height: 1.2em;
     }
 
@@ -1230,7 +1072,7 @@ are decoupled.
       font-size: smaller;
       line-height: 1em;
       font-family: monospace;
-      background-color: var(--sklearn-color-unfitted-level-0);
+      background-color: var(--sklearn-color-background);
       border-radius: 1em;
       height: 1em;
       width: 1em;
@@ -1238,17 +1080,16 @@ are decoupled.
       margin-left: 0.5em;
       text-align: center;
       /* unfitted */
-      border: var(--sklearn-color-unfitted-level-3) 1pt solid;
-      color: var(--sklearn-color-unfitted-level-3);
+      border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+      color: var(--sklearn-color-unfitted-level-1);
     }
 
     .sk-estimator-doc-link.fitted,
     a:link.sk-estimator-doc-link.fitted,
     a:visited.sk-estimator-doc-link.fitted {
       /* fitted */
-      background-color: var(--sklearn-color-fitted-level-0);
-      border: var(--sklearn-color-fitted-level-3) 1pt solid;
-      color: var(--sklearn-color-fitted-level-3);
+      border: var(--sklearn-color-fitted-level-1) 1pt solid;
+      color: var(--sklearn-color-fitted-level-1);
     }
 
     /* On hover */
@@ -1258,8 +1099,7 @@ are decoupled.
     .sk-estimator-doc-link:hover {
       /* unfitted */
       background-color: var(--sklearn-color-unfitted-level-3);
-      border: var(--sklearn-color-fitted-level-0) 1pt solid;
-      color: var(--sklearn-color-unfitted-level-0);
+      color: var(--sklearn-color-background);
       text-decoration: none;
     }
 
@@ -1269,8 +1109,7 @@ are decoupled.
     .sk-estimator-doc-link.fitted:hover {
       /* fitted */
       background-color: var(--sklearn-color-fitted-level-3);
-      border: var(--sklearn-color-fitted-level-0) 1pt solid;
-      color: var(--sklearn-color-fitted-level-0);
+      color: var(--sklearn-color-background);
       text-decoration: none;
     }
 
@@ -1310,7 +1149,7 @@ are decoupled.
       font-size: 1rem;
       line-height: 1em;
       font-family: monospace;
-      background-color: var(--sklearn-color-unfitted-level-0);
+      background-color: var(--sklearn-color-background);
       border-radius: 1rem;
       height: 1rem;
       width: 1rem;
@@ -1322,7 +1161,6 @@ are decoupled.
 
     #sk-container-id-2 a.estimator_doc_link.fitted {
       /* fitted */
-      background-color: var(--sklearn-color-fitted-level-0);
       border: var(--sklearn-color-fitted-level-1) 1pt solid;
       color: var(--sklearn-color-fitted-level-1);
     }
@@ -1340,17 +1178,10 @@ are decoupled.
       background-color: var(--sklearn-color-fitted-level-3);
     }
 
-    .estimator-table {
-        font-family: monospace;
-    }
-
     .estimator-table summary {
         padding: .5rem;
+        font-family: monospace;
         cursor: pointer;
-    }
-
-    .estimator-table summary::marker {
-        font-size: 0.7rem;
     }
 
     .estimator-table details[open] {
@@ -1362,7 +1193,6 @@ are decoupled.
     .estimator-table .parameters-table {
         margin-left: auto !important;
         margin-right: auto !important;
-        margin-top: 0;
     }
 
     .estimator-table .parameters-table tr:nth-child(odd) {
@@ -1381,85 +1211,24 @@ are decoupled.
         border: 1px solid rgba(106, 105, 104, 0.232);
     }
 
-    /*
-        `table td`is set in notebook with right text-align.
-        We need to overwrite it.
-    */
-    .estimator-table table td.param {
-        text-align: left;
-        position: relative;
-        padding: 0;
-    }
-
     .user-set td {
         color:rgb(255, 94, 0);
-        text-align: left !important;
+        text-align: left;
     }
 
-    .user-set td.value {
-        color:rgb(255, 94, 0);
-        background-color: transparent;
+    .user-set td.value pre {
+        color:rgb(255, 94, 0) !important;
+        background-color: transparent !important;
     }
 
     .default td {
         color: black;
-        text-align: left !important;
+        text-align: left;
     }
 
     .user-set td i,
     .default td i {
         color: black;
-    }
-
-    /*
-        Styles for parameter documentation links
-        We need styling for visited so jupyter doesn't overwrite it
-    */
-    a.param-doc-link,
-    a.param-doc-link:link,
-    a.param-doc-link:visited {
-        text-decoration: underline dashed;
-        text-underline-offset: .3em;
-        color: inherit;
-        display: block;
-        padding: .5em;
-    }
-
-    /* "hack" to make the entire area of the cell containing the link clickable */
-    a.param-doc-link::before {
-        position: absolute;
-        content: "";
-        inset: 0;
-    }
-
-    .param-doc-description {
-        display: none;
-        position: absolute;
-        z-index: 9999;
-        left: 0;
-        padding: .5ex;
-        margin-left: 1.5em;
-        color: var(--sklearn-color-text);
-        box-shadow: .3em .3em .4em #999;
-        width: max-content;
-        text-align: left;
-        max-height: 10em;
-        overflow-y: auto;
-
-        /* unfitted */
-        background: var(--sklearn-color-unfitted-level-0);
-        border: thin solid var(--sklearn-color-unfitted-level-3);
-    }
-
-    /* Fitted state for parameter tooltips */
-    .fitted .param-doc-description {
-        /* fitted */
-        background: var(--sklearn-color-fitted-level-0);
-        border: thin solid var(--sklearn-color-fitted-level-3);
-    }
-
-    .param-doc-link:hover .param-doc-description {
-        display: block;
     }
 
     .copy-paste-icon {
@@ -1485,7 +1254,7 @@ are decoupled.
                      onclick="copyToClipboard('method',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
-                <td class="param">method</td>
+                <td class="param">method&nbsp;</td>
                 <td class="value">&#x27;procrustes&#x27;</td>
             </tr>
     
@@ -1495,7 +1264,7 @@ are decoupled.
                      onclick="copyToClipboard('labels',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
-                <td class="param">labels</td>
+                <td class="param">labels&nbsp;</td>
                 <td class="value">array([96, 96...hape=(46448,))</td>
             </tr>
     
@@ -1505,7 +1274,7 @@ are decoupled.
                      onclick="copyToClipboard('n_jobs',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
-                <td class="param">n_jobs</td>
+                <td class="param">n_jobs&nbsp;</td>
                 <td class="value">1</td>
             </tr>
     
@@ -1515,7 +1284,7 @@ are decoupled.
                      onclick="copyToClipboard('verbose',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
-                <td class="param">verbose</td>
+                <td class="param">verbose&nbsp;</td>
                 <td class="value">0</td>
             </tr>
     
@@ -1525,7 +1294,7 @@ are decoupled.
                      onclick="copyToClipboard('n_iter',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
-                <td class="param">n_iter</td>
+                <td class="param">n_iter&nbsp;</td>
                 <td class="value">2</td>
             </tr>
     
@@ -1535,7 +1304,7 @@ are decoupled.
                      onclick="copyToClipboard('scale_template',
                               this.parentElement.nextElementSibling)"
                 ></i></td>
-                <td class="param">scale_template</td>
+                <td class="param">scale_template&nbsp;</td>
                 <td class="value">False</td>
             </tr>
     
@@ -1577,88 +1346,15 @@ are decoupled.
         return false;
     }
 
-    document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
+    document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
         const toggleableContent = element.closest('.sk-toggleable__content');
         const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-        const paramName = element.parentElement.nextElementSibling
-            .textContent.trim().split(' ')[0];
+        const paramName = element.parentElement.nextElementSibling.textContent.trim();
         const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
 
         element.setAttribute('title', fullParamName);
     });
-
-
-    /**
-     * Adapted from Skrub
-     * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
-     * @returns "light" or "dark"
-     */
-    function detectTheme(element) {
-        const body = document.querySelector('body');
-
-        // Check VSCode theme
-        const themeKindAttr = body.getAttribute('data-vscode-theme-kind');
-        const themeNameAttr = body.getAttribute('data-vscode-theme-name');
-
-        if (themeKindAttr && themeNameAttr) {
-            const themeKind = themeKindAttr.toLowerCase();
-            const themeName = themeNameAttr.toLowerCase();
-
-            if (themeKind.includes("dark") || themeName.includes("dark")) {
-                return "dark";
-            }
-            if (themeKind.includes("light") || themeName.includes("light")) {
-                return "light";
-            }
-        }
-
-        // Check Jupyter theme
-        if (body.getAttribute('data-jp-theme-light') === 'false') {
-            return 'dark';
-        } else if (body.getAttribute('data-jp-theme-light') === 'true') {
-            return 'light';
-        }
-
-        // Guess based on a parent element's color
-        const color = window.getComputedStyle(element.parentNode, null).getPropertyValue('color');
-        const match = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
-        if (match) {
-            const [r, g, b] = [
-                parseFloat(match[1]),
-                parseFloat(match[2]),
-                parseFloat(match[3])
-            ];
-
-            // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
-            const luma = 0.299 * r + 0.587 * g + 0.114 * b;
-
-            if (luma > 180) {
-                // If the text is very bright we have a dark theme
-                return 'dark';
-            }
-            if (luma < 75) {
-                // If the text is very dark we have a light theme
-                return 'light';
-            }
-            // Otherwise fall back to the next heuristic.
-        }
-
-        // Fallback to system preference
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-
-
-    function forceTheme(elementId) {
-        const estimatorElement = document.querySelector(`#${elementId}`);
-        if (estimatorElement === null) {
-            console.error(`Element with id ${elementId} not found.`);
-        } else {
-            const theme = detectTheme(estimatorElement);
-            estimatorElement.classList.add(theme);
-        }
-    }
-
-    forceTheme('sk-container-id-2');</script></body>
+    </script></body>
     </div>
     <br />
     <br />
@@ -1825,7 +1521,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 11.280 seconds)
+   **Total running time of the script:** (1 minutes 28.840 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_template_bias.py:

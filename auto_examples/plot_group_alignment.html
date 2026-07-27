@@ -1,29 +1,27 @@
 <!doctype html>
 <html class="no-js" lang="en" data-content_root="../">
-  <head><meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta property="og:title" content="Template-based prediction." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://nilearn.github.io/auto_examples/plot_group_alignment.html" />
-<meta property="og:site_name" content="Nilearn" />
+<meta property="og:url" content="https://fmralign.github.io/auto_examples/plot_group_alignment.html" />
+<meta property="og:site_name" content="fmralign" />
 <meta property="og:description" content="In this tutorial, we show how to improve inter-subject similarity using a template computed across multiple source subjects. For this purpose, we leverage GroupAlignment to create a template, using..." />
-<meta property="og:image" content="https://nilearn.github.io/_static/nilearn-logo.png" />
-<meta property="og:image:alt" content="Nilearn" />
 <meta name="description" content="In this tutorial, we show how to improve inter-subject similarity using a template computed across multiple source subjects. For this purpose, we leverage GroupAlignment to create a template, using..." />
-<link rel="search" title="Search" href="../search.html"><link rel="next" title="Decoupling template generation and alignment" href="plot_template_bias.html"><link rel="prev" title="Examples" href="index.html">
+<link rel="search" title="Search" href="../search.html" /><link rel="next" title="Decoupling template generation and alignment" href="plot_template_bias.html" /><link rel="prev" title="Examples" href="index.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
         <title>Template-based prediction. - fmralign</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=2da93098" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3682908d" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
@@ -173,10 +171,14 @@
   </symbol>
 </svg>
 
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
-<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
-<label class="overlay sidebar-overlay" for="__navigation"></label>
-<label class="overlay toc-overlay" for="__toc"></label>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
 
 <a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
@@ -186,7 +188,8 @@
   <header class="mobile-header">
     <div class="header-left">
       <label class="nav-overlay-icon" for="__navigation">
-        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
       </label>
     </div>
     <div class="header-center">
@@ -194,7 +197,8 @@
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
-        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
           <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
           <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
@@ -202,7 +206,8 @@
         </button>
       </div>
       <label class="toc-overlay-icon toc-header-icon" for="__toc">
-        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
     </div>
   </header>
@@ -210,6 +215,7 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
   
   <span class="sidebar-brand-text">fmralign</span>
   
@@ -221,7 +227,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Examples</a><input aria-label="Toggle navigation of Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Template-based prediction.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_template_bias.html">Decoupling template generation and alignment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
@@ -231,22 +237,22 @@
 <li class="toctree-l2"><a class="reference internal" href="plot_alignment_simulated_2D_data.html">Alignment on simulated 2D data.</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide.html">User guide</a><input aria-label="Toggle navigation of User guide" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide.html">User guide</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of User guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../overview.html">1. Introduction: fmralign in a nutshell</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../functional_alignment/index.html">2. Functional alignment: handling functional variability</a><input aria-label="Toggle navigation of 2. Functional alignment: handling functional variability" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../functional_alignment/index.html">2. Functional alignment: handling functional variability</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of 2. Functional alignment: handling functional variability</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../functional_alignment/introduction.html">2.1. An introduction to functional alignment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../functional_alignment/fmralign_pipeline.html">2.2. Functional alignment pipeline</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../modules/index.html">API References</a><input aria-label="Toggle navigation of API References" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/alignment.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.alignment</span></code>: Alignment Strategies</a><input aria-label="Toggle navigation of fmralign.alignment: Alignment Strategies" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../modules/index.html">API References</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of API References</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/alignment.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.alignment</span></code>: Alignment Strategies</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of fmralign.alignment: Alignment Strategies</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html">fmralign.alignment.pairwise_alignment.PairwiseAlignment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html">fmralign.alignment.group_alignment.GroupAlignment</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/methods.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.methods</span></code>: Alignment Methods</a><input aria-label="Toggle navigation of fmralign.methods: Alignment Methods" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/methods.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.methods</span></code>: Alignment Methods</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of fmralign.methods: Alignment Methods</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.methods.Identity.html">fmralign.methods.Identity</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.methods.DetSRM.html">fmralign.methods.DetSRM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.methods.Procrustes.html">fmralign.methods.Procrustes</a></li>
@@ -255,7 +261,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.methods.SpectralOT.html">fmralign.methods.SpectralOT</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/embedding.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.embeddings</span></code>: Embedding Utilities</a><input aria-label="Toggle navigation of fmralign.embeddings: Embedding Utilities" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/embedding.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.embeddings</span></code>: Embedding Utilities</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of fmralign.embeddings: Embedding Utilities</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.embeddings.connectivity.get_connectivity_features.html">fmralign.embeddings.connectivity.get_connectivity_features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.embeddings.parcellation.get_adjacency_from_labels.html">fmralign.embeddings.parcellation.get_adjacency_from_labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.embeddings.parcellation.get_labels.html">fmralign.embeddings.parcellation.get_labels</a></li>
@@ -292,7 +298,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/nilearn/nilearn/blob/main/doc/auto_examples/plot_group_alignment.rst?plain=true" title="View this page">
+  <a class="muted-link" href="https://github.com/fmralign/fmralign/blob/main/doc/auto_examples/plot_group_alignment.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -300,7 +306,7 @@
 
   <div class="edit-this-page">
     <a class="muted-link"
-       href="https://github.com/nilearn/nilearn/edit/main/examples/plot_group_alignment.py"
+       href="https://github.com/fmralign/fmralign/edit/main/examples/plot_group_alignment.py"
        title="Edit this page"
        target="_blank">
       <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -312,7 +318,8 @@
       <span class="visually-hidden">Edit this page</span>
     </a>
   </div><div class="theme-toggle-container theme-toggle-content">
-            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
@@ -320,7 +327,8 @@
             </button>
           </div>
           <label class="toc-overlay-icon toc-content-icon" for="__toc">
-            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
@@ -366,53 +374,55 @@ mask is a binary image used to extract grey matter regions.</p>
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/yvju3/download ...
-[fetch_files]  ...done. (3 seconds, 0 min)
+[fetch_files]  ...done. (2 seconds, 0 min)
 
 [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/fe06df963fcb3fd454f63a33f0864e8d/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/8z23h/download ...
 [fetch_files]
-Downloaded 16203776 of 21185337 bytes (76.5%%, 00 HR 00 MIN 00 SEC remaining)
-[fetch_files]  ...done. (3 seconds, 0 min)
+Downloaded 1589248 of 21185337 bytes (7.5%%, 00 HR 00 MIN 13 SEC remaining)
+[fetch_files]  ...done. (4 seconds, 0 min)
 
 [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/100352739b7501f0ed04920933b4be36/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/e9kbm/download ...
 [fetch_files]
-Downloaded 16171008 of 21196887 bytes (76.3%%, 00 HR 00 MIN 00 SEC remaining)
-[fetch_files]  ...done. (2 seconds, 0 min)
+Downloaded 4390912 of 21196887 bytes (20.7%%, 00 HR 00 MIN 04 SEC remaining)
+[fetch_files]  ...done. (3 seconds, 0 min)
 
 [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/331a0a579c6e46c0911502a96215b358/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/qn5b6/download ...
 [fetch_files]
-Downloaded 13598720 of 21197218 bytes (64.2%%, 00 HR 00 MIN 01 SEC remaining)
-[fetch_files]  ...done. (2 seconds, 0 min)
+Downloaded 5898240 of 21197218 bytes (27.8%%, 00 HR 00 MIN 03 SEC remaining)
+[fetch_files]  ...done. (3 seconds, 0 min)
 
 [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/cd396fed594eb866baecd48b70ddf7e7/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/u74a3/download ...
 [fetch_files]
-Downloaded 15745024 of 21185350 bytes (74.3%%, 00 HR 00 MIN 00 SEC remaining)
-[fetch_files]  ...done. (2 seconds, 0 min)
+Downloaded 5644288 of 21185350 bytes (26.6%%, 00 HR 00 MIN 03 SEC remaining)
+[fetch_files]  ...done. (3 seconds, 0 min)
 
 [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/fc5556cc3678df4f4ab566414382180a/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/83bje/download ...
-[fetch_files]  ...done. (2 seconds, 0 min)
+[fetch_files]
+Downloaded 5529600 of 21188335 bytes (26.1%%, 00 HR 00 MIN 03 SEC remaining)
+[fetch_files]  ...done. (3 seconds, 0 min)
 
 [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/1beaa1b5a1734a1afbf1c844e1f7a60e/download...
 [fetch_files] .. done.
 
 [fetch_files] Downloading data from https://osf.io/43j69/download ...
 [fetch_files]
-Downloaded 15826944 of 21187400 bytes (74.7%%, 00 HR 00 MIN 00 SEC remaining)
-[fetch_files]  ...done. (3 seconds, 0 min)
+Downloaded 5898240 of 21187400 bytes (27.8%%, 00 HR 00 MIN 03 SEC remaining)
+[fetch_files]  ...done. (4 seconds, 0 min)
 
 [fetch_files] Extracting data from /home/runner/nilearn_data/ibc/75e62c44985852e000c2b2865badf72d/download...
 [fetch_files] .. done.
@@ -504,7 +514,7 @@ Parameter smoothing_fwhm :
     Masker parameter None - overriding estimator parameter 4.0
 
   parcellation.fit(images_to_parcel)
-/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 35 &gt; 1. Completing it to avoid stopping the tree early.
+/home/runner/work/fmralign/fmralign/.venv/lib/python3.10/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 35 &gt; 1. Completing it to avoid stopping the tree early.
   connectivity, n_connected_components = _fix_connectivity(
 /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:137: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
 Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
@@ -583,7 +593,7 @@ alignment was able to improve inter-subject similarity.</p>
 </ul>
 <p>We observe that creating a template and aligning a new subject to it yields
 better inter-subject similarity than regular euclidean averaging.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (4 minutes 26.850 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (4 minutes 27.904 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-group-alignment-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/a9d2259c803687ed0b0d9f6c413722f5/plot_group_alignment.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_group_alignment.ipynb</span></code></a></p>
@@ -675,12 +685,11 @@ better inter-subject similarity than regular euclidean averaging.</p>
     </aside>
   </div>
 </div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
-    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
-    <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=4ea706d9"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

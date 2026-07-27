@@ -1,29 +1,27 @@
 <!doctype html>
 <html class="no-js" lang="en" data-content_root="../">
-  <head><meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta property="og:title" content="Decoupling template generation and alignment" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://nilearn.github.io/auto_examples/plot_template_bias.html" />
-<meta property="og:site_name" content="Nilearn" />
+<meta property="og:url" content="https://fmralign.github.io/auto_examples/plot_template_bias.html" />
+<meta property="og:site_name" content="fmralign" />
 <meta property="og:description" content="When performing template-based alignment, one often uses the same subjects both to generate the template and to align to it. However, this can lead to overfitting and optimistic results (see Jegana..." />
-<meta property="og:image" content="https://nilearn.github.io/_static/nilearn-logo.png" />
-<meta property="og:image:alt" content="Nilearn" />
 <meta name="description" content="When performing template-based alignment, one often uses the same subjects both to generate the template and to align to it. However, this can lead to overfitting and optimistic results (see Jegana..." />
-<link rel="search" title="Search" href="../search.html"><link rel="next" title="Pairwise functional alignment." href="plot_pairwise_alignment.html"><link rel="prev" title="Template-based prediction." href="plot_group_alignment.html">
+<link rel="search" title="Search" href="../search.html" /><link rel="next" title="Pairwise functional alignment." href="plot_pairwise_alignment.html" /><link rel="prev" title="Template-based prediction." href="plot_group_alignment.html" />
 
-    <link rel="shortcut icon" href="../_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="../_static/favicon.ico"/><!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
         <title>Decoupling template generation and alignment - fmralign</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=2da93098" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3682908d" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
@@ -173,10 +171,14 @@
   </symbol>
 </svg>
 
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
-<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
-<label class="overlay sidebar-overlay" for="__navigation"></label>
-<label class="overlay toc-overlay" for="__toc"></label>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
 
 <a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
@@ -186,7 +188,8 @@
   <header class="mobile-header">
     <div class="header-left">
       <label class="nav-overlay-icon" for="__navigation">
-        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
       </label>
     </div>
     <div class="header-center">
@@ -194,7 +197,8 @@
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
-        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
           <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
           <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
@@ -202,7 +206,8 @@
         </button>
       </div>
       <label class="toc-overlay-icon toc-header-icon" for="__toc">
-        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
     </div>
   </header>
@@ -210,6 +215,7 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
   
   <span class="sidebar-brand-text">fmralign</span>
   
@@ -221,7 +227,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Examples</a><input aria-label="Toggle navigation of Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">Examples</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="plot_group_alignment.html">Template-based prediction.</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Decoupling template generation and alignment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
@@ -231,22 +237,22 @@
 <li class="toctree-l2"><a class="reference internal" href="plot_alignment_simulated_2D_data.html">Alignment on simulated 2D data.</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide.html">User guide</a><input aria-label="Toggle navigation of User guide" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide.html">User guide</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of User guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../overview.html">1. Introduction: fmralign in a nutshell</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../functional_alignment/index.html">2. Functional alignment: handling functional variability</a><input aria-label="Toggle navigation of 2. Functional alignment: handling functional variability" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../functional_alignment/index.html">2. Functional alignment: handling functional variability</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of 2. Functional alignment: handling functional variability</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../functional_alignment/introduction.html">2.1. An introduction to functional alignment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../functional_alignment/fmralign_pipeline.html">2.2. Functional alignment pipeline</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../modules/index.html">API References</a><input aria-label="Toggle navigation of API References" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/alignment.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.alignment</span></code>: Alignment Strategies</a><input aria-label="Toggle navigation of fmralign.alignment: Alignment Strategies" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../modules/index.html">API References</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of API References</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/alignment.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.alignment</span></code>: Alignment Strategies</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of fmralign.alignment: Alignment Strategies</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html">fmralign.alignment.pairwise_alignment.PairwiseAlignment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.alignment.group_alignment.GroupAlignment.html">fmralign.alignment.group_alignment.GroupAlignment</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/methods.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.methods</span></code>: Alignment Methods</a><input aria-label="Toggle navigation of fmralign.methods: Alignment Methods" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/methods.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.methods</span></code>: Alignment Methods</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of fmralign.methods: Alignment Methods</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.methods.Identity.html">fmralign.methods.Identity</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.methods.DetSRM.html">fmralign.methods.DetSRM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.methods.Procrustes.html">fmralign.methods.Procrustes</a></li>
@@ -255,7 +261,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.methods.SpectralOT.html">fmralign.methods.SpectralOT</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/embedding.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.embeddings</span></code>: Embedding Utilities</a><input aria-label="Toggle navigation of fmralign.embeddings: Embedding Utilities" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../modules/embedding.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.embeddings</span></code>: Embedding Utilities</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of fmralign.embeddings: Embedding Utilities</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.embeddings.connectivity.get_connectivity_features.html">fmralign.embeddings.connectivity.get_connectivity_features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.embeddings.parcellation.get_adjacency_from_labels.html">fmralign.embeddings.parcellation.get_adjacency_from_labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../modules/generated/fmralign.embeddings.parcellation.get_labels.html">fmralign.embeddings.parcellation.get_labels</a></li>
@@ -292,7 +298,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/nilearn/nilearn/blob/main/doc/auto_examples/plot_template_bias.rst?plain=true" title="View this page">
+  <a class="muted-link" href="https://github.com/fmralign/fmralign/blob/main/doc/auto_examples/plot_template_bias.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -300,7 +306,7 @@
 
   <div class="edit-this-page">
     <a class="muted-link"
-       href="https://github.com/nilearn/nilearn/edit/main/examples/plot_template_bias.py"
+       href="https://github.com/fmralign/fmralign/edit/main/examples/plot_template_bias.py"
        title="Edit this page"
        target="_blank">
       <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -312,7 +318,8 @@
       <span class="visually-hidden">Edit this page</span>
     </a>
   </div><div class="theme-toggle-container theme-toggle-content">
-            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
@@ -320,7 +327,8 @@
             </button>
           </div>
           <label class="toc-overlay-icon toc-content-icon" for="__toc">
-            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
@@ -392,18 +400,6 @@ into alignment data (task “archi_standard”) and test data (task “archi_spa
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:41: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
 Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
   sub: masker.transform(
-/home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:41: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
-Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
-  sub: masker.transform(
-/home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:41: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
-Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
-  sub: masker.transform(
-/home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:47: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
-Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
-  sub: masker.transform(
-/home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:47: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
-Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
-  sub: masker.transform(
 /home/runner/work/fmralign/fmralign/examples/plot_template_bias.py:47: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
 Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
   sub: masker.transform(
@@ -416,7 +412,7 @@ Parameter smoothing_fwhm :
     Masker parameter None - overriding estimator parameter 4.0
 
   parcellation.fit(images_to_parcel)
-/home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 35 &gt; 1. Completing it to avoid stopping the tree early.
+/home/runner/work/fmralign/fmralign/.venv/lib/python3.10/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 35 &gt; 1. Completing it to avoid stopping the tree early.
   connectivity, n_connected_components = _fix_connectivity(
 /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:137: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
 Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
@@ -446,21 +442,20 @@ Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; inst
   --sklearn-color-fitted-level-1: #d4ebff;
   --sklearn-color-fitted-level-2: #b3dbfd;
   --sklearn-color-fitted-level-3: cornflowerblue;
-}
 
-#sk-container-id-1.light {
   /* Specific color for light theme */
-  --sklearn-color-text-on-default-background: black;
-  --sklearn-color-background: white;
-  --sklearn-color-border-box: black;
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
   --sklearn-color-icon: #696969;
-}
 
-#sk-container-id-1.dark {
-  --sklearn-color-text-on-default-background: white;
-  --sklearn-color-background: #111;
-  --sklearn-color-border-box: white;
-  --sklearn-color-icon: #878787;
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
 }
 
 #sk-container-id-1 {
@@ -586,8 +581,8 @@ clickable and can be expanded/collapsed.
   padding: 0.5em;
   box-sizing: border-box;
   text-align: center;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  justify-content: space-between;
   gap: 0.5em;
 }
 
@@ -694,6 +689,7 @@ clickable and can be expanded/collapsed.
 #sk-container-id-1 div.sk-label label {
   font-family: monospace;
   font-weight: bold;
+  display: inline-block;
   line-height: 1.2em;
 }
 
@@ -739,7 +735,7 @@ a:visited.sk-estimator-doc-link {
   font-size: smaller;
   line-height: 1em;
   font-family: monospace;
-  background-color: var(--sklearn-color-unfitted-level-0);
+  background-color: var(--sklearn-color-background);
   border-radius: 1em;
   height: 1em;
   width: 1em;
@@ -747,17 +743,16 @@ a:visited.sk-estimator-doc-link {
   margin-left: 0.5em;
   text-align: center;
   /* unfitted */
-  border: var(--sklearn-color-unfitted-level-3) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-3);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
 }
 
 .sk-estimator-doc-link.fitted,
 a:link.sk-estimator-doc-link.fitted,
 a:visited.sk-estimator-doc-link.fitted {
   /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-  border: var(--sklearn-color-fitted-level-3) 1pt solid;
-  color: var(--sklearn-color-fitted-level-3);
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
 }
 
 /* On hover */
@@ -767,8 +762,7 @@ div.sk-label-container:hover .sk-estimator-doc-link:hover,
 .sk-estimator-doc-link:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-3);
-  border: var(--sklearn-color-fitted-level-0) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-0);
+  color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
@@ -778,8 +772,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 .sk-estimator-doc-link.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
-  border: var(--sklearn-color-fitted-level-0) 1pt solid;
-  color: var(--sklearn-color-fitted-level-0);
+  color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
@@ -819,7 +812,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   font-size: 1rem;
   line-height: 1em;
   font-family: monospace;
-  background-color: var(--sklearn-color-unfitted-level-0);
+  background-color: var(--sklearn-color-background);
   border-radius: 1rem;
   height: 1rem;
   width: 1rem;
@@ -831,7 +824,6 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
 #sk-container-id-1 a.estimator_doc_link.fitted {
   /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
   border: var(--sklearn-color-fitted-level-1) 1pt solid;
   color: var(--sklearn-color-fitted-level-1);
 }
@@ -849,17 +841,10 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   background-color: var(--sklearn-color-fitted-level-3);
 }
 
-.estimator-table {
-    font-family: monospace;
-}
-
 .estimator-table summary {
     padding: .5rem;
+    font-family: monospace;
     cursor: pointer;
-}
-
-.estimator-table summary::marker {
-    font-size: 0.7rem;
 }
 
 .estimator-table details[open] {
@@ -871,7 +856,6 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 .estimator-table .parameters-table {
     margin-left: auto !important;
     margin-right: auto !important;
-    margin-top: 0;
 }
 
 .estimator-table .parameters-table tr:nth-child(odd) {
@@ -890,85 +874,24 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     border: 1px solid rgba(106, 105, 104, 0.232);
 }
 
-/*
-    `table td`is set in notebook with right text-align.
-    We need to overwrite it.
-*/
-.estimator-table table td.param {
-    text-align: left;
-    position: relative;
-    padding: 0;
-}
-
 .user-set td {
     color:rgb(255, 94, 0);
-    text-align: left !important;
+    text-align: left;
 }
 
-.user-set td.value {
-    color:rgb(255, 94, 0);
-    background-color: transparent;
+.user-set td.value pre {
+    color:rgb(255, 94, 0) !important;
+    background-color: transparent !important;
 }
 
 .default td {
     color: black;
-    text-align: left !important;
+    text-align: left;
 }
 
 .user-set td i,
 .default td i {
     color: black;
-}
-
-/*
-    Styles for parameter documentation links
-    We need styling for visited so jupyter doesn't overwrite it
-*/
-a.param-doc-link,
-a.param-doc-link:link,
-a.param-doc-link:visited {
-    text-decoration: underline dashed;
-    text-underline-offset: .3em;
-    color: inherit;
-    display: block;
-    padding: .5em;
-}
-
-/* "hack" to make the entire area of the cell containing the link clickable */
-a.param-doc-link::before {
-    position: absolute;
-    content: "";
-    inset: 0;
-}
-
-.param-doc-description {
-    display: none;
-    position: absolute;
-    z-index: 9999;
-    left: 0;
-    padding: .5ex;
-    margin-left: 1.5em;
-    color: var(--sklearn-color-text);
-    box-shadow: .3em .3em .4em #999;
-    width: max-content;
-    text-align: left;
-    max-height: 10em;
-    overflow-y: auto;
-
-    /* unfitted */
-    background: var(--sklearn-color-unfitted-level-0);
-    border: thin solid var(--sklearn-color-unfitted-level-3);
-}
-
-/* Fitted state for parameter tooltips */
-.fitted .param-doc-description {
-    /* fitted */
-    background: var(--sklearn-color-fitted-level-0);
-    border: thin solid var(--sklearn-color-fitted-level-3);
-}
-
-.param-doc-link:hover .param-doc-description {
-    display: block;
 }
 
 .copy-paste-icon {
@@ -994,7 +917,7 @@ a.param-doc-link::before {
                  onclick="copyToClipboard('method',
                           this.parentElement.nextElementSibling)"
             ></i></td>
-            <td class="param">method</td>
+            <td class="param">method&nbsp;</td>
             <td class="value">&#x27;procrustes&#x27;</td>
         </tr>
 
@@ -1004,7 +927,7 @@ a.param-doc-link::before {
                  onclick="copyToClipboard('labels',
                           this.parentElement.nextElementSibling)"
             ></i></td>
-            <td class="param">labels</td>
+            <td class="param">labels&nbsp;</td>
             <td class="value">array([96, 96...hape=(46448,))</td>
         </tr>
 
@@ -1014,7 +937,7 @@ a.param-doc-link::before {
                  onclick="copyToClipboard('n_jobs',
                           this.parentElement.nextElementSibling)"
             ></i></td>
-            <td class="param">n_jobs</td>
+            <td class="param">n_jobs&nbsp;</td>
             <td class="value">1</td>
         </tr>
 
@@ -1024,7 +947,7 @@ a.param-doc-link::before {
                  onclick="copyToClipboard('verbose',
                           this.parentElement.nextElementSibling)"
             ></i></td>
-            <td class="param">verbose</td>
+            <td class="param">verbose&nbsp;</td>
             <td class="value">0</td>
         </tr>
 
@@ -1034,7 +957,7 @@ a.param-doc-link::before {
                  onclick="copyToClipboard('n_iter',
                           this.parentElement.nextElementSibling)"
             ></i></td>
-            <td class="param">n_iter</td>
+            <td class="param">n_iter&nbsp;</td>
             <td class="value">2</td>
         </tr>
 
@@ -1044,7 +967,7 @@ a.param-doc-link::before {
                  onclick="copyToClipboard('scale_template',
                           this.parentElement.nextElementSibling)"
             ></i></td>
-            <td class="param">scale_template</td>
+            <td class="param">scale_template&nbsp;</td>
             <td class="value">False</td>
         </tr>
 
@@ -1086,88 +1009,15 @@ a.param-doc-link::before {
     return false;
 }
 
-document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
+document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     const toggleableContent = element.closest('.sk-toggleable__content');
     const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-    const paramName = element.parentElement.nextElementSibling
-        .textContent.trim().split(' ')[0];
+    const paramName = element.parentElement.nextElementSibling.textContent.trim();
     const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
 
     element.setAttribute('title', fullParamName);
 });
-
-
-/**
- * Adapted from Skrub
- * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
- * @returns "light" or "dark"
- */
-function detectTheme(element) {
-    const body = document.querySelector('body');
-
-    // Check VSCode theme
-    const themeKindAttr = body.getAttribute('data-vscode-theme-kind');
-    const themeNameAttr = body.getAttribute('data-vscode-theme-name');
-
-    if (themeKindAttr && themeNameAttr) {
-        const themeKind = themeKindAttr.toLowerCase();
-        const themeName = themeNameAttr.toLowerCase();
-
-        if (themeKind.includes("dark") || themeName.includes("dark")) {
-            return "dark";
-        }
-        if (themeKind.includes("light") || themeName.includes("light")) {
-            return "light";
-        }
-    }
-
-    // Check Jupyter theme
-    if (body.getAttribute('data-jp-theme-light') === 'false') {
-        return 'dark';
-    } else if (body.getAttribute('data-jp-theme-light') === 'true') {
-        return 'light';
-    }
-
-    // Guess based on a parent element's color
-    const color = window.getComputedStyle(element.parentNode, null).getPropertyValue('color');
-    const match = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
-    if (match) {
-        const [r, g, b] = [
-            parseFloat(match[1]),
-            parseFloat(match[2]),
-            parseFloat(match[3])
-        ];
-
-        // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
-        const luma = 0.299 * r + 0.587 * g + 0.114 * b;
-
-        if (luma > 180) {
-            // If the text is very bright we have a dark theme
-            return 'dark';
-        }
-        if (luma < 75) {
-            // If the text is very dark we have a light theme
-            return 'light';
-        }
-        // Otherwise fall back to the next heuristic.
-    }
-
-    // Fallback to system preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
-
-
-function forceTheme(elementId) {
-    const estimatorElement = document.querySelector(`#${elementId}`);
-    if (estimatorElement === null) {
-        console.error(`Element with id ${elementId} not found.`);
-    } else {
-        const theme = detectTheme(estimatorElement);
-        estimatorElement.classList.add(theme);
-    }
-}
-
-forceTheme('sk-container-id-1');</script></body>
+</script></body>
 </div>
 <br />
 <br /></section>
@@ -1198,21 +1048,20 @@ are decoupled.</p>
   --sklearn-color-fitted-level-1: #d4ebff;
   --sklearn-color-fitted-level-2: #b3dbfd;
   --sklearn-color-fitted-level-3: cornflowerblue;
-}
 
-#sk-container-id-2.light {
   /* Specific color for light theme */
-  --sklearn-color-text-on-default-background: black;
-  --sklearn-color-background: white;
-  --sklearn-color-border-box: black;
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
   --sklearn-color-icon: #696969;
-}
 
-#sk-container-id-2.dark {
-  --sklearn-color-text-on-default-background: white;
-  --sklearn-color-background: #111;
-  --sklearn-color-border-box: white;
-  --sklearn-color-icon: #878787;
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
 }
 
 #sk-container-id-2 {
@@ -1338,8 +1187,8 @@ clickable and can be expanded/collapsed.
   padding: 0.5em;
   box-sizing: border-box;
   text-align: center;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  justify-content: space-between;
   gap: 0.5em;
 }
 
@@ -1446,6 +1295,7 @@ clickable and can be expanded/collapsed.
 #sk-container-id-2 div.sk-label label {
   font-family: monospace;
   font-weight: bold;
+  display: inline-block;
   line-height: 1.2em;
 }
 
@@ -1491,7 +1341,7 @@ a:visited.sk-estimator-doc-link {
   font-size: smaller;
   line-height: 1em;
   font-family: monospace;
-  background-color: var(--sklearn-color-unfitted-level-0);
+  background-color: var(--sklearn-color-background);
   border-radius: 1em;
   height: 1em;
   width: 1em;
@@ -1499,17 +1349,16 @@ a:visited.sk-estimator-doc-link {
   margin-left: 0.5em;
   text-align: center;
   /* unfitted */
-  border: var(--sklearn-color-unfitted-level-3) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-3);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
 }
 
 .sk-estimator-doc-link.fitted,
 a:link.sk-estimator-doc-link.fitted,
 a:visited.sk-estimator-doc-link.fitted {
   /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-  border: var(--sklearn-color-fitted-level-3) 1pt solid;
-  color: var(--sklearn-color-fitted-level-3);
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
 }
 
 /* On hover */
@@ -1519,8 +1368,7 @@ div.sk-label-container:hover .sk-estimator-doc-link:hover,
 .sk-estimator-doc-link:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-3);
-  border: var(--sklearn-color-fitted-level-0) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-0);
+  color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
@@ -1530,8 +1378,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 .sk-estimator-doc-link.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
-  border: var(--sklearn-color-fitted-level-0) 1pt solid;
-  color: var(--sklearn-color-fitted-level-0);
+  color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
@@ -1571,7 +1418,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   font-size: 1rem;
   line-height: 1em;
   font-family: monospace;
-  background-color: var(--sklearn-color-unfitted-level-0);
+  background-color: var(--sklearn-color-background);
   border-radius: 1rem;
   height: 1rem;
   width: 1rem;
@@ -1583,7 +1430,6 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
 #sk-container-id-2 a.estimator_doc_link.fitted {
   /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
   border: var(--sklearn-color-fitted-level-1) 1pt solid;
   color: var(--sklearn-color-fitted-level-1);
 }
@@ -1601,17 +1447,10 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   background-color: var(--sklearn-color-fitted-level-3);
 }
 
-.estimator-table {
-    font-family: monospace;
-}
-
 .estimator-table summary {
     padding: .5rem;
+    font-family: monospace;
     cursor: pointer;
-}
-
-.estimator-table summary::marker {
-    font-size: 0.7rem;
 }
 
 .estimator-table details[open] {
@@ -1623,7 +1462,6 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 .estimator-table .parameters-table {
     margin-left: auto !important;
     margin-right: auto !important;
-    margin-top: 0;
 }
 
 .estimator-table .parameters-table tr:nth-child(odd) {
@@ -1642,85 +1480,24 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     border: 1px solid rgba(106, 105, 104, 0.232);
 }
 
-/*
-    `table td`is set in notebook with right text-align.
-    We need to overwrite it.
-*/
-.estimator-table table td.param {
-    text-align: left;
-    position: relative;
-    padding: 0;
-}
-
 .user-set td {
     color:rgb(255, 94, 0);
-    text-align: left !important;
+    text-align: left;
 }
 
-.user-set td.value {
-    color:rgb(255, 94, 0);
-    background-color: transparent;
+.user-set td.value pre {
+    color:rgb(255, 94, 0) !important;
+    background-color: transparent !important;
 }
 
 .default td {
     color: black;
-    text-align: left !important;
+    text-align: left;
 }
 
 .user-set td i,
 .default td i {
     color: black;
-}
-
-/*
-    Styles for parameter documentation links
-    We need styling for visited so jupyter doesn't overwrite it
-*/
-a.param-doc-link,
-a.param-doc-link:link,
-a.param-doc-link:visited {
-    text-decoration: underline dashed;
-    text-underline-offset: .3em;
-    color: inherit;
-    display: block;
-    padding: .5em;
-}
-
-/* "hack" to make the entire area of the cell containing the link clickable */
-a.param-doc-link::before {
-    position: absolute;
-    content: "";
-    inset: 0;
-}
-
-.param-doc-description {
-    display: none;
-    position: absolute;
-    z-index: 9999;
-    left: 0;
-    padding: .5ex;
-    margin-left: 1.5em;
-    color: var(--sklearn-color-text);
-    box-shadow: .3em .3em .4em #999;
-    width: max-content;
-    text-align: left;
-    max-height: 10em;
-    overflow-y: auto;
-
-    /* unfitted */
-    background: var(--sklearn-color-unfitted-level-0);
-    border: thin solid var(--sklearn-color-unfitted-level-3);
-}
-
-/* Fitted state for parameter tooltips */
-.fitted .param-doc-description {
-    /* fitted */
-    background: var(--sklearn-color-fitted-level-0);
-    border: thin solid var(--sklearn-color-fitted-level-3);
-}
-
-.param-doc-link:hover .param-doc-description {
-    display: block;
 }
 
 .copy-paste-icon {
@@ -1746,7 +1523,7 @@ a.param-doc-link::before {
                  onclick="copyToClipboard('method',
                           this.parentElement.nextElementSibling)"
             ></i></td>
-            <td class="param">method</td>
+            <td class="param">method&nbsp;</td>
             <td class="value">&#x27;procrustes&#x27;</td>
         </tr>
 
@@ -1756,7 +1533,7 @@ a.param-doc-link::before {
                  onclick="copyToClipboard('labels',
                           this.parentElement.nextElementSibling)"
             ></i></td>
-            <td class="param">labels</td>
+            <td class="param">labels&nbsp;</td>
             <td class="value">array([96, 96...hape=(46448,))</td>
         </tr>
 
@@ -1766,7 +1543,7 @@ a.param-doc-link::before {
                  onclick="copyToClipboard('n_jobs',
                           this.parentElement.nextElementSibling)"
             ></i></td>
-            <td class="param">n_jobs</td>
+            <td class="param">n_jobs&nbsp;</td>
             <td class="value">1</td>
         </tr>
 
@@ -1776,7 +1553,7 @@ a.param-doc-link::before {
                  onclick="copyToClipboard('verbose',
                           this.parentElement.nextElementSibling)"
             ></i></td>
-            <td class="param">verbose</td>
+            <td class="param">verbose&nbsp;</td>
             <td class="value">0</td>
         </tr>
 
@@ -1786,7 +1563,7 @@ a.param-doc-link::before {
                  onclick="copyToClipboard('n_iter',
                           this.parentElement.nextElementSibling)"
             ></i></td>
-            <td class="param">n_iter</td>
+            <td class="param">n_iter&nbsp;</td>
             <td class="value">2</td>
         </tr>
 
@@ -1796,7 +1573,7 @@ a.param-doc-link::before {
                  onclick="copyToClipboard('scale_template',
                           this.parentElement.nextElementSibling)"
             ></i></td>
-            <td class="param">scale_template</td>
+            <td class="param">scale_template&nbsp;</td>
             <td class="value">False</td>
         </tr>
 
@@ -1838,88 +1615,15 @@ a.param-doc-link::before {
     return false;
 }
 
-document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
+document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     const toggleableContent = element.closest('.sk-toggleable__content');
     const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-    const paramName = element.parentElement.nextElementSibling
-        .textContent.trim().split(' ')[0];
+    const paramName = element.parentElement.nextElementSibling.textContent.trim();
     const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
 
     element.setAttribute('title', fullParamName);
 });
-
-
-/**
- * Adapted from Skrub
- * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
- * @returns "light" or "dark"
- */
-function detectTheme(element) {
-    const body = document.querySelector('body');
-
-    // Check VSCode theme
-    const themeKindAttr = body.getAttribute('data-vscode-theme-kind');
-    const themeNameAttr = body.getAttribute('data-vscode-theme-name');
-
-    if (themeKindAttr && themeNameAttr) {
-        const themeKind = themeKindAttr.toLowerCase();
-        const themeName = themeNameAttr.toLowerCase();
-
-        if (themeKind.includes("dark") || themeName.includes("dark")) {
-            return "dark";
-        }
-        if (themeKind.includes("light") || themeName.includes("light")) {
-            return "light";
-        }
-    }
-
-    // Check Jupyter theme
-    if (body.getAttribute('data-jp-theme-light') === 'false') {
-        return 'dark';
-    } else if (body.getAttribute('data-jp-theme-light') === 'true') {
-        return 'light';
-    }
-
-    // Guess based on a parent element's color
-    const color = window.getComputedStyle(element.parentNode, null).getPropertyValue('color');
-    const match = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
-    if (match) {
-        const [r, g, b] = [
-            parseFloat(match[1]),
-            parseFloat(match[2]),
-            parseFloat(match[3])
-        ];
-
-        // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
-        const luma = 0.299 * r + 0.587 * g + 0.114 * b;
-
-        if (luma > 180) {
-            // If the text is very bright we have a dark theme
-            return 'dark';
-        }
-        if (luma < 75) {
-            // If the text is very dark we have a light theme
-            return 'light';
-        }
-        // Otherwise fall back to the next heuristic.
-    }
-
-    // Fallback to system preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
-
-
-function forceTheme(elementId) {
-    const estimatorElement = document.querySelector(`#${elementId}`);
-    if (estimatorElement === null) {
-        console.error(`Element with id ${elementId} not found.`);
-    } else {
-        const theme = detectTheme(estimatorElement);
-        estimatorElement.classList.add(theme);
-    }
-}
-
-forceTheme('sk-container-id-2');</script></body>
+</script></body>
 </div>
 <br />
 <br /></section>
@@ -2030,7 +1734,7 @@ overly optimistic results.</p>
 </aside>
 </aside>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 11.280 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 28.840 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-template-bias-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/2ff943af0a8e0286ca8d2b4198a71626/plot_template_bias.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_template_bias.ipynb</span></code></a></p>
@@ -2120,12 +1824,11 @@ overly optimistic results.</p>
     </aside>
   </div>
 </div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
-    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
-    <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=4ea706d9"></script>
+    <script src="../_static/copybutton.js?v=30646c52"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

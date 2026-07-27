@@ -181,7 +181,7 @@ utility, which will generate a parcellation of the data in 150 pieces.
         Masker parameter None - overriding estimator parameter 4.0
 
       parcellation.fit(images_to_parcel)
-    /home/runner/work/fmralign/fmralign/.venv/lib/python3.12/site-packages/sklearn/cluster/_agglomerative.py:323: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
+    /home/runner/work/fmralign/fmralign/.venv/lib/python3.10/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 35 > 1. Completing it to avoid stopping the tree early.
       connectivity, n_connected_components = _fix_connectivity(
     /home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:137: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
     Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
@@ -242,11 +242,11 @@ transformation that is applied to the whole brain.
       masker.transform(
     /home/runner/work/fmralign/fmralign/fmralign/alignment/pairwise_alignment.py:79: UserWarning: 
      Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
-     parcel 8 : 1062 voxels
      parcel 9 : 1393 voxels
-     parcel 12 : 1313 voxels
-     parcel 23 : 1210 voxels
+     parcel 19 : 1062 voxels
      parcel 31 : 1712 voxels
+     parcel 42 : 1210 voxels
+     parcel 49 : 1313 voxels
      parcel 50 : 1223 voxels
       self.labels_ = _check_labels(X, self.labels)
 
@@ -345,7 +345,7 @@ subject data, informed by another subject are greatly improved.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 32.438 seconds)
+   **Total running time of the script:** (0 minutes 28.286 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_pairwise_alignment.py:

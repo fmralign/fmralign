@@ -1,27 +1,25 @@
 <!doctype html>
 <html class="no-js" lang="en" data-content_root="../../">
-  <head><meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta property="og:title" content="fmralign.embeddings.whole_brain.get_laplacian_embedding" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://nilearn.github.io/modules/generated/fmralign.embeddings.whole_brain.get_laplacian_embedding.html" />
-<meta property="og:site_name" content="Nilearn" />
-<meta property="og:image" content="https://nilearn.github.io/_static/nilearn-logo.png" />
-<meta property="og:image:alt" content="Nilearn" />
-<link rel="search" title="Search" href="../../search.html"><link rel="next" title="People" href="../../authors.html"><link rel="prev" title="fmralign.embeddings.whole_brain.get_adjacency_from_mask" href="fmralign.embeddings.whole_brain.get_adjacency_from_mask.html">
+<meta property="og:url" content="https://fmralign.github.io/modules/generated/fmralign.embeddings.whole_brain.get_laplacian_embedding.html" />
+<meta property="og:site_name" content="fmralign" />
+<link rel="search" title="Search" href="../../search.html" /><link rel="next" title="People" href="../../authors.html" /><link rel="prev" title="fmralign.embeddings.whole_brain.get_adjacency_from_mask" href="fmralign.embeddings.whole_brain.get_adjacency_from_mask.html" />
 
-    <link rel="shortcut icon" href="../../_static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/><!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
         <title>fmralign.embeddings.whole_brain.get_laplacian_embedding - fmralign</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=2da93098" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=354aac6f" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=3682908d" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/fontawesome.min.css" />
@@ -171,10 +169,14 @@
   </symbol>
 </svg>
 
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
-<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
-<label class="overlay sidebar-overlay" for="__navigation"></label>
-<label class="overlay toc-overlay" for="__toc"></label>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
 
 <a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
@@ -184,7 +186,8 @@
   <header class="mobile-header">
     <div class="header-left">
       <label class="nav-overlay-icon" for="__navigation">
-        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
       </label>
     </div>
     <div class="header-center">
@@ -192,7 +195,8 @@
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
-        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
           <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
           <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
@@ -200,7 +204,8 @@
         </button>
       </div>
       <label class="toc-overlay-icon toc-header-icon" for="__toc">
-        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
     </div>
   </header>
@@ -208,6 +213,7 @@
     <div class="sidebar-container">
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
   
   <span class="sidebar-brand-text">fmralign</span>
   
@@ -219,7 +225,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../auto_examples/index.html">Examples</a><input aria-label="Toggle navigation of Examples" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../auto_examples/index.html">Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Examples</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_group_alignment.html">Template-based prediction.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_template_bias.html">Decoupling template generation and alignment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_pairwise_alignment.html">Pairwise functional alignment.</a></li>
@@ -229,22 +235,22 @@
 <li class="toctree-l2"><a class="reference internal" href="../../auto_examples/plot_alignment_simulated_2D_data.html">Alignment on simulated 2D data.</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../user_guide.html">User guide</a><input aria-label="Toggle navigation of User guide" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../user_guide.html">User guide</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of User guide</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../overview.html">1. Introduction: fmralign in a nutshell</a></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../functional_alignment/index.html">2. Functional alignment: handling functional variability</a><input aria-label="Toggle navigation of 2. Functional alignment: handling functional variability" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../functional_alignment/index.html">2. Functional alignment: handling functional variability</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of 2. Functional alignment: handling functional variability</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../functional_alignment/introduction.html">2.1. An introduction to functional alignment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../functional_alignment/fmralign_pipeline.html">2.2. Functional alignment pipeline</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API References</a><input aria-label="Toggle navigation of API References" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="../alignment.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.alignment</span></code>: Alignment Strategies</a><input aria-label="Toggle navigation of fmralign.alignment: Alignment Strategies" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API References</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of API References</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../alignment.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.alignment</span></code>: Alignment Strategies</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of fmralign.alignment: Alignment Strategies</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="fmralign.alignment.pairwise_alignment.PairwiseAlignment.html">fmralign.alignment.pairwise_alignment.PairwiseAlignment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fmralign.alignment.group_alignment.GroupAlignment.html">fmralign.alignment.group_alignment.GroupAlignment</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../methods.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.methods</span></code>: Alignment Methods</a><input aria-label="Toggle navigation of fmralign.methods: Alignment Methods" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../methods.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.methods</span></code>: Alignment Methods</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of fmralign.methods: Alignment Methods</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="fmralign.methods.Identity.html">fmralign.methods.Identity</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fmralign.methods.DetSRM.html">fmralign.methods.DetSRM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fmralign.methods.Procrustes.html">fmralign.methods.Procrustes</a></li>
@@ -253,7 +259,7 @@
 <li class="toctree-l3"><a class="reference internal" href="fmralign.methods.SpectralOT.html">fmralign.methods.SpectralOT</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current has-children"><a class="reference internal" href="../embedding.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.embeddings</span></code>: Embedding Utilities</a><input aria-label="Toggle navigation of fmralign.embeddings: Embedding Utilities" checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="../embedding.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fmralign.embeddings</span></code>: Embedding Utilities</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of fmralign.embeddings: Embedding Utilities</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="fmralign.embeddings.connectivity.get_connectivity_features.html">fmralign.embeddings.connectivity.get_connectivity_features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fmralign.embeddings.parcellation.get_adjacency_from_labels.html">fmralign.embeddings.parcellation.get_adjacency_from_labels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fmralign.embeddings.parcellation.get_labels.html">fmralign.embeddings.parcellation.get_labels</a></li>
@@ -290,7 +296,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="https://github.com/nilearn/nilearn/blob/main/doc/modules/generated/fmralign.embeddings.whole_brain.get_laplacian_embedding.rst?plain=true" title="View this page">
+  <a class="muted-link" href="https://github.com/fmralign/fmralign/blob/main/doc/modules/generated/fmralign.embeddings.whole_brain.get_laplacian_embedding.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -298,7 +304,7 @@
 
   <div class="edit-this-page">
     <a class="muted-link"
-       href="https://github.com/nilearn/nilearn/edit/main/doc/modules/generated/fmralign.embeddings.whole_brain.get_laplacian_embedding.rst"
+       href="https://github.com/fmralign/fmralign/edit/main/doc/modules/generated/fmralign.embeddings.whole_brain.get_laplacian_embedding.rst"
        title="Edit this page"
        target="_blank">
       <svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -310,7 +316,8 @@
       <span class="visually-hidden">Edit this page</span>
     </a>
   </div><div class="theme-toggle-container theme-toggle-content">
-            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
@@ -318,7 +325,8 @@
             </button>
           </div>
           <label class="toc-overlay-icon toc-content-icon" for="__toc">
-            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
@@ -430,12 +438,11 @@ the first <cite>k</cite> eigenmodes.</p>
     </aside>
   </div>
 </div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
-    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
-    <script src="../../_static/sg-tags.js?v=d80f6fa4"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=5fa4622c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../_static/copybutton.js?v=4ea706d9"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     </body>
 </html>

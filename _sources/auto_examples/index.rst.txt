@@ -12,10 +12,6 @@ Examples
     the instructions.
 
 
-.. raw:: html
-
-  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
-
 
 .. raw:: html
 
@@ -32,7 +28,7 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_group_alignment_thumb.png
     :alt:
 
-  :doc:`/auto_examples/plot_group_alignment`
+  :ref:`sphx_glr_auto_examples_plot_group_alignment.py`
 
 .. raw:: html
 
@@ -49,7 +45,7 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_template_bias_thumb.png
     :alt:
 
-  :doc:`/auto_examples/plot_template_bias`
+  :ref:`sphx_glr_auto_examples_plot_template_bias.py`
 
 .. raw:: html
 
@@ -66,7 +62,7 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_pairwise_alignment_thumb.png
     :alt:
 
-  :doc:`/auto_examples/plot_pairwise_alignment`
+  :ref:`sphx_glr_auto_examples_plot_pairwise_alignment.py`
 
 .. raw:: html
 
@@ -83,7 +79,7 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_pairwise_roi_alignment_thumb.png
     :alt:
 
-  :doc:`/auto_examples/plot_pairwise_roi_alignment`
+  :ref:`sphx_glr_auto_examples_plot_pairwise_roi_alignment.py`
 
 .. raw:: html
 
@@ -100,7 +96,7 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_alignment_methods_benchmark_thumb.png
     :alt:
 
-  :doc:`/auto_examples/plot_alignment_methods_benchmark`
+  :ref:`sphx_glr_auto_examples_plot_alignment_methods_benchmark.py`
 
 .. raw:: html
 
@@ -117,7 +113,7 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_surf_alignment_thumb.png
     :alt:
 
-  :doc:`/auto_examples/plot_surf_alignment`
+  :ref:`sphx_glr_auto_examples_plot_surf_alignment.py`
 
 .. raw:: html
 
@@ -134,7 +130,7 @@ Examples
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_alignment_simulated_2D_data_thumb.png
     :alt:
 
-  :doc:`/auto_examples/plot_alignment_simulated_2D_data`
+  :ref:`sphx_glr_auto_examples_plot_alignment_simulated_2D_data.py`
 
 .. raw:: html
 
