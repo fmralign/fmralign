@@ -132,8 +132,8 @@ class PiecewiseAlignment(BaseAlignment):
         Y : np.ndarray
             Target data of shape (n_samples, n_features).
         """
-        # if self.labels is None:
-        #     raise ValueError("'labels' cannot be None.")
+        if self.labels is None:
+            raise ValueError("'labels' cannot be None.")
         if self.method is None:
             raise ValueError("'method' cannot be None.")
 
