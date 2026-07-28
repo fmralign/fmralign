@@ -104,10 +104,6 @@ skip-magic-trailing-comma = false
 
 [tool.ruff.lint]
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
-extend-select = [
-    "B",  # flake8-bugbear
-    "UP"  # pyupgrade
-]
 fixable = ["ALL"]
 ignore = [
     "E501"  # Line too long
@@ -115,7 +111,9 @@ ignore = [
 select = [
     "E",  # pycodestyle
     "F",  # pyflakes
-    "I"  # isort
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "UP"  # pyupgrade
 ]
 unfixable = []
 
