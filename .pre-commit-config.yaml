@@ -1,6 +1,10 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 
+ci:
+  autofix_commit_msg: "chore(deps): update pre-commit hooks'"
+  autoupdate_commit_msg: "style: pre-commit fixes"
+  autoupdate_schedule: "monthly"
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
@@ -20,6 +24,12 @@ repos:
     hooks:
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
+
+  # Format markdown files
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.23.2
+    hooks:
+      - id: markdownlint-cli2
 
   # Format TOML files
   - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
