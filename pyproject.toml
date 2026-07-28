@@ -7,7 +7,7 @@ requires = ["hatchling", "hatch-vcs"]
 dev = [
     {include-group = "test"},
     {include-group = "doc"},
-    {include-group = "ot"}
+    "fmralign[ot]"
 ]
 # For building the documentation
 doc = [
