@@ -2,7 +2,6 @@ import numpy as np
 from joblib import Parallel, delayed
 from sklearn.base import clone
 
-from fmralign.methods import DetSRM
 from fmralign.methods.base import BaseAlignment
 
 
@@ -116,7 +115,7 @@ class PiecewiseAlignment(BaseAlignment):
         Verbosity level. Default is 0.
     """
 
-    def __init__(self, method, labels, n_jobs=1, verbose=0):
+    def __init__(self, method=None, labels=None, n_jobs=1, verbose=0):
         super().__init__()
         self.n_jobs = n_jobs
         self.method = method
@@ -133,6 +132,11 @@ class PiecewiseAlignment(BaseAlignment):
         Y : np.ndarray
             Target data of shape (n_samples, n_features).
         """
+        if self.labels is None:
+            raise ValueError("'labels' cannot be None.")
+        if self.method is None:
+            raise ValueError("'method' cannot be None.")
+
         X_ = _array_to_list(X, self.labels)
         Y_ = _array_to_list(Y, self.labels)
         self.fit_ = Parallel(n_jobs=self.n_jobs, verbose=self.verbose)(
@@ -161,6 +165,9 @@ class PiecewiseAlignment(BaseAlignment):
             data is returned with the shape
             (n_labels, n_samples, n_components).
         """
+        # avoid circular import
+        from fmralign.methods import DetSRM
+
         X_ = _array_to_list(X, self.labels)
         piecewise_transforms = Parallel(
             n_jobs=self.n_jobs, verbose=self.verbose
