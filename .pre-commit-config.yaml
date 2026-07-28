@@ -21,6 +21,12 @@ repos:
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
 
+  # Format markdown files
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.23.2
+    hooks:
+      - id: markdownlint-cli2
+
   # Format TOML files
   - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
     rev: v2.16.0
