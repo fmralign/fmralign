@@ -1521,7 +1521,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 28.840 seconds)
+   **Total running time of the script:** (1 minutes 46.880 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_template_bias.py:
