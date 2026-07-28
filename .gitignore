@@ -58,15 +58,15 @@ coverage.xml
 .pytest_cache/
 
 # Sphinx documentation
-doc/_build/
-doc/auto_examples/
-doc/.nojekyll
-doc/building_blocks/generated/
-doc/generated/
-doc/modules/generated/
-doc/modules/generated_reports/*.html
-doc/modules/description
-doc/sg_execution_times.rst
+docs/_build/
+docs/auto_examples/
+docs/.nojekyll
+docs/building_blocks/generated/
+docs/generated/
+docs/modules/generated/
+docs/modules/generated_reports/*.html
+docs/modules/description
+docs/sg_execution_times.rst
 log.txt
 build.txt
 pattern.txt
