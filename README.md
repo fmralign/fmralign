@@ -5,23 +5,29 @@
 ![python version](https://img.shields.io/badge/python-3.10_|_3.11_|_3.12_|_3.13_|_3.14-blue?style=for-the-badge)
 ![license](https://img.shields.io/github/license/fmralign/fmralign?style=for-the-badge)
 
-[Functional alignment for fMRI](https://fmralign.github.io/fmralign-docs) (functional Magnetic Resonance Imaging) data.
+[Functional alignment for fMRI](https://fmralign.github.io/fmralign-docs)
+(functional Magnetic Resonance Imaging) data.
 
-This light-weight Python library provides access to a range of functional alignment methods, including Procrustes and Optimal Transport.
+This light-weight Python library provides access to a range of functional
+alignment methods, including Procrustes and Optimal Transport.
 It is compatible with and inspired by [Nilearn](http://nilearn.github.io).
-Alternative implementations of these ideas can be found in the [pymvpa](http://www.pymvpa.org), [brainiak](http://brainiak.org) or [neuroboros](http://neuroboros.github.io) packages.
+Alternative implementations of these ideas can be found in the
+[pymvpa](http://www.pymvpa.org), [brainiak](http://brainiak.org)
+or [neuroboros](http://neuroboros.github.io) packages.
 
 ## Getting Started
 
 ### Installation
 
-You can access the latest stable version of fmralign directly with the PyPi package installer:
+You can access the latest stable version of fmralign directly with the PyPi
+package installer:
 
 ```bash
 pip install fmralign
 ```
 
-Optimal Transport methods can be installed with the optional dependency `[ot]`, which installs both supported backends (`geomloss` and `POT`):
+Optimal Transport methods can be installed with the optional dependency `[ot]`,
+which installs both supported backends (`geomloss` and `POT`):
 
 ```bash
 pip install fmralign[ot]
@@ -34,7 +40,8 @@ pip install fmralign[ot_geomloss]  # geomloss backend only
 pip install fmralign[ot_pot]       # POT backend only
 ```
 
-For development or bleeding-edge features, fmralign can also be installed directly from source:
+For development or bleeding-edge features, fmralign can also be installed
+directly from source:
 
 ```bash
 git clone https://github.com/fmralign/fmralign
@@ -45,7 +52,7 @@ pip install -e .
 ### Documentation
 
 You can find an introduction to functional alignment, a user guide and some examples
-on how to use the package at https://fmralign.github.io/fmralign
+on how to use the package on the documentation [website](https://fmralign.github.io/fmralign-docs).
 
 ## License
 
