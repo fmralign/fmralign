@@ -42,7 +42,7 @@ jobs:
         run: uv pip install --resolution lowest-direct -e ".[doc]"
 
       - name: Build Sphinx documentation
-        working-directory: doc
+        working-directory: docs
         run: uv run python -m sphinx --builder html . _build/html --verbose --color --fail-on-warning --keep-going --show-traceback --nitpicky
 
       - name: Upload Sphinx docs artifact
