@@ -167,7 +167,7 @@ html_theme_options = {
     },
     "source_repository": "https://github.com/fmralign/fmralign",
     "source_branch": "main",
-    "source_directory": "doc/",
+    "source_directory": "docs/",
 }
 
 # Add any paths that contain custom themes here, relative to this directory.

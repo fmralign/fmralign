@@ -90,12 +90,12 @@ testpaths = ["fmralign"]
 xfail_strict = true
 
 [tool.ruff]
-extend-exclude = ["doc/auto_examples/*"]
+extend-exclude = ["docs/auto_examples/*"]
 include = [
     "pyproject.toml",
     "fmralign/**/*.py",
     "examples/**/*.py",
-    "doc/**/*.py"
+    "docs/**/*.py"
 ]
 indent-width = 4
 line-length = 79

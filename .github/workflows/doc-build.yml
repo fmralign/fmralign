@@ -42,14 +42,14 @@ jobs:
         run: uv pip install --resolution lowest-direct -e ".[doc]"
 
       - name: Build Sphinx documentation
-        working-directory: doc
+        working-directory: docs
         run: uv run python -m sphinx --builder html . _build/html --verbose --color --fail-on-warning --keep-going --show-traceback --nitpicky
 
       - name: Upload Sphinx docs artifact
         uses: actions/upload-artifact@v7
         with:
           name: sphinx-docs
-          path: doc/_build/html
+          path: docs/_build/html
 
   deploy:
     # Avoid running this job on a fork
@@ -62,10 +62,10 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: sphinx-docs
-          path: doc/_build/html/
+          path: docs/_build/html/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: doc/_build/html
+          publish_dir: docs/_build/html
