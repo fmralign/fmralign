@@ -5,7 +5,7 @@
 ![python version](https://img.shields.io/badge/python-3.10_|_3.11_|_3.12_|_3.13_|_3.14-blue?style=for-the-badge)
 ![license](https://img.shields.io/github/license/fmralign/fmralign?style=for-the-badge)
 
-[Functional alignment for fMRI](https://fmralign.github.io/fmralign-docs)
+[Functional alignment for fMRI](https://fmralign.github.io/fmralign/)
 (functional Magnetic Resonance Imaging) data.
 
 This light-weight Python library provides access to a range of functional
