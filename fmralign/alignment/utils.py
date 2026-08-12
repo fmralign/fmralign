@@ -83,7 +83,7 @@ def _check_input_arrays(X):
         raise ValueError(
             "All arrays in the input dict must have the same number of features."
         )
-    return subjects_keys, subjects_values
+    return subjects_keys, np.array(list(X.values()))
 
 
 def _check_target(X, y):
@@ -254,19 +254,18 @@ def _map_to_target(
     list of fitted estimators
     """
     n_labels = len(np.unique(labels))
-    fitted_estimators = []
-    for subject_data in X:
-        if n_labels > 1:
-            estimator = PiecewiseAlignment(
-                method=method, labels=labels, n_jobs=n_jobs, verbose=verbose
-            )
-        else:
-            estimator = clone(method)
+    n_subjects = X.shape[0]
+    if n_labels > 1:
+        estimator = PiecewiseAlignment(
+            method=method, labels=labels, n_jobs=n_jobs, verbose=verbose
+        )
+    else:
+        estimator = clone(method)
 
-        estimator.fit(subject_data, target_data)
-        fitted_estimators.append(estimator)
+    Y = np.repeat(target_data[np.newaxis, ...], n_subjects, axis=0)
+    estimator.fit(X, Y)
 
-    return fitted_estimators
+    return estimator
 
 
 def _fit_template(
@@ -312,7 +311,7 @@ def _fit_template(
     # Fit template alignment
     for _ in range(n_iter):
         fit_ = _map_to_target(X, template, method, labels, n_jobs, verbose)
-        aligned_data = [fit_[i].transform(X[i]) for i in range(len(X))]
+        aligned_data = fit_.transform(X)
         template = _rescaled_euclidean_mean(aligned_data, scale_template)
     return fit_, template
 

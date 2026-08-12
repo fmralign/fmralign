@@ -43,8 +43,7 @@ def test_check_input_arrays():
     subjects_values = [np.random.rand(10, 5) for _ in range(3)]
     subjects_dict = dict(zip(subjects_keys, subjects_values, strict=False))
     checked_keys, checked_values = _check_input_arrays(subjects_dict)
-    assert isinstance(checked_values, list)
-    assert all(isinstance(x, np.ndarray) for x in checked_values)
+    assert isinstance(checked_values, np.ndarray)
     assert checked_keys == subjects_keys
 
     # Invalid input (not a dict)
@@ -170,8 +169,8 @@ def test_check_method():
 def test_fit_template():
     """Test fitting a template to a set of subjects."""
     subjects_data, labels = sample_subjects()
-    estimators, template = _fit_template(subjects_data, Identity(), labels)
-    assert len(estimators) == len(subjects_data)
+    estimator, template = _fit_template(subjects_data, Identity(), labels)
+    assert isinstance(estimator, Identity)
     euclidean_mean = _rescaled_euclidean_mean(subjects_data)
     # Check that the template is the Euclidean mean for identity method
     assert_array_equal(template, euclidean_mean)
@@ -181,13 +180,12 @@ def test_map_to_target():
     """Test identity of multiple subjects to target."""
     X, labels = sample_subjects()
     target_data = X[0]
-    estimators = _map_to_target(X, target_data, Identity(), labels)
-    assert len(estimators) == len(X)
-    for estimator in estimators:
-        assert isinstance(estimator, Identity)
-        transformed_data = estimator.transform(X[0])
-        assert transformed_data.shape == target_data.shape
-        assert transformed_data.dtype == target_data.dtype
+    estimator = _map_to_target(X, target_data, Identity(), labels)
+    assert isinstance(estimator, Identity)
+    transformed_data = estimator.transform(X)
+    assert transformed_data.shape[-2:] == target_data.shape
+    assert transformed_data.dtype == target_data.dtype
+    assert_array_equal(transformed_data[0], target_data)
 
 
 def test_init_template():
