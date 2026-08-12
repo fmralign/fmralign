@@ -1,19 +1,19 @@
 import numpy as np
-from scipy import linalg
 
 from fmralign.methods.base import BaseAlignment
 
 
 def scaled_procrustes(X, Y, scaling=False, primal=None):
     r"""
-    Compute a mixing matrix R and a scaling sc such that Frobenius norm
-    :math:`||sc RX - Y||^2` is minimized and R is an orthogonal matrix
+    Batched version. Compute a mixing matrix R and a scaling sc such that Frobenius norm
+    :math:`||sc RX - Y||^2` is minimized and R is an orthogonal matrix, for each
+    batch element independently.
 
     Parameters
     ----------
-    X: (n_samples, n_features) nd array
+    X: (b, n_samples, n_features) nd array
         source data
-    Y: (n_samples, n_features) nd array
+    Y: (b, n_samples, n_features) nd array
         target data
     scaling: bool
         If scaling is true, computes a floating scaling parameter sc such that:
@@ -24,38 +24,44 @@ def scaled_procrustes(X, Y, scaling=False, primal=None):
     primal: bool or None, optional,
          Whether the SVD is done on the YX^T (primal) or Y^TX (dual)
          if None primal is used iff n_features <= n_timeframes
-
     Returns
     -------
-    R: (n_features, n_features) nd array
+    R: (b, n_features, n_features) nd array
         transformation matrix
-    sc: int
+    sc: (b,) nd array
         scaling parameter
     """
     X = X.astype(np.float64, copy=False)
     Y = Y.astype(np.float64, copy=False)
-    if np.linalg.norm(X) == 0 or np.linalg.norm(Y) == 0:
-        return np.eye(X.shape[1]), 1
-    if primal is None:
-        primal = X.shape[0] >= X.shape[1]
-    if primal:
-        A = Y.T.dot(X)
-        if A.shape[0] == A.shape[1]:
-            A += 1.0e-18 * np.eye(A.shape[0])
-        U, s, V = linalg.svd(A, full_matrices=0)
-        R = U.dot(V)
-    else:  # "dual" mode
-        Uy, sy, Vy = linalg.svd(Y, full_matrices=0)
-        Ux, sx, Vx = linalg.svd(X, full_matrices=0)
-        A = np.diag(sy).dot(Uy.T).dot(Ux).dot(np.diag(sx))
-        U, s, V = linalg.svd(A)
-        R = Vy.T.dot(U).dot(V).dot(Vx)
 
+    b, n_samples, n_features = X.shape
+    X_norm = np.linalg.norm(X.reshape(b, -1), axis=1)
+
+    if primal is None:
+        primal = n_samples >= n_features
+    if primal:
+        A = Y.transpose(0, 2, 1) @ X
+        if A.shape[1] == A.shape[2]:
+            A += 1.0e-18 * np.eye(A.shape[1])
+        U, s, V = np.linalg.svd(A, full_matrices=0)
+        R = U @ V
+    else:  # "dual" mode
+        Uy, sy, Vy = np.linalg.svd(Y, full_matrices=0)
+        Ux, sx, Vx = np.linalg.svd(X, full_matrices=0)
+        A = np.einsum(
+            "bij,bjk->bik",
+            sy[..., None] * np.eye(sy.shape[-1]),
+            Uy.transpose(0, 2, 1),
+        )
+        A = A @ Ux @ (sx[..., None] * np.eye(sx.shape[-1]))
+        U, s, V = np.linalg.svd(A)
+        R = Vy.transpose(0, 2, 1) @ U @ V @ Vx
     if scaling:
-        sc = s.sum() / (np.linalg.norm(X) ** 2)
+        sc = s.sum(axis=-1) / (X_norm**2)
     else:
-        sc = 1
-    return R.T, sc
+        sc = np.ones(b)
+
+    return R.transpose(0, 2, 1), sc
 
 
 class Procrustes(BaseAlignment):
@@ -98,4 +104,4 @@ class Procrustes(BaseAlignment):
 
     def transform(self, X):
         """Transform X using optimal transform computed during fit."""
-        return X.dot(self.R) * self.scale
+        return X @ self.R * self.scale[:, None, None]
