@@ -140,7 +140,7 @@ class GroupAlignment(TransformerMixin, BaseEstimator):
             fit_ = []
             for left_out_sub in self.subject_keys_:
                 _, external_template = _fit_template(
-                    [v for k, v in X.items() if k != left_out_sub],
+                    np.array([v for k, v in X.items() if k != left_out_sub]),
                     self.method_,
                     self.labels_,
                     self.n_jobs,
@@ -149,13 +149,13 @@ class GroupAlignment(TransformerMixin, BaseEstimator):
                     self.scale_template,
                 )
                 pairwise_fit_ = _map_to_target(
-                    [X[left_out_sub]],
+                    X[left_out_sub][None, ...],
                     external_template,
                     self.method_,
                     self.labels_,
                     self.n_jobs,
                     self.verbose,
-                )[0]
+                )
                 fit_.append(pairwise_fit_)
 
         else:  # Pairwise alignment
@@ -168,33 +168,8 @@ class GroupAlignment(TransformerMixin, BaseEstimator):
                 self.verbose,
             )
 
-        self.fitted_estimators = dict(
-            zip(self.subject_keys_, fit_, strict=False)
-        )
+        self.fitted_estimator = fit_
         return self
-
-    def _transform_one_array(self, X, estimator):
-        """Transform a single subject's data using a fitted estimator.
-
-        Parameters
-        ----------
-        X : array-like
-            Subject data to transform. Should have the same number of
-            voxels/columns as the data used during fitting.
-        estimator : A fitted alignment estimator
-            The fitted alignment estimator to use for transformation.
-
-        Returns
-        -------
-        array-like
-            Aligned subject data.
-
-        Raises
-        ------
-        ValueError
-            If the estimator has not been fitted yet.
-        """
-        return estimator.transform(X)
 
     def transform(self, X):
         """Transform the input arrays using the fitted model.
@@ -211,7 +186,7 @@ class GroupAlignment(TransformerMixin, BaseEstimator):
         dict of array-like
             Dictionary with transformed subject data.
         """
-        if not hasattr(self, "fitted_estimators"):
+        if not hasattr(self, "fitted_estimator"):
             raise ValueError(
                 "This instance has not been fitted yet. "
                 "Please call 'fit' before 'transform'."
@@ -225,10 +200,10 @@ class GroupAlignment(TransformerMixin, BaseEstimator):
                 "Please check the input keys."
             )
 
-        return {
-            key: self._transform_one_array(X[key], self.fitted_estimators[key])
-            for key in keys
-        }
+        X_ = np.array(list(X.values()))
+        X_pred = self.fitted_estimator.transform(X_)
+
+        return {key: X_pred[i] for i, key in enumerate(keys)}
 
     # Make inherited function harmless
     def fit_transform(self):
