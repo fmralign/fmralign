@@ -164,7 +164,8 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
     X : ndarray
         The data array of shape (n_samples, n_features).
     labels : 1D np.ndarray or None
-        Labels for the parcellation of the data.
+        Labels for the parcellation of the data. If None, a single label
+        will be created for all features.
     threshold : int, default=1000
         The threshold for the maximum size of a parcel. If any parcel exceeds this size,
         a warning will be raised.
@@ -179,10 +180,6 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
     if labels is None:
         # If no labels are provided, create a single label for the whole brain
         labels = np.ones(X.shape[1], dtype=int)
-        warnings.warn(
-            "No labels provided, using a single label for all features.",
-            stacklevel=2,
-        )
     else:
         if len(labels) != X.shape[1]:
             raise ValueError(
