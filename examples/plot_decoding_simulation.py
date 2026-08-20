@@ -267,9 +267,9 @@ n_samples = [10, 100, 1000, 10000]
 snrs = [-10, 0, 10, 20]
 n_repeats = 5
 
-fig, axes = plt.subplots(1, len(snrs), figsize=(4 * len(snrs), 4), sharey=True)
+fig, axes = plt.subplots(2, 2, figsize=(6, 6.5), sharey=True)
 
-for ax, snr in zip(axes, snrs, strict=True):
+for ax, snr in zip(axes.ravel(), snrs, strict=True):
     for method in methods:
         scores = np.array(
             [
@@ -290,22 +290,22 @@ for ax, snr in zip(axes, snrs, strict=True):
         )
     ax.axhline(0.5, color="k", linestyle="--", label="Chance level")
     ax.set_xscale("log")
-    ax.set_xlabel("Number of alignment samples")
-    ax.set_title(f"snr={snr}")
+    ax.set_xlabel("N samples")
+    ax.set_ylabel("Target score")
+    ax.set_title(f"SNR={snr} dB")
     ax.set_ylim(0.4, 1)
     ax.set_box_aspect(1)
 
-axes[0].set_ylabel("Decoding accuracy on target subject")
-handles, labels = axes[0].get_legend_handles_labels()
+handles, labels = axes[0, 0].get_legend_handles_labels()
 fig.legend(
     handles,
     labels,
     loc="upper center",
-    bbox_to_anchor=(0.5, -0.05),
+    bbox_to_anchor=(0.5, 0.1),
     ncol=len(labels),
 )
 fig.suptitle("Effect of alignment sample size and SNR on transfer accuracy")
-fig.tight_layout()
+fig.tight_layout(rect=(0, 0.1, 1, 0.98))
 
 # %%
 # Conclusion
