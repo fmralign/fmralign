@@ -6,7 +6,7 @@ This example uses simulated data to study how functional alignment
 helps a classifier trained on one subject (the source) generalize to
 another subject (the target). This example is inspired by this
 `Nilearn simulation
-<https://nilearn.github.io/dev/auto_examples/02_decoding/plot_simulated_data.html>`_.# noqa: E501
+<https://nilearn.github.io/dev/auto_examples/02_decoding/plot_simulated_data.html>`_.
 
 Two subjects share the same underlying cognitive signal, but this
 signal is expressed through subject-specific spatial patterns, and is
@@ -228,8 +228,8 @@ for method in methods:
 plot_patterns(aligned_weights, methods, "Aligned SVM weights")
 
 # %%
-# Effect of the number of alignment samples and of the SNR
-# --------------------------------------------------------
+# Influence of the number of alignment samples and SNR
+# ----------------------------------------------------
 # We repeat the simulation many times to study how decoding accuracy
 # on the target subject depends on the amount of data available for
 # alignment and on the signal-to-noise ratio, for each method.
@@ -297,7 +297,13 @@ for ax, snr in zip(axes, snrs, strict=True):
 
 axes[0].set_ylabel("Decoding accuracy on target subject")
 handles, labels = axes[0].get_legend_handles_labels()
-fig.legend(handles, labels, bbox_to_anchor=(1.02, 0.5), loc="center left")
+fig.legend(
+    handles,
+    labels,
+    loc="upper center",
+    bbox_to_anchor=(0.5, -0.05),
+    ncol=len(labels),
+)
 fig.suptitle("Effect of alignment sample size and SNR on transfer accuracy")
 fig.tight_layout()
 
@@ -315,11 +321,11 @@ fig.tight_layout()
 # In high-SNR settings, such as with statistical maps, Optimal Transport
 # performs best, thanks to its ability to capture finer spatial patterns.
 #
-# Ridge regression requires estimating an ``n_{voxels} x n_{voxels}`` matrix.
+# Ridge regression requires estimating a
+# :math:`n_{\mathrm{voxels}} \times n_{\mathrm{voxels}}` matrix.
 # Consequently, it typically requires tens of thousands of alignment samples
-# to be reliably estimated, having mildest regularization of the three methods.
+# to be reliably estimated, as it has the mildest regularization of the
+# three methods.
 #
 # In practice, the best alignment method depends on both the type of data
 # and the number of samples available for alignment.
-#
-# sphinx_gallery_thumbnail_number = 1
