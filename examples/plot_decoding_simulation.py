@@ -315,7 +315,9 @@ fig.tight_layout()
 # subject compared with the unaligned baseline. This improvement generally
 # increases with the number of samples used for alignment.
 #
-# In low-SNR settings, such as with BOLD signals, Procrustes performs best.
+# In low-SNR settings, such as with
+# `BOLD <https://nilearn.github.io/dev/glossary.html#term-BOLD>`_
+# signals, Procrustes performs best.
 # Its highly constrained alignment matrix makes it more robust to noise.
 #
 # In high-SNR settings, such as with statistical maps, Optimal Transport
