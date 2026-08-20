@@ -306,7 +306,7 @@
 <div class="viewcode-block" id="RidgeAlignment">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.RidgeAlignment.html#fmralign.methods.RidgeAlignment">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RidgeAlignment</span><span class="p">(</span><span class="n">BaseAlignment</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">    Compute a scikit-estimator R using a mixing matrix M s.t Frobenius</span>
 <span class="sd">    norm :math:`|| XM - Y ||^2 + alpha * ||M||^2` is minimized.</span>
 <span class="sd">    cross-validation is used to find the optimal alpha.</span>
@@ -328,7 +328,7 @@
 <span class="sd">        - integer, to specify the number of folds.</span>
 <span class="sd">        - An object to be used as a cross-validation generator.</span>
 <span class="sd">        - An iterable yielding train/test splits.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
 <div class="viewcode-block" id="RidgeAlignment.__init__">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.RidgeAlignment.html#fmralign.methods.RidgeAlignment.__init__">[docs]</a>
@@ -340,7 +340,7 @@
 <div class="viewcode-block" id="RidgeAlignment.fit">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.RidgeAlignment.html#fmralign.methods.RidgeAlignment.fit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        Fit R s.t. :math:`|| XR - Y ||^2 + alpha ||R||^2` is minimized with cv</span>
 
 <span class="sd">        Parameters</span>
@@ -349,7 +349,7 @@
 <span class="sd">            source data</span>
 <span class="sd">        Y: (n_samples, n_features) nd array</span>
 <span class="sd">            target data</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">RidgeCV</span><span class="p">(</span>
             <span class="n">alphas</span><span class="o">=</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span>
@@ -357,7 +357,7 @@
                 <span class="k">else</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
             <span class="p">),</span>
             <span class="n">fit_intercept</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">scoring</span><span class="o">=</span><span class="s2">&quot;r2&quot;</span><span class="p">,</span>
+            <span class="n">scoring</span><span class="o">=</span><span class="s2">"r2"</span><span class="p">,</span>
             <span class="n">cv</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cv</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
@@ -367,7 +367,7 @@
 <div class="viewcode-block" id="RidgeAlignment.transform">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.RidgeAlignment.html#fmralign.methods.RidgeAlignment.transform">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform X using optimal transform computed during fit.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Transform X using optimal transform computed during fit."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
 </div>
 

@@ -318,7 +318,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_convert_to_multi_masker</span><span class="p">(</span><span class="n">masker</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a NiftiMasker to a MultiNiftiMasker or a SurfaceMasker to a</span>
+<span class="w">    </span><span class="sd">"""Convert a NiftiMasker to a MultiNiftiMasker or a SurfaceMasker to a</span>
 <span class="sd">    MultiSurfaceMasker.</span>
 
 <span class="sd">    Note: A deep copy of the masker is created to avoid modifying the original</span>
@@ -334,7 +334,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    multi_masker: MultiNiftiMasker or MultiSurfaceMasker</span>
 <span class="sd">        The converted masker.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">multi_masker</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">masker</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">masker</span><span class="p">,</span> <span class="n">NiftiMasker</span><span class="p">):</span>
@@ -346,15 +346,15 @@
         <span class="n">multi_masker</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">multi_masker</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Masker must be a NiftiMasker or SurfaceMasker.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Masker must be a NiftiMasker or SurfaceMasker."</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="get_labels">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.embeddings.parcellation.get_labels.html#fmralign.embeddings.parcellation.get_labels">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_labels</span><span class="p">(</span>
-    <span class="n">imgs</span><span class="p">,</span> <span class="n">masker</span><span class="p">,</span> <span class="n">n_pieces</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">clustering</span><span class="o">=</span><span class="s2">&quot;ward&quot;</span><span class="p">,</span> <span class="n">smoothing_fwhm</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span>
+    <span class="n">imgs</span><span class="p">,</span> <span class="n">masker</span><span class="p">,</span> <span class="n">n_pieces</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">clustering</span><span class="o">=</span><span class="s2">"ward"</span><span class="p">,</span> <span class="n">smoothing_fwhm</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate an array of labels for each voxel in the data.</span>
+<span class="w">    </span><span class="sd">"""Generate an array of labels for each voxel in the data.</span>
 
 <span class="sd">    Use nilearn Parcellation class in our pipeline. It is used to find local</span>
 <span class="sd">    regions of the brain in which alignment will be later applied. For</span>
@@ -373,8 +373,8 @@
 <span class="sd">        http://nilearn.github.io/manipulating_images/masker_objects.html</span>
 <span class="sd">    clustering: string or 3D Niimg</span>
 <span class="sd">        If you aim for speed, choose k-means (and check kmeans_smoothing_fwhm parameter)</span>
-<span class="sd">        If you want spatially connected and/or reproducible regions use &#39;ward&#39;</span>
-<span class="sd">        If you want balanced clusters (especially from timeseries) used &#39;hierarchical_kmeans&#39;</span>
+<span class="sd">        If you want spatially connected and/or reproducible regions use 'ward'</span>
+<span class="sd">        If you want balanced clusters (especially from timeseries) used 'hierarchical_kmeans'</span>
 <span class="sd">        If 3D Niimg, image used as predefined clustering, n_pieces is ignored</span>
 <span class="sd">    smoothing_fwhm: None or int</span>
 <span class="sd">        By default 5mm smoothing will be applied before kmeans clustering to have</span>
@@ -387,12 +387,12 @@
 <span class="sd">    -------</span>
 <span class="sd">    labels : list of ints (len n_features)</span>
 <span class="sd">        Parcellation of features in clusters</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># check if clustering is provided</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">clustering</span><span class="p">,</span> <span class="n">nib</span><span class="o">.</span><span class="n">nifti1</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">n_pieces</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s2">&quot;Clustering image provided, n_pieces ignored.&quot;</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span>
+                <span class="s2">"Clustering image provided, n_pieces ignored."</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span>
             <span class="p">)</span>
         <span class="n">check_same_fov</span><span class="p">(</span><span class="n">masker</span><span class="o">.</span><span class="n">mask_img_</span><span class="p">,</span> <span class="n">clustering</span><span class="p">)</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="n">apply_mask_fmri</span><span class="p">(</span><span class="n">clustering</span><span class="p">,</span> <span class="n">masker</span><span class="o">.</span><span class="n">mask_img_</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
@@ -400,7 +400,7 @@
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">clustering</span><span class="p">,</span> <span class="n">SurfaceImage</span><span class="p">):</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="n">masker</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">clustering</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
-    <span class="c1"># otherwise check it&#39;s needed, if not return 1 everywhere</span>
+    <span class="c1"># otherwise check it's needed, if not return 1 everywhere</span>
     <span class="k">elif</span> <span class="n">n_pieces</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span>
             <span class="nb">int</span><span class="p">(</span><span class="n">masker</span><span class="o">.</span><span class="n">mask_img_</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span>
@@ -408,7 +408,7 @@
 
     <span class="c1"># otherwise check requested clustering method</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">clustering</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">n_pieces</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">clustering</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;kmeans&quot;</span><span class="p">,</span> <span class="s2">&quot;hierarchical_kmeans&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">clustering</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"kmeans"</span><span class="p">,</span> <span class="s2">"hierarchical_kmeans"</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span>
             <span class="n">smoothing_fwhm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="p">):</span>
             <span class="n">images_to_parcel</span> <span class="o">=</span> <span class="n">smooth_img</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">smoothing_fwhm</span><span class="p">)</span>
@@ -417,11 +417,11 @@
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">masker</span><span class="p">,</span> <span class="n">NiftiMasker</span> <span class="o">|</span> <span class="n">SurfaceMasker</span><span class="p">):</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s2">&quot;Converting masker to multi-masker for compatibility&quot;</span>
-                <span class="s2">&quot; with Nilearn Parcellations class. This conversion does&quot;</span>
-                <span class="s2">&quot; not affect the original masker. &quot;</span>
-                <span class="s2">&quot;See https://github.com/nilearn/nilearn/issues/5926&quot;</span>
-                <span class="s2">&quot; for more details.&quot;</span><span class="p">,</span>
+                <span class="s2">"Converting masker to multi-masker for compatibility"</span>
+                <span class="s2">" with Nilearn Parcellations class. This conversion does"</span>
+                <span class="s2">" not affect the original masker. "</span>
+                <span class="s2">"See https://github.com/nilearn/nilearn/issues/5926"</span>
+                <span class="s2">" for more details."</span><span class="p">,</span>
                 <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">masker_</span> <span class="o">=</span> <span class="n">_convert_to_multi_masker</span><span class="p">(</span><span class="n">masker</span><span class="p">)</span>
@@ -440,14 +440,14 @@
 
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;&#39;clustering&#39; should be a string or a 3D Niimg&quot;</span>
-            <span class="s2">&quot;and n_pieces should be an int &gt;= 1&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;found </span><span class="si">{</span><span class="n">clustering</span><span class="si">=}</span><span class="s2"> and </span><span class="si">{</span><span class="n">n_pieces</span><span class="si">=}</span><span class="s2">.&quot;</span>
+            <span class="s2">"'clustering' should be a string or a 3D Niimg"</span>
+            <span class="s2">"and n_pieces should be an int &gt;= 1"</span>
+            <span class="sa">f</span><span class="s2">"found </span><span class="si">{</span><span class="n">clustering</span><span class="si">=}</span><span class="s2"> and </span><span class="si">{</span><span class="n">n_pieces</span><span class="si">=}</span><span class="s2">."</span>
         <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">verbose</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The alignment will be applied on parcels of sizes </span><span class="si">{</span><span class="n">counts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"The alignment will be applied on parcels of sizes </span><span class="si">{</span><span class="n">counts</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">labels</span></div>
 
@@ -456,7 +456,7 @@
 <div class="viewcode-block" id="get_adjacency_from_labels">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.embeddings.parcellation.get_adjacency_from_labels.html#fmralign.embeddings.parcellation.get_adjacency_from_labels">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_adjacency_from_labels</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Creates a sparse matrix where element (i,j) is 1</span>
 <span class="sd">    if labels[i] == labels[j], 0 otherwise.</span>
 
@@ -469,7 +469,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    sparse_matrix: sparse scipy.sparse.coo_matrix</span>
 <span class="sd">        of shape (len(labels), len(labels))</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">n_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
     <span class="n">unique_labels</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">return_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>

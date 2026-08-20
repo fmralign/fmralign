@@ -311,19 +311,19 @@
 <div class="viewcode-block" id="PairwiseAlignment">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">PairwiseAlignment</span><span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Performs pairwise alignment between two subjects.</span>
+<span class="w">    </span><span class="sd">"""Performs pairwise alignment between two subjects.</span>
 
-<span class="sd">    This class performs source-to-target alignment of two subjects&#39; data.</span>
+<span class="sd">    This class performs source-to-target alignment of two subjects' data.</span>
 <span class="sd">    It supports various alignment methods and can process data in parallel.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    method : str or a `BaseAlignment` instance, default=&quot;identity&quot;</span>
+<span class="sd">    method : str or a `BaseAlignment` instance, default="identity"</span>
 <span class="sd">        The alignment method to use. It can be a string representing the method name</span>
 <span class="sd">        or an instance of a class derived from `BaseAlignment`. Available methods include:</span>
-<span class="sd">        [&quot;identity&quot;, &quot;procrustes&quot;, &quot;ot&quot;, &quot;sparseuot&quot;, &quot;ridge&quot;].</span>
+<span class="sd">        ["identity", "procrustes", "ot", "sparseuot", "ridge"].</span>
 <span class="sd">    labels : array-like or None, default=None</span>
-<span class="sd">        Describes each voxel label&#39;s in the case of non-overlapping parcels.</span>
+<span class="sd">        Describes each voxel label's in the case of non-overlapping parcels.</span>
 <span class="sd">        If provided, local alignments can be performed in parallel.</span>
 <span class="sd">        If None, global alignment is performed across all features.</span>
 <span class="sd">    n_jobs : int, default=1</span>
@@ -347,17 +347,17 @@
 <span class="sd">    &gt;&gt;&gt; X = np.random.rand(10, 5)</span>
 <span class="sd">    &gt;&gt;&gt; Y = np.random.rand(10, 5)</span>
 <span class="sd">    &gt;&gt;&gt; test_data = np.random.rand(8, 5)</span>
-<span class="sd">    &gt;&gt;&gt; aligner = PairwiseAlignment(method=&quot;procrustes&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; aligner = PairwiseAlignment(method="procrustes")</span>
 <span class="sd">    &gt;&gt;&gt; aligner.fit(X, Y)</span>
-<span class="sd">    PairwiseAlignment(method=&#39;procrustes&#39;)</span>
+<span class="sd">    PairwiseAlignment(method='procrustes')</span>
 <span class="sd">    &gt;&gt;&gt; aligned_data = aligner.transform(test_data)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
 <div class="viewcode-block" id="PairwiseAlignment.__init__">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;identity&quot;</span><span class="p">,</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">"identity"</span><span class="p">,</span>
         <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
@@ -371,7 +371,7 @@
 <div class="viewcode-block" id="PairwiseAlignment.fit">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment.fit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit the pairwise alignment model to the data.</span>
+<span class="w">        </span><span class="sd">"""Fit the pairwise alignment model to the data.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -379,7 +379,7 @@
 <span class="sd">            Source data for alignment of shape (n_samples, n_features).</span>
 <span class="sd">        Y : array-like</span>
 <span class="sd">            Target data for alignment of shape (n_samples, n_features).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="c1"># Validate input data</span>
         <span class="n">X_</span> <span class="o">=</span> <span class="p">[</span><span class="n">X</span><span class="p">]</span>
         <span class="n">Y_</span> <span class="o">=</span> <span class="n">_check_target</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
@@ -402,7 +402,7 @@
 <div class="viewcode-block" id="PairwiseAlignment.transform">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment.transform">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform the input arrays using the fitted model.</span>
+<span class="w">        </span><span class="sd">"""Transform the input arrays using the fitted model.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -415,11 +415,11 @@
 <span class="sd">        -------</span>
 <span class="sd">        dict of array-like</span>
 <span class="sd">            Dictionary with transformed subject data.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;fitted_estimator&quot;</span><span class="p">):</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">"fitted_estimator"</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;This instance has not been fitted yet. &quot;</span>
-                <span class="s2">&quot;Please call &#39;fit&#39; before &#39;transform&#39;.&quot;</span>
+                <span class="s2">"This instance has not been fitted yet. "</span>
+                <span class="s2">"Please call 'fit' before 'transform'."</span>
             <span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitted_estimator</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span></div>
@@ -429,12 +429,12 @@
 <div class="viewcode-block" id="PairwiseAlignment.fit_transform">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment.fit_transform">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Parent method not applicable here.</span>
+<span class="w">        </span><span class="sd">"""Parent method not applicable here.</span>
 
 <span class="sd">        Will raise AttributeError if called.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
-            <span class="s2">&quot;type object &#39;PairwiseAlignment&#39; has no &#39;fit_transform&#39; attribute&quot;</span>
+            <span class="s2">"type object 'PairwiseAlignment' has no 'fit_transform' attribute"</span>
         <span class="p">)</span></div>
 </div>
 

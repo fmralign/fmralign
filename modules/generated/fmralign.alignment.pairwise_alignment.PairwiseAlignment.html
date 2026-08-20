@@ -372,9 +372,9 @@ If None, global alignment is performed across all features.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">test_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span> <span class="o">=</span> <span class="n">PairwiseAlignment</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;procrustes&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span> <span class="o">=</span> <span class="n">PairwiseAlignment</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">"procrustes"</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">aligner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
-<span class="go">PairwiseAlignment(method=&#39;procrustes&#39;)</span>
+<span class="go">PairwiseAlignment(method='procrustes')</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">aligned_data</span> <span class="o">=</span> <span class="n">aligner</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
 </pre></div>
 </div>

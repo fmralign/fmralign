@@ -305,7 +305,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">scaled_procrustes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">primal</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">    Compute a mixing matrix R and a scaling sc such that Frobenius norm</span>
 <span class="sd">    :math:`||sc RX - Y||^2` is minimized and R is an orthogonal matrix</span>
 
@@ -331,7 +331,7 @@
 <span class="sd">        transformation matrix</span>
 <span class="sd">    sc: int</span>
 <span class="sd">        scaling parameter</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -344,7 +344,7 @@
             <span class="n">A</span> <span class="o">+=</span> <span class="mf">1.0e-18</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">U</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">R</span> <span class="o">=</span> <span class="n">U</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>  <span class="c1"># &quot;dual&quot; mode</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># "dual" mode</span>
         <span class="n">Uy</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">Vy</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">Ux</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">Vx</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sy</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Uy</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Ux</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sx</span><span class="p">))</span>
@@ -361,7 +361,7 @@
 <div class="viewcode-block" id="Procrustes">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.Procrustes.html#fmralign.methods.Procrustes">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Procrustes</span><span class="p">(</span><span class="n">BaseAlignment</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">    Compute a orthogonal mixing matrix R and a scaling sc.</span>
 <span class="sd">    These are calculated such that Frobenius norm :math:`||sc RX - Y||^2` is minimized.</span>
 
@@ -376,7 +376,7 @@
 <span class="sd">        Optimal orthogonal transform</span>
 <span class="sd">    scale: float,</span>
 <span class="sd">               inferred scaling parameter</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
 <div class="viewcode-block" id="Procrustes.__init__">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.Procrustes.html#fmralign.methods.Procrustes.__init__">[docs]</a>
@@ -388,7 +388,7 @@
 <div class="viewcode-block" id="Procrustes.fit">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.Procrustes.html#fmralign.methods.Procrustes.fit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        Fit orthogonal R s.t. :math:`||sc XR - Y||^2`</span>
 
 <span class="sd">        Parameters</span>
@@ -397,7 +397,7 @@
 <span class="sd">            source data</span>
 <span class="sd">        Y: (n_samples, n_features) nd array</span>
 <span class="sd">            target data</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">R</span><span class="p">,</span> <span class="n">sc</span> <span class="o">=</span> <span class="n">scaled_procrustes</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scaling</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">sc</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">R</span>
@@ -407,7 +407,7 @@
 <div class="viewcode-block" id="Procrustes.transform">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.Procrustes.html#fmralign.methods.Procrustes.transform">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform X using optimal transform computed during fit.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Transform X using optimal transform computed during fit."""</span>
         <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span></div>
 </div>
 

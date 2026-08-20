@@ -343,7 +343,7 @@ Files is the list of paths for each subjects.
 df is a dataframe with metadata about each of them.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.fetch_example_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_ibc_subjects_contrasts</span>
 
-<a href="https://docs.python.org/3.10/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">files</span></a><span class="p">,</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">,</span> <a href="https://docs.python.org/3.10/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">_</span></a> <span class="o">=</span> <span class="n">fetch_ibc_subjects_contrasts</span><span class="p">([</span><span class="s2">&quot;sub-01&quot;</span><span class="p">,</span> <span class="s2">&quot;sub-04&quot;</span><span class="p">])</span>
+<a href="https://docs.python.org/3.10/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">files</span></a><span class="p">,</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">,</span> <a href="https://docs.python.org/3.10/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">_</span></a> <span class="o">=</span> <span class="n">fetch_ibc_subjects_contrasts</span><span class="p">([</span><span class="s2">"sub-01"</span><span class="p">,</span> <span class="s2">"sub-04"</span><span class="p">])</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[get_dataset_dir] Dataset directory found: /home/runner/nilearn_data/ibc
@@ -362,9 +362,9 @@ surface template.</p>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">project_to_surface</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Util function for loading and projecting volumetric images.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Util function for loading and projecting volumetric images."""</span>
     <span class="n">surface_image</span> <span class="o">=</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage.from_volume" title="nilearn.surface.SurfaceImage.from_volume" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-method"><span class="n">SurfaceImage</span><span class="o">.</span><span class="n">from_volume</span></a><span class="p">(</span>
-        <span class="n">mesh</span><span class="o">=</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.Bunch.html#sklearn.utils.Bunch" title="sklearn.utils.Bunch" class="sphx-glr-backref-module-sklearn-utils sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fsaverage_meshes</span></a><span class="p">[</span><span class="s2">&quot;pial&quot;</span><span class="p">],</span>
+        <span class="n">mesh</span><span class="o">=</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.Bunch.html#sklearn.utils.Bunch" title="sklearn.utils.Bunch" class="sphx-glr-backref-module-sklearn-utils sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fsaverage_meshes</span></a><span class="p">[</span><span class="s2">"pial"</span><span class="p">],</span>
         <span class="n">volume_img</span><span class="o">=</span><span class="n">img</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">return</span> <span class="n">surface_image</span>
@@ -373,10 +373,10 @@ surface template.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nilearn.image</span><span class="w"> </span><span class="kn">import</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.image.concat_imgs.html#nilearn.image.concat_imgs" title="nilearn.image.concat_imgs" class="sphx-glr-backref-module-nilearn-image sphx-glr-backref-type-py-function"><span class="n">concat_imgs</span></a>
 
 <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_train</span></a> <span class="o">=</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.image.concat_imgs.html#nilearn.image.concat_imgs" title="nilearn.image.concat_imgs" class="sphx-glr-backref-module-nilearn-image sphx-glr-backref-type-py-function"><span class="n">concat_imgs</span></a><span class="p">(</span>
-    <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">[(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">subject</span></a> <span class="o">==</span> <span class="s2">&quot;sub-01&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span></a> <span class="o">==</span> <span class="s2">&quot;ap&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
+    <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">[(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">subject</span></a> <span class="o">==</span> <span class="s2">"sub-01"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span></a> <span class="o">==</span> <span class="s2">"ap"</span><span class="p">)]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
 <span class="p">)</span>
 <a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">target_train</span></a> <span class="o">=</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.image.concat_imgs.html#nilearn.image.concat_imgs" title="nilearn.image.concat_imgs" class="sphx-glr-backref-module-nilearn-image sphx-glr-backref-type-py-function"><span class="n">concat_imgs</span></a><span class="p">(</span>
-    <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">[(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">subject</span></a> <span class="o">==</span> <span class="s2">&quot;sub-04&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span></a> <span class="o">==</span> <span class="s2">&quot;ap&quot;</span><span class="p">)]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
+    <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">[(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">subject</span></a> <span class="o">==</span> <span class="s2">"sub-04"</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span></a> <span class="o">==</span> <span class="s2">"ap"</span><span class="p">)]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
 <span class="p">)</span>
 
 <a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">surf_source_train</span></a> <span class="o">=</span> <span class="n">project_to_surface</span><span class="p">(</span><a href="https://nipy.org/nibabel/reference/nibabel.nifti1.html#nibabel.nifti1.Nifti1Image" title="nibabel.nifti1.Nifti1Image" class="sphx-glr-backref-module-nibabel-nifti1 sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">source_train</span></a><span class="p">)</span>
@@ -400,17 +400,17 @@ and plot it on the surface using nilearn.</p>
     <span class="p">[</span><a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">surf_source_train</span></a><span class="p">,</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">surf_target_train</span></a><span class="p">],</span>
     <span class="n">n_pieces</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
     <a href="https://nilearn.github.io/stable/modules/generated/nilearn.maskers.MultiSurfaceMasker.html#nilearn.maskers.MultiSurfaceMasker" title="nilearn.maskers.MultiSurfaceMasker" class="sphx-glr-backref-module-nilearn-maskers sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">masker</span></a><span class="o">=</span><a href="https://nilearn.github.io/stable/modules/generated/nilearn.maskers.MultiSurfaceMasker.html#nilearn.maskers.MultiSurfaceMasker" title="nilearn.maskers.MultiSurfaceMasker" class="sphx-glr-backref-module-nilearn-maskers sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">masker</span></a><span class="p">,</span>
-    <span class="n">clustering</span><span class="o">=</span><span class="s2">&quot;ward&quot;</span><span class="p">,</span>
+    <span class="n">clustering</span><span class="o">=</span><span class="s2">"ward"</span><span class="p">,</span>
 <span class="p">)</span>
 
 <a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">clustering_img</span></a> <span class="o">=</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.maskers.MultiSurfaceMasker.html#nilearn.maskers.MultiSurfaceMasker.inverse_transform" title="nilearn.maskers.MultiSurfaceMasker.inverse_transform" class="sphx-glr-backref-module-nilearn-maskers sphx-glr-backref-type-py-method"><span class="n">masker</span><span class="o">.</span><span class="n">inverse_transform</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="p">)</span>
 
 <a href="https://nilearn.github.io/stable/modules/generated/nilearn.plotting.plot_surf_roi.html#nilearn.plotting.plot_surf_roi" title="nilearn.plotting.plot_surf_roi" class="sphx-glr-backref-module-nilearn-plotting sphx-glr-backref-type-py-function"><span class="n">plotting</span><span class="o">.</span><span class="n">plot_surf_roi</span></a><span class="p">(</span>
-    <span class="n">surf_mesh</span><span class="o">=</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.Bunch.html#sklearn.utils.Bunch" title="sklearn.utils.Bunch" class="sphx-glr-backref-module-sklearn-utils sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fsaverage_meshes</span></a><span class="p">[</span><span class="s2">&quot;pial&quot;</span><span class="p">],</span>
+    <span class="n">surf_mesh</span><span class="o">=</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.Bunch.html#sklearn.utils.Bunch" title="sklearn.utils.Bunch" class="sphx-glr-backref-module-sklearn-utils sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fsaverage_meshes</span></a><span class="p">[</span><span class="s2">"pial"</span><span class="p">],</span>
     <span class="n">roi_map</span><span class="o">=</span><a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">clustering_img</span></a><span class="p">,</span>
-    <span class="n">hemi</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
-    <span class="n">view</span><span class="o">=</span><span class="s2">&quot;lateral&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Ward parcellation on the left hemisphere&quot;</span><span class="p">,</span>
+    <span class="n">hemi</span><span class="o">=</span><span class="s2">"left"</span><span class="p">,</span>
+    <span class="n">view</span><span class="o">=</span><span class="s2">"lateral"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"Ward parcellation on the left hemisphere"</span><span class="p">,</span>
 <span class="p">)</span>
 <a href="https://nilearn.github.io/stable/modules/generated/nilearn.plotting.show.html#nilearn.plotting.show" title="nilearn.plotting.show" class="sphx-glr-backref-module-nilearn-plotting sphx-glr-backref-type-py-function"><span class="n">plotting</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
@@ -426,10 +426,10 @@ Parameter smoothing_fwhm :
   self._set_arrayXarray(i, j, x)
 /home/runner/work/fmralign/fmralign/.venv/lib/python3.10/site-packages/sklearn/cluster/_agglomerative.py:321: UserWarning: the number of connected components of the connectivity matrix is 2 &gt; 1. Completing it to avoid stopping the tree early.
   connectivity, n_connected_components = _fix_connectivity(
-/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:137: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
-Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
+/home/runner/work/fmralign/fmralign/fmralign/embeddings/parcellation.py:137: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
   labels = masker.transform(parcellation.labels_img_).astype(int)
-/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:93: UserWarning: You are using the &#39;agg&#39; matplotlib backend that is non-interactive.
+/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:93: UserWarning: You are using the 'agg' matplotlib backend that is non-interactive.
 No figure will be plotted when calling matplotlib.pyplot.show() or nilearn.plotting.show().
 You can fix this by installing a different backend: for example via
         pip install PyQt6
@@ -448,7 +448,7 @@ parcellate the cortical surface.</p>
 <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_target_train</span></a> <span class="o">=</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.maskers.MultiSurfaceMasker.html#nilearn.maskers.MultiSurfaceMasker.transform" title="nilearn.maskers.MultiSurfaceMasker.transform" class="sphx-glr-backref-module-nilearn-maskers sphx-glr-backref-type-py-method"><span class="n">masker</span><span class="o">.</span><span class="n">transform</span></a><span class="p">(</span><a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">surf_target_train</span></a><span class="p">)</span>
 
 <a href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment" title="fmralign.alignment.pairwise_alignment.PairwiseAlignment" class="sphx-glr-backref-module-fmralign-alignment-pairwise_alignment sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">alignment_estimator</span></a> <span class="o">=</span> <a href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment" title="fmralign.alignment.pairwise_alignment.PairwiseAlignment" class="sphx-glr-backref-module-fmralign-alignment-pairwise_alignment sphx-glr-backref-type-py-class"><span class="n">PairwiseAlignment</span></a><span class="p">(</span>
-    <span class="n">method</span><span class="o">=</span><span class="s2">&quot;procrustes&quot;</span><span class="p">,</span>
+    <span class="n">method</span><span class="o">=</span><span class="s2">"procrustes"</span><span class="p">,</span>
     <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="o">=</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="p">,</span>
 <span class="p">)</span>
 
@@ -456,11 +456,11 @@ parcellate the cortical surface.</p>
 <a href="../modules/generated/fmralign.alignment.pairwise_alignment.PairwiseAlignment.html#fmralign.alignment.pairwise_alignment.PairwiseAlignment.fit" title="fmralign.alignment.pairwise_alignment.PairwiseAlignment.fit" class="sphx-glr-backref-module-fmralign-alignment-pairwise_alignment sphx-glr-backref-type-py-method"><span class="n">alignment_estimator</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_source_train</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_target_train</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:106: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
-Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:106: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
   data_source_train = masker.transform(surf_source_train)
-/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:107: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
-Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
+/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:107: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
   data_target_train = masker.transform(surf_target_train)
 /home/runner/work/fmralign/fmralign/fmralign/alignment/pairwise_alignment.py:79: UserWarning:
  Some parcels are more than 1000 voxels wide it can slow down alignment,especially optimal_transport :
@@ -1049,17 +1049,17 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 the data on the surface and apply the learned alignment operator.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">surf_audio_source</span></a> <span class="o">=</span> <span class="n">project_to_surface</span><span class="p">(</span>
     <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">[</span>
-        <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">subject</span></a> <span class="o">==</span> <span class="s2">&quot;sub-01&quot;</span><span class="p">)</span>
-        <span class="o">&amp;</span> <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">condition</span></a> <span class="o">==</span> <span class="s2">&quot;audio_sentence&quot;</span><span class="p">)</span>
-        <span class="o">&amp;</span> <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span></a> <span class="o">==</span> <span class="s2">&quot;pa&quot;</span><span class="p">)</span>
+        <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">subject</span></a> <span class="o">==</span> <span class="s2">"sub-01"</span><span class="p">)</span>
+        <span class="o">&amp;</span> <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">condition</span></a> <span class="o">==</span> <span class="s2">"audio_sentence"</span><span class="p">)</span>
+        <span class="o">&amp;</span> <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span></a> <span class="o">==</span> <span class="s2">"pa"</span><span class="p">)</span>
     <span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
 <span class="p">)</span>
 
 <a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">surf_audio_target</span></a> <span class="o">=</span> <span class="n">project_to_surface</span><span class="p">(</span>
     <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">[</span>
-        <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">subject</span></a> <span class="o">==</span> <span class="s2">&quot;sub-04&quot;</span><span class="p">)</span>
-        <span class="o">&amp;</span> <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">condition</span></a> <span class="o">==</span> <span class="s2">&quot;audio_sentence&quot;</span><span class="p">)</span>
-        <span class="o">&amp;</span> <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span></a> <span class="o">==</span> <span class="s2">&quot;pa&quot;</span><span class="p">)</span>
+        <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">subject</span></a> <span class="o">==</span> <span class="s2">"sub-04"</span><span class="p">)</span>
+        <span class="o">&amp;</span> <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">condition</span></a> <span class="o">==</span> <span class="s2">"audio_sentence"</span><span class="p">)</span>
+        <span class="o">&amp;</span> <span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="pandas.Series" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span></a> <span class="o">==</span> <span class="s2">"pa"</span><span class="p">)</span>
     <span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
 <span class="p">)</span>
 
@@ -1068,8 +1068,8 @@ the data on the surface and apply the learned alignment operator.</p>
 <a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">surf_aligned</span></a> <span class="o">=</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.maskers.MultiSurfaceMasker.html#nilearn.maskers.MultiSurfaceMasker.inverse_transform" title="nilearn.maskers.MultiSurfaceMasker.inverse_transform" class="sphx-glr-backref-module-nilearn-maskers sphx-glr-backref-type-py-method"><span class="n">masker</span><span class="o">.</span><span class="n">inverse_transform</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">aligned_target_data</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:140: FutureWarning: boolean values for &#39;standardize&#39; will be deprecated in nilearn 0.15.0.
-Use &#39;zscore_sample&#39; instead of &#39;True&#39; or use &#39;None&#39; instead of &#39;False&#39;.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/fmralign/fmralign/examples/plot_surf_alignment.py:140: FutureWarning: boolean values for 'standardize' will be deprecated in nilearn 0.15.0.
+Use 'zscore_sample' instead of 'True' or use 'None' instead of 'False'.
   audio_source_data = masker.transform(surf_audio_source)
 </pre></div>
 </div>
@@ -1085,30 +1085,30 @@ subject are progressively removed.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.animation</span><span class="w"> </span><span class="kn">import</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FuncAnimation.html#matplotlib.animation.FuncAnimation" title="matplotlib.animation.FuncAnimation" class="sphx-glr-backref-module-matplotlib-animation sphx-glr-backref-type-py-class"><span class="n">FuncAnimation</span></a>
 
 <a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fsaverage_sulcal</span></a> <span class="o">=</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.datasets.load_fsaverage_data.html#nilearn.datasets.load_fsaverage_data" title="nilearn.datasets.load_fsaverage_data" class="sphx-glr-backref-module-nilearn-datasets sphx-glr-backref-type-py-function"><span class="n">load_fsaverage_data</span></a><span class="p">(</span>
-    <span class="n">mesh</span><span class="o">=</span><span class="s2">&quot;fsaverage5&quot;</span><span class="p">,</span>
-    <span class="n">data_type</span><span class="o">=</span><span class="s2">&quot;sulcal&quot;</span><span class="p">,</span>
-    <span class="n">mesh_type</span><span class="o">=</span><span class="s2">&quot;inflated&quot;</span><span class="p">,</span>
+    <span class="n">mesh</span><span class="o">=</span><span class="s2">"fsaverage5"</span><span class="p">,</span>
+    <span class="n">data_type</span><span class="o">=</span><span class="s2">"sulcal"</span><span class="p">,</span>
+    <span class="n">mesh_type</span><span class="o">=</span><span class="s2">"inflated"</span><span class="p">,</span>
 <span class="p">)</span>
 
 <a href="https://docs.python.org/3.10/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plotting_params</span></a> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;bg_map&quot;</span><span class="p">:</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fsaverage_sulcal</span></a><span class="p">,</span>
-    <span class="s2">&quot;hemi&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;view&quot;</span><span class="p">:</span> <span class="s2">&quot;lateral&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;colorbar&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="s2">&quot;bg_on_data&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="s2">&quot;vmax&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-    <span class="s2">&quot;vmin&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span>
-    <span class="s2">&quot;cmap&quot;</span><span class="p">:</span> <span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span>
+    <span class="s2">"bg_map"</span><span class="p">:</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fsaverage_sulcal</span></a><span class="p">,</span>
+    <span class="s2">"hemi"</span><span class="p">:</span> <span class="s2">"left"</span><span class="p">,</span>
+    <span class="s2">"view"</span><span class="p">:</span> <span class="s2">"lateral"</span><span class="p">,</span>
+    <span class="s2">"colorbar"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">"alpha"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">"bg_on_data"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">"vmax"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s2">"vmin"</span><span class="p">:</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span>
+    <span class="s2">"cmap"</span><span class="p">:</span> <span class="s2">"coolwarm"</span><span class="p">,</span>
 <span class="p">}</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">interpolate_surf_image</span><span class="p">(</span><span class="n">surf_img1</span><span class="p">,</span> <span class="n">surf_img2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Interpolate two surface images.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Interpolate two surface images."""</span>
     <span class="c1"># Create a new surface image with the same mesh as the input</span>
     <span class="n">surf_img_interpolated</span> <span class="o">=</span> <a href="https://docs.python.org/3.10/library/copy.html#copy.deepcopy" title="copy.deepcopy" class="sphx-glr-backref-module-copy sphx-glr-backref-type-py-function"><span class="n">deepcopy</span></a><span class="p">(</span><span class="n">surf_img1</span><span class="p">)</span>
     <span class="c1"># Interpolate the data</span>
-    <span class="k">for</span> <span class="n">hemi</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="s2">&quot;right&quot;</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">hemi</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]:</span>
         <span class="n">surf_img_interpolated</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="n">hemi</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">surf_img1</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="n">hemi</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span>
             <span class="o">+</span> <span class="n">surf_img2</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="n">hemi</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span>
@@ -1131,23 +1131,23 @@ subject are progressively removed.</p>
             <a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">surf_audio_source</span></a><span class="p">,</span> <a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">surf_aligned</span></a><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span>
         <span class="p">)</span>
         <a href="https://nilearn.github.io/stable/modules/generated/nilearn.plotting.plot_surf_stat_map.html#nilearn.plotting.plot_surf_stat_map" title="nilearn.plotting.plot_surf_stat_map" class="sphx-glr-backref-module-nilearn-plotting sphx-glr-backref-type-py-function"><span class="n">plotting</span><span class="o">.</span><span class="n">plot_surf_stat_map</span></a><span class="p">(</span>
-            <span class="n">surf_mesh</span><span class="o">=</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.Bunch.html#sklearn.utils.Bunch" title="sklearn.utils.Bunch" class="sphx-glr-backref-module-sklearn-utils sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fsaverage_meshes</span></a><span class="p">[</span><span class="s2">&quot;pial&quot;</span><span class="p">],</span>
+            <span class="n">surf_mesh</span><span class="o">=</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.Bunch.html#sklearn.utils.Bunch" title="sklearn.utils.Bunch" class="sphx-glr-backref-module-sklearn-utils sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fsaverage_meshes</span></a><span class="p">[</span><span class="s2">"pial"</span><span class="p">],</span>
             <span class="n">stat_map</span><span class="o">=</span><span class="n">surf_interpolated</span><span class="p">,</span>
             <span class="n">figure</span><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span>
             <span class="o">**</span><a href="https://docs.python.org/3.10/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plotting_params</span></a><span class="p">,</span>
         <span class="p">)</span>
         <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.suptitle.html#matplotlib.pyplot.suptitle" title="matplotlib.pyplot.suptitle" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span></a><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Interpolated audio sentence alpha=</span><span class="si">{</span><span class="n">alpha</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
+            <span class="sa">f</span><span class="s2">"Interpolated audio sentence alpha=</span><span class="si">{</span><span class="n">alpha</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># Target image (frame 10)</span>
         <a href="https://nilearn.github.io/stable/modules/generated/nilearn.plotting.plot_surf_stat_map.html#nilearn.plotting.plot_surf_stat_map" title="nilearn.plotting.plot_surf_stat_map" class="sphx-glr-backref-module-nilearn-plotting sphx-glr-backref-type-py-function"><span class="n">plotting</span><span class="o">.</span><span class="n">plot_surf_stat_map</span></a><span class="p">(</span>
-            <span class="n">surf_mesh</span><span class="o">=</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.Bunch.html#sklearn.utils.Bunch" title="sklearn.utils.Bunch" class="sphx-glr-backref-module-sklearn-utils sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fsaverage_meshes</span></a><span class="p">[</span><span class="s2">&quot;pial&quot;</span><span class="p">],</span>
+            <span class="n">surf_mesh</span><span class="o">=</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.Bunch.html#sklearn.utils.Bunch" title="sklearn.utils.Bunch" class="sphx-glr-backref-module-sklearn-utils sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fsaverage_meshes</span></a><span class="p">[</span><span class="s2">"pial"</span><span class="p">],</span>
             <span class="n">stat_map</span><span class="o">=</span><a href="https://nilearn.github.io/stable/modules/generated/nilearn.surface.SurfaceImage.html#nilearn.surface.SurfaceImage" title="nilearn.surface.SurfaceImage" class="sphx-glr-backref-module-nilearn-surface sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">surf_audio_target</span></a><span class="p">,</span>
             <span class="n">figure</span><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span>
             <span class="o">**</span><a href="https://docs.python.org/3.10/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">plotting_params</span></a><span class="p">,</span>
         <span class="p">)</span>
-        <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.suptitle.html#matplotlib.pyplot.suptitle" title="matplotlib.pyplot.suptitle" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span></a><span class="p">(</span><span class="s2">&quot;Target image&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+        <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.suptitle.html#matplotlib.pyplot.suptitle" title="matplotlib.pyplot.suptitle" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span></a><span class="p">(</span><span class="s2">"Target image"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">[</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">]</span>
 
@@ -1341,42 +1341,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_img80576b6ad39f4c8687bd118b596c1451">
+  <img id="_anim_img854398a3188448a6ae04a7930c045907">
   <div class="anim-controls">
-    <input id="_anim_slider80576b6ad39f4c8687bd118b596c1451" type="range" class="anim-slider"
+    <input id="_anim_slider854398a3188448a6ae04a7930c045907" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="anim80576b6ad39f4c8687bd118b596c1451.set_frame(parseInt(this.value));">
+           oninput="anim854398a3188448a6ae04a7930c045907.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim80576b6ad39f4c8687bd118b596c1451.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim854398a3188448a6ae04a7930c045907.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="anim80576b6ad39f4c8687bd118b596c1451.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="anim854398a3188448a6ae04a7930c045907.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="anim80576b6ad39f4c8687bd118b596c1451.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="anim854398a3188448a6ae04a7930c045907.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="anim80576b6ad39f4c8687bd118b596c1451.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="anim854398a3188448a6ae04a7930c045907.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="anim80576b6ad39f4c8687bd118b596c1451.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="anim854398a3188448a6ae04a7930c045907.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="anim80576b6ad39f4c8687bd118b596c1451.play_animation()">
+      <button title="Play" aria-label="Play" onclick="anim854398a3188448a6ae04a7930c045907.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="anim80576b6ad39f4c8687bd118b596c1451.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="anim854398a3188448a6ae04a7930c045907.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="anim80576b6ad39f4c8687bd118b596c1451.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="anim854398a3188448a6ae04a7930c045907.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="anim80576b6ad39f4c8687bd118b596c1451.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="anim854398a3188448a6ae04a7930c045907.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select80576b6ad39f4c8687bd118b596c1451"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select854398a3188448a6ae04a7930c045907"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_80576b6ad39f4c8687bd118b596c1451"
+      <input type="radio" name="state" value="once" id="_anim_radio1_854398a3188448a6ae04a7930c045907"
              >
-      <label for="_anim_radio1_80576b6ad39f4c8687bd118b596c1451">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_80576b6ad39f4c8687bd118b596c1451"
+      <label for="_anim_radio1_854398a3188448a6ae04a7930c045907">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_854398a3188448a6ae04a7930c045907"
              checked>
-      <label for="_anim_radio2_80576b6ad39f4c8687bd118b596c1451">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_80576b6ad39f4c8687bd118b596c1451"
+      <label for="_anim_radio2_854398a3188448a6ae04a7930c045907">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_854398a3188448a6ae04a7930c045907"
              >
-      <label for="_anim_radio3_80576b6ad39f4c8687bd118b596c1451">Reflect</label>
+      <label for="_anim_radio3_854398a3188448a6ae04a7930c045907">Reflect</label>
     </form>
   </div>
 </div>
@@ -1386,9 +1386,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_img80576b6ad39f4c8687bd118b596c1451";
-    var slider_id = "_anim_slider80576b6ad39f4c8687bd118b596c1451";
-    var loop_select_id = "_anim_loop_select80576b6ad39f4c8687bd118b596c1451";
+    var img_id = "_anim_img854398a3188448a6ae04a7930c045907";
+    var slider_id = "_anim_slider854398a3188448a6ae04a7930c045907";
+    var loop_select_id = "_anim_loop_select854398a3188448a6ae04a7930c045907";
     var frames = new Array(12);
 
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAMgCAYAAACwGEg9AAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -64580,7 +64580,7 @@ AAAAAAaAgA4AAAAAwAAQ0AEAAAAAGAACOgAAAAAAA0BABwAAAABgAAjoAAAAAAAMAAEdAAAAAIAB\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        anim80576b6ad39f4c8687bd118b596c1451 = new Animation(frames, img_id, slider_id, 299.0,
+        anim854398a3188448a6ae04a7930c045907 = new Animation(frames, img_id, slider_id, 299.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -64589,7 +64589,7 @@ AAAAAAaAgA4AAAAAwAAQ0AEAAAAAGAACOgAAAAAAA0BABwAAAABgAAjoAAAAAAAMAAEdAAAAAIAB\
   plotting.plot_surf_stat_map(
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 27.407 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 28.442 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-surf-alignment-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/7f3e9d12ad06b317d586125843d70ff5/plot_surf_alignment.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_surf_alignment.ipynb</span></code></a></p>

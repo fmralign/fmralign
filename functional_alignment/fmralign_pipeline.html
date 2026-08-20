@@ -405,7 +405,7 @@ the prediction of left-out data for a new subject from another subjects data.</p
 <h3><span class="section-number">2.2.3.1. </span>Loading the data<a class="headerlink" href="#loading-the-data" title="Link to this heading">¶</a></h3>
 <p>We begin with the retrieval of images from two <a class="reference external" href="https://project.inria.fr/IBC/">Individual Brain Charting</a> subjects :</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.fetch_example_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_ibc_subjects_contrasts</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">files</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">fetch_ibc_subjects_contrasts</span><span class="p">([</span><span class="s1">&#39;sub-01&#39;</span><span class="p">,</span> <span class="s1">&#39;sub-02&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">files</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">fetch_ibc_subjects_contrasts</span><span class="p">([</span><span class="s1">'sub-01'</span><span class="p">,</span> <span class="s1">'sub-02'</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>Here <cite>files</cite> is the list of paths for each subject and <cite>df</cite> is a pandas Dataframe
@@ -422,12 +422,12 @@ with metadata about each of them.</p>
 <p>Select visual cortex, create a mask and resample it to the right resolution</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mask_visual</span> <span class="o">=</span> <span class="n">new_img_like</span><span class="p">(</span><span class="n">atlas</span><span class="p">,</span> <span class="n">atlas</span><span class="o">.</span><span class="n">get_fdata</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">resampled_mask_visual</span> <span class="o">=</span> <span class="n">resample_to_img</span><span class="p">(</span>
-<span class="go">    mask_visual, mask, interpolation=&quot;nearest&quot;)</span>
+<span class="go">    mask_visual, mask, interpolation="nearest")</span>
 </pre></div>
 </div>
 <p>Plot the mask we  use</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_roi</span><span class="p">(</span><span class="n">resampled_mask_visual</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Visual regions mask extracted from atlas&#39;</span><span class="p">,</span>
-<span class="go">         cut_coords=(8, -80, 9), colorbar=True, cmap=&#39;Paired&#39;)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plotting</span><span class="o">.</span><span class="n">plot_roi</span><span class="p">(</span><span class="n">resampled_mask_visual</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Visual regions mask extracted from atlas'</span><span class="p">,</span>
+<span class="go">         cut_coords=(8, -80, 9), colorbar=True, cmap='Paired')</span>
 </pre></div>
 </div>
 <figure class="align-default">
@@ -457,8 +457,8 @@ contains roughly the same signals but acquired independently.</p>
 </ul>
 </dd>
 </dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">source_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">subject</span> <span class="o">==</span> <span class="s1">&#39;sub-01&#39;</span><span class="p">][</span><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span> <span class="o">==</span> <span class="s1">&#39;ap&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">subject</span> <span class="o">==</span> <span class="s1">&#39;sub-02&#39;</span><span class="p">][</span><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span> <span class="o">==</span> <span class="s1">&#39;ap&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">source_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">subject</span> <span class="o">==</span> <span class="s1">'sub-01'</span><span class="p">][</span><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span> <span class="o">==</span> <span class="s1">'ap'</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">subject</span> <span class="o">==</span> <span class="s1">'sub-02'</span><span class="p">][</span><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span> <span class="o">==</span> <span class="s1">'ap'</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
 </pre></div>
 </div>
 <dl class="simple">
@@ -470,8 +470,8 @@ to score our predictions</p></li>
 </ul>
 </dd>
 </dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">source_test</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">subject</span> <span class="o">==</span> <span class="s1">&#39;sub-01&#39;</span><span class="p">][</span><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span> <span class="o">==</span> <span class="s1">&#39;pa&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target_test</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">subject</span> <span class="o">==</span> <span class="s1">&#39;sub-02&#39;</span><span class="p">][</span><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span> <span class="o">==</span> <span class="s1">&#39;pa&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">source_test</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">subject</span> <span class="o">==</span> <span class="s1">'sub-01'</span><span class="p">][</span><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span> <span class="o">==</span> <span class="s1">'pa'</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target_test</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">subject</span> <span class="o">==</span> <span class="s1">'sub-02'</span><span class="p">][</span><span class="n">df</span><span class="o">.</span><span class="n">acquisition</span> <span class="o">==</span> <span class="s1">'pa'</span><span class="p">]</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">values</span>
 </pre></div>
 </div>
 </section>
@@ -487,7 +487,7 @@ to score our predictions</p></li>
 the correlation of this prediction with the real signal. We also include identity (no alignment) as a baseline.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign</span><span class="w"> </span><span class="kn">import</span> <span class="n">GroupAlignment</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">fmralign.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">score_voxelwise</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;identity&quot;</span><span class="p">,</span> <span class="s2">&quot;procrustes&quot;</span><span class="p">,</span> <span class="s2">&quot;ot&quot;</span><span class="p">,</span> <span class="s2">&quot;SRM&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"identity"</span><span class="p">,</span> <span class="s2">"procrustes"</span><span class="p">,</span> <span class="s2">"ot"</span><span class="p">,</span> <span class="s2">"SRM"</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">titles</span><span class="p">,</span> <span class="n">aligned_scores</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">method</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">methods</span><span class="p">):</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="c1"># Fit the group estimator on the training data</span>
@@ -504,7 +504,7 @@ the correlation of this prediction with the real signal. We also include identit
 <span class="gp">&gt;&gt;&gt; </span>        <span class="n">target_test</span><span class="p">,</span>
 <span class="gp">&gt;&gt;&gt; </span>        <span class="n">roi_masker</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">target_pred</span><span class="p">),</span>
 <span class="gp">&gt;&gt;&gt; </span>        <span class="n">masker</span><span class="o">=</span><span class="n">roi_masker</span><span class="p">,</span>
-<span class="gp">&gt;&gt;&gt; </span>        <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;corr&quot;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">loss</span><span class="o">=</span><span class="s2">"corr"</span><span class="p">,</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="p">)</span>
 </pre></div>
 </div>

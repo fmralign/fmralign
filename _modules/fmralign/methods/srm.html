@@ -306,7 +306,7 @@
 <div class="viewcode-block" id="DetSRM">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.DetSRM.html#fmralign.methods.DetSRM">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DetSRM</span><span class="p">(</span><span class="n">BaseAlignment</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the alignment from one subjects to the shared latent response.</span>
+<span class="w">    </span><span class="sd">"""Compute the alignment from one subjects to the shared latent response.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -317,7 +317,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    W : (n_components, n_voxels) ndarray</span>
 <span class="sd">        Optimal mixing matrix</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
 <div class="viewcode-block" id="DetSRM.__init__">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.DetSRM.html#fmralign.methods.DetSRM.__init__">[docs]</a>
@@ -328,7 +328,7 @@
 <div class="viewcode-block" id="DetSRM.fit">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.DetSRM.html#fmralign.methods.DetSRM.fit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">S</span><span class="p">):</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">"""</span>
 <span class="sd">        Fit orthogonal W s.t. :math:`||X - SW||^2` is minimized</span>
 
 <span class="sd">        Parameters</span>
@@ -337,7 +337,7 @@
 <span class="sd">            Source data</span>
 <span class="sd">        S: (n_samples, n_components) ndarray</span>
 <span class="sd">            Shared response</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">U</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">((</span><span class="n">S</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Wt</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">V</span>
         <span class="k">return</span> <span class="bp">self</span></div>
@@ -346,7 +346,7 @@
 <div class="viewcode-block" id="DetSRM.transform">
 <a class="viewcode-back" href="../../../modules/generated/fmralign.methods.DetSRM.html#fmralign.methods.DetSRM.transform">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Transform X using optimal transform computed during fit.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Transform X using optimal transform computed during fit."""</span>
         <span class="k">return</span> <span class="n">X</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">Wt</span></div>
 </div>
 
