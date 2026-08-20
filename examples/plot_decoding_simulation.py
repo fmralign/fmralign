@@ -12,7 +12,7 @@ Two subjects share the same underlying cognitive signal, but this
 signal is expressed through subject-specific spatial patterns, and is
 corrupted by independent, spatially smooth noise. This mimics how the
 same mental process can produce different topographies across
-individuals in fMRI data, while a decoder trained on raw voxels does
+individuals in fMRI data, such that a decoder trained on raw voxels does
 not transfer across subjects.
 
 We compare a classifier trained directly on the source subject to
