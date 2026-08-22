@@ -142,6 +142,23 @@ Examples
     </div>
 
 
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example uses simulated data to study how functional alignment helps a classifier trained on one subject (the source) generalize to another subject (the target). This example is inspired by this Nilearn simulation.">
+
+.. only:: html
+
+  .. image:: /auto_examples/images/thumb/sphx_glr_plot_decoding_simulation_thumb.png
+    :alt:
+
+  :doc:`/auto_examples/plot_decoding_simulation`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Decoding experiment with simulated data</div>
+    </div>
+
+
 .. thumbnail-parent-div-close
 
 .. raw:: html
@@ -159,6 +176,7 @@ Examples
    /auto_examples/plot_alignment_methods_benchmark
    /auto_examples/plot_surf_alignment
    /auto_examples/plot_alignment_simulated_2D_data
+   /auto_examples/plot_decoding_simulation
 
 
 .. only:: html
