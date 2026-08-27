@@ -1,3 +1,4 @@
+import numpy as np
 from sklearn.linear_model import RidgeCV
 
 from fmralign.methods.base import BaseAlignment
@@ -5,13 +6,13 @@ from fmralign.methods.base import BaseAlignment
 
 class RidgeAlignment(BaseAlignment):
     r"""
-    Compute a scikit-estimator R using a mixing matrix M s.t Frobenius
-    norm :math:`|| XM - Y ||^2 + alpha * ||M||^2` is minimized.
+    Batched version. Compute a scikit-estimator R using a mixing matrix M s.t Frobenius
+    norm :math:`|| XM - Y ||^2 + alpha * ||M||^2` is minimized, independently
+    for each element of the batch dimension.
     cross-validation is used to find the optimal alpha.
-
     Parameters
     ----------
-    R : scikit-estimator from sklearn.linear_model.RidgeCV
+    R : list of scikit-estimators from sklearn.linear_model.RidgeCV
         with methods fit, predict
     alpha : numpy array of shape [n_alphas]
         Array of alpha values to try. Regularization strength;
@@ -34,28 +35,34 @@ class RidgeAlignment(BaseAlignment):
 
     def fit(self, X, Y):
         r"""
-        Fit R s.t. :math:`|| XR - Y ||^2 + alpha ||R||^2` is minimized with cv
-
+        Fit R s.t. :math:`|| XR - Y ||^2 + alpha ||R||^2` is minimized with cv,
+        independently for each batch element.
         Parameters
         ----------
-        X: (n_samples, n_features) nd array
+        X: (b, n_samples, n_features) nd array
             source data
-        Y: (n_samples, n_features) nd array
+        Y: (b, n_samples, n_features) nd array
             target data
         """
-        self.R = RidgeCV(
-            alphas=(
-                self.alphas
-                if self.alphas is not None
-                else [0.1, 1.0, 10.0, 100, 1000]
-            ),
-            fit_intercept=True,
-            scoring="r2",
-            cv=self.cv,
-        )
-        self.R.fit(X, Y)
+        b = X.shape[0]
+        self.R = []
+        for i in range(b):
+            r = RidgeCV(
+                alphas=(
+                    self.alphas
+                    if self.alphas is not None
+                    else [0.1, 1.0, 10.0, 100, 1000]
+                ),
+                fit_intercept=True,
+                scoring="r2",
+                cv=self.cv,
+            )
+            r.fit(X[i], Y[i])
+            self.R.append(r)
         return self
 
     def transform(self, X):
         """Transform X using optimal transform computed during fit."""
-        return self.R.predict(X)
+        return np.stack(
+            [r.predict(X[i]) for i, r in enumerate(self.R)], axis=0
+        )

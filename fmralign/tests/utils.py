@@ -162,8 +162,8 @@ def sample_labels(n_voxels=30, n_labels=1):
 
 def sample_subjects(n_subjects=3, n_features=10, n_voxels=30, n_labels=1):
     """Generate random data for multiple subjects."""
-    subjects_data = [
-        sample_one_subject(n_features, n_voxels) for _ in range(n_subjects)
-    ]
+    subjects_data = np.array(
+        [sample_one_subject(n_features, n_voxels) for _ in range(n_subjects)]
+    )
     labels = sample_labels(n_voxels, n_labels)
     return subjects_data, labels

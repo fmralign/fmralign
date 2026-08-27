@@ -84,22 +84,21 @@ class OptimalTransport(BaseAlignment):
         import torch
 
         X_torch = torch.tensor(
-            np.ascontiguousarray(X.T), device=self.device, dtype=torch.float32
+            X.swapaxes(-1, -2), device=self.device, dtype=torch.float32
         )
         Y_torch = torch.tensor(
-            np.ascontiguousarray(Y.T), device=self.device, dtype=torch.float32
+            Y.swapaxes(-1, -2), device=self.device, dtype=torch.float32
         )
 
-        M = ot.dist(X_torch, Y_torch)
-        M_normalized = ot.utils.cost_normalization(M, "max")
+        M = ot.dist_batch(X_torch, Y_torch)
+        M_normalized = M / M.amax(dim=(1, 2), keepdim=True)
 
-        res = ot.solve(
+        res = ot.solve_batch(
             M=M_normalized,
             reg=self.reg,
             tol=self.tol,
-            method="sinkhorn_log",
+            method="log_sinkhorn",
             max_iter=self.max_iter,
-            verbose=self.verbose,
             grad="detach",
             **self.kwargs,
         )
@@ -113,7 +112,7 @@ class OptimalTransport(BaseAlignment):
         """Transform X using optimal coupling computed during fit."""
         import torch
 
-        n_voxels = self.R.shape[1]
+        n_voxels = self.R.shape[2]
         R_torch = torch.tensor(self.R, device=self.device, dtype=torch.float32)
         X_torch = torch.from_numpy(X).to(torch.float32).to(self.device)
         return (X_torch @ R_torch * n_voxels).cpu().numpy()

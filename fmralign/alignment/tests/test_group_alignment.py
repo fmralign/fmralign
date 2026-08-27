@@ -19,18 +19,18 @@ def test_alignment_template(method):
     algo.fit(X, y="template")
 
     assert isinstance(algo.method_, _check_method(method).__class__)
-    assert len(algo.fitted_estimators) == len(X)
     if method != "srm":
         assert algo.template.shape == X[0].shape
-    for i, x in X.items():
-        transformed = algo._transform_one_array(x, algo.fitted_estimators[i])
+
+    X_pred = algo.transform(X)
+    for key, val in X.items():
         if method == "identity":
-            assert_array_equal(transformed, x)
+            assert_array_equal(X_pred[key], val)
         elif method == "srm":
-            n_components = algo.fitted_estimators[0].Wt.shape[1]
-            assert transformed.shape == (x.shape[0], n_components)
+            n_components = algo.fitted_estimator.Wt.shape[2]
+            assert X_pred[key].shape == (val.shape[0], n_components)
         else:
-            assert transformed.shape == x.shape
+            assert X_pred[key].shape == val.shape
 
 
 @pytest.mark.parametrize("method", methods)
@@ -43,18 +43,18 @@ def test_alignment_loso(method):
     algo.fit(X, y="leave_one_subject_out")
 
     assert isinstance(algo.method_, _check_method(method).__class__)
-    assert len(algo.fitted_estimators) == len(X)
-    assert algo.template is None
+    if method != "srm":
+        assert algo.template.shape == X[0].shape
 
-    for i, x in X.items():
-        transformed = algo._transform_one_array(x, algo.fitted_estimators[i])
+    X_pred = algo.transform(X)
+    for key, val in X.items():
         if method == "identity":
-            assert_array_equal(transformed, x)
+            assert_array_equal(X_pred[key], val)
         elif method == "srm":
-            n_components = algo.fitted_estimators[0].Wt.shape[1]
-            assert transformed.shape == (x.shape[0], n_components)
+            n_components = algo.fitted_estimator.Wt.shape[2]
+            assert X_pred[key].shape == (val.shape[0], n_components)
         else:
-            assert transformed.shape == x.shape
+            assert X_pred[key].shape == val.shape
 
 
 @pytest.mark.parametrize("method", methods)
