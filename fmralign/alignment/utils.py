@@ -30,15 +30,20 @@ def _rescaled_euclidean_mean(subjects_data, scale_average=False):
     average_data: ndarray
         Average of imgs, with same shape as one img
     """
-    average_data = np.mean(subjects_data, axis=0)
-    scale = 1
+    total = np.zeros_like(next(iter(subjects_data)))
+    norm_sum = 0.0
+    n = 0
+    for data in subjects_data:
+        total += data
+        norm_sum += np.linalg.norm(data)
+        n += 1
+
+    average_data = total / n
+
     if scale_average:
-        X_norm = 0
-        for data in subjects_data:
-            X_norm += np.linalg.norm(data)
-        X_norm /= len(subjects_data)
-        scale = X_norm / np.linalg.norm(average_data)
-    average_data *= scale
+        x_norm = norm_sum / n
+        scale = x_norm / np.linalg.norm(average_data)
+        average_data *= scale
 
     return average_data
 
@@ -308,9 +313,23 @@ def _fit_template(
     template = _init_template(X, method, scale_template, labels)
     # Fit template alignment
     for _ in range(n_iter):
-        fit_ = _map_to_target(X, template, method, labels, n_jobs, verbose)
-        aligned_data = [fit_[i].transform(X[i]) for i in range(len(X))]
-        template = _rescaled_euclidean_mean(aligned_data, scale_template)
+        fit_ = []
+        total, norm_sum, n = np.zeros_like(template), 0.0, 0
+        for x in X:
+            estimator = _map_to_target(
+                [x], template, method, labels, n_jobs, verbose
+            )[0]
+            fit_.append(estimator)
+
+            aligned = estimator.transform(x)
+            total += aligned
+            norm_sum += np.linalg.norm(aligned)
+            n += 1
+
+        template = total / n
+        if scale_template:
+            scale = (norm_sum / n) / np.linalg.norm(template)
+            template *= scale
     return fit_, template
 
 
@@ -337,7 +356,7 @@ def _init_template(X, method, scale_template=False, labels=None):
     if isinstance(method, DetSRM):
         n_labels = len(np.unique(labels))
         n_components = method.n_components
-        n_samples = X[0].shape[0]
+        n_samples = next(iter(X)).shape[0]
         if n_labels == 1:
             template = np.random.randn(n_samples, n_components)
         else:
