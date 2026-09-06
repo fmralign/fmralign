@@ -1,4 +1,5 @@
 import warnings
+from itertools import tee
 
 import numpy as np
 from sklearn.base import clone
@@ -19,8 +20,9 @@ def _rescaled_euclidean_mean(subjects_data, scale_average=False):
 
     Parameters
     ----------
-    subjects_data: `list` of `numpy.ndarray`
-        Each element of the list is the data for one subject.
+    subjects_data: iterable of :class:`numpy.ndarray`
+        Iterable of subject data arrays, where each
+        array is of shape (n_samples, n_features).
     scale_average: boolean
         If true, average is rescaled so that it keeps the same norm as the
         average of training images.
@@ -284,8 +286,9 @@ def _fit_template(
 
     Parameters
     ----------
-    X : list of 2D ndarray
-        List of subject data arrays, where each array is of shape (n_samples, n_features).
+    X : iterable of :class:`numpy.ndarray`
+        Iterable of subject data arrays, where each
+        array is of shape (n_samples, n_features).
     method : an instance of any class derived from `BaseAlignment`
         Algorithm used to perform alignment between sources and target.
     labels : 1D np.ndarray
@@ -309,13 +312,17 @@ def _fit_template(
     template : ndarray
         The template data array.
     """
+    # Tee the iterable to allow multiple passes over the data
+    data_iterators = iter(tee(X, n_iter + 1))
     # Initialize the template
-    template = _init_template(X, method, scale_template, labels)
-    # Fit template alignment
+    template = _init_template(
+        next(data_iterators), method, scale_template, labels
+    )
+    # Fit alignment estimators and update the template iteratively
     for _ in range(n_iter):
         fit_ = []
         total, norm_sum, n = np.zeros_like(template), 0.0, 0
-        for x in X:
+        for x in next(data_iterators):
             estimator = _map_to_target(
                 [x], template, method, labels, n_jobs, verbose
             )[0]
@@ -330,6 +337,7 @@ def _fit_template(
         if scale_template:
             scale = (norm_sum / n) / np.linalg.norm(template)
             template *= scale
+
     return fit_, template
 
 
@@ -338,8 +346,9 @@ def _init_template(X, method, scale_template=False, labels=None):
 
     Parameters
     ----------
-    X : list of 2D ndarray
-        List of subject data arrays, where each array is of shape (n_samples, n_features).
+    X : iterable of :class:`numpy.ndarray`
+        Iterable of subject data arrays, where each
+        array is of shape (n_samples, n_features).
     method : an instance of any class derived from `BaseAlignment`
         Algorithm used to perform alignment between sources and target.
     scale_template : bool, optional
