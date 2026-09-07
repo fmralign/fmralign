@@ -173,6 +173,17 @@ def test_fit_template():
     assert_array_equal(template, euclidean_mean)
 
 
+def test_fit_template_generator():
+    """Test fitting a template using a generator of subjects data."""
+    subjects_data, labels = sample_subjects()
+    subjects_iterator = (x for x in subjects_data)
+    estimators, template = _fit_template(subjects_iterator, Identity(), labels)
+    assert len(estimators) == len(subjects_data)
+    euclidean_mean = _rescaled_euclidean_mean(subjects_data)
+    # Check that the template is the Euclidean mean for identity method
+    assert_array_equal(template, euclidean_mean)
+
+
 def test_map_to_target():
     """Test identity of multiple subjects to target."""
     X, labels = sample_subjects()
