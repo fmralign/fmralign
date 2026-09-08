@@ -349,7 +349,7 @@ def _fit_hyperalignment(
     n_jobs=1,
     verbose=0,
 ):
-    """Fit a template using the hyperalignment procedure to the target\n
+    """Fit a template using the hyperalignment procedure to the data barycenter\n
     data using the specified method.
 
     Parameters
