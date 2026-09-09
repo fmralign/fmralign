@@ -1,12 +1,14 @@
 import numpy as np
 import pytest
-from numpy.testing import assert_array_equal
+from numpy.testing import assert_allclose, assert_array_equal
+from scipy.stats import zscore
 
 from fmralign.alignment.utils import (
     _check_input_arrays,
     _check_labels,
     _check_method,
     _check_target,
+    _fit_hyperalignment,
     _fit_template,
     _init_template,
     _map_to_target,
@@ -182,6 +184,37 @@ def test_fit_template_generator():
     euclidean_mean = _rescaled_euclidean_mean(subjects_data)
     # Check that the template is the Euclidean mean for identity method
     assert_array_equal(template, euclidean_mean)
+
+
+def test_fit_hyperalignment():
+    """Check the hyperalignment template using Identity transforms."""
+    subjects_data, labels = sample_subjects()
+    estimators, template = _fit_hyperalignment(
+        subjects_data, Identity(), labels
+    )
+
+    assert len(estimators) == len(subjects_data)
+    for estimator in estimators:
+        assert isinstance(estimator, Identity)
+
+    aligned = [zscore(x) for x in subjects_data]
+    expected_template = zscore(np.mean(aligned, axis=0))
+    assert_allclose(template, expected_template)
+
+
+def test_fit_hyperalignment_generator():
+    """Check the hyperalignment template using a one-pass generator input."""
+    subjects_data, labels = sample_subjects()
+    subjects_iterator = (x for x in subjects_data)
+    estimators, template = _fit_hyperalignment(
+        subjects_iterator, Identity(), labels
+    )
+
+    assert len(estimators) == len(subjects_data)
+
+    aligned = [zscore(x) for x in subjects_data]
+    expected_template = zscore(np.mean(aligned, axis=0))
+    assert_allclose(template, expected_template)
 
 
 def test_map_to_target():
