@@ -2,6 +2,7 @@ import warnings
 from itertools import tee
 
 import numpy as np
+from scipy.stats import zscore
 from sklearn.base import clone
 
 from fmralign.methods import (
@@ -337,6 +338,72 @@ def _fit_template(
         if scale_template:
             scale = (norm_sum / n) / np.linalg.norm(template)
             template *= scale
+
+    return fit_, template
+
+
+def _fit_hyperalignment(
+    X,
+    method,
+    labels,
+    n_jobs=1,
+    verbose=0,
+):
+    """Fit a template using the hyperalignment procedure to the data barycenter\n
+    data using the specified method.
+
+    Parameters
+    ----------
+    X : iterable of :class:`numpy.ndarray`
+        Iterable of subject data arrays, where each
+        array is of shape (n_samples, n_features).
+    method : an instance of any class derived from `BaseAlignment`
+        Algorithm used to perform alignment between sources and target.
+    labels : 1D np.ndarray
+        Labels for the parcellation of the data. If only one label is present,
+        the whole brain method is used.
+        If multiple labels are present, the method will patch the parcels estimators
+        in a big whole brain estimator.
+    n_jobs : int, default=1
+        Number of jobs to run in parallel. If -1, all CPUs are used.
+        If 1, no parallel computing code is used at all, by default 1
+    verbose : int, default=0
+        Verbosity level, by default 0
+
+    Returns
+    -------
+    fit_ : list of fitted estimators
+    template : ndarray
+        The template data array.
+    """
+    # Tee the iterable to allow multiple passes over the data
+    data_iterators = iter(tee(X, 3))
+
+    # Level 1
+    level1_data = []
+    target = _init_template(next(data_iterators), method, False, labels)
+    for x in next(data_iterators):
+        estimator = _map_to_target(
+            [x], target, method, labels, n_jobs, verbose
+        )[0]
+        aligned_data = zscore(estimator.transform(x))
+        level1_data.append(aligned_data)
+        target = zscore(_rescaled_euclidean_mean([target, aligned_data]))
+
+    # Level 2
+    level2_data = []
+    fit_ = []
+    for i, x in enumerate(next(data_iterators)):
+        external_data = [y for j, y in enumerate(level1_data) if j != i]
+        target = _rescaled_euclidean_mean(external_data)
+        estimator = _map_to_target(
+            [x], target, method, labels, n_jobs, verbose
+        )[0]
+        aligned_data = zscore(estimator.transform(x))
+        level2_data.append(aligned_data)
+        fit_.append(estimator)
+
+    template = zscore(_rescaled_euclidean_mean(level2_data))
 
     return fit_, template
 
