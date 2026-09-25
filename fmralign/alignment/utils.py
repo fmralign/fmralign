@@ -1,5 +1,4 @@
 import warnings
-from itertools import tee
 
 import numpy as np
 from sklearn.base import clone
@@ -289,6 +288,8 @@ def _fit_template(
     X : iterable of :class:`numpy.ndarray`
         Iterable of subject data arrays, where each
         array is of shape (n_samples, n_features).
+        Note that if X is a generator, it should be long enough
+        to be looped through n_iter + 1 times.
     method : an instance of any class derived from `BaseAlignment`
         Algorithm used to perform alignment between sources and target.
     labels : 1D np.ndarray
@@ -312,17 +313,13 @@ def _fit_template(
     template : ndarray
         The template data array.
     """
-    # Tee the iterable to allow multiple passes over the data
-    data_iterators = iter(tee(X, n_iter + 1))
     # Initialize the template
-    template = _init_template(
-        next(data_iterators), method, scale_template, labels
-    )
+    template = _init_template(X, method, scale_template, labels)
     # Fit alignment estimators and update the template iteratively
     for _ in range(n_iter):
         fit_ = []
         total, norm_sum, n = np.zeros_like(template), 0.0, 0
-        for x in next(data_iterators):
+        for x in X:
             estimator = _map_to_target(
                 [x], template, method, labels, n_jobs, verbose
             )[0]
