@@ -234,7 +234,7 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
 
 
 def _check_iterable_arrays(X):
-    """Check if X is a list of arrays or a callable returning an\n
+    """Check if X is a list of arrays or a callable returning an
     iterable of arrays."""
 
     if isinstance(X, list):
