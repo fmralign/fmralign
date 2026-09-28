@@ -1,5 +1,4 @@
 import warnings
-from itertools import tee
 
 import numpy as np
 from sklearn.base import clone
@@ -12,6 +11,16 @@ from fmralign.methods import (
     RidgeAlignment,
 )
 from fmralign.methods.piecewise import PiecewiseAlignment
+
+
+class ReIterable:
+    """Wrapper class to make a callable generator re-iterable."""
+
+    def __init__(self, gen):
+        self.gen = gen
+
+    def __iter__(self):
+        return self.gen()
 
 
 def _rescaled_euclidean_mean(subjects_data, scale_average=False):
@@ -224,6 +233,34 @@ def _check_labels(X, labels=None, threshold=1000, verbose=0):
     return labels
 
 
+def _check_iterable_arrays(X):
+    """Check if X is a list of arrays or a callable returning an
+    iterable of arrays."""
+
+    if isinstance(X, list):
+        if not all(isinstance(x, np.ndarray) for x in X):
+            raise TypeError(
+                "All elements in the list must be numpy arrays."
+                f" Got {[type(x) for x in X]} instead."
+            )
+        X_ = X
+    elif callable(X):
+        X_ = ReIterable(X)
+        for x in X_:
+            if not isinstance(x, np.ndarray):
+                raise TypeError(
+                    "All elements returned by the callable must be numpy arrays."
+                    f" Got {type(x)} instead."
+                )
+    else:
+        raise TypeError(
+            "X must be a list of arrays or a callable returning an iterable of arrays."
+            f" Got {type(X)} instead."
+        )
+
+    return X_
+
+
 def _map_to_target(
     X,
     target_data,
@@ -286,8 +323,7 @@ def _fit_template(
 
     Parameters
     ----------
-    X : iterable of :class:`numpy.ndarray`
-        Iterable of subject data arrays, where each
+    X : list or callable returning an iterable of :class:`numpy.ndarray` where each
         array is of shape (n_samples, n_features).
     method : an instance of any class derived from `BaseAlignment`
         Algorithm used to perform alignment between sources and target.
@@ -312,17 +348,15 @@ def _fit_template(
     template : ndarray
         The template data array.
     """
-    # Tee the iterable to allow multiple passes over the data
-    data_iterators = iter(tee(X, n_iter + 1))
+    X_ = _check_iterable_arrays(X)
+
     # Initialize the template
-    template = _init_template(
-        next(data_iterators), method, scale_template, labels
-    )
+    template = _init_template(X_, method, scale_template, labels)
     # Fit alignment estimators and update the template iteratively
     for _ in range(n_iter):
         fit_ = []
         total, norm_sum, n = np.zeros_like(template), 0.0, 0
-        for x in next(data_iterators):
+        for x in X_:
             estimator = _map_to_target(
                 [x], template, method, labels, n_jobs, verbose
             )[0]
