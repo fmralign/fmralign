@@ -5,8 +5,8 @@ requires = ["hatchling", "hatch-vcs"]
 [dependency-groups]
 # Required dependencies for devs
 dev = [
-    {include-group = "test"},
-    {include-group = "doc"},
+    { include-group = "test" },
+    { include-group = "doc" },
     "fmralign[ot]"
 ]
 # For building the documentation
@@ -35,10 +35,10 @@ test = [
 
 [project]
 authors = [
-    {name = "Elizabeth DuPre", email = "emd222@cornell.edu"},
-    {name = "Pierre-Louis Barbarant", email = "pierre-louis.barbarant@inria.fr"},
-    {name = "Thomas Bazeille"},
-    {name = "Bertrand Thirion"}
+    { name = "Elizabeth DuPre", email = "emd222@cornell.edu" },
+    { name = "Pierre-Louis Barbarant", email = "pierre-louis.barbarant@inria.fr" },
+    { name = "Thomas Bazeille" },
+    { name = "Bertrand Thirion" }
 ]
 classifiers = ["Programming Language :: Python :: 3"]
 dependencies = [
@@ -49,7 +49,7 @@ dependencies = [
 ]
 description = "Functional alignment for fMRI"
 dynamic = ["version"]
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 name = "fmralign"
 readme = "README.md"
 requires-python = ">=3.10"
