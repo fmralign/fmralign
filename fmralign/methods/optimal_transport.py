@@ -233,7 +233,7 @@ class SpectralOT(BaseAlignment):
             )
 
         elif self.backend == "geomloss":
-            self.R = _geomloss_solver(
+            potentials = _geomloss_solver(
                 X_torch,
                 Y_torch,
                 evecs_torch,
@@ -241,6 +241,12 @@ class SpectralOT(BaseAlignment):
                 self.alpha,
                 self.max_iter,
             )
+            # Store the torch tensors on CPU for later use in transform
+            self.X_torch = X_torch.to("cpu")
+            self.Y_torch = Y_torch.to("cpu")
+            self.evecs_torch = evecs_torch.to("cpu")
+            self.f_ba = potentials.f_ba.to("cpu")
+            self.g_ab = potentials.g_ab.to("cpu")
         else:
             raise ValueError(
                 f"Unknown backend {self.backend}. Valid backends are 'geomloss', 'pot'."
@@ -259,13 +265,70 @@ class SpectralOT(BaseAlignment):
             X_torch = torch.from_numpy(X).to(torch.float32).to(self.device)
             return (X_torch @ R_torch * n_voxels).cpu().numpy()
         elif self.backend == "geomloss":
-            n_voxels = X.shape[1]
-            X_torch_t = torch.tensor(
+            from geomloss._arguments import ArrayProperties
+            from geomloss._typing import SinkhornPotentials
+            from geomloss.ot._implementations.sample import (
+                OTResultSample,
+            )
+
+            # Move the tensors to the device
+            self.X_torch = self.X_torch.to(self.device)
+            self.Y_torch = self.Y_torch.to(self.device)
+            self.evecs_torch = self.evecs_torch.to(self.device)
+            self.f_ba = self.f_ba.to(self.device)
+            self.g_ab = self.g_ab.to(self.device)
+
+            # Reinstantiate lazy cost matrices
+            costs_matrices = _cost_matrices_geomloss(
+                self.X_torch, self.Y_torch, self.evecs_torch, self.alpha
+            )
+            M_normalized = costs_matrices.xy
+
+            # Uniform weights for the source and target distributions
+            N, M = M_normalized.shape
+            a = torch.ones(N, dtype=torch.float32).to(self.device) / N
+            b = torch.ones(M, dtype=torch.float32).to(self.device) / M
+            array_properties = ArrayProperties(
+                B=0,
+                N=N,
+                M=M,
+                dtype=torch.float32,
+                device=self.device,
+                library="torch",
+            )
+            res = OTResultSample(
+                X_a=None,
+                X_b=None,
+                a=a,
+                b=b,
+                C=costs_matrices,
+                cost=None,
+                reg=self.reg,
+                reg_type="KL",
+                debias=False,
+                unbalanced=None,
+                unbalanced_type="KL",
+                potentials=SinkhornPotentials(
+                    g_ab=self.g_ab, f_ba=self.f_ba, f_aa=None, g_bb=None
+                ),
+                array_properties=array_properties,
+            )
+            R = res.plan_operator
+
+            X_t = torch.tensor(
                 np.ascontiguousarray(X.T),
                 device=self.device,
                 dtype=torch.float32,
             )
-            return (self.R.T @ X_torch_t * n_voxels).T.cpu().numpy()
+            X_pred = (R.T @ X_t * N).T.cpu().numpy()
+
+            # Put the torch tensors back on CPU
+            self.X_torch = self.X_torch.to("cpu")
+            self.Y_torch = self.Y_torch.to("cpu")
+            self.evecs_torch = self.evecs_torch.to("cpu")
+            self.f_ba = self.f_ba.to("cpu")
+            self.g_ab = self.g_ab.to("cpu")
+            return X_pred
 
 
 def _pot_solver(X_torch, Y_torch, evecs_torch, reg, alpha, max_iter):
@@ -297,19 +360,50 @@ def _geomloss_solver(X_torch, Y_torch, evecs_torch, reg, alpha, max_iter):
     """Solve the OT problem using the GeomLoss library."""
     import torch
     from geomloss import _backends as bk
-    from geomloss._arguments import ArrayProperties
-    from geomloss._typing import CostMatrices
     from geomloss.ot._abstract_solvers import (
         annealing_parameters,
         sinkhorn_loop,
     )
     from geomloss.ot._implementations.sample import (
-        OTResultSample,
-        cost_matrix,
         softmin_sample,
     )
 
     device = X_torch.device
+    costs_matrices = _cost_matrices_geomloss(
+        X_torch, Y_torch, evecs_torch, alpha
+    )
+    M_normalized = costs_matrices.xy
+    max_cost = M_normalized.max(axis=1).max()
+    min_cost = M_normalized.min(axis=1).min()
+
+    # Uniform weights for the source and target distributions
+    N, M = M_normalized.shape
+    a = torch.ones(N, dtype=torch.float32).to(device) / N
+    b = torch.ones(M, dtype=torch.float32).to(device) / M
+    descent = annealing_parameters(
+        maxmin_cost=max_cost - min_cost,
+        eps=reg,
+        rho=None,
+        n_iter=max_iter,
+    )
+    potentials = sinkhorn_loop(
+        softmin=softmin_sample,
+        log_a_list=[bk.stable_log(a)],
+        log_b_list=[bk.stable_log(b)],
+        C_list=[costs_matrices],
+        descent=descent,
+        debias=False,
+        last_extrapolation=True,
+    )
+
+    return potentials
+
+
+def _cost_matrices_geomloss(X_torch, Y_torch, evecs_torch, alpha):
+    """Instantiate the lazy cost matrices for the GeomLoss backend."""
+    from geomloss._typing import CostMatrices
+    from geomloss.ot._implementations.sample import cost_matrix
+
     M_func = cost_matrix(X_torch, Y_torch, matrix_type="lazy")
     M_func_t = cost_matrix(Y_torch, X_torch, matrix_type="lazy")
     M_geom = cost_matrix(evecs_torch, evecs_torch, matrix_type="lazy")
@@ -322,57 +416,4 @@ def _geomloss_solver(X_torch, Y_torch, evecs_torch, reg, alpha, max_iter):
     M_normalized_t = (
         1 - alpha
     ) * M_func_normalized_t + alpha * M_geom_normalized
-
-    # Uniform weights for the source and target distributions
-    N, M = M_normalized.shape
-    a = torch.ones(N, dtype=torch.float32).to(device) / N
-    b = torch.ones(M, dtype=torch.float32).to(device) / M
-
-    array_properties = ArrayProperties(
-        B=0,
-        N=N,
-        M=M,
-        dtype=torch.float32,
-        device=device,
-        library="torch",
-    )
-
-    max_cost = M_normalized.max(axis=1).max()
-    min_cost = M_normalized.min(axis=1).min()
-    descent = annealing_parameters(
-        maxmin_cost=max_cost - min_cost,
-        eps=reg,
-        rho=None,
-        n_iter=max_iter,
-    )
-    costs_matrices = CostMatrices(
-        xy=M_normalized, yx=M_normalized_t, xx=None, yy=None
-    )
-
-    potentials = sinkhorn_loop(
-        softmin=softmin_sample,
-        log_a_list=[bk.stable_log(a)],
-        log_b_list=[bk.stable_log(b)],
-        C_list=[costs_matrices],
-        descent=descent,
-        debias=False,
-        last_extrapolation=True,
-    )
-
-    res = OTResultSample(
-        X_a=None,
-        X_b=None,
-        a=a,
-        b=b,
-        C=costs_matrices,
-        cost=None,
-        reg=reg,
-        reg_type="KL",
-        debias=False,
-        unbalanced=None,
-        unbalanced_type="KL",
-        potentials=potentials,
-        array_properties=array_properties,
-    )
-
-    return res.plan_operator
+    return CostMatrices(xy=M_normalized, yx=M_normalized_t, xx=None, yy=None)
