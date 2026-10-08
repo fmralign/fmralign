@@ -553,7 +553,7 @@
             <span class="p">)</span>
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">"geomloss"</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">_geomloss_solver</span><span class="p">(</span>
+            <span class="n">potentials</span> <span class="o">=</span> <span class="n">_geomloss_solver</span><span class="p">(</span>
                 <span class="n">X_torch</span><span class="p">,</span>
                 <span class="n">Y_torch</span><span class="p">,</span>
                 <span class="n">evecs_torch</span><span class="p">,</span>
@@ -561,6 +561,12 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,</span>
             <span class="p">)</span>
+            <span class="c1"># Store the torch tensors on CPU for later use in transform</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_torch</span> <span class="o">=</span> <span class="n">X_torch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Y_torch</span> <span class="o">=</span> <span class="n">Y_torch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">evecs_torch</span> <span class="o">=</span> <span class="n">evecs_torch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">f_ba</span> <span class="o">=</span> <span class="n">potentials</span><span class="o">.</span><span class="n">f_ba</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g_ab</span> <span class="o">=</span> <span class="n">potentials</span><span class="o">.</span><span class="n">g_ab</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">"Unknown backend </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="si">}</span><span class="s2">. Valid backends are 'geomloss', 'pot'."</span>
@@ -582,13 +588,70 @@
             <span class="n">X_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">X_torch</span> <span class="o">@</span> <span class="n">R_torch</span> <span class="o">*</span> <span class="n">n_voxels</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">"geomloss"</span><span class="p">:</span>
-            <span class="n">n_voxels</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">X_torch_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss._arguments</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArrayProperties</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss._typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">SinkhornPotentials</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss.ot._implementations.sample</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+                <span class="n">OTResultSample</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Move the tensors to the device</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_torch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_torch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Y_torch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y_torch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">evecs_torch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evecs_torch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">f_ba</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_ba</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g_ab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_ab</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+            <span class="c1"># Reinstantiate lazy cost matrices</span>
+            <span class="n">costs_matrices</span> <span class="o">=</span> <span class="n">_cost_matrices_geomloss</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">X_torch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y_torch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">evecs_torch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span>
+            <span class="p">)</span>
+            <span class="n">M_normalized</span> <span class="o">=</span> <span class="n">costs_matrices</span><span class="o">.</span><span class="n">xy</span>
+
+            <span class="c1"># Uniform weights for the source and target distributions</span>
+            <span class="n">N</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="n">M_normalized</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="o">/</span> <span class="n">M</span>
+            <span class="n">array_properties</span> <span class="o">=</span> <span class="n">ArrayProperties</span><span class="p">(</span>
+                <span class="n">B</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">,</span>
+                <span class="n">M</span><span class="o">=</span><span class="n">M</span><span class="p">,</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
+                <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                <span class="n">library</span><span class="o">=</span><span class="s2">"torch"</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">OTResultSample</span><span class="p">(</span>
+                <span class="n">X_a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">X_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span>
+                <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span>
+                <span class="n">C</span><span class="o">=</span><span class="n">costs_matrices</span><span class="p">,</span>
+                <span class="n">cost</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">reg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reg</span><span class="p">,</span>
+                <span class="n">reg_type</span><span class="o">=</span><span class="s2">"KL"</span><span class="p">,</span>
+                <span class="n">debias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">unbalanced</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">unbalanced_type</span><span class="o">=</span><span class="s2">"KL"</span><span class="p">,</span>
+                <span class="n">potentials</span><span class="o">=</span><span class="n">SinkhornPotentials</span><span class="p">(</span>
+                    <span class="n">g_ab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">g_ab</span><span class="p">,</span> <span class="n">f_ba</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">f_ba</span><span class="p">,</span> <span class="n">f_aa</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">g_bb</span><span class="o">=</span><span class="kc">None</span>
+                <span class="p">),</span>
+                <span class="n">array_properties</span><span class="o">=</span><span class="n">array_properties</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">R</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">plan_operator</span>
+
+            <span class="n">X_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
                 <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">),</span>
                 <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
                 <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X_torch_t</span> <span class="o">*</span> <span class="n">n_voxels</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span></div>
+            <span class="n">X_pred</span> <span class="o">=</span> <span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">X_t</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+            <span class="c1"># Put the torch tensors back on CPU</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">X_torch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X_torch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Y_torch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y_torch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">evecs_torch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evecs_torch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">f_ba</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f_ba</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g_ab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_ab</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">"cpu"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">X_pred</span></div>
 </div>
 
 
@@ -622,19 +685,50 @@
 <span class="w">    </span><span class="sd">"""Solve the OT problem using the GeomLoss library."""</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss</span><span class="w"> </span><span class="kn">import</span> <span class="n">_backends</span> <span class="k">as</span> <span class="n">bk</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss._arguments</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArrayProperties</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss._typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">CostMatrices</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss.ot._abstract_solvers</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
         <span class="n">annealing_parameters</span><span class="p">,</span>
         <span class="n">sinkhorn_loop</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss.ot._implementations.sample</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-        <span class="n">OTResultSample</span><span class="p">,</span>
-        <span class="n">cost_matrix</span><span class="p">,</span>
         <span class="n">softmin_sample</span><span class="p">,</span>
     <span class="p">)</span>
 
     <span class="n">device</span> <span class="o">=</span> <span class="n">X_torch</span><span class="o">.</span><span class="n">device</span>
+    <span class="n">costs_matrices</span> <span class="o">=</span> <span class="n">_cost_matrices_geomloss</span><span class="p">(</span>
+        <span class="n">X_torch</span><span class="p">,</span> <span class="n">Y_torch</span><span class="p">,</span> <span class="n">evecs_torch</span><span class="p">,</span> <span class="n">alpha</span>
+    <span class="p">)</span>
+    <span class="n">M_normalized</span> <span class="o">=</span> <span class="n">costs_matrices</span><span class="o">.</span><span class="n">xy</span>
+    <span class="n">max_cost</span> <span class="o">=</span> <span class="n">M_normalized</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">min_cost</span> <span class="o">=</span> <span class="n">M_normalized</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+    <span class="c1"># Uniform weights for the source and target distributions</span>
+    <span class="n">N</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="n">M_normalized</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="o">/</span> <span class="n">M</span>
+    <span class="n">descent</span> <span class="o">=</span> <span class="n">annealing_parameters</span><span class="p">(</span>
+        <span class="n">maxmin_cost</span><span class="o">=</span><span class="n">max_cost</span> <span class="o">-</span> <span class="n">min_cost</span><span class="p">,</span>
+        <span class="n">eps</span><span class="o">=</span><span class="n">reg</span><span class="p">,</span>
+        <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">potentials</span> <span class="o">=</span> <span class="n">sinkhorn_loop</span><span class="p">(</span>
+        <span class="n">softmin</span><span class="o">=</span><span class="n">softmin_sample</span><span class="p">,</span>
+        <span class="n">log_a_list</span><span class="o">=</span><span class="p">[</span><span class="n">bk</span><span class="o">.</span><span class="n">stable_log</span><span class="p">(</span><span class="n">a</span><span class="p">)],</span>
+        <span class="n">log_b_list</span><span class="o">=</span><span class="p">[</span><span class="n">bk</span><span class="o">.</span><span class="n">stable_log</span><span class="p">(</span><span class="n">b</span><span class="p">)],</span>
+        <span class="n">C_list</span><span class="o">=</span><span class="p">[</span><span class="n">costs_matrices</span><span class="p">],</span>
+        <span class="n">descent</span><span class="o">=</span><span class="n">descent</span><span class="p">,</span>
+        <span class="n">debias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">last_extrapolation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">potentials</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_cost_matrices_geomloss</span><span class="p">(</span><span class="n">X_torch</span><span class="p">,</span> <span class="n">Y_torch</span><span class="p">,</span> <span class="n">evecs_torch</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Instantiate the lazy cost matrices for the GeomLoss backend."""</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss._typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">CostMatrices</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">geomloss.ot._implementations.sample</span><span class="w"> </span><span class="kn">import</span> <span class="n">cost_matrix</span>
+
     <span class="n">M_func</span> <span class="o">=</span> <span class="n">cost_matrix</span><span class="p">(</span><span class="n">X_torch</span><span class="p">,</span> <span class="n">Y_torch</span><span class="p">,</span> <span class="n">matrix_type</span><span class="o">=</span><span class="s2">"lazy"</span><span class="p">)</span>
     <span class="n">M_func_t</span> <span class="o">=</span> <span class="n">cost_matrix</span><span class="p">(</span><span class="n">Y_torch</span><span class="p">,</span> <span class="n">X_torch</span><span class="p">,</span> <span class="n">matrix_type</span><span class="o">=</span><span class="s2">"lazy"</span><span class="p">)</span>
     <span class="n">M_geom</span> <span class="o">=</span> <span class="n">cost_matrix</span><span class="p">(</span><span class="n">evecs_torch</span><span class="p">,</span> <span class="n">evecs_torch</span><span class="p">,</span> <span class="n">matrix_type</span><span class="o">=</span><span class="s2">"lazy"</span><span class="p">)</span>
@@ -647,60 +741,7 @@
     <span class="n">M_normalized_t</span> <span class="o">=</span> <span class="p">(</span>
         <span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span>
     <span class="p">)</span> <span class="o">*</span> <span class="n">M_func_normalized_t</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">M_geom_normalized</span>
-
-    <span class="c1"># Uniform weights for the source and target distributions</span>
-    <span class="n">N</span><span class="p">,</span> <span class="n">M</span> <span class="o">=</span> <span class="n">M_normalized</span><span class="o">.</span><span class="n">shape</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="o">/</span> <span class="n">M</span>
-
-    <span class="n">array_properties</span> <span class="o">=</span> <span class="n">ArrayProperties</span><span class="p">(</span>
-        <span class="n">B</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">N</span><span class="o">=</span><span class="n">N</span><span class="p">,</span>
-        <span class="n">M</span><span class="o">=</span><span class="n">M</span><span class="p">,</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span>
-        <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span>
-        <span class="n">library</span><span class="o">=</span><span class="s2">"torch"</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">max_cost</span> <span class="o">=</span> <span class="n">M_normalized</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-    <span class="n">min_cost</span> <span class="o">=</span> <span class="n">M_normalized</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
-    <span class="n">descent</span> <span class="o">=</span> <span class="n">annealing_parameters</span><span class="p">(</span>
-        <span class="n">maxmin_cost</span><span class="o">=</span><span class="n">max_cost</span> <span class="o">-</span> <span class="n">min_cost</span><span class="p">,</span>
-        <span class="n">eps</span><span class="o">=</span><span class="n">reg</span><span class="p">,</span>
-        <span class="n">rho</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">n_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">costs_matrices</span> <span class="o">=</span> <span class="n">CostMatrices</span><span class="p">(</span>
-        <span class="n">xy</span><span class="o">=</span><span class="n">M_normalized</span><span class="p">,</span> <span class="n">yx</span><span class="o">=</span><span class="n">M_normalized_t</span><span class="p">,</span> <span class="n">xx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">yy</span><span class="o">=</span><span class="kc">None</span>
-    <span class="p">)</span>
-
-    <span class="n">potentials</span> <span class="o">=</span> <span class="n">sinkhorn_loop</span><span class="p">(</span>
-        <span class="n">softmin</span><span class="o">=</span><span class="n">softmin_sample</span><span class="p">,</span>
-        <span class="n">log_a_list</span><span class="o">=</span><span class="p">[</span><span class="n">bk</span><span class="o">.</span><span class="n">stable_log</span><span class="p">(</span><span class="n">a</span><span class="p">)],</span>
-        <span class="n">log_b_list</span><span class="o">=</span><span class="p">[</span><span class="n">bk</span><span class="o">.</span><span class="n">stable_log</span><span class="p">(</span><span class="n">b</span><span class="p">)],</span>
-        <span class="n">C_list</span><span class="o">=</span><span class="p">[</span><span class="n">costs_matrices</span><span class="p">],</span>
-        <span class="n">descent</span><span class="o">=</span><span class="n">descent</span><span class="p">,</span>
-        <span class="n">debias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">last_extrapolation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">res</span> <span class="o">=</span> <span class="n">OTResultSample</span><span class="p">(</span>
-        <span class="n">X_a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">X_b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span>
-        <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span>
-        <span class="n">C</span><span class="o">=</span><span class="n">costs_matrices</span><span class="p">,</span>
-        <span class="n">cost</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">reg</span><span class="o">=</span><span class="n">reg</span><span class="p">,</span>
-        <span class="n">reg_type</span><span class="o">=</span><span class="s2">"KL"</span><span class="p">,</span>
-        <span class="n">debias</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">unbalanced</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">unbalanced_type</span><span class="o">=</span><span class="s2">"KL"</span><span class="p">,</span>
-        <span class="n">potentials</span><span class="o">=</span><span class="n">potentials</span><span class="p">,</span>
-        <span class="n">array_properties</span><span class="o">=</span><span class="n">array_properties</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">plan_operator</span>
+    <span class="k">return</span> <span class="n">CostMatrices</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">M_normalized</span><span class="p">,</span> <span class="n">yx</span><span class="o">=</span><span class="n">M_normalized_t</span><span class="p">,</span> <span class="n">xx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">yy</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
         </article>
       </div>
