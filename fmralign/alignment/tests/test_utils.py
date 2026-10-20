@@ -5,6 +5,7 @@ from scipy.stats import zscore
 
 from fmralign.alignment.utils import (
     _check_input_arrays,
+    _check_iterable_arrays,
     _check_labels,
     _check_method,
     _check_target,
@@ -165,6 +166,39 @@ def test_check_method():
     assert checked_method is method_instance
 
 
+def test_check_iterable_arrays():
+    """Test the iterable array checking function."""
+    subjects_data, _ = sample_subjects()
+    # Check valid iterable
+    checked_data = _check_iterable_arrays(subjects_data)
+    assert isinstance(checked_data, list)
+    assert all(isinstance(x, np.ndarray) for x in checked_data)
+
+    # Check invalid list
+    invalid_list = [x for x in ["not an array"] * len(subjects_data)]
+    with pytest.raises(
+        TypeError, match="All elements in the list must be numpy arrays"
+    ):
+        _check_iterable_arrays(invalid_list)
+
+    # Check invalid callable
+    def invalid_lambda():
+        return (x for x in ["not an array"] * len(subjects_data))
+
+    with pytest.raises(
+        TypeError,
+        match="All elements returned by the callable must be numpy arrays.",
+    ):
+        _check_iterable_arrays(invalid_lambda)
+
+    # Check invalid argument type
+    with pytest.raises(
+        TypeError,
+        match="X must be a list of arrays or a callable returning an iterable of arrays.",
+    ):
+        _check_iterable_arrays(X=42)
+
+
 def test_fit_template():
     """Test fitting a template to a set of subjects."""
     subjects_data, labels = sample_subjects()
@@ -178,7 +212,10 @@ def test_fit_template():
 def test_fit_template_generator():
     """Test fitting a template using a generator of subjects data."""
     subjects_data, labels = sample_subjects()
-    subjects_iterator = (x for x in subjects_data)
+
+    def subjects_iterator():
+        return (x for x in subjects_data)
+
     estimators, template = _fit_template(subjects_iterator, Identity(), labels)
     assert len(estimators) == len(subjects_data)
     euclidean_mean = _rescaled_euclidean_mean(subjects_data)
@@ -215,6 +252,18 @@ def test_fit_hyperalignment_generator():
     aligned = [zscore(x) for x in subjects_data]
     expected_template = zscore(np.mean(aligned, axis=0))
     assert_allclose(template, expected_template)
+
+
+def test_fit_template_wrong_iterable():
+    """Test fitting a template using an invalid iterable of subjects data."""
+    subjects_data, labels = sample_subjects()
+
+    # Create an invalid iterable (not yielding numpy arrays)
+    def invalid_iterator():
+        return (x for x in ["not an array"] * len(subjects_data))
+
+    with pytest.raises(TypeError):
+        _fit_template(invalid_iterator, Identity(), labels)
 
 
 def test_map_to_target():
