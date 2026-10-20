@@ -242,7 +242,10 @@ def test_fit_hyperalignment():
 def test_fit_hyperalignment_generator():
     """Check the hyperalignment template using a one-pass generator input."""
     subjects_data, labels = sample_subjects()
-    subjects_iterator = (x for x in subjects_data)
+
+    def subjects_iterator():
+        return (x for x in subjects_data)
+
     estimators, template = _fit_hyperalignment(
         subjects_iterator, Identity(), labels
     )
