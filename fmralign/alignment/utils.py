@@ -414,14 +414,17 @@ def _fit_hyperalignment(
 
     # Level 1
     level1_data = []
-    target = _init_template(X_, method, False, labels)
-    for x in X_:
-        estimator = _map_to_target(
-            [x], target, method, labels, n_jobs, verbose
-        )[0]
-        aligned_data = zscore(estimator.transform(x))
-        level1_data.append(aligned_data)
-        target = zscore(_rescaled_euclidean_mean([target, aligned_data]))
+    for i, x in enumerate(X_):
+        if i == 0:
+            target = zscore(x)
+            level1_data.append(target)
+        else:
+            estimator = _map_to_target(
+                [x], target, method, labels, n_jobs, verbose
+            )[0]
+            aligned_data = zscore(estimator.transform(x))
+            target = zscore(_rescaled_euclidean_mean([target, aligned_data]))
+            level1_data.append(aligned_data)
 
     # Level 2
     level2_data = []
