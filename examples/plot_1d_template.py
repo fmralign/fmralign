@@ -7,10 +7,11 @@ functional organization, but whose functional areas are located at slightly
 different places in each brain. This mimics the idiosyncratic topographies
 observed in real fMRI data, that anatomical registration cannot correct.
 
-Because the data are simulated, we know the noise-free activation map of each
-subject: the *hidden truth*. We use it to compare how well different
-strategies predict a left-out subject's activation map from the other
-subjects: anatomical averaging, spatial smoothing, and template alignment with
+Because the data are simulated, we know both the *hidden model* (the
+functional organization shared by all subjects) and the noise-free activation
+map of each subject. We use them to compare how well different strategies
+predict a left-out subject's activation map from the other subjects:
+anatomical averaging, spatial smoothing, and template alignment with
 :class:`~fmralign.methods.Procrustes` (see :footcite:t:`Haxby2011`) or
 :class:`~fmralign.methods.OptimalTransport`
 (see :footcite:t:`Bazeille2019`).
@@ -23,8 +24,8 @@ subjects: anatomical averaging, spatial smoothing, and template alignment with
 # avoids border effects. The ring is tiled by 20 functional blocks of 10
 # voxels. Each block has its own response profile to the 30 experimental
 # conditions used for alignment, and our contrast of interest activates one
-# block out of five: these four patches are the hidden truth we want to
-# recover.
+# block out of five: these four patches form the hidden model shared by all
+# subjects.
 
 import numpy as np
 from scipy.ndimage import gaussian_filter1d
@@ -45,7 +46,7 @@ def block_of_voxel(widths, shift=0.0):
     return np.searchsorted(edges, positions, side="right")
 
 
-hidden_truth = block_is_active[block_of_voxel(block_widths)]
+hidden_model = block_is_active[block_of_voxel(block_widths)]
 
 # %%
 # Simulating subjects with idiosyncratic topographies
@@ -109,12 +110,12 @@ def plot_maps(maps, active):
 
 plot_maps(
     {
-        "Hidden truth (shared organization)": hidden_truth,
+        "Hidden model (shared organization)": hidden_model,
         "Noise-free map of sub-01": true_maps["sub-01"],
         "Noise-free map of sub-02": true_maps["sub-02"],
         "Observed contrast map of sub-01": contrast_maps["sub-01"],
     },
-    active=hidden_truth,
+    active=hidden_model,
 )
 
 # %%
@@ -139,20 +140,17 @@ for sub in subjects:
 # %%
 # Predicting a subject from the others, with template alignment
 # -------------------------------------------------------------
-# We now use :class:`~fmralign.alignment.group_alignment.GroupAlignment`
-# with ``y="leave_one_subject_out"``: for each subject, a template is built
-# from the alignment data of all other subjects, and the subject is aligned to
-# this template. The subject never contributes to the template it is aligned
-# to, exactly as a new subject would (see :ref:`sphx_glr_auto_examples_plot_template_bias.py`).
+# We follow a leave-one-subject-out procedure: for each left-out subject, we
+# use :class:`~fmralign.alignment.group_alignment.GroupAlignment` to build a
+# template from the alignment data of the other subjects only. The left-out
+# subject never contributes to the template, exactly as a new subject would
+# (see :ref:`sphx_glr_auto_examples_plot_template_bias.py`).
 #
-# We then move all contrast maps into template space. Since the templates are
-# built from nearly the same subjects, they share a common space. To predict a
-# left-out subject, we average the aligned maps of the other subjects, and
-# send this group map back into the subject's own voxels with the transpose of
-# the subject's alignment matrix ``R``: for optimal transport, it is the
-# transport plan from the template to the subject; for Procrustes, it is the
-# inverse rotation. Since we score predictions with a correlation, the overall
-# scale of ``R`` does not matter.
+# :meth:`~fmralign.alignment.group_alignment.GroupAlignment.predict_subject`
+# then moves the contrast maps of the other subjects into the template, and
+# averages them into a group map. It finally aligns the template to the
+# left-out subject's alignment data, and uses this alignment to send the group
+# map into the left-out subject's own voxels.
 
 from fmralign import GroupAlignment
 from fmralign.methods import OptimalTransport, Procrustes
@@ -162,20 +160,17 @@ methods = {
     "Optimal transport": OptimalTransport(),
 }
 for name, method in methods.items():
-    aligner = GroupAlignment(method=method)
-    aligner.fit(alignment_data, y="leave_one_subject_out")
-    aligned_maps = aligner.transform(contrast_maps)
-
     for sub in subjects:
-        group_map = np.mean(
-            [aligned_maps[s] for s in subjects if s != sub], axis=0
+        others = [s for s in subjects if s != sub]
+        aligner = GroupAlignment(method=method)
+        aligner.fit({s: alignment_data[s] for s in others}, y="template")
+        predictions[name][sub] = aligner.predict_subject(
+            {s: contrast_maps[s] for s in others}, alignment_data[sub]
         )
-        R = aligner.fitted_estimators[sub].R
-        predictions[name][sub] = group_map @ R.T
 
 # %%
-# Comparing the predictions with the hidden truth
-# -----------------------------------------------
+# Comparing the predictions with the subject's truth
+# --------------------------------------------------
 # For each left-out subject, we measure the correlation between each
 # prediction and the subject's noise-free map. We first look at the
 # predictions for one subject, with its truly active voxels shaded in green.
@@ -193,7 +188,7 @@ scores = {
 sub = "sub-01"
 plot_maps(
     {
-        f"{name} with {sub} left out (correlation with hidden truth: "
+        f"{name} with {sub} left out (correlation with {sub}'s truth: "
         f"{correlation(prediction[sub], true_maps[sub]):.2f})": prediction[sub]
         for name, prediction in predictions.items()
     },
@@ -210,7 +205,7 @@ ax.boxplot(
     orientation="horizontal",
 )
 ax.invert_yaxis()
-ax.set_xlabel("Correlation with the hidden truth")
+ax.set_xlabel("Correlation with the subject's truth")
 ax.set_title("Prediction of left-out subjects")
 fig.tight_layout()
 plt.show()
@@ -219,16 +214,18 @@ plt.show()
 # Conclusion
 # ----------
 # Without alignment, the activated blocks of different subjects do not overlap
-# well, so their average is a weak, blurred version of the truth. Smoothing
+# well, and their average ignores where the blocks lie in the left-out
+# subject: it is a weak, blurred version of the subject's truth. Smoothing
 # reduces noise but blurs the map further.
 #
 # Template alignment matches voxels based on their responses to the
-# alignment conditions rather than on their location. Procrustes does so with
-# a single rotation of the whole region, which mixes the signal of distant
-# voxels. Optimal transport instead moves the signal of each voxel to the
-# few template locations that respond most similarly, so the activation is
-# brought back to the right place while staying sharp. It therefore recovers
-# the hidden truth best.
+# alignment conditions rather than on their location, and sends the group map
+# into the left-out subject's own voxels. Procrustes does so with a single
+# rotation of the whole region, which mixes the signal of distant voxels.
+# Optimal transport instead moves the signal of each voxel to the few
+# locations that respond most similarly, so the activation is brought to the
+# right place while staying sharp. It therefore predicts each subject's truth
+# best.
 #
 # You can increase ``warp_amplitude`` or ``width_scaling`` to simulate larger
 # inter-subject variability: the anatomical baselines degrade quickly, while optimal
