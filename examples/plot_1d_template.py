@@ -54,13 +54,17 @@ hidden_model = block_is_active[block_of_voxel(block_widths)]
 # Each subject has the same blocks in the same order, but at slightly
 # different places: the whole layout is shifted by a random warp of about
 # ``warp_amplitude`` voxels, and the width of each block is randomly scaled by
-# up to ``width_scaling``. From this subject-specific layout, we generate:
+# up to ``width_scaling``. The activation of each block is also randomly
+# scaled by up to ``height_scaling``, so that the patches are more or less
+# strongly activated in each subject. From this subject-specific layout, we
+# generate:
 #
 #   * alignment data: the responses of the blocks to the 100 conditions, plus
 #     noise;
 #   * a contrast map: the activated blocks, plus noise.
 
 n_subjects, warp_amplitude, width_scaling = 10, 4.0, 0.3
+height_scaling = 0.5
 
 alignment_data, contrast_maps, true_maps = {}, {}, {}
 for i in range(n_subjects):
@@ -71,8 +75,12 @@ for i in range(n_subjects):
         widths, shift=warp_amplitude * rng.standard_normal()
     )
 
+    heights = rng.uniform(
+        1 - height_scaling, 1 + height_scaling, size=n_blocks
+    )
+
     sub = f"sub-{i + 1:02d}"
-    true_maps[sub] = 0.6 * block_is_active[blocks]
+    true_maps[sub] = 0.6 * (heights * block_is_active)[blocks]
     alignment_data[sub] = block_profiles[:, blocks] + rng.standard_normal(
         (n_conditions, n_voxels)
     )
