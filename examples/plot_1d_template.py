@@ -22,7 +22,7 @@ anatomical averaging, spatial smoothing, and template alignment with
 # -------------------------------------------
 # We consider a 1D brain region of 200 voxels arranged on a ring, which
 # avoids border effects. The ring is tiled by 20 functional blocks of 10
-# voxels. Each block has its own response profile to the 30 experimental
+# voxels. Each block has its own response profile to the 100 experimental
 # conditions used for alignment, and our contrast of interest activates one
 # block out of five: these four patches form the hidden model shared by all
 # subjects.
@@ -30,7 +30,7 @@ anatomical averaging, spatial smoothing, and template alignment with
 import numpy as np
 from scipy.ndimage import gaussian_filter1d
 
-n_voxels, n_conditions, n_blocks, noise_sd = 200, 30, 20, 0.1
+n_voxels, n_conditions, n_blocks, noise_sd = 200, 100, 20, 0.4
 rng = np.random.default_rng(0)
 
 block_widths = np.full(n_blocks, n_voxels / n_blocks)
@@ -56,7 +56,7 @@ hidden_model = block_is_active[block_of_voxel(block_widths)]
 # ``warp_amplitude`` voxels, and the width of each block is randomly scaled by
 # up to ``width_scaling``. From this subject-specific layout, we generate:
 #
-#   * alignment data: the responses of the blocks to the 30 conditions, plus
+#   * alignment data: the responses of the blocks to the 100 conditions, plus
 #     noise;
 #   * a contrast map: the activated blocks, plus noise.
 
