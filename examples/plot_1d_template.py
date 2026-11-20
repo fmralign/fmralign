@@ -20,9 +20,9 @@ anatomical averaging, spatial smoothing, and template alignment with
 # %%
 # Simulating a shared functional organization
 # -------------------------------------------
-# We consider a 1D brain region of 200 voxels arranged on a ring, which
-# avoids border effects. The ring is tiled by 20 functional blocks of 10
-# voxels. Each block has its own response profile to the 100 experimental
+# We consider a 1D brain region of 100 voxels arranged on a ring, which
+# avoids border effects. The ring is tiled by 20 functional blocks of 5
+# voxels. Each block has its own response profile to the 50 experimental
 # conditions used for alignment, and our contrast of interest activates one
 # block out of five: these four patches form the hidden model shared by all
 # subjects.
@@ -30,13 +30,13 @@ anatomical averaging, spatial smoothing, and template alignment with
 import numpy as np
 from scipy.ndimage import gaussian_filter1d
 
-n_voxels, n_conditions, n_blocks, noise_sd = 200, 100, 20, 0.4
+n_voxels, n_conditions, n_blocks, noise_sd = 100, 50, 20, 0.1
 rng = np.random.default_rng(0)
 
 block_widths = np.full(n_blocks, n_voxels / n_blocks)
 block_profiles = rng.standard_normal((n_conditions, n_blocks))
 block_is_active = np.zeros(n_blocks)
-block_is_active[2::5] = 1
+block_is_active[2::5] = 1.0  # Blocks activated in the contrast of interest
 
 
 def block_of_voxel(widths, shift=0.0):
@@ -59,11 +59,11 @@ hidden_model = block_is_active[block_of_voxel(block_widths)]
 # strongly activated in each subject. From this subject-specific layout, we
 # generate:
 #
-#   * alignment data: the responses of the blocks to the 100 conditions, plus
+#   * alignment data: the responses of the blocks to the 50 conditions, plus
 #     noise;
 #   * a contrast map: the activated blocks, plus noise.
 
-n_subjects, warp_amplitude, width_scaling = 10, 4.0, 0.3
+n_subjects, warp_amplitude, width_scaling = 10, 2.0, 0.3
 height_scaling = 0.5
 
 alignment_data, contrast_maps, true_maps = {}, {}, {}
@@ -80,7 +80,7 @@ for i in range(n_subjects):
     )
 
     sub = f"sub-{i + 1:02d}"
-    true_maps[sub] = 0.6 * (heights * block_is_active)[blocks]
+    true_maps[sub] = (heights * block_is_active)[blocks]
     alignment_data[sub] = block_profiles[:, blocks] + rng.standard_normal(
         (n_conditions, n_voxels)
     )
@@ -92,38 +92,45 @@ for i in range(n_subjects):
 subjects = list(contrast_maps)
 
 # %%
-# We plot the noise-free maps of two subjects: the activated blocks (shaded
-# in green for the shared organization) are displaced differently in each
-# subject. What we actually observe is a much noisier contrast map.
+# We plot the noise-free maps of two subjects, along with the hidden model in
+# green: the activated blocks are displaced differently in each subject, and
+# more or less strongly activated. What we actually observe is a much noisier
+# contrast map.
 
 import matplotlib.pyplot as plt
 
 
-def plot_maps(maps, active):
-    """Plot 1D maps on top of each other, shading the ``active`` voxels."""
+def plot_maps(maps, truth, truth_label):
+    """Plot 1D maps on top of each other, each along with the ``truth``."""
     fig, axes = plt.subplots(
         len(maps), 1, figsize=(8, 1.3 * len(maps)), sharex=True
     )
     for ax, (title, values) in zip(axes, maps.items(), strict=True):
-        for voxel in np.flatnonzero(active):
-            ax.axvspan(
-                voxel - 0.5, voxel + 0.5, color="tab:green", alpha=0.2, lw=0
-            )
+        ax.plot(
+            truth,
+            color="tab:green",
+            linewidth=2,
+            linestyle=":",
+            label=truth_label,
+        )
         ax.plot(np.ravel(values), color="black", linewidth=1.2)
         ax.set_title(title, loc="left", fontsize=10)
         ax.set_yticks([])
+    axes[0].legend(
+        loc="lower right", bbox_to_anchor=(1, 1), frameon=False, fontsize=10
+    )
     axes[-1].set_xlabel("Voxel")
     fig.tight_layout()
 
 
 plot_maps(
     {
-        "Hidden model (shared organization)": hidden_model,
         "Noise-free map of sub-01": true_maps["sub-01"],
         "Noise-free map of sub-02": true_maps["sub-02"],
         "Observed contrast map of sub-01": contrast_maps["sub-01"],
     },
-    active=hidden_model,
+    truth=hidden_model,
+    truth_label="Hidden model (shared organization)",
 )
 
 # %%
@@ -143,7 +150,9 @@ predictions = {
 for sub in subjects:
     average = np.mean([contrast_maps[s] for s in subjects if s != sub], axis=0)
     predictions["Anatomical average"][sub] = average
-    predictions["Smoothing"][sub] = gaussian_filter1d(average, 3, mode="wrap")
+    predictions["Smoothing"][sub] = gaussian_filter1d(
+        average, 1.5, mode="wrap"
+    )
 
 # %%
 # Predicting a subject from the others, with template alignment
@@ -181,7 +190,7 @@ for name, method in methods.items():
 # --------------------------------------------------
 # For each left-out subject, we measure the correlation between each
 # prediction and the subject's noise-free map. We first look at the
-# predictions for one subject, with its truly active voxels shaded in green.
+# predictions for one subject, along with its noise-free map in green.
 
 
 def correlation(a, b):
@@ -200,7 +209,8 @@ plot_maps(
         f"{correlation(prediction[sub], true_maps[sub]):.2f})": prediction[sub]
         for name, prediction in predictions.items()
     },
-    active=true_maps[sub],
+    truth=true_maps[sub],
+    truth_label=f"Noise-free map of {sub}",
 )
 
 # %%
@@ -229,11 +239,15 @@ plt.show()
 # Template alignment matches voxels based on their responses to the
 # alignment conditions rather than on their location, and sends the group map
 # into the left-out subject's own voxels. Procrustes does so with a single
-# rotation of the whole region, which mixes the signal of distant voxels.
-# Optimal transport instead moves the signal of each voxel to the few
-# locations that respond most similarly, so the activation is brought to the
-# right place while staying sharp. It therefore predicts each subject's truth
-# best.
+# rotation over the whole region, mixing the signal with positive and negative
+# coefficients. Entropic optimal transport on the other hand only mixes
+# functionally similar voxels using positive coefficients, and produces a
+# prediction that overlaps better with the subject's truth.
+#
+# It should be noted that none of the methods is able to overcome to height
+# variability between subjects: all of them base their prediction on the signal
+# of the template, and therefore cannot apply voxel-specific scaling to match
+# perfectly the predicted subject's response.
 #
 # You can increase ``warp_amplitude`` or ``width_scaling`` to simulate larger
 # inter-subject variability: the anatomical baselines degrade quickly, while optimal
